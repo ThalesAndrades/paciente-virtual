@@ -1,0 +1,10 @@
+
+==================================================
+Consulta iniciada em 2026-06-10 23:02:28.710263
+==================================================
+
+PROFISSIONAL: Qual seu nome e idade?
+
+PACIENTE: Meu nome é Ana Paula e tenho 36 anos.
+
+PROFISSIONAL: sair

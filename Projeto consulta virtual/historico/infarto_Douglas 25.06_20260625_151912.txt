@@ -1,0 +1,26 @@
+
+==================================================
+Consulta iniciada em 2026-06-25 15:19:12.709770
+==================================================
+
+PROFISSIONAL: solicito ecg
+
+RESULTADO Eletrocardiograma: Supradesnivelamento de ST em DII, DIII e aVF
+
+PROFISSIONAL: solicito ecg
+
+RESULTADO Eletrocardiograma: Supradesnivelamento de ST em DII, DIII e aVF
+
+PROFISSIONAL: solicito troponina
+
+RESULTADO Troponina: Positiva
+
+PROFISSIONAL: solicito raio-x
+
+PACIENTE: Vou precisar fazer um raio-X. O médico vai analisar os resultados para entender melhor o que está acontecendo.
+
+PROFISSIONAL: Obrigado sair
+
+PACIENTE: De nada.
+
+PROFISSIONAL: sair

@@ -1,0 +1,67 @@
+{
+    "Identificacao": {
+        "peso": 1,
+        "itens": {
+            "Nome": ["nome"],
+            "Idade": ["idade", "anos"]
+        }
+    },
+
+    "Investigacao_Psicossocial": {
+        "peso": 5,
+        "itens": {
+            "Relacionamento": [
+                "marido",
+                "companheiro",
+                "relacionamento"
+            ],
+
+            "Controle": [
+                "controle",
+                "ciúmes",
+                "ciumes"
+            ],
+
+            "Humilhacao": [
+                "humilha",
+                "ofende"
+            ],
+
+            "Medo": [
+                "medo"
+            ]
+        }
+    },
+
+    "Rede_de_Apoio": {
+        "peso": 2,
+        "itens": {
+            "Familia": [
+                "família",
+                "familia"
+            ],
+
+            "Amigos": [
+                "amigos"
+            ],
+
+            "Apoio": [
+                "apoio"
+            ]
+        }
+    },
+
+    "Conduta": {
+        "peso": 2,
+        "itens": {
+            "Protecao": [
+                "proteção",
+                "protecao"
+            ],
+
+            "Encaminhamento": [
+                "encaminhamento"
+            ]
+        }
+    }
+}

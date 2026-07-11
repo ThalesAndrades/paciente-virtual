@@ -1,0 +1,114 @@
+{
+    "identificacao": {
+      "nome": "Ana Paula Martins",
+      "idade": 36,
+      "sexo": "Feminino",
+      "voz": "feminino",
+      "estado_civil": "Casada",
+      "escolaridade": "Ensino Médio Completo",
+      "profissao": "Auxiliar Administrativa"
+    },
+  
+    "queixa_principal": "Insônia e dores de cabeça frequentes",
+
+    "informacoes_iniciais": {
+      "sono": "Refere dificuldade para dormir.",
+      "cefaleia": "Apresenta dores de cabeça frequentes.",
+      "cansaco": "Sente-se cansada quase todos os dias.",
+      "ansiedade": "Relata nervosismo frequente."
+},
+  
+    "historia_doenca_atual": {
+      "inicio": "Há aproximadamente 8 meses",
+      "frequencia": "Quase diária",
+      "fatores_piora": "Discussões em casa",
+      "fatores_melhora": "Quando passa algum tempo fora de casa",
+      "sintomas_associados": [
+        "Ansiedade",
+        "Choro frequente",
+        "Cansaço",
+        "Dificuldade de concentração"
+      ]
+    },
+  
+    "antecedentes_pessoais": {
+      "hipertensao": false,
+      "diabetes": false,
+      "tratamento_psicologico": "Nunca realizou",
+      "tratamento_psiquiatrico": "Nega"
+    },
+  
+    "informacoes_intermediarias": {
+      "relacionamento": "Ultimamente meu casamento não anda muito bem.",
+      "ciumes": "Meu marido costuma ser bastante ciumento.",
+       "isolamento": "Acabei me afastando de algumas pessoas."
+},
+  
+    "informacoes_sensiveis": {
+  "controle": "Ele sempre quer saber com quem estou falando.",
+  "humilhacoes": "Às vezes ele me chama de inútil.",
+  "medo": "Prefiro evitar discussões porque fico com medo da reação dele.",
+  "culpa": "Talvez eu também tenha culpa por algumas coisas."
+},
+  
+    "rede_apoio": {
+      "familia": "Mora em outra cidade.",
+      "amigos": "Pouco contato atualmente.",
+      "apoio": "Sente que não tem com quem conversar."
+    },
+
+    "exame_fisico": {
+
+    "aparencia": {
+
+        "nome": "Aparência geral",
+
+        "sinonimos": [
+            "aparência",
+            "aparencia",
+            "inspeção",
+            "estado geral"
+        ],
+
+        "resultado":
+        "Paciente com aspecto cansado e higiene preservada."
+
+    },
+
+    "contato_visual": {
+
+        "nome": "Contato visual",
+
+        "sinonimos": [
+            "contato visual",
+            "olhar"
+        ],
+
+        "resultado":
+        "Contato visual reduzido."
+
+    },
+
+    "afetividade": {
+
+        "nome": "Afetividade",
+
+        "sinonimos": [
+            "afetividade",
+            "afeto",
+            "humor"
+        ],
+
+        "resultado":
+        "Triste e ansiosa durante toda a entrevista."
+
+    }
+
+},
+  
+    "emocao_atual": {
+      "ansiosa": true,
+      "triste": true,
+      "amedrontada": true
+    }
+  }

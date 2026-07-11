@@ -1,0 +1,10 @@
+
+==================================================
+Consulta iniciada em 2026-06-24 14:05:09.866770
+==================================================
+
+PROFISSIONAL: Boa tarde qual o seu nome
+
+PACIENTE: Boa tarde. Ana Paula Martins.
+
+PROFISSIONAL: sair

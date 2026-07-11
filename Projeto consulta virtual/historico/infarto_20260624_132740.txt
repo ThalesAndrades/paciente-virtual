@@ -1,0 +1,14 @@
+
+==================================================
+Consulta iniciada em 2026-06-24 13:27:40.282786
+==================================================
+
+PROFISSIONAL: Olá qual o seu nome
+
+PACIENTE: João Carlos Ferreira.
+
+PROFISSIONAL: o que você tá sentindo
+
+PACIENTE: Dor no peito, sudorese e náusea.
+
+PROFISSIONAL: sair

@@ -1,0 +1,47 @@
+{
+    "Identificacao": {
+        "peso": 1,
+        "itens": {
+            "Nome": ["nome"],
+            "Idade": ["idade", "anos"],
+            "Sexo": ["sexo"],
+            "Profissao": ["profissao", "trabalha"]
+        }
+    },
+
+    "Historia_Doenca_Atual": {
+        "peso": 3,
+        "itens": {
+            "Inicio": ["quando começou", "há quanto tempo"],
+            "Localizacao": ["onde dói", "local da dor"],
+            "Intensidade": ["0 a 10", "intensidade"],
+            "Irradiacao": ["irradia", "espalha"]
+        }
+    },
+
+    "Antecedentes": {
+        "peso": 2,
+        "itens": {
+            "Hipertensao": ["hipertensão", "pressão alta"],
+            "Diabetes": ["diabetes"],
+            "Dislipidemia": ["colesterol"]
+        }
+    },
+
+    "Habitos": {
+        "peso": 1,
+        "itens": {
+            "Tabagismo": ["fuma", "cigarro"],
+            "Alcool": ["alcool", "bebida"],
+            "Atividade_Fisica": ["atividade física", "exercício"]
+        }
+    },
+
+    "Exames": {
+        "peso": 3,
+        "itens": {
+            "ECG": ["ecg"],
+            "Troponina": ["troponina"]
+        }
+    }
+}

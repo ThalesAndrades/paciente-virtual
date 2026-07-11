@@ -1,0 +1,14 @@
+
+==================================================
+Consulta iniciada em 2026-06-22 18:24:00.523647
+==================================================
+
+PROFISSIONAL: Qual o seu nome
+
+PROFISSIONAL: 
+
+PROFISSIONAL: sair
+
+PROFISSIONAL: sair
+
+PACIENTE: De nada.

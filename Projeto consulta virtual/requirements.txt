@@ -1,0 +1,7 @@
+edge-tts>=7.0.0
+playsound3>=3.0.0
+pyttsx3>=2.90
+ollama
+sounddevice
+scipy
+SpeechRecognition

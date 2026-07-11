@@ -1,0 +1,18 @@
+
+==================================================
+Consulta iniciada em 2026-06-17 21:43:29.809385
+==================================================
+
+PROFISSIONAL: Qual seu nome?
+
+PACIENTE: João Carlos Ferreira. Como posso ajudar?
+
+PROFISSIONAL: Onde dói?
+
+PACIENTE: Dói no meio do peito, mais precisamente na região central do tórax. A dor também se espalha para o braço esquerdo.
+
+PROFISSIONAL: Obrigado
+
+PACIENTE: Não há problema. Se precisar de mais informações ou tiver dúvidas, estou aqui. 😊
+
+PROFISSIONAL: sair

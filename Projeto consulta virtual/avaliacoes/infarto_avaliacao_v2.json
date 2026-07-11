@@ -1,0 +1,65 @@
+{
+    "nome_caso": "Infarto Agudo do Miocárdio",
+    
+    "criterios": [
+    
+    {
+      "nome": "Identificação do paciente",
+      "peso": 1,
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        "nome",
+        "idade",
+        "sexo"
+      ]
+    },
+    
+    {
+      "nome": "Caracterização da dor",
+      "peso": 3,
+      "objetivo": "Caracterizar adequadamente a dor torácica.",
+      "itens": [
+        "inicio",
+        "localizacao",
+        "intensidade",
+        "irradiacao",
+        "duracao"
+      ]
+    },
+    
+    {
+      "nome": "Sintomas associados",
+      "peso": 2,
+      "objetivo": "Investigar sinais e sintomas relacionados ao quadro.",
+      "itens": [
+        "sudorese",
+        "náusea",
+        "falta de ar"
+      ]
+    },
+    
+    {
+      "nome": "Fatores de risco cardiovasculares",
+      "peso": 2,
+      "objetivo": "Investigar fatores de risco para doença cardiovascular.",
+      "itens": [
+        "hipertensão",
+        "tabagismo",
+        "dislipidemia",
+        "história familiar"
+      ]
+    },
+    
+    {
+      "nome": "Solicitação de exames",
+      "peso": 2,
+      "objetivo": "Solicitar exames adequados para o caso.",
+      "itens": [
+        "ecg",
+        "troponina"
+      ]
+    }
+    
+    ]
+}
+    

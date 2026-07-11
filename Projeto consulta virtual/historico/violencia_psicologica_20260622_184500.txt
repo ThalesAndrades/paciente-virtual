@@ -1,0 +1,14 @@
+
+==================================================
+Consulta iniciada em 2026-06-22 18:45:00.204784
+==================================================
+
+PROFISSIONAL: Boa tarde qual o seu nome
+
+PROFISSIONAL: Quantos anos você tem
+
+PROFISSIONAL: sair
+
+PROFISSIONAL: sair
+
+PACIENTE: Até logo!

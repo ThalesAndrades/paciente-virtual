@@ -1,0 +1,18 @@
+
+==================================================
+Consulta iniciada em 2026-06-21 23:23:44.826855
+==================================================
+
+PROFISSIONAL: Boa tarde qual o seu nome
+
+PACIENTE: Boa tarde. João Carlos Ferreira.
+
+PROFISSIONAL: obrigado
+
+PACIENTE: De nada.
+
+PROFISSIONAL: Onde está doendo
+
+PACIENTE: No peito.
+
+PROFISSIONAL: sair

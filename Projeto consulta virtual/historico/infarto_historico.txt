@@ -1,0 +1,42 @@
+
+==================================================
+Consulta iniciada em 2026-06-10 14:21:12.426928
+==================================================
+
+PROFISSIONAL: sair
+
+==================================================
+Consulta iniciada em 2026-06-10 15:01:57.014160
+==================================================
+
+PROFISSIONAL: Qual seu nome?
+
+PACIENTE: João Carlos Ferreira.
+
+PROFISSIONAL: Qual sua idade?
+
+PACIENTE: 58 anos.
+
+PROFISSIONAL: Onde está a dor?
+
+PACIENTE: A dor está localizada na região central do tórax.
+
+PROFISSIONAL: Há quanto tempo começou?
+
+PACIENTE: Há 2 horas.
+
+PROFISSIONAL: A dor irradia?
+
+PACIENTE: A dor irradia para o braço esquerdo.
+
+PROFISSIONAL: O senhor fuma?
+
+PACIENTE: Sim, fumo um maço por dia há 35 anos.
+
+PROFISSIONAL: Solicito ECG e troponina
+RESULTADO ECG: Supradesnivelamento de ST em DII, DIII e aVF
+
+PROFISSIONAL: Solicito troponina
+RESULTADO TROPONINA: Positiva
+
+PROFISSIONAL: sair

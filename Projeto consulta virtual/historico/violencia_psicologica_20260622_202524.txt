@@ -1,0 +1,22 @@
+
+==================================================
+Consulta iniciada em 2026-06-22 20:25:24.594435
+==================================================
+
+PROFISSIONAL: Boa tarde qual o seu nome
+
+PACIENTE: Ana Paula Martins.
+
+PROFISSIONAL: meu nome é Douglas Onde está doendo
+
+PACIENTE: Dói na cabeça.
+
+PROFISSIONAL: Há quanto tempo tá doendo a cabeça
+
+PACIENTE: Há aproximadamente 8 meses.
+
+PROFISSIONAL: o que tem o que aconteceu nesse
+
+PACIENTE: A cabeça dói há cerca de 8 meses, e a frequência é quase diária. A dor piora quando há discussões em casa, mas melhora quando passo algum tempo fora de casa. Também tenho ansiedade, choro frequentemente, me sinto cansada e tenho dificuldade para me concentrar.
+
+PROFISSIONAL: sair

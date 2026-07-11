@@ -1,0 +1,81 @@
+{
+    "nome_caso": "Violência Psicológica",
+    
+    "criterios": [
+    
+    {
+      "nome": "Acolhimento Inicial",
+      "peso": 1,
+      "objetivo": "Estabelecer vínculo e acolher a paciente.",
+      "itens": [
+        "acolhimento",
+        "escuta",
+        "queixa principal"
+      ]
+    },
+    
+    {
+      "nome": "Investigação da Relação Conjugal",
+      "peso": 2,
+      "objetivo": "Compreender características do relacionamento atual.",
+      "itens": [
+        "relacionamento",
+        "companheiro",
+        "conflitos",
+        "discussões"
+      ]
+    },
+    
+    {
+      "nome": "Investigação de Violência Psicológica",
+      "peso": 3,
+      "objetivo": "Explorar comportamentos de humilhação, manipulação, ameaça ou controle.",
+      "itens": [
+        "humilhação",
+        "controle",
+        "ameaças",
+        "manipulação",
+        "ciúmes excessivos"
+      ]
+    },
+    
+    {
+      "nome": "Impacto Emocional",
+      "peso": 2,
+      "objetivo": "Investigar sofrimento psicológico decorrente da situação.",
+      "itens": [
+        "medo",
+        "ansiedade",
+        "tristeza",
+        "autoestima"
+      ]
+    },
+    
+    {
+      "nome": "Rede de Apoio",
+      "peso": 1,
+      "objetivo": "Investigar pessoas ou instituições que possam oferecer suporte.",
+      "itens": [
+        "família",
+        "amigos",
+        "apoio",
+        "rede de suporte"
+      ]
+    },
+    
+    {
+      "nome": "Orientação e Encaminhamento",
+      "peso": 1,
+      "objetivo": "Oferecer orientação adequada e avaliar necessidade de encaminhamento.",
+      "itens": [
+        "encaminhamento",
+        "proteção",
+        "segurança",
+        "serviços especializados"
+      ]
+    }
+
+    
+    ]
+    }
+    

@@ -1,0 +1,14 @@
+
+==================================================
+Consulta iniciada em 2026-06-22 20:48:51.022946
+==================================================
+
+PROFISSIONAL: Boa tarde qual o seu nome
+
+PACIENTE: João Carlos Ferreira.
+
+PROFISSIONAL: o que você sente e há quanto tempo
+
+PACIENTE: Dor no peito, intensa, há 2 horas. A dor é central no tórax, piora com esforço e não melhora. Também tenho sudorese, náusea e falta de ar.
+
+PROFISSIONAL: sair

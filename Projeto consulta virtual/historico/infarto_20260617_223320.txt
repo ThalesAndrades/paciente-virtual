@@ -1,0 +1,22 @@
+
+==================================================
+Consulta iniciada em 2026-06-17 22:33:20.629014
+==================================================
+
+PROFISSIONAL: Qual seu nome?
+
+PACIENTE: João Carlos Ferreira.
+
+PROFISSIONAL: Qual sua queixa?
+
+PACIENTE: Dor no peito.
+
+PROFISSIONAL: me fale mais sobre essa dor, João
+
+PACIENTE: A dor está no meio do peito, é forte, quase 8 em 10. Vai para o braço esquerdo. Dura há 2 horas e piora quando faço esforço. Não tem nada que alivie. Também tenho suor, náusea e falta de ar.
+
+PROFISSIONAL: obrigado
+
+PACIENTE: De nada.
+
+PROFISSIONAL: sair

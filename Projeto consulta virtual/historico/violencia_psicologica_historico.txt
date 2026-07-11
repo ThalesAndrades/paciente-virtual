@@ -1,0 +1,34 @@
+
+==================================================
+Consulta iniciada em 2026-06-10 15:26:53.373020
+==================================================
+
+PROFISSIONAL: Qual seu nome?
+
+PACIENTE: Ana Paula.
+
+PROFISSIONAL: O que a trouxe para atendimento?
+
+PACIENTE: Venho aqui porque tenho tido insônia e dores de cabeça quase todos os dias. A ansiedade também está me afetando muito, e às vezes fico chorando sem saber por quê. Fico cansada e com dificuldade para me concentrar no trabalho. Acho que preciso de ajuda para entender o que está acontecendo comigo.
+
+PROFISSIONAL: Há quanto tempo esses sintomas começaram?
+
+PACIENTE: Esses sintomas começaram há aproximadamente 8 meses. No começo, era mais ou menos assim, mas com o tempo, a insônia e as dores de cabeça ficaram mais frequentes, quase todos os dias. A ansiedade também piorou, e agora é difícil sair da cama de manhã.
+
+PROFISSIONAL: Como estão as coisas em casa?
+
+PACIENTE: A gente tem tido muitas discussões em casa... às vezes chega a ser difícil lidar com isso. Fico ansiosa e com medo de que as coisas não melhorem. A tensão em casa parece me afetar muito, e isso está me deixando mais cansada e com dificuldade para dormir. Sinto que preciso encontrar uma forma de resolver isso, mas não sei por onde começar.
+
+PROFISSIONAL: Como está o relacionamento com o marido?
+
+PACIENTE: O relacionamento com o marido tem sido muito tenso ultimamente. A gente tem brigado bastante, e às vezes as discussões chegam a um ponto em que não sei mais como lidar. Fico com medo de que a gente não consiga resolver isso, e isso me deixa muito ansiosa e triste. Acho que precisamos encontrar uma forma de nos entender melhor, mas não sei por onde começar.
+
+PROFISSIONAL: Você se sente respeitada nessa relação?
+
+PACIENTE: Acho que, às vezes, não me sinto completamente respeitada... As brigas e a tensão fazem com que eu me sinta ignorada ou que minhas preocupações não sejam levadas em conta. Às vezes, fico com a sensação de que não sou ouvida quando tento conversar sobre o que me machuca. Isso me deixa ainda mais triste e ansiosa, como se eu estivesse sozinha com esse peso.
+
+PROFISSIONAL: Já sentiu medo dele?
+
+PACIENTE: Às vezes, sim. Nas brigas mais intensas, sinto um medo de que as coisas possam sair do controle. Não é um medo físico, mas mais uma sensação de insegurança, como se eu estivesse sozinha nessa situação e não soubesse como resolver. Isso me deixa ainda mais ansiosa e me faz querer fugir daquela tensão, mas não sei como fazer isso sem magoar ninguém. Acho que preciso encontrar um jeito de conversar melhor com ele, mas não sei por onde começar.
+
+PROFISSIONAL: sair
