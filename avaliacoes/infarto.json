@@ -1,0 +1,196 @@
+{
+  "nome_caso": "Infarto Agudo do Miocárdio",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "peso": 1,
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "sexo",
+          "termos": [
+            "sexo"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Caracterização da dor",
+      "peso": 3,
+      "objetivo": "Caracterizar adequadamente a dor torácica.",
+      "itens": [
+        {
+          "nome": "início",
+          "termos": [
+            "início",
+            "começou",
+            "desde quando",
+            "há quanto tempo",
+            "que horas",
+            "começa"
+          ]
+        },
+        {
+          "nome": "localização",
+          "termos": [
+            "localização",
+            "onde",
+            "local da dor",
+            "região",
+            "lugar"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "nota",
+            "0 a 10",
+            "zero a dez",
+            "escala"
+          ]
+        },
+        {
+          "nome": "irradiação",
+          "termos": [
+            "irradiação",
+            "irradia",
+            "espalha",
+            "vai para algum lugar",
+            "outro lugar",
+            "irradiando",
+            "irradiar"
+          ]
+        },
+        {
+          "nome": "duração",
+          "termos": [
+            "duração",
+            "dura",
+            "constante",
+            "contínua",
+            "o tempo todo",
+            "para de doer"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Sintomas associados",
+      "peso": 2,
+      "objetivo": "Investigar sinais e sintomas relacionados ao quadro.",
+      "itens": [
+        {
+          "nome": "sudorese",
+          "termos": [
+            "sudorese",
+            "suor",
+            "suando",
+            "suou",
+            "suava"
+          ]
+        },
+        {
+          "nome": "náusea",
+          "termos": [
+            "náusea",
+            "enjoo",
+            "enjoado",
+            "vontade de vomitar",
+            "vômito"
+          ]
+        },
+        {
+          "nome": "falta de ar",
+          "termos": [
+            "falta de ar",
+            "dispneia",
+            "dificuldade para respirar",
+            "respirar"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Fatores de risco cardiovasculares",
+      "peso": 2,
+      "objetivo": "Investigar fatores de risco para doença cardiovascular.",
+      "itens": [
+        {
+          "nome": "hipertensão",
+          "termos": [
+            "hipertensão",
+            "pressão alta",
+            "hipertenso"
+          ]
+        },
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "tabagismo",
+            "fuma",
+            "fumante",
+            "cigarro",
+            "tabaco",
+            "fumava",
+            "fumou"
+          ]
+        },
+        {
+          "nome": "dislipidemia",
+          "termos": [
+            "dislipidemia",
+            "colesterol"
+          ]
+        },
+        {
+          "nome": "história familiar",
+          "termos": [
+            "família",
+            "familiar",
+            "pai",
+            "mãe",
+            "parente"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Solicitação de exames",
+      "peso": 2,
+      "objetivo": "Solicitar exames adequados para o caso.",
+      "itens": [
+        {
+          "nome": "ecg",
+          "termos": [
+            "ecg",
+            "eletrocardiograma",
+            "eletro"
+          ]
+        },
+        {
+          "nome": "troponina",
+          "termos": [
+            "troponina",
+            "troponinas"
+          ]
+        }
+      ]
+    }
+  ]
+}

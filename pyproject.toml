@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paciente-virtual"
+version = "1.0.0"
+description = "Simulador de paciente virtual por voz para treinamento clínico"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "edge-tts>=7.0.0",
+    "playsound3>=3.0.0",
+    "pyttsx3>=2.90",
+    "ollama>=0.4.0",
+    "sounddevice>=0.4.6",
+    "numpy>=1.24",
+    "SpeechRecognition>=3.10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+paciente-virtual = "paciente_virtual.consulta:main"
+paciente-virtual-avaliador = "paciente_virtual.avaliador:main"
+
+[tool.setuptools.packages.find]
+include = ["paciente_virtual*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# O prompt do paciente é prosa; quebrar as linhas mudaria o texto enviado ao modelo.
+"paciente_virtual/prompt.py" = ["E501"]

@@ -1,0 +1,127 @@
+{
+  "nome_caso": "Violência Psicológica",
+  "criterios": [
+    {
+      "nome": "Acolhimento Inicial",
+      "peso": 1,
+      "objetivo": "Estabelecer vínculo e acolher a paciente.",
+      "itens": [
+        {
+          "nome": "acolhimento",
+          "termos": [
+            "como posso ajudar",
+            "o que a traz",
+            "o que trouxe",
+            "fique à vontade",
+            "estou aqui para",
+            "pode confiar"
+          ]
+        },
+        {
+          "nome": "escuta",
+          "termos": ["entendo", "compreendo", "sinto muito", "imagino", "deve ser difícil"]
+        },
+        {
+          "nome": "queixa principal",
+          "termos": ["o que está sentindo", "o que sente", "como se sente", "queixa"]
+        }
+      ]
+    },
+    {
+      "nome": "Investigação da Relação Conjugal",
+      "peso": 2,
+      "objetivo": "Compreender características do relacionamento atual.",
+      "itens": [
+        { "nome": "relacionamento", "termos": ["relacionamento", "casamento", "relação"] },
+        {
+          "nome": "companheiro",
+          "termos": ["marido", "esposo", "companheiro", "parceiro"]
+        },
+        { "nome": "conflitos", "termos": ["conflito", "briga", "problema em casa"] },
+        { "nome": "discussões", "termos": ["discussão", "discussões", "discutem", "discute"] }
+      ]
+    },
+    {
+      "nome": "Investigação de Violência Psicológica",
+      "peso": 3,
+      "objetivo": "Explorar comportamentos de humilhação, manipulação, ameaça ou controle.",
+      "itens": [
+        {
+          "nome": "humilhação",
+          "termos": ["humilha", "humilhação", "xinga", "ofende", "diminui", "desvaloriza"]
+        },
+        {
+          "nome": "controle",
+          "termos": [
+            "controla",
+            "controle",
+            "vigia",
+            "celular",
+            "com quem você fala",
+            "deixa você sair"
+          ]
+        },
+        { "nome": "ameaças", "termos": ["ameaça", "ameaças", "ameaçou", "ameaçador"] },
+        {
+          "nome": "manipulação",
+          "termos": ["manipula", "manipulação", "culpa você", "distorce"]
+        },
+        { "nome": "ciúmes excessivos", "termos": ["ciúme", "ciúmes", "ciumento"] }
+      ]
+    },
+    {
+      "nome": "Impacto Emocional",
+      "peso": 2,
+      "objetivo": "Investigar sofrimento psicológico decorrente da situação.",
+      "itens": [
+        { "nome": "medo", "termos": ["medo", "receio", "amedrontada", "insegura"] },
+        { "nome": "ansiedade", "termos": ["ansiedade", "ansiosa", "nervosa", "nervosismo"] },
+        { "nome": "tristeza", "termos": ["tristeza", "triste", "chora", "choro", "chorado"] },
+        {
+          "nome": "autoestima",
+          "termos": ["autoestima", "auto estima", "se sente consigo", "seu valor"]
+        }
+      ]
+    },
+    {
+      "nome": "Rede de Apoio",
+      "peso": 1,
+      "objetivo": "Investigar pessoas ou instituições que possam oferecer suporte.",
+      "itens": [
+        { "nome": "família", "termos": ["família", "familiares", "pais", "irmã", "irmão"] },
+        { "nome": "amigos", "termos": ["amigos", "amigas", "amizades"] },
+        {
+          "nome": "apoio",
+          "termos": ["apoio", "suporte", "com quem conversar", "com quem contar"]
+        },
+        { "nome": "rede de suporte", "termos": ["rede de apoio", "rede de suporte"] }
+      ]
+    },
+    {
+      "nome": "Orientação e Encaminhamento",
+      "peso": 1,
+      "objetivo": "Oferecer orientação adequada e avaliar necessidade de encaminhamento.",
+      "itens": [
+        {
+          "nome": "encaminhamento",
+          "termos": ["encaminhar", "encaminhamento", "psicólogo", "psicologia", "acompanhamento"]
+        },
+        {
+          "nome": "proteção",
+          "termos": ["proteção", "medida protetiva", "delegacia", "180", "denúncia"]
+        },
+        { "nome": "segurança", "termos": ["segurança", "segura em casa", "risco"] },
+        {
+          "nome": "serviços especializados",
+          "termos": [
+            "caps",
+            "creas",
+            "centro de referência",
+            "serviço especializado",
+            "rede de atendimento"
+          ]
+        }
+      ]
+    }
+  ]
+}
