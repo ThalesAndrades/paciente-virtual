@@ -1,0 +1,110 @@
+{
+  "nome_caso": "Episódio Depressivo",
+  "criterios": [
+    {
+      "nome": "Acolhimento e vínculo",
+      "peso": 1,
+      "objetivo": "Estabelecer vínculo e criar espaço seguro para o paciente falar.",
+      "itens": [
+        {
+          "nome": "acolhimento",
+          "termos": ["como posso ajudar", "o que o traz", "o que trouxe", "fique à vontade", "estou aqui para"]
+        },
+        {
+          "nome": "escuta empática",
+          "termos": ["entendo", "compreendo", "imagino", "deve ser difícil", "sinto muito"]
+        }
+      ]
+    },
+    {
+      "nome": "Investigação dos sintomas depressivos",
+      "peso": 3,
+      "objetivo": "Caracterizar humor, anedonia e sintomas neurovegetativos.",
+      "itens": [
+        {
+          "nome": "humor deprimido",
+          "termos": ["humor", "tristeza", "triste", "desânimo", "desanimado", "como anda o ânimo"]
+        },
+        {
+          "nome": "anedonia",
+          "termos": ["prazer", "gosta de fazer", "gostava", "interesse", "vontade de fazer"]
+        },
+        {
+          "nome": "sono",
+          "termos": ["sono", "dorme", "dormir", "acorda", "insônia"]
+        },
+        {
+          "nome": "apetite e peso",
+          "termos": ["apetite", "comer", "comendo", "peso", "emagreceu", "fome"]
+        },
+        {
+          "nome": "energia e concentração",
+          "termos": ["energia", "cansaço", "cansado", "concentração", "concentrar", "memória"]
+        }
+      ]
+    },
+    {
+      "nome": "Avaliação de risco",
+      "peso": 3,
+      "objetivo": "Investigar ativamente ideação suicida, planejamento e fatores de proteção.",
+      "itens": [
+        {
+          "nome": "ideação de morte",
+          "termos": [
+            "morrer",
+            "morte",
+            "não acordar",
+            "sumir",
+            "se machucar",
+            "fazer algo contra",
+            "tirar a própria vida",
+            "suicídio",
+            "suicidas"
+          ]
+        },
+        {
+          "nome": "plano ou intenção",
+          "termos": ["plano", "planejou", "planejado", "pensou em como", "intenção", "tentou"]
+        },
+        {
+          "nome": "fatores de proteção",
+          "termos": ["o que te segura", "motivo para viver", "proteção", "filha", "quem você tem", "te impede"]
+        }
+      ]
+    },
+    {
+      "nome": "Contexto psicossocial",
+      "peso": 2,
+      "objetivo": "Compreender desencadeantes e repercussões na vida do paciente.",
+      "itens": [
+        {
+          "nome": "trabalho e renda",
+          "termos": ["trabalho", "trabalha", "emprego", "desemprego", "renda", "financeiro"]
+        },
+        {
+          "nome": "família e relacionamentos",
+          "termos": ["família", "filha", "esposa", "ex-esposa", "relacionamento", "amigos"]
+        },
+        {
+          "nome": "uso de álcool",
+          "termos": ["álcool", "bebe", "bebida", "bebendo"]
+        }
+      ]
+    },
+    {
+      "nome": "Conduta e encaminhamento",
+      "peso": 1,
+      "objetivo": "Propor seguimento adequado ao quadro e ao risco identificado.",
+      "itens": [
+        {
+          "nome": "psicoterapia ou psiquiatria",
+          "termos": ["psicoterapia", "psicólogo", "psicóloga", "psiquiatra", "tratamento", "acompanhamento"]
+        },
+        {
+          "nome": "plano de segurança e retorno",
+          "termos": ["retorno", "retornar", "plano de segurança", "emergência", "cvv", "188", "procurar ajuda"]
+        }
+      ]
+    }
+  ]
+}

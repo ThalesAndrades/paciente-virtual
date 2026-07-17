@@ -41,6 +41,8 @@ _MARCADORES_RADICAL = [
     "confer",
     "solicit",
     "realiz",
+    "aplic",
+    "observ",
 ]
 
 # Palavras e expressões exatas (com limite de palavra, acentos ignorados).

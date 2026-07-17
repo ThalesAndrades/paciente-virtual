@@ -1,0 +1,111 @@
+{
+  "titulo": "Processo de Luto",
+
+  "identificacao": {
+    "nome": "Helena Vasconcelos",
+    "idade": 67,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Viúva",
+    "escolaridade": "Ensino Superior Completo",
+    "profissao": "Professora aposentada"
+  },
+
+  "queixa_principal": "Não consigo dormir direito desde que meu marido faleceu",
+
+  "informacoes_iniciais": {
+    "perda": "O marido faleceu há 5 meses, após 45 anos de casamento.",
+    "sono": "Demora horas para dormir; a cama parece grande demais.",
+    "choro": "Chora quase todos os dias, principalmente à noite.",
+    "casa": "A casa ficou vazia e silenciosa demais."
+  },
+
+  "historia_doenca_atual": {
+    "inicio": "Desde o falecimento, há 5 meses",
+    "frequencia": "Praticamente todas as noites",
+    "fatores_piora": "Datas especiais, fim de tarde, ver os pertences dele",
+    "fatores_melhora": "Conversar com a vizinha, ir ao grupo da igreja",
+    "sintomas_associados": [
+      "Saudade intensa",
+      "Choro frequente",
+      "Apetite um pouco reduzido",
+      "Cansaço"
+    ]
+  },
+
+  "antecedentes_pessoais": {
+    "hipertensao": true,
+    "diabetes": false,
+    "tratamento_psicologico": "Nunca realizou",
+    "medicacoes": "Losartana para pressão, em uso regular",
+    "alergias": "Nega"
+  },
+
+  "antecedentes_familiares": {
+    "pais": "Falecidos por causas naturais, idosos"
+  },
+
+  "habitos_de_vida": {
+    "tabagismo": "Nunca fumou",
+    "alcool": "Não bebe",
+    "atividade_fisica": "Parou a hidroginástica depois da perda",
+    "sono": "Dorme 4 a 5 horas por noite, com despertares"
+  },
+
+  "informacoes_intermediarias": {
+    "doenca_marido": "Ele teve câncer; foram 8 meses entre o diagnóstico e o fim.",
+    "filhos": "Meus dois filhos moram em outro estado; ligam, mas estão ocupados com a vida deles.",
+    "rotina": "Deixei a hidroginástica e quase não saio; só vou à missa aos domingos."
+  },
+
+  "informacoes_sensiveis": {
+    "culpa": "Fico remoendo que devia ter percebido os sinais da doença antes.",
+    "retrato": "Converso com o retrato dele todos os dias; sei que parece bobagem.",
+    "presenca": "Às vezes, à noite, tenho a impressão de ouvir a voz dele me chamando.",
+    "medo": "Tenho medo de estar enlouquecendo por causa disso."
+  },
+
+  "rede_apoio": {
+    "vizinha": "Uma vizinha amiga de longa data, que a visita quase todo dia.",
+    "igreja": "Participa do grupo de senhoras da igreja aos domingos.",
+    "filhos": "Dois filhos afetuosos, porém distantes fisicamente."
+  },
+
+  "exame_fisico": {
+    "aparencia": {
+      "nome": "Aparência geral",
+      "sinonimos": ["aparência", "aparencia", "inspeção", "estado geral", "autocuidado"],
+      "resultado": "Bem cuidada, vestida adequadamente; olhos lacrimejantes ao falar do marido."
+    },
+    "afeto": {
+      "nome": "Exame do estado mental — humor e afeto",
+      "sinonimos": ["estado mental", "exame psíquico", "afeto", "afetividade"],
+      "resultado": "Humor triste, porém afeto preservado e reativo: sorri ao lembrar de momentos bons do casamento."
+    },
+    "contato_visual": {
+      "nome": "Contato visual",
+      "sinonimos": ["contato visual", "olhar"],
+      "resultado": "Contato visual bom, interage com interesse."
+    },
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": ["pressão", "pressao", "pa", "aferir pressão", "medir pressão", "pressão arterial"],
+      "resultado": "128/82 mmHg"
+    }
+  },
+
+  "exames_disponiveis": {
+    "phq9": {
+      "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+      "sinonimos": ["phq-9", "phq 9", "phq", "escala de depressão", "questionário de depressão"],
+      "resultado": "9 pontos — sintomas leves, compatíveis com reação de luto."
+    }
+  },
+
+  "emocao_atual": {
+    "triste": true,
+    "saudosa": true,
+    "com_medo_de_enlouquecer": true,
+    "desesperancosa": false
+  }
+}

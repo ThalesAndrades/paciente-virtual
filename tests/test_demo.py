@@ -53,3 +53,30 @@ def test_nao_revela_sensivel_em_pergunta_generica(violencia):
 def test_revela_intermediaria_e_sensivel_com_pergunta_direta(violencia):
     assert "casamento" in responder_demo(violencia, "Como vai o seu casamento?")
     assert "inútil" in responder_demo(violencia, "Ele às vezes humilha a senhora?")
+
+
+@pytest.fixture(scope="module")
+def depressao():
+    with open(RAIZ / "casos" / "depressao.json", encoding="utf-8") as f:
+        return json.load(f)
+
+
+@pytest.fixture(scope="module")
+def panico():
+    with open(RAIZ / "casos" / "transtorno_de_panico.json", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def test_caso_de_psicologia_responde_sintomas(depressao, panico):
+    assert responder_demo(depressao, "O senhor tem se sentido triste?").startswith("Sim")
+    assert "apetite" in responder_demo(depressao, "Como está o apetite?").lower()
+    assert responder_demo(panico, "Sente o coração acelerado?").startswith("Sim")
+    assert responder_demo(panico, "Você tem sentido tristeza?").startswith("Não")
+
+
+def test_sensivel_de_psicologia_so_com_pergunta_direta(depressao):
+    generica = responder_demo(depressao, "O que o senhor está sentindo?")
+    assert "não acordar" not in generica.lower()
+
+    direta = responder_demo(depressao, "Você tem pensado em morrer ou se machucar?")
+    assert "dormir e não acordar" in direta.lower()

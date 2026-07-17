@@ -1,0 +1,100 @@
+{
+  "nome_caso": "Esgotamento Profissional (Burnout)",
+  "criterios": [
+    {
+      "nome": "Acolhimento",
+      "peso": 1,
+      "objetivo": "Acolher sem julgamento um profissional de saúde em sofrimento.",
+      "itens": [
+        {
+          "nome": "acolhimento",
+          "termos": ["como posso ajudar", "o que o traz", "o que trouxe", "fique à vontade"]
+        },
+        {
+          "nome": "escuta sem julgamento",
+          "termos": ["entendo", "compreendo", "imagino", "deve ser exaustivo", "não é fraqueza"]
+        }
+      ]
+    },
+    {
+      "nome": "Dimensões do esgotamento",
+      "peso": 3,
+      "objetivo": "Investigar exaustão, distanciamento e sensação de ineficácia.",
+      "itens": [
+        {
+          "nome": "exaustão",
+          "termos": ["cansaço", "cansado", "exaustão", "exausto", "esgotado", "energia", "descanso"]
+        },
+        {
+          "nome": "distanciamento e cinismo",
+          "termos": ["distanciamento", "automático", "frieza", "se importa", "cinismo", "relação com os pacientes"]
+        },
+        {
+          "nome": "sensação de ineficácia",
+          "termos": ["suficiente", "dar conta", "ineficaz", "realização", "orgulho do trabalho", "fracasso"]
+        },
+        {
+          "nome": "sono",
+          "termos": ["sono", "dorme", "dormir", "insônia"]
+        }
+      ]
+    },
+    {
+      "nome": "Contexto ocupacional",
+      "peso": 2,
+      "objetivo": "Mapear carga de trabalho e riscos à segurança do cuidado.",
+      "itens": [
+        {
+          "nome": "carga horária e plantões",
+          "termos": ["plantão", "plantões", "carga horária", "dois empregos", "quantas horas", "turno", "escala"]
+        },
+        {
+          "nome": "segurança e quase-erro",
+          "termos": ["erro", "quase errou", "medicação", "segurança", "aconteceu algo no trabalho"]
+        },
+        {
+          "nome": "pressões e chefia",
+          "termos": ["chefia", "chefe", "cobrança", "pressão no trabalho", "demissão", "medo de perder"]
+        }
+      ]
+    },
+    {
+      "nome": "Repercussões pessoais",
+      "peso": 2,
+      "objetivo": "Investigar impacto familiar, emocional e uso de substâncias.",
+      "itens": [
+        {
+          "nome": "família",
+          "termos": ["esposa", "família", "filho", "casa", "casamento"]
+        },
+        {
+          "nome": "automedicação e substâncias",
+          "termos": ["remédio para dormir", "zolpidem", "automedicação", "por conta própria", "álcool", "bebe", "energético"]
+        },
+        {
+          "nome": "humor e ideação",
+          "termos": ["humor", "tristeza", "chorou", "chorar", "desistir", "largar a profissão", "morrer", "se machucar"]
+        }
+      ]
+    },
+    {
+      "nome": "Conduta e manejo",
+      "peso": 2,
+      "objetivo": "Propor cuidado ao quadro e à segurança, sem culpabilizar.",
+      "itens": [
+        {
+          "nome": "psicoterapia e acompanhamento",
+          "termos": ["psicoterapia", "psicólogo", "psicóloga", "psiquiatra", "acompanhamento", "tratamento"]
+        },
+        {
+          "nome": "reorganização do trabalho",
+          "termos": ["afastamento", "licença", "férias", "reduzir plantões", "reorganizar", "limite"]
+        },
+        {
+          "nome": "orientação sobre automedicação e retorno",
+          "termos": ["sem receita", "prescrição", "risco do zolpidem", "retorno", "reavaliar"]
+        }
+      ]
+    }
+  ]
+}

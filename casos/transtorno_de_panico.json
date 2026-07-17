@@ -1,0 +1,120 @@
+{
+  "titulo": "Transtorno de Pânico",
+
+  "identificacao": {
+    "nome": "Fernanda Lima Rocha",
+    "idade": 29,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Solteira",
+    "escolaridade": "Ensino Superior Completo",
+    "profissao": "Analista de sistemas"
+  },
+
+  "queixa_principal": "Crises de coração acelerado e medo de morrer",
+
+  "informacoes_iniciais": {
+    "crises": "Tem episódios súbitos de coração disparado e falta de ar.",
+    "pronto_socorro": "Já foi três vezes ao pronto-socorro achando que era infarto.",
+    "medo": "Tem muito medo de estar com um problema no coração.",
+    "exames_anteriores": "Nos atendimentos anteriores disseram que não era nada, mas ninguém explicou o que é."
+  },
+
+  "historia_doenca_atual": {
+    "inicio": "Há 3 meses",
+    "frequencia": "Duas a três crises por semana",
+    "duracao": "Cada crise dura uns 15 a 20 minutos",
+    "fatores_piora": "Lugares cheios e fechados; às vezes vem do nada, até dormindo",
+    "fatores_melhora": "Sair para um lugar aberto e esperar passar",
+    "sintomas_associados": [
+      "Palpitações",
+      "Falta de ar",
+      "Sudorese fria",
+      "Formigamento nas mãos",
+      "Tontura",
+      "Sensação de estar fora do próprio corpo",
+      "Medo intenso de morrer"
+    ]
+  },
+
+  "antecedentes_pessoais": {
+    "hipertensao": false,
+    "diabetes": false,
+    "cardiopatia": "Nega; exames do pronto-socorro sempre normais",
+    "tratamento_psicologico": "Nunca realizou",
+    "alergias": "Nega"
+  },
+
+  "antecedentes_familiares": {
+    "mae": "Sempre foi muito nervosa, nunca se tratou",
+    "pai": "Hipertensão arterial"
+  },
+
+  "habitos_de_vida": {
+    "tabagismo": "Não fuma",
+    "alcool": "Raramente",
+    "cafeina": "Quatro a cinco cafés por dia para dar conta do trabalho",
+    "atividade_fisica": "Parou a academia depois que as crises começaram",
+    "sono": "Demora para pegar no sono com medo de ter crise dormindo"
+  },
+
+  "informacoes_intermediarias": {
+    "evitacao": "Parei de andar de metrô e evito shopping; peço carona ou vou de carro.",
+    "trabalho": "Pedi para trabalhar de casa; tenho medo de ter uma crise na frente dos colegas.",
+    "antecipacao": "Fico o dia inteiro com medo da próxima crise, mesmo quando estou bem."
+  },
+
+  "informacoes_sensiveis": {
+    "termino": "Terminei um noivado de 4 anos pouco antes das crises começarem.",
+    "medo_enlouquecer": "Tenho medo de estar ficando louca; nunca contei isso para ninguém.",
+    "vergonha": "Minha família acha frescura, então parei de comentar."
+  },
+
+  "rede_apoio": {
+    "familia": "Mora sozinha; mãe na mesma cidade, mas relação tensa.",
+    "amigos": "Uma amiga próxima do trabalho, que não sabe de tudo.",
+    "apoio": "Sente que ninguém leva a sério o que ela passa."
+  },
+
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": ["pressão", "pressao", "pa", "aferir pressão", "medir pressão", "pressão arterial"],
+      "resultado": "118/76 mmHg"
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": ["frequência cardíaca", "frequencia cardiaca", "fc", "pulso", "batimentos"],
+      "resultado": "82 bpm, ritmo regular"
+    },
+    "aparencia": {
+      "nome": "Aparência geral",
+      "sinonimos": ["aparência", "aparencia", "inspeção", "estado geral"],
+      "resultado": "Tensa, sentada na beirada da cadeira, esfregando as mãos; sem sinais de sofrimento agudo."
+    }
+  },
+
+  "exames_disponiveis": {
+    "ecg": {
+      "nome": "Eletrocardiograma",
+      "sinonimos": ["ecg", "eletro", "eletrocardiograma"],
+      "resultado": "Ritmo sinusal, sem alterações."
+    },
+    "tsh": {
+      "nome": "TSH",
+      "sinonimos": ["tsh", "tireoide", "hormônio tireoidiano", "função tireoidiana"],
+      "resultado": "1,8 mUI/L — dentro da normalidade."
+    },
+    "gad7": {
+      "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
+      "sinonimos": ["gad-7", "gad 7", "gad", "escala de ansiedade"],
+      "resultado": "14 pontos — sintomas ansiosos moderados."
+    }
+  },
+
+  "emocao_atual": {
+    "ansiosa": true,
+    "assustada": true,
+    "frustrada": true
+  }
+}

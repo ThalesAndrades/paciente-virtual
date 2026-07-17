@@ -1,0 +1,100 @@
+{
+  "nome_caso": "Transtorno de Pânico",
+  "criterios": [
+    {
+      "nome": "Acolhimento e validação",
+      "peso": 1,
+      "objetivo": "Acolher o sofrimento sem minimizar as crises.",
+      "itens": [
+        {
+          "nome": "acolhimento",
+          "termos": ["como posso ajudar", "o que a traz", "o que trouxe", "fique à vontade"]
+        },
+        {
+          "nome": "validação do sofrimento",
+          "termos": ["entendo", "compreendo", "imagino", "deve ser assustador", "não é frescura", "é real"]
+        }
+      ]
+    },
+    {
+      "nome": "Caracterização das crises",
+      "peso": 3,
+      "objetivo": "Descrever início, duração, sintomas físicos e cognições das crises.",
+      "itens": [
+        {
+          "nome": "início e duração",
+          "termos": ["quando começou", "começam", "quanto tempo dura", "duração", "de repente", "súbito"]
+        },
+        {
+          "nome": "sintomas físicos",
+          "termos": ["palpitação", "coração", "falta de ar", "sudorese", "suor", "formigamento", "tontura", "tremor"]
+        },
+        {
+          "nome": "gatilhos",
+          "termos": ["gatilho", "o que desencadeia", "alguma situação", "onde acontecem", "lugares"]
+        },
+        {
+          "nome": "medo de morrer ou enlouquecer",
+          "termos": ["medo de morrer", "morrer", "enlouquecer", "ficando louca", "perder o controle"]
+        }
+      ]
+    },
+    {
+      "nome": "Impacto e comportamento de evitação",
+      "peso": 2,
+      "objetivo": "Investigar evitação fóbica e ansiedade antecipatória.",
+      "itens": [
+        {
+          "nome": "evitação",
+          "termos": ["evita", "evitando", "deixou de ir", "parou de ir", "metrô", "shopping", "lugares cheios"]
+        },
+        {
+          "nome": "impacto no trabalho e na rotina",
+          "termos": ["trabalho", "trabalha", "rotina", "dia a dia", "atividades"]
+        },
+        {
+          "nome": "ansiedade antecipatória",
+          "termos": ["medo de ter outra", "próxima crise", "antecipa", "fica esperando", "preocupada com a crise"]
+        }
+      ]
+    },
+    {
+      "nome": "Diagnóstico diferencial",
+      "peso": 2,
+      "objetivo": "Afastar causas orgânicas e uso de substâncias.",
+      "itens": [
+        {
+          "nome": "avaliação cardiológica",
+          "termos": ["ecg", "eletro", "eletrocardiograma", "coração já foi examinado", "exames do coração"]
+        },
+        {
+          "nome": "função tireoidiana",
+          "termos": ["tsh", "tireoide", "hormônio"]
+        },
+        {
+          "nome": "cafeína e substâncias",
+          "termos": ["café", "cafeína", "energético", "estimulante", "droga", "substância", "medicação"]
+        }
+      ]
+    },
+    {
+      "nome": "Psicoeducação e manejo",
+      "peso": 2,
+      "objetivo": "Explicar o quadro e propor tratamento baseado em evidências.",
+      "itens": [
+        {
+          "nome": "explicar o que é pânico",
+          "termos": ["crise de pânico", "pânico", "ansiedade", "não é do coração", "explicar o que acontece"]
+        },
+        {
+          "nome": "psicoterapia",
+          "termos": ["psicoterapia", "psicólogo", "psicóloga", "terapia", "tcc", "cognitivo"]
+        },
+        {
+          "nome": "técnicas e seguimento",
+          "termos": ["respiração", "respirar devagar", "técnica", "retorno", "acompanhamento", "reduzir o café"]
+        }
+      ]
+    }
+  ]
+}

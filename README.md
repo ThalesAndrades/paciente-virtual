@@ -20,6 +20,21 @@ O paciente segue regras de **revelação gradual**: informações sensíveis só
 diante de perguntas específicas, acolhedoras e empáticas — a qualidade das respostas
 depende da qualidade da entrevista.
 
+## Casos incluídos
+
+| Caso | Foco pedagógico |
+| ---- | --------------- |
+| Episódio Depressivo | Sintomas depressivos, **avaliação de risco de suicídio** e fatores de proteção |
+| Transtorno de Pânico | Caracterização das crises, evitação e **diagnóstico diferencial** com causa cardíaca (ECG/TSH normais) |
+| Processo de Luto | Escuta empática, fenômenos normais do luto e **diferencial com depressão** (afeto reativo, PHQ-9 leve) |
+| Esgotamento Profissional (Burnout) | Exaustão/distanciamento/ineficácia, segurança do cuidado e automedicação |
+| Violência Psicológica | Revelação gradual, acolhimento e rede de proteção |
+| Infarto Agudo do Miocárdio | Anamnese de dor torácica e solicitação de exames |
+
+Os casos de saúde mental incluem escalas aplicáveis como "exames"
+(PHQ-9, GAD-7, MBI) e itens de exame do estado mental (aparência, afeto,
+psicomotricidade) — peça "vou aplicar o PHQ-9" ou "observe a aparência".
+
 ## Requisitos
 
 - Python 3.10+
@@ -135,7 +150,8 @@ tests/                   # Testes automatizados (pytest)
    `identificacao` (com `voz`: `"feminino"` ou `"masculino"`), `queixa_principal`,
    `historia_doenca_atual`, antecedentes, hábitos e, opcionalmente, os blocos de
    revelação gradual (`informacoes_iniciais`, `informacoes_intermediarias`,
-   `informacoes_sensiveis`).
+   `informacoes_sensiveis`). O campo opcional `titulo` define o nome exibido
+   na interface web (senão, usa-se o nome do arquivo).
 2. Adicione `exame_fisico` e `exames_disponiveis` com `nome`, `sinonimos` e
    `resultado` para cada exame.
 3. Crie a rubrica `avaliacoes/<nome_do_caso>.json` (mesmo nome do caso) com
