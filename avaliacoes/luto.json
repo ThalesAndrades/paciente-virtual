@@ -1,0 +1,96 @@
+{
+  "nome_caso": "Processo de Luto",
+  "criterios": [
+    {
+      "nome": "Acolhimento e empatia",
+      "peso": 2,
+      "objetivo": "Acolher a perda com escuta empática e sem pressa.",
+      "itens": [
+        {
+          "nome": "acolhimento",
+          "termos": ["como posso ajudar", "o que a traz", "o que trouxe", "fique à vontade"]
+        },
+        {
+          "nome": "empatia com a perda",
+          "termos": ["sinto muito", "meus sentimentos", "deve ser muito difícil", "imagino", "compreendo", "entendo"]
+        },
+        {
+          "nome": "espaço para falar do marido",
+          "termos": ["me fale sobre ele", "como ele era", "quantos anos ficaram", "casamento", "me conte sobre"]
+        }
+      ]
+    },
+    {
+      "nome": "Exploração do luto",
+      "peso": 3,
+      "objetivo": "Compreender as circunstâncias da perda e as manifestações do luto.",
+      "itens": [
+        {
+          "nome": "circunstâncias da perda",
+          "termos": ["como ele faleceu", "o que aconteceu", "doença", "câncer", "quando ele faleceu"]
+        },
+        {
+          "nome": "sono e rotina",
+          "termos": ["sono", "dorme", "dormir", "rotina", "dia a dia", "atividades"]
+        },
+        {
+          "nome": "choro e saudade",
+          "termos": ["chora", "choro", "saudade", "lembranças", "lembra dele"]
+        },
+        {
+          "nome": "fenômenos do luto",
+          "termos": ["ouve a voz", "sente a presença", "conversa com ele", "retrato", "sonha com ele", "impressão de vê-lo"]
+        }
+      ]
+    },
+    {
+      "nome": "Diferencial com depressão",
+      "peso": 2,
+      "objetivo": "Distinguir luto esperado de quadro depressivo instalado.",
+      "itens": [
+        {
+          "nome": "prazer e reatividade preservados",
+          "termos": ["prazer", "consegue se alegrar", "momentos bons", "gosta de fazer", "interesse", "igreja", "vizinha"]
+        },
+        {
+          "nome": "culpa",
+          "termos": ["culpa", "culpada", "se culpa", "responsável pela"]
+        },
+        {
+          "nome": "ideação de morte",
+          "termos": ["morrer", "morte", "vontade de viver", "se juntar a ele", "não acordar", "suicídio"]
+        }
+      ]
+    },
+    {
+      "nome": "Rede de apoio",
+      "peso": 2,
+      "objetivo": "Mapear vínculos e recursos comunitários disponíveis.",
+      "itens": [
+        {
+          "nome": "família",
+          "termos": ["filhos", "família", "familiares", "netos"]
+        },
+        {
+          "nome": "comunidade e amizades",
+          "termos": ["vizinha", "amigos", "amigas", "igreja", "grupo", "comunidade"]
+        }
+      ]
+    },
+    {
+      "nome": "Orientação e seguimento",
+      "peso": 1,
+      "objetivo": "Normalizar o luto, orientar e garantir acompanhamento.",
+      "itens": [
+        {
+          "nome": "normalização do luto",
+          "termos": ["é esperado", "é normal", "faz parte do luto", "não está enlouquecendo", "luto"]
+        },
+        {
+          "nome": "encaminhamento e retorno",
+          "termos": ["grupo de apoio", "psicoterapia", "psicólogo", "psicóloga", "retorno", "acompanhamento", "retomar a hidroginástica"]
+        }
+      ]
+    }
+  ]
+}

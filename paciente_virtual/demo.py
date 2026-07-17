@@ -21,14 +21,26 @@ AVISO_DEMO = (
 RESPOSTA_PADRAO = "Desculpe, não entendi bem a pergunta. Pode perguntar de outro jeito?"
 
 # Sintomas que o aluno costuma investigar por palavras diferentes das do caso.
+# A chave é um radical procurado nos relatos do caso; os termos são as
+# palavras da pergunta que ativam a verificação.
 _SINONIMOS_SINTOMAS = {
     "sudorese": ["suor", "sudorese", "suando", "suado"],
     "nausea": ["nausea", "enjoo", "enjoada", "enjoado", "vomitar", "vomito"],
     "falta de ar": ["falta de ar", "respirar", "folego", "dispneia"],
     "ansiedade": ["ansiedade", "ansiosa", "ansioso", "nervosa", "nervoso", "nervosismo"],
     "choro": ["choro", "chora", "chorado", "chorando"],
-    "cansaco": ["cansaco", "cansada", "cansado", "fadiga"],
+    "cansaco": ["cansaco", "cansada", "cansado", "fadiga", "exausto", "exausta", "esgotado"],
     "concentracao": ["concentracao", "concentrar"],
+    "palpitac": [
+        "palpitacao",
+        "palpitacoes",
+        "coracao acelerado",
+        "coracao disparado",
+        "taquicardia",
+    ],
+    "tontura": ["tontura", "tonta", "tonto", "vertigem"],
+    "trist": ["triste", "tristeza", "deprimido", "deprimida", "desanimo", "desanimado"],
+    "irritab": ["irritado", "irritada", "irritabilidade", "explosivo", "paciencia"],
 }
 
 
@@ -174,6 +186,10 @@ def _regras(caso):
             else None,
         ),
         (
+            ["apetite", "fome", "comendo", "comer"],
+            lambda: _frase(iniciais.get("apetite") or "") or None,
+        ),
+        (
             ["pressao alta", "hipertensao", "hipertenso"],
             lambda: _sim_ou_nao(pessoais.get("hipertensao"), "pressão alta"),
         ),
@@ -218,6 +234,36 @@ def _regras(caso):
         (
             ["apoio", "suporte", "conversar com alguem", "contar"],
             lambda: _frase(rede.get("apoio") or "") or None,
+        ),
+        (
+            ["humor", "animo"],
+            lambda: _frase(iniciais.get("desanimo") or "") or None,
+        ),
+        (
+            ["emprego", "desemprego", "desempregado", "renda", "financeiro"],
+            lambda: _frase(intermediarias.get("trabalho") or "") or None,
+        ),
+        # Avaliação de risco: só com pergunta direta sobre o tema.
+        (
+            [
+                "morrer",
+                "morte",
+                "se machucar",
+                "suicidio",
+                "nao acordar",
+                "tirar a propria vida",
+                "acabar com tudo",
+                "sumir",
+            ],
+            lambda: _frase(sensiveis.get("ideacao") or "") or None,
+        ),
+        (
+            ["plano", "planejou", "intencao", "tentou"],
+            lambda: _frase(sensiveis.get("plano") or "") or None,
+        ),
+        (
+            ["te segura", "motivo para viver", "protecao", "te impede"],
+            lambda: _frase(sensiveis.get("protecao") or "") or None,
         ),
         # Saudações por último: "bom dia, qual é o seu nome?" deve responder
         # o nome, não só "Olá.".

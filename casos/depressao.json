@@ -1,0 +1,124 @@
+{
+  "titulo": "Episódio Depressivo",
+
+  "identificacao": {
+    "nome": "Carlos Eduardo Nunes",
+    "idade": 42,
+    "sexo": "Masculino",
+    "voz": "masculino",
+    "estado_civil": "Divorciado",
+    "escolaridade": "Ensino Médio Completo",
+    "profissao": "Motorista de aplicativo"
+  },
+
+  "queixa_principal": "Cansaço e desânimo que não passam",
+
+  "informacoes_iniciais": {
+    "desanimo": "Sente desânimo quase todos os dias, o dia inteiro.",
+    "sono": "Acorda por volta das 4h da manhã e não consegue voltar a dormir.",
+    "energia": "Sente-se sem energia mesmo sem ter feito esforço.",
+    "apetite": "Perdeu o apetite; emagreceu uns 5 quilos nos últimos meses."
+  },
+
+  "historia_doenca_atual": {
+    "inicio": "Há uns 4 meses, piorando nas últimas semanas",
+    "frequencia": "Praticamente todos os dias",
+    "fatores_piora": "Ficar sozinho em casa, fim do dia",
+    "fatores_melhora": "Nada traz alívio de verdade",
+    "sintomas_associados": [
+      "Perda de prazer nas coisas que gostava",
+      "Dificuldade de concentração",
+      "Isolamento social",
+      "Choro escondido"
+    ]
+  },
+
+  "antecedentes_pessoais": {
+    "hipertensao": false,
+    "diabetes": false,
+    "tratamento_psicologico": "Nunca realizou",
+    "tratamento_psiquiatrico": "Nega",
+    "cirurgias": "Nega",
+    "alergias": "Nega"
+  },
+
+  "antecedentes_familiares": {
+    "mae": "Teve depressão após a aposentadoria",
+    "pai": "Falecido, era etilista"
+  },
+
+  "habitos_de_vida": {
+    "tabagismo": "Não fuma",
+    "alcool": "Aos fins de semana; aumentou um pouco ultimamente",
+    "atividade_fisica": "Parou de jogar futebol com os amigos há 3 meses",
+    "sono": "Dorme por volta de meia-noite e acorda às 4h"
+  },
+
+  "informacoes_intermediarias": {
+    "trabalho": "Perdi meu emprego de vendedor há 8 meses; hoje faço corridas de aplicativo, mas a renda caiu muito.",
+    "vergonha": "Me sinto um fracasso, não consigo nem pagar a pensão da minha filha direito.",
+    "isolamento": "Parei de responder os amigos; desmarco quando me chamam.",
+    "familia": "Brigo com a minha ex-esposa por causa do dinheiro; minha filha de 16 anos mora com ela."
+  },
+
+  "informacoes_sensiveis": {
+    "ideacao": "Às vezes penso que seria melhor dormir e não acordar mais.",
+    "plano": "Nunca planejei nada contra mim, o pensamento só vem e vai.",
+    "culpa": "Sinto que sou um peso para todo mundo.",
+    "protecao": "O que me segura é a minha filha; não quero fazer isso com ela."
+  },
+
+  "rede_apoio": {
+    "filha": "Tem boa relação com a filha, mas a vê pouco.",
+    "irmao": "Um irmão que mora em outra cidade; conversam de vez em quando.",
+    "apoio": "Não conta essas coisas para ninguém; acha que ninguém entenderia."
+  },
+
+  "exame_fisico": {
+    "aparencia": {
+      "nome": "Aparência geral",
+      "sinonimos": ["aparência", "aparencia", "inspeção", "estado geral", "autocuidado"],
+      "resultado": "Aspecto cansado, barba por fazer, roupas amassadas; visivelmente emagrecido."
+    },
+    "afeto": {
+      "nome": "Exame do estado mental — humor e afeto",
+      "sinonimos": ["estado mental", "exame psíquico", "afeto", "afetividade"],
+      "resultado": "Humor deprimido, afeto embotado e pouco reativo; discurso lento, em tom baixo."
+    },
+    "psicomotricidade": {
+      "nome": "Psicomotricidade",
+      "sinonimos": ["psicomotricidade", "lentificação", "movimentos"],
+      "resultado": "Lentificação psicomotora evidente; permanece de ombros caídos, com pouca gesticulação."
+    },
+    "contato_visual": {
+      "nome": "Contato visual",
+      "sinonimos": ["contato visual", "olhar"],
+      "resultado": "Contato visual reduzido; olha para o chão a maior parte do tempo."
+    }
+  },
+
+  "exames_disponiveis": {
+    "phq9": {
+      "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+      "sinonimos": ["phq-9", "phq 9", "phq", "escala de depressão", "questionário de depressão"],
+      "resultado": "18 pontos — sintomas depressivos moderadamente graves."
+    },
+    "tsh": {
+      "nome": "TSH",
+      "sinonimos": ["tsh", "tireoide", "hormônio tireoidiano", "função tireoidiana"],
+      "resultado": "2,1 mUI/L — dentro da normalidade."
+    },
+    "hemograma": {
+      "nome": "Hemograma",
+      "sinonimos": ["hemograma", "exame de sangue"],
+      "resultado": "Sem alterações significativas."
+    }
+  },
+
+  "emocao_atual": {
+    "triste": true,
+    "desesperancoso": true,
+    "envergonhado": true,
+    "irritado": false
+  }
+}

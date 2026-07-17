@@ -1,0 +1,113 @@
+{
+  "titulo": "Esgotamento Profissional (Burnout)",
+
+  "identificacao": {
+    "nome": "Rodrigo Tavares Menezes",
+    "idade": 35,
+    "sexo": "Masculino",
+    "voz": "masculino",
+    "estado_civil": "Casado",
+    "escolaridade": "Ensino Superior Completo",
+    "profissao": "Enfermeiro"
+  },
+
+  "queixa_principal": "Estou no limite, não aguento mais o trabalho",
+
+  "informacoes_iniciais": {
+    "exaustao": "Sente um cansaço que não melhora nem no dia de folga.",
+    "irritabilidade": "Anda explosivo, perde a paciência por qualquer coisa.",
+    "cefaleia": "Dores de cabeça em aperto quase todos os dias.",
+    "plantoes": "Trabalha em dois hospitais, emendando plantões."
+  },
+
+  "historia_doenca_atual": {
+    "inicio": "Há cerca de 1 ano, bem pior nos últimos 3 meses",
+    "frequencia": "Sintomas presentes quase todos os dias",
+    "fatores_piora": "Véspera de plantão, sobrecarga de pacientes, cobranças da chefia",
+    "fatores_melhora": "Raros dias de folga em família, mas o alívio dura pouco",
+    "sintomas_associados": [
+      "Cansaço que não melhora com descanso",
+      "Distanciamento dos pacientes",
+      "Sensação de que nada do que faz é suficiente",
+      "Dificuldade para pegar no sono"
+    ]
+  },
+
+  "antecedentes_pessoais": {
+    "hipertensao": false,
+    "diabetes": false,
+    "tratamento_psicologico": "Nunca realizou",
+    "alergias": "Nega"
+  },
+
+  "antecedentes_familiares": {
+    "pai": "Hipertensão arterial",
+    "mae": "Saudável"
+  },
+
+  "habitos_de_vida": {
+    "tabagismo": "Não fuma",
+    "alcool": "Uma ou duas cervejas para relaxar depois do plantão, quase toda semana",
+    "cafeina": "Muitos cafés e energético nos plantões noturnos",
+    "atividade_fisica": "Não pratica; alega falta de tempo",
+    "sono": "Dorme 5 horas em média, alternando turnos"
+  },
+
+  "informacoes_intermediarias": {
+    "empregos": "Preciso dos dois empregos por causa do financiamento da casa; tenho medo de ser demitido se reclamar.",
+    "cinismo": "Ando atendendo no automático; me pego torcendo para o paciente nem chegar.",
+    "familia": "Minha esposa reclama que virei um estranho dentro de casa; discutimos quase toda semana.",
+    "erro": "Semana passada quase troquei a medicação de um paciente; um colega percebeu a tempo."
+  },
+
+  "informacoes_sensiveis": {
+    "choro": "Depois do quase-erro, chorei trancado no vestiário do hospital.",
+    "abandono": "Tenho pensado seriamente em largar a enfermagem, e isso me apavora.",
+    "automedicacao": "Ando tomando zolpidem por conta própria para conseguir dormir; um colega me arruma.",
+    "culpa": "Sinto que estou falhando como profissional, como marido e como pai."
+  },
+
+  "rede_apoio": {
+    "esposa": "Casado há 8 anos; relação desgastada, mas ela se preocupa com ele.",
+    "filho": "Um filho de 5 anos; sente culpa por vê-lo tão pouco.",
+    "colegas": "Bom vínculo com um colega enfermeiro, o mesmo que evitou o quase-erro."
+  },
+
+  "exame_fisico": {
+    "aparencia": {
+      "nome": "Aparência geral",
+      "sinonimos": ["aparência", "aparencia", "inspeção", "estado geral", "autocuidado"],
+      "resultado": "Aspecto exausto, olheiras profundas; uniforme do hospital ainda vestido."
+    },
+    "afeto": {
+      "nome": "Exame do estado mental — humor e afeto",
+      "sinonimos": ["estado mental", "exame psíquico", "afeto", "afetividade"],
+      "resultado": "Humor irritável e ansioso; discurso acelerado ao falar do trabalho, com suspiros frequentes."
+    },
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": ["pressão", "pressao", "pa", "aferir pressão", "medir pressão", "pressão arterial"],
+      "resultado": "136/86 mmHg"
+    }
+  },
+
+  "exames_disponiveis": {
+    "mbi": {
+      "nome": "Inventário de Burnout de Maslach (MBI)",
+      "sinonimos": ["mbi", "maslach", "inventário de burnout", "escala de burnout"],
+      "resultado": "Exaustão emocional elevada, despersonalização elevada, realização profissional reduzida."
+    },
+    "tsh": {
+      "nome": "TSH",
+      "sinonimos": ["tsh", "tireoide", "hormônio tireoidiano", "função tireoidiana"],
+      "resultado": "2,4 mUI/L — dentro da normalidade."
+    }
+  },
+
+  "emocao_atual": {
+    "exausto": true,
+    "irritado": true,
+    "culpado": true,
+    "com_medo_do_futuro": true
+  }
+}

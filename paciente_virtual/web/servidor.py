@@ -49,7 +49,7 @@ def _listar_casos():
         casos.append(
             {
                 "id": arquivo.stem,
-                "titulo": arquivo.stem.replace("_", " ").capitalize(),
+                "titulo": caso.get("titulo") or arquivo.stem.replace("_", " ").capitalize(),
                 "queixa": caso.get("queixa_principal", ""),
                 "paciente": {
                     "nome": ident.get("nome", ""),
