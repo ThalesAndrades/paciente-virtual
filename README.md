@@ -7,10 +7,12 @@ avaliação objetiva (rubrica) e um parecer pedagógico gerado por IA.
 
 ## Como funciona
 
-1. **Consulta** (`paciente-virtual`): o estudante escolhe um caso clínico, conversa
+1. **Consulta** — pela interface web (`paciente-virtual-web`, recomendada) ou pelo
+   terminal (`paciente-virtual`): o estudante escolhe um caso clínico, conversa
    com o paciente falando ao microfone (ou digitando) e pode solicitar exame físico
    e exames complementares. Toda a consulta é registrada em `historico/`.
-2. **Avaliação** (`paciente-virtual-avaliador`): o transcript é pontuado contra uma
+2. **Avaliação** — ao encerrar a consulta na interface web (ou com
+   `paciente-virtual-avaliador` no terminal): o transcript é pontuado contra uma
    rubrica objetiva (`avaliacoes/`) e analisado semanticamente pelo modelo de
    linguagem, que produz nota, pontos fortes e feedback pedagógico.
 
@@ -46,7 +48,24 @@ pip install -e .
 
 ## Uso
 
-Iniciar uma consulta:
+### Protótipo interativo (web) — recomendado
+
+```bash
+paciente-virtual-web
+# ou: python -m paciente_virtual.web
+```
+
+Abra <http://127.0.0.1:8000> no navegador: escolha o caso, converse com o paciente
+por texto ou voz (🎤 usa o reconhecimento de fala do navegador; 🔊 lê as respostas
+em voz alta) e clique em **Encerrar e avaliar** para ver a nota objetiva e o
+parecer pedagógico na hora.
+
+Sem o Ollama em execução, o protótipo continua funcionando em **modo
+demonstração**: o paciente responde com dados fixos do caso (as respostas ficam
+marcadas) e a avaliação objetiva é gerada normalmente — apenas o parecer da IA
+fica indisponível.
+
+### Consulta pelo terminal
 
 ```bash
 paciente-virtual
@@ -77,6 +96,8 @@ python -m paciente_virtual.diagnostico microfone
 | `PACIENTE_VIRTUAL_MODELO`      | `qwen3:8b`   | Modelo servido pelo Ollama                            |
 | `PACIENTE_VIRTUAL_DIR`         | raiz do repo | Diretório com `casos/`, `avaliacoes/`, `historico/`   |
 | `PACIENTE_VIRTUAL_LIMIAR_FALA` | `120`        | Piso de sensibilidade do microfone (amplitude int16) |
+| `PACIENTE_VIRTUAL_HOST`        | `127.0.0.1`  | Endereço do servidor web                              |
+| `PACIENTE_VIRTUAL_PORTA`       | `8000`       | Porta do servidor web                                 |
 
 O limiar de fala é calibrado automaticamente pelo ruído ambiente no início de
 cada gravação; reduza o piso se o seu microfone tiver pouco ganho.
@@ -94,7 +115,11 @@ paciente_virtual/        # Pacote Python
 ├── texto.py             # Normalização de texto (acentos, limites de palavra)
 ├── config.py            # Caminhos e modelo configuráveis por ambiente
 ├── util.py              # Menu de seleção de arquivos
+├── demo.py              # Paciente de demonstração (sem Ollama)
 ├── diagnostico.py       # Testes manuais de áudio
+├── web/
+│   ├── servidor.py      # API JSON do protótipo interativo (Flask)
+│   └── static/          # Página única do chat (HTML/CSS/JS)
 └── voz/
     ├── ouvir.py         # Captura com detecção de silêncio + transcrição
     └── falar.py         # edge-tts com fallback pyttsx3

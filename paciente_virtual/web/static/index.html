@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paciente Virtual</title>
+<style>
+  :root {
+    --fundo: #f4f6f9;
+    --superficie: #ffffff;
+    --borda: #dde3ec;
+    --texto: #1c2733;
+    --texto-suave: #5b6b7d;
+    --primaria: #1668b0;
+    --primaria-escura: #0f4d85;
+    --aluno: #1668b0;
+    --paciente: #eef2f7;
+    --exame: #fff8e6;
+    --exame-borda: #e8d9a0;
+    --ok: #1e8a4c;
+    --falha: #c23b3b;
+    --aviso-fundo: #fdf0e3;
+    --aviso-texto: #8a5a1e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fundo: #12181f;
+      --superficie: #1a222c;
+      --borda: #2b3644;
+      --texto: #e6edf5;
+      --texto-suave: #93a4b8;
+      --primaria: #3d8fd6;
+      --primaria-escura: #5aa4e0;
+      --aluno: #23578a;
+      --paciente: #242f3c;
+      --exame: #33301f;
+      --exame-borda: #5a5230;
+      --ok: #4cc07e;
+      --falha: #e07070;
+      --aviso-fundo: #362a1a;
+      --aviso-texto: #e0b87a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.5;
+  }
+  .tela { display: none; max-width: 780px; margin: 0 auto; padding: 24px 16px 90px; }
+  .tela.ativa { display: block; }
+  h1 { font-size: 1.5rem; margin: 8px 0 2px; }
+  .subtitulo { color: var(--texto-suave); margin: 0 0 24px; }
+  label { display: block; font-weight: 600; margin: 18px 0 6px; }
+  input[type=text] {
+    width: 100%; padding: 10px 12px; font-size: 1rem;
+    border: 1px solid var(--borda); border-radius: 8px;
+    background: var(--superficie); color: var(--texto);
+  }
+  .cartoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 6px; }
+  .cartao {
+    text-align: left; padding: 14px 16px; border: 2px solid var(--borda); border-radius: 12px;
+    background: var(--superficie); color: var(--texto); cursor: pointer; font: inherit;
+  }
+  .cartao:hover { border-color: var(--primaria); }
+  .cartao.selecionado { border-color: var(--primaria); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primaria) 25%, transparent); }
+  .cartao h3 { margin: 0 0 4px; font-size: 1.05rem; }
+  .cartao p { margin: 2px 0; font-size: .9rem; color: var(--texto-suave); }
+  .botao {
+    display: inline-block; padding: 11px 22px; margin-top: 22px;
+    background: var(--primaria); border: none; border-radius: 8px;
+    color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }
+  .botao:hover { background: var(--primaria-escura); }
+  .botao:disabled { opacity: .5; cursor: default; }
+  .botao.secundario { background: transparent; color: var(--primaria); border: 1px solid var(--primaria); }
+
+  /* Consulta */
+  .cabecalho-consulta {
+    position: sticky; top: 0; z-index: 2;
+    display: flex; align-items: center; gap: 12px;
+    background: var(--superficie); border-bottom: 1px solid var(--borda);
+    padding: 12px 16px; margin: -24px -16px 16px; flex-wrap: wrap;
+  }
+  .avatar {
+    width: 42px; height: 42px; border-radius: 50%; flex: none;
+    background: var(--primaria); color: #fff; display: flex;
+    align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem;
+  }
+  .cabecalho-consulta .info { flex: 1; min-width: 160px; }
+  .cabecalho-consulta .info strong { display: block; }
+  .cabecalho-consulta .info span { font-size: .85rem; color: var(--texto-suave); }
+  .acoes { display: flex; gap: 8px; }
+  .acoes button {
+    padding: 8px 12px; border-radius: 8px; border: 1px solid var(--borda);
+    background: var(--superficie); color: var(--texto); cursor: pointer; font-size: .9rem;
+  }
+  .acoes button.ligado { border-color: var(--primaria); color: var(--primaria); font-weight: 600; }
+
+  #mensagens { display: flex; flex-direction: column; gap: 10px; }
+  .balao { max-width: 82%; padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; }
+  .balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 4px; }
+  .balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 4px; }
+  .balao.exame {
+    align-self: flex-start; background: var(--exame); border: 1px solid var(--exame-borda);
+    border-radius: 10px; font-size: .95rem; max-width: 92%;
+  }
+  .balao.exame strong { display: block; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .balao.aviso { align-self: center; background: var(--aviso-fundo); color: var(--aviso-texto); font-size: .85rem; border-radius: 8px; max-width: 100%; }
+  .balao.digitando { align-self: flex-start; color: var(--texto-suave); background: var(--paciente); }
+  .rotulo-demo { font-size: .72rem; color: var(--texto-suave); margin-top: 4px; display: block; }
+
+  .entrada {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--superficie); border-top: 1px solid var(--borda); padding: 10px 16px;
+  }
+  .entrada .interno { max-width: 780px; margin: 0 auto; display: flex; gap: 8px; }
+  .entrada input { flex: 1; }
+  .entrada button {
+    padding: 10px 16px; border: none; border-radius: 8px;
+    background: var(--primaria); color: #fff; font-size: 1rem; cursor: pointer;
+  }
+  #botao-mic { background: var(--superficie); color: var(--texto); border: 1px solid var(--borda); }
+  #botao-mic.gravando { background: var(--falha); color: #fff; border-color: var(--falha); }
+
+  /* Avaliação */
+  .nota-geral {
+    display: flex; align-items: baseline; gap: 10px;
+    background: var(--superficie); border: 1px solid var(--borda);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 18px;
+  }
+  .nota-geral .valor { font-size: 2.4rem; font-weight: 700; color: var(--primaria); }
+  .criterio { background: var(--superficie); border: 1px solid var(--borda); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .criterio h3 { margin: 0; font-size: 1rem; display: flex; justify-content: space-between; gap: 8px; }
+  .criterio .objetivo { margin: 4px 0 10px; font-size: .88rem; color: var(--texto-suave); }
+  .itens { display: flex; flex-wrap: wrap; gap: 6px; }
+  .item { font-size: .85rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--borda); }
+  .item.ok { color: var(--ok); border-color: var(--ok); }
+  .item.falha { color: var(--falha); border-color: var(--falha); text-decoration: line-through; }
+  .parecer { background: var(--superficie); border: 1px solid var(--borda); border-radius: 12px; padding: 16px; white-space: pre-wrap; font-size: .95rem; }
+  .faixa-aviso { background: var(--aviso-fundo); color: var(--aviso-texto); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: .9rem; }
+  .oculto { display: none !important; }
+</style>
+</head>
+<body>
+
+<section id="tela-inicio" class="tela ativa">
+  <h1>🩺 Paciente Virtual</h1>
+  <p class="subtitulo">Simulador de entrevista clínica para treinamento</p>
+
+  <label for="campo-aluno">Nome do aluno</label>
+  <input id="campo-aluno" type="text" placeholder="Digite seu nome" autocomplete="name">
+
+  <label>Caso clínico</label>
+  <div id="lista-casos" class="cartoes"><p class="subtitulo">Carregando casos…</p></div>
+
+  <button id="botao-iniciar" class="botao" disabled>Iniciar consulta</button>
+</section>
+
+<section id="tela-consulta" class="tela">
+  <div class="cabecalho-consulta">
+    <div class="avatar" id="avatar-paciente">?</div>
+    <div class="info">
+      <strong id="nome-paciente"></strong>
+      <span id="dados-paciente"></span>
+    </div>
+    <div class="acoes">
+      <button id="botao-som" class="ligado" title="Ler as respostas em voz alta">🔊 Voz</button>
+      <button id="botao-encerrar">Encerrar e avaliar</button>
+    </div>
+  </div>
+
+  <div id="mensagens"></div>
+
+  <div class="entrada">
+    <div class="interno">
+      <button id="botao-mic" title="Falar (reconhecimento de voz do navegador)">🎤</button>
+      <input id="campo-mensagem" type="text" placeholder="Pergunte ao paciente…" autocomplete="off">
+      <button id="botao-enviar">Enviar</button>
+    </div>
+  </div>
+</section>
+
+<section id="tela-avaliacao" class="tela">
+  <h1>Resultado da consulta</h1>
+  <p class="subtitulo" id="resumo-avaliacao"></p>
+
+  <div id="aviso-avaliacao" class="faixa-aviso oculto"></div>
+
+  <div class="nota-geral oculto" id="bloco-nota">
+    <span class="valor" id="nota-final"></span>
+    <span>/ 10 na avaliação objetiva</span>
+  </div>
+
+  <div id="criterios"></div>
+
+  <h2 id="titulo-parecer" class="oculto">Parecer pedagógico (IA)</h2>
+  <div id="parecer" class="parecer oculto"></div>
+
+  <button id="botao-nova" class="botao">Nova consulta</button>
+</section>
+
+<script>
+"use strict";
+
+const estado = {
+  casos: [],
+  casoSelecionado: null,
+  consultaId: null,
+  voz: "feminino",
+  falarRespostas: true,
+  avisoDemoExibido: false,
+  ocupado: false,
+};
+
+const $ = (id) => document.getElementById(id);
+
+function mostrarTela(id) {
+  document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa"));
+  $(id).classList.add("ativa");
+}
+
+/* ---------- Tela inicial ---------- */
+
+async function carregarCasos() {
+  try {
+    const resposta = await fetch("/api/casos");
+    estado.casos = await resposta.json();
+  } catch {
+    $("lista-casos").innerHTML = "<p class='subtitulo'>Erro ao carregar os casos.</p>";
+    return;
+  }
+
+  const lista = $("lista-casos");
+  lista.innerHTML = "";
+  for (const caso of estado.casos) {
+    const cartao = document.createElement("button");
+    cartao.className = "cartao";
+    cartao.innerHTML = `
+      <h3>${caso.titulo}</h3>
+      <p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao}</p>
+      <p>Queixa: ${caso.queixa}</p>`;
+    cartao.addEventListener("click", () => {
+      estado.casoSelecionado = caso.id;
+      document.querySelectorAll(".cartao").forEach((c) => c.classList.remove("selecionado"));
+      cartao.classList.add("selecionado");
+      $("botao-iniciar").disabled = false;
+    });
+    lista.appendChild(cartao);
+  }
+}
+
+async function iniciarConsulta() {
+  const aluno = $("campo-aluno").value.trim() || "aluno";
+  const resposta = await fetch("/api/consultas", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ caso: estado.casoSelecionado, aluno }),
+  });
+  if (!resposta.ok) { alert("Não foi possível iniciar a consulta."); return; }
+
+  const dados = await resposta.json();
+  estado.consultaId = dados.id;
+  estado.voz = dados.voz;
+  estado.avisoDemoExibido = false;
+
+  $("mensagens").innerHTML = "";
+  $("avatar-paciente").textContent = (dados.paciente.nome || "?").charAt(0);
+  $("nome-paciente").textContent = dados.paciente.nome;
+  $("dados-paciente").textContent =
+    `${dados.paciente.idade} anos · ${dados.paciente.sexo} · ${dados.paciente.profissao}`;
+
+  adicionarBalao("aviso", "Consulta iniciada. Converse com o paciente, solicite exames e, ao final, clique em “Encerrar e avaliar”.");
+  mostrarTela("tela-consulta");
+  $("campo-mensagem").focus();
+}
+
+/* ---------- Chat ---------- */
+
+function adicionarBalao(tipo, texto, extra = {}) {
+  const balao = document.createElement("div");
+  balao.className = `balao ${tipo}`;
+  if (tipo === "exame") {
+    balao.innerHTML = `<strong>${extra.titulo} — ${extra.nome}</strong>`;
+    balao.append(texto);
+  } else {
+    balao.textContent = texto;
+    if (extra.demo) {
+      const rotulo = document.createElement("span");
+      rotulo.className = "rotulo-demo";
+      rotulo.textContent = "modo demonstração";
+      balao.appendChild(rotulo);
+    }
+  }
+  $("mensagens").appendChild(balao);
+  balao.scrollIntoView({ behavior: "smooth", block: "end" });
+  return balao;
+}
+
+function falarTexto(texto) {
+  if (!estado.falarRespostas || !window.speechSynthesis) return;
+  const fala = new SpeechSynthesisUtterance(texto);
+  fala.lang = "pt-BR";
+  const vozes = speechSynthesis.getVoices().filter((v) => v.lang.startsWith("pt"));
+  if (vozes.length) {
+    const querFeminina = estado.voz !== "masculino";
+    const preferida = vozes.find((v) =>
+      querFeminina
+        ? /maria|francisca|luciana|female|feminin/i.test(v.name)
+        : /antonio|daniel|felipe|male|masculin/i.test(v.name)
+    );
+    fala.voice = preferida || vozes[0];
+  }
+  speechSynthesis.cancel();
+  speechSynthesis.speak(fala);
+}
+
+async function enviarMensagem() {
+  const campo = $("campo-mensagem");
+  const texto = campo.value.trim();
+  if (!texto || estado.ocupado || !estado.consultaId) return;
+
+  campo.value = "";
+  adicionarBalao("aluno", texto);
+  const digitando = adicionarBalao("digitando", "…");
+  estado.ocupado = true;
+
+  try {
+    const resposta = await fetch(`/api/consultas/${estado.consultaId}/mensagem`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ texto }),
+    });
+    const dados = await resposta.json();
+    digitando.remove();
+
+    if (!resposta.ok) {
+      adicionarBalao("aviso", dados.erro || "Erro ao enviar a mensagem.");
+      return;
+    }
+
+    for (const evento of dados.eventos) {
+      if (evento.tipo === "exame") {
+        adicionarBalao("exame", evento.resultado, { titulo: evento.titulo, nome: evento.nome });
+        falarTexto(evento.resultado);
+      } else if (evento.tipo === "paciente") {
+        adicionarBalao("paciente", evento.texto, { demo: evento.origem === "demo" });
+        falarTexto(evento.texto);
+      } else if (evento.tipo === "aviso") {
+        if (!estado.avisoDemoExibido) {
+          adicionarBalao("aviso", evento.texto);
+          estado.avisoDemoExibido = true;
+        }
+      }
+    }
+  } catch {
+    digitando.remove();
+    adicionarBalao("aviso", "Falha de conexão com o servidor.");
+  } finally {
+    estado.ocupado = false;
+    campo.focus();
+  }
+}
+
+/* ---------- Reconhecimento de voz (navegador) ---------- */
+
+const ReconhecimentoFala = window.SpeechRecognition || window.webkitSpeechRecognition;
+let reconhecedor = null;
+
+if (ReconhecimentoFala) {
+  reconhecedor = new ReconhecimentoFala();
+  reconhecedor.lang = "pt-BR";
+  reconhecedor.interimResults = false;
+  reconhecedor.onresult = (evento) => {
+    $("campo-mensagem").value = evento.results[0][0].transcript;
+    enviarMensagem();
+  };
+  reconhecedor.onend = () => $("botao-mic").classList.remove("gravando");
+  reconhecedor.onerror = () => $("botao-mic").classList.remove("gravando");
+} else {
+  $("botao-mic").disabled = true;
+  $("botao-mic").title = "Reconhecimento de voz indisponível neste navegador (use Chrome/Edge)";
+}
+
+function alternarMicrofone() {
+  if (!reconhecedor) return;
+  const botao = $("botao-mic");
+  if (botao.classList.contains("gravando")) {
+    reconhecedor.stop();
+  } else {
+    botao.classList.add("gravando");
+    reconhecedor.start();
+  }
+}
+
+/* ---------- Avaliação ---------- */
+
+async function encerrarConsulta() {
+  if (!estado.consultaId || estado.ocupado) return;
+  if (!confirm("Encerrar a consulta e gerar a avaliação?")) return;
+
+  estado.ocupado = true;
+  $("botao-encerrar").disabled = true;
+  const aguardando = adicionarBalao("aviso", "Encerrando e gerando a avaliação…");
+
+  try {
+    const resposta = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, { method: "POST" });
+    const dados = await resposta.json();
+    if (!resposta.ok) {
+      aguardando.textContent = dados.erro || "Erro ao encerrar a consulta.";
+      return;
+    }
+    mostrarAvaliacao(dados);
+  } catch {
+    aguardando.textContent = "Falha de conexão ao encerrar a consulta.";
+  } finally {
+    estado.ocupado = false;
+    $("botao-encerrar").disabled = false;
+  }
+}
+
+function mostrarAvaliacao(dados) {
+  estado.consultaId = null;
+  speechSynthesis && speechSynthesis.cancel();
+
+  $("resumo-avaliacao").textContent = `Transcrição salva em historico/${dados.transcript}`;
+
+  const aviso = $("aviso-avaliacao");
+  aviso.classList.toggle("oculto", !dados.aviso);
+  if (dados.aviso) aviso.textContent = dados.aviso;
+
+  const temChecklist = Boolean(dados.checklist);
+  $("bloco-nota").classList.toggle("oculto", !temChecklist);
+  $("criterios").innerHTML = "";
+
+  if (temChecklist) {
+    $("nota-final").textContent = dados.checklist.nota_total.toFixed(1).replace(".", ",");
+    for (const criterio of dados.checklist.criterios) {
+      const bloco = document.createElement("div");
+      bloco.className = "criterio";
+      const itens = criterio.itens
+        .map((item) => `<span class="item ${item.atendido ? "ok" : "falha"}">${item.atendido ? "✓" : "✗"} ${item.nome}</span>`)
+        .join("");
+      bloco.innerHTML = `
+        <h3><span>${criterio.nome}</span><span>${criterio.nota.toFixed(1)}/${criterio.peso.toFixed(1)}</span></h3>
+        <p class="objetivo">${criterio.objetivo}</p>
+        <div class="itens">${itens}</div>`;
+      $("criterios").appendChild(bloco);
+    }
+  }
+
+  const temParecer = Boolean(dados.parecer);
+  $("titulo-parecer").classList.toggle("oculto", !temParecer);
+  $("parecer").classList.toggle("oculto", !temParecer);
+  if (temParecer) $("parecer").textContent = dados.parecer;
+
+  mostrarTela("tela-avaliacao");
+}
+
+/* ---------- Ligações ---------- */
+
+$("botao-iniciar").addEventListener("click", iniciarConsulta);
+$("botao-enviar").addEventListener("click", enviarMensagem);
+$("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
+$("botao-mic").addEventListener("click", alternarMicrofone);
+$("botao-encerrar").addEventListener("click", encerrarConsulta);
+$("botao-som").addEventListener("click", () => {
+  estado.falarRespostas = !estado.falarRespostas;
+  $("botao-som").classList.toggle("ligado", estado.falarRespostas);
+  if (!estado.falarRespostas && window.speechSynthesis) speechSynthesis.cancel();
+});
+$("botao-nova").addEventListener("click", () => {
+  $("botao-iniciar").disabled = !estado.casoSelecionado;
+  mostrarTela("tela-inicio");
+});
+
+carregarCasos();
+</script>
+</body>
+</html>

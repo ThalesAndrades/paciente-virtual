@@ -52,45 +52,81 @@ def termos_do_item(item):
     return item["nome"], item.get("termos") or [item["nome"]]
 
 
-def avaliar_checklist(rubrica, texto_profissional):
-    """Pontua a consulta pela presença dos termos da rubrica. Retorna a nota total."""
+def carregar_rubrica(caso):
+    """Carrega a rubrica de um caso. Retorna None se não existir."""
+    arquivo = DIR_AVALIACOES / f"{caso}.json"
+    if not arquivo.exists():
+        return None
+    with open(arquivo, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def pontuar_checklist(rubrica, texto_profissional):
+    """Pontua a consulta pela presença dos termos da rubrica, sem imprimir nada.
+
+    Retorna ``{"criterios": [...], "nota_total": float}``, onde cada critério
+    traz ``nome``, ``objetivo``, ``peso``, ``nota`` e os ``itens`` com o campo
+    ``atendido``. Critérios sem itens ficam com nota 0 e lista vazia.
+    """
+    criterios_avaliados = []
     nota_total = 0.0
+
+    for criterio in rubrica["criterios"]:
+        peso = criterio["peso"]
+        itens = criterio["itens"]
+        itens_avaliados = []
+        nota_bloco = 0.0
+
+        if itens:
+            valor_item = peso / len(itens)
+            for item in itens:
+                nome, termos = termos_do_item(item)
+                atendido = contem_algum_termo(texto_profissional, termos)
+                if atendido:
+                    nota_bloco += valor_item
+                itens_avaliados.append({"nome": nome, "atendido": atendido})
+
+        nota_total += nota_bloco
+        criterios_avaliados.append(
+            {
+                "nome": criterio["nome"],
+                "objetivo": criterio["objetivo"],
+                "peso": peso,
+                "nota": nota_bloco,
+                "itens": itens_avaliados,
+            }
+        )
+
+    return {"criterios": criterios_avaliados, "nota_total": nota_total}
+
+
+def avaliar_checklist(rubrica, texto_profissional):
+    """Imprime a avaliação objetiva no console. Retorna a nota total."""
+    resultado = pontuar_checklist(rubrica, texto_profissional)
 
     print("\n" + "=" * 50)
     print("RESULTADO DA AVALIAÇÃO OBJETIVA")
     print("=" * 50)
 
-    for criterio in rubrica["criterios"]:
-        peso = criterio["peso"]
-        itens = criterio["itens"]
-
+    for criterio in resultado["criterios"]:
         print(f"\n{criterio['nome'].upper()}")
         print(f"Objetivo: {criterio['objetivo']}")
 
-        if not itens:
+        if not criterio["itens"]:
             print("(critério sem itens — ignorado)")
             continue
 
-        valor_item = peso / len(itens)
-        nota_bloco = 0.0
+        for item in criterio["itens"]:
+            marca = "✓" if item["atendido"] else "✗"
+            print(f"{marca} {item['nome']}")
 
-        for item in itens:
-            nome, termos = termos_do_item(item)
-
-            if contem_algum_termo(texto_profissional, termos):
-                print(f"✓ {nome}")
-                nota_bloco += valor_item
-            else:
-                print(f"✗ {nome}")
-
-        nota_total += nota_bloco
-        print(f"Pontuação: {nota_bloco:.2f}/{peso:.2f}")
+        print(f"Pontuação: {criterio['nota']:.2f}/{criterio['peso']:.2f}")
 
     print("\n" + "=" * 50)
-    print(f"NOTA OBJETIVA: {nota_total:.2f}/10.00")
+    print(f"NOTA OBJETIVA: {resultado['nota_total']:.2f}/10.00")
     print("=" * 50)
 
-    return nota_total
+    return resultado["nota_total"]
 
 
 def avaliar_com_ia(rubrica, texto):
@@ -156,14 +192,11 @@ def main():
             f"Rubricas disponíveis: {[r.stem for r in listar_rubricas()]}"
         )
 
-    arquivo_rubrica = DIR_AVALIACOES / f"{caso}.json"
-    if not arquivo_rubrica.exists():
-        raise SystemExit(f"\nRubrica não encontrada: {arquivo_rubrica}")
+    rubrica = carregar_rubrica(caso)
+    if rubrica is None:
+        raise SystemExit(f"\nRubrica não encontrada: {DIR_AVALIACOES / f'{caso}.json'}")
 
     print(f"\nCaso identificado: {caso}")
-
-    with open(arquivo_rubrica, encoding="utf-8") as f:
-        rubrica = json.load(f)
 
     avaliar_checklist(rubrica, extrair_texto_profissional(texto))
 
