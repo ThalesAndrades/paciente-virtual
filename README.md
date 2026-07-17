@@ -202,12 +202,25 @@ A detecção é por palavras-chave (determinística, avaliável), não por
 interpretação de intenção — frases ambíguas como "costuma verificar sua
 pressão em casa?" ainda disparam a medição.
 
+## Deploy na Hostinger (Node.js)
+
+O repositório inclui um servidor Node **sem dependências** que roda o protótipo em
+hospedagens Node.js (como a da Hostinger), reutilizando os mesmos casos, rubricas
+e página web. Sem Ollama, funciona em modo demonstração com avaliação objetiva.
+
+```bash
+npm start   # http://127.0.0.1:3000
+```
+
+Passo a passo completo em [`deploy/hostinger/README.md`](deploy/hostinger/README.md).
+
 ## Desenvolvimento
 
 ```bash
 pip install -e ".[dev]"
 ruff check .   # lint
-pytest         # testes
+pytest         # testes Python
+npm test       # testes do servidor Node (deploy)
 ```
 
 ## Privacidade

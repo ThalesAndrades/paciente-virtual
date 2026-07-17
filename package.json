@@ -1,0 +1,15 @@
+{
+  "name": "paciente-virtual",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Simulador de paciente virtual — servidor Node para hospedagem (ex.: Hostinger)",
+  "type": "module",
+  "main": "deploy/hostinger/servidor.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node deploy/hostinger/servidor.js",
+    "test": "node --test deploy/hostinger/testes/*.test.js"
+  }
+}
