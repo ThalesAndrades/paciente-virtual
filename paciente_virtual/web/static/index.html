@@ -213,6 +213,7 @@ const estado = {
   falarRespostas: true,
   avisoDemoExibido: false,
   ocupado: false,
+  capacidades: { stt: false, tts: {} },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -299,8 +300,18 @@ function adicionarBalao(tipo, texto, extra = {}) {
   return balao;
 }
 
-function falarTexto(texto) {
-  if (!estado.falarRespostas || !window.speechSynthesis) return;
+let audioAtual = null;
+
+function pararFala() {
+  if (audioAtual) {
+    audioAtual.pause();
+    audioAtual = null;
+  }
+  if (window.speechSynthesis) speechSynthesis.cancel();
+}
+
+function falarComNavegador(texto) {
+  if (!window.speechSynthesis) return;
   const fala = new SpeechSynthesisUtterance(texto);
   fala.lang = "pt-BR";
   const vozes = speechSynthesis.getVoices().filter((v) => v.lang.startsWith("pt"));
@@ -313,8 +324,32 @@ function falarTexto(texto) {
     );
     fala.voice = preferida || vozes[0];
   }
-  speechSynthesis.cancel();
   speechSynthesis.speak(fala);
+}
+
+async function falarTexto(texto) {
+  if (!estado.falarRespostas) return;
+  pararFala();
+
+  // Voz neural local (Piper) servida pelo backend, quando instalada.
+  if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
+    try {
+      const resposta = await fetch("/api/falar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ texto, voz: estado.voz }),
+      });
+      if (resposta.ok) {
+        const blob = await resposta.blob();
+        audioAtual = new Audio(URL.createObjectURL(blob));
+        audioAtual.play();
+        return;
+      }
+    } catch {
+      /* cai para a voz do navegador */
+    }
+  }
+  falarComNavegador(texto);
 }
 
 async function enviarMensagem() {
@@ -368,23 +403,86 @@ async function enviarMensagem() {
 
 const ReconhecimentoFala = window.SpeechRecognition || window.webkitSpeechRecognition;
 let reconhecedor = null;
+let gravador = null;
 
-if (ReconhecimentoFala) {
-  reconhecedor = new ReconhecimentoFala();
-  reconhecedor.lang = "pt-BR";
-  reconhecedor.interimResults = false;
-  reconhecedor.onresult = (evento) => {
-    $("campo-mensagem").value = evento.results[0][0].transcript;
-    enviarMensagem();
-  };
-  reconhecedor.onend = () => $("botao-mic").classList.remove("gravando");
-  reconhecedor.onerror = () => $("botao-mic").classList.remove("gravando");
-} else {
-  $("botao-mic").disabled = true;
-  $("botao-mic").title = "Reconhecimento de voz indisponível neste navegador (use Chrome/Edge)";
+function usaTranscricaoLocal() {
+  return estado.capacidades.stt && navigator.mediaDevices && window.MediaRecorder;
+}
+
+function configurarMicrofone() {
+  const botao = $("botao-mic");
+
+  if (usaTranscricaoLocal()) {
+    botao.disabled = false;
+    botao.title = "Falar (transcrição local com Whisper no servidor)";
+    return;
+  }
+
+  if (ReconhecimentoFala) {
+    reconhecedor = new ReconhecimentoFala();
+    reconhecedor.lang = "pt-BR";
+    reconhecedor.interimResults = false;
+    reconhecedor.onresult = (evento) => {
+      $("campo-mensagem").value = evento.results[0][0].transcript;
+      enviarMensagem();
+    };
+    reconhecedor.onend = () => botao.classList.remove("gravando");
+    reconhecedor.onerror = () => botao.classList.remove("gravando");
+    botao.disabled = false;
+    botao.title = "Falar (reconhecimento de voz do navegador)";
+    return;
+  }
+
+  botao.disabled = true;
+  botao.title =
+    "Voz indisponível: instale o extra voz-local no servidor ou use Chrome/Edge";
+}
+
+async function gravarParaServidor() {
+  const botao = $("botao-mic");
+  if (gravador) {
+    gravador.stop();
+    return;
+  }
+
+  try {
+    const midia = await navigator.mediaDevices.getUserMedia({ audio: true });
+    gravador = new MediaRecorder(midia);
+    const pedacos = [];
+    gravador.ondataavailable = (evento) => pedacos.push(evento.data);
+    gravador.onstop = async () => {
+      midia.getTracks().forEach((faixa) => faixa.stop());
+      botao.classList.remove("gravando");
+      const blob = new Blob(pedacos, { type: gravador.mimeType });
+      gravador = null;
+
+      const forma = new FormData();
+      forma.append("audio", blob, "fala.webm");
+      try {
+        const resposta = await fetch("/api/transcrever", { method: "POST", body: forma });
+        const dados = await resposta.json();
+        if (resposta.ok && dados.texto) {
+          $("campo-mensagem").value = dados.texto;
+          enviarMensagem();
+        } else {
+          adicionarBalao("aviso", dados.erro || "Não foi possível entender a fala.");
+        }
+      } catch {
+        adicionarBalao("aviso", "Falha ao enviar o áudio para transcrição.");
+      }
+    };
+    gravador.start();
+    botao.classList.add("gravando");
+  } catch {
+    adicionarBalao("aviso", "Não foi possível acessar o microfone.");
+  }
 }
 
 function alternarMicrofone() {
+  if (usaTranscricaoLocal()) {
+    gravarParaServidor();
+    return;
+  }
   if (!reconhecedor) return;
   const botao = $("botao-mic");
   if (botao.classList.contains("gravando")) {
@@ -393,6 +491,16 @@ function alternarMicrofone() {
     botao.classList.add("gravando");
     reconhecedor.start();
   }
+}
+
+async function carregarCapacidades() {
+  try {
+    const resposta = await fetch("/api/voz");
+    estado.capacidades = await resposta.json();
+  } catch {
+    estado.capacidades = { stt: false, tts: {} };
+  }
+  configurarMicrofone();
 }
 
 /* ---------- Avaliação ---------- */
@@ -423,7 +531,7 @@ async function encerrarConsulta() {
 
 function mostrarAvaliacao(dados) {
   estado.consultaId = null;
-  speechSynthesis && speechSynthesis.cancel();
+  pararFala();
 
   $("resumo-avaliacao").textContent = `Transcrição salva em historico/${dados.transcript}`;
 
@@ -469,7 +577,7 @@ $("botao-encerrar").addEventListener("click", encerrarConsulta);
 $("botao-som").addEventListener("click", () => {
   estado.falarRespostas = !estado.falarRespostas;
   $("botao-som").classList.toggle("ligado", estado.falarRespostas);
-  if (!estado.falarRespostas && window.speechSynthesis) speechSynthesis.cancel();
+  if (!estado.falarRespostas) pararFala();
 });
 $("botao-nova").addEventListener("click", () => {
   $("botao-iniciar").disabled = !estado.casoSelecionado;
@@ -477,6 +585,7 @@ $("botao-nova").addEventListener("click", () => {
 });
 
 carregarCasos();
+carregarCapacidades();
 </script>
 </body>
 </html>

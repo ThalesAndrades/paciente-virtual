@@ -24,6 +24,16 @@ dev = [
     "pytest>=8.0",
     "ruff>=0.4",
 ]
+# Voz 100% local e open source: Whisper (transcrição) + Piper/Kokoro (síntese).
+# espeakng-loader e phonemizer-fork dão ao Kokoro o G2P do português (misaki.espeak).
+voz-local = [
+    "faster-whisper>=1.0",
+    "piper-tts>=1.2",
+    "kokoro>=0.9",
+    "espeakng-loader>=0.2",
+    "phonemizer-fork>=3.3",
+    "huggingface_hub>=0.23",
+]
 
 [project.scripts]
 paciente-virtual = "paciente_virtual.consulta:main"

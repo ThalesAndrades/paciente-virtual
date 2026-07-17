@@ -157,6 +157,63 @@ def test_encerrar_sem_modelo_mantem_nota_objetiva(cliente, monkeypatch):
     assert "checklist" in resultado
 
 
+def test_capacidades_de_voz(cliente, monkeypatch):
+    monkeypatch.setattr(servidor.transcricao, "whisper_disponivel", lambda: True)
+    monkeypatch.setattr(servidor.sintese, "voz_local_disponivel", lambda voz: voz == "masculino")
+
+    dados = cliente.get("/api/voz").get_json()
+    assert dados == {"stt": True, "tts": {"feminino": False, "masculino": True}}
+
+
+def test_transcrever_indisponivel_sem_whisper(cliente, monkeypatch):
+    monkeypatch.setattr(servidor.transcricao, "whisper_disponivel", lambda: False)
+    assert cliente.post("/api/transcrever", data=b"audio").status_code == 503
+
+
+def test_transcrever_usa_whisper(cliente, monkeypatch):
+    monkeypatch.setattr(servidor.transcricao, "whisper_disponivel", lambda: True)
+    monkeypatch.setattr(
+        servidor.transcricao, "transcrever_com_whisper", lambda fonte: "onde dói?"
+    )
+
+    resposta = cliente.post("/api/transcrever", data=b"webm-falso")
+    assert resposta.status_code == 200
+    assert resposta.get_json() == {"texto": "onde dói?"}
+
+
+def test_transcrever_aceita_multipart(cliente, monkeypatch):
+    import io as modulo_io
+
+    monkeypatch.setattr(servidor.transcricao, "whisper_disponivel", lambda: True)
+    monkeypatch.setattr(
+        servidor.transcricao, "transcrever_com_whisper", lambda fonte: "qual a pressão?"
+    )
+
+    resposta = cliente.post(
+        "/api/transcrever",
+        data={"audio": (modulo_io.BytesIO(b"webm-falso"), "fala.webm")},
+        content_type="multipart/form-data",
+    )
+    assert resposta.status_code == 200
+    assert resposta.get_json() == {"texto": "qual a pressão?"}
+
+
+def test_falar_gera_wav(cliente, monkeypatch):
+    monkeypatch.setattr(servidor.sintese, "voz_local_disponivel", lambda voz: True)
+    monkeypatch.setattr(servidor.sintese, "sintetizar_wav", lambda texto, voz: b"RIFFwav")
+
+    resposta = cliente.post("/api/falar", json={"texto": "Olá", "voz": "masculino"})
+    assert resposta.status_code == 200
+    assert resposta.mimetype == "audio/wav"
+    assert resposta.data == b"RIFFwav"
+
+
+def test_falar_indisponivel_e_texto_vazio(cliente, monkeypatch):
+    monkeypatch.setattr(servidor.sintese, "voz_local_disponivel", lambda voz: False)
+    assert cliente.post("/api/falar", json={"texto": "Olá"}).status_code == 503
+    assert cliente.post("/api/falar", json={"texto": " "}).status_code == 400
+
+
 def test_consulta_encerrada_nao_aceita_mensagem(cliente, monkeypatch):
     def falhar(mensagens):
         raise ConnectionError("ollama fora do ar")

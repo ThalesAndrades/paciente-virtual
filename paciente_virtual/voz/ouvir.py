@@ -6,6 +6,7 @@ para microfones com pouco ganho.
 """
 
 from ..config import LIMIAR_FALA_MINIMO
+from . import transcricao
 
 TAXA_AMOSTRAGEM = 16000
 DURACAO_BLOCO = 0.1  # segundos por bloco de leitura
@@ -103,11 +104,22 @@ def ouvir_microfone():
         print("\nNenhuma fala detectada.")
         return ""
 
-    dados = sr.AudioData(audio.tobytes(), TAXA_AMOSTRAGEM, audio.dtype.itemsize)
-    reconhecedor = sr.Recognizer()
+    # Whisper local (open source) quando instalado; senão, Google (nuvem).
+    if transcricao.whisper_disponivel():
+        try:
+            texto = transcricao.transcrever_amostras(audio, TAXA_AMOSTRAGEM)
+            if texto:
+                return texto
+            print("\nNão foi possível entender a fala.")
+            return ""
+        except Exception as erro:
+            print(f"\nFalha na transcrição local: {erro}")
+            if transcricao.motor_configurado() == "whisper":
+                return ""
+            print("(tentando o serviço do Google)")
 
     try:
-        return reconhecedor.recognize_google(dados, language="pt-BR")
+        return transcricao.transcrever_com_google(audio, TAXA_AMOSTRAGEM)
     except sr.UnknownValueError:
         print("\nNão foi possível entender a fala.")
         return ""
