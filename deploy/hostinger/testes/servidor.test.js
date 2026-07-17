@@ -59,6 +59,37 @@ test("fluxo completo de consulta em modo demonstração", async () => {
 
     const depois = await api(base, `/api/consultas/${id}/mensagem`, { texto: "oi" });
     assert.equal(depois.status, 409);
+
+    // Painel do professor: a consulta recém-gravada aparece e é detalhável.
+    const arquivo = fim.dados.transcript;
+    if (arquivo && arquivo.endsWith(".txt")) {
+      try {
+        const painel = await api(base, "/api/relatorio");
+        assert.equal(painel.status, 200);
+        const item = painel.dados.find((consulta) => consulta.arquivo === arquivo);
+        assert.ok(item, "consulta gravada deveria aparecer no painel");
+        assert.equal(item.aluno, "Node E2E");
+        assert.ok(item.nota > 0);
+
+        const detalhe = await api(base, `/api/relatorio/${encodeURIComponent(arquivo)}`);
+        assert.equal(detalhe.status, 200);
+        assert.ok(detalhe.dados.eventos.some((evento) => evento.tipo === "exame"));
+
+        const invalido = await api(base, "/api/relatorio/..%2Fpyproject.toml");
+        assert.equal(invalido.status, 404);
+      } finally {
+        const fs = await import("node:fs");
+        const path = await import("node:path");
+        const { fileURLToPath } = await import("node:url");
+        const raiz = path.resolve(
+          path.dirname(fileURLToPath(import.meta.url)),
+          "..",
+          "..",
+          ".."
+        );
+        fs.rmSync(path.join(raiz, "historico", arquivo), { force: true });
+      }
+    }
   } finally {
     servidor.close();
   }

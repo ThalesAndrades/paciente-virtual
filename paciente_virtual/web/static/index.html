@@ -99,7 +99,11 @@
   }
   .acoes button.ligado { border-color: var(--primaria); color: var(--primaria); font-weight: 600; }
 
-  #mensagens { display: flex; flex-direction: column; gap: 10px; }
+  .fluxo-mensagens { display: flex; flex-direction: column; gap: 10px; }
+  .linha-consulta { width: 100%; margin-bottom: 10px; }
+  .linha-consulta h3 { display: flex; justify-content: space-between; gap: 8px; }
+  .linha-consulta .nota-linha { color: var(--primaria); }
+  #tela-detalhe h2 { font-size: 1.1rem; margin: 22px 0 12px; }
   .balao { max-width: 82%; padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; }
   .balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 4px; }
   .balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 4px; }
@@ -157,6 +161,33 @@
   <div id="lista-casos" class="cartoes"><p class="subtitulo">Carregando casos…</p></div>
 
   <button id="botao-iniciar" class="botao" disabled>Iniciar consulta</button>
+  <button id="botao-painel" class="botao secundario">📊 Painel do professor</button>
+</section>
+
+<section id="tela-painel" class="tela">
+  <h1>📊 Painel do professor</h1>
+  <p class="subtitulo">
+    Consultas gravadas, com a nota objetiva recalculada pela rubrica atual
+  </p>
+  <div id="lista-consultas"></div>
+  <button id="botao-painel-voltar" class="botao secundario">← Voltar</button>
+</section>
+
+<section id="tela-detalhe" class="tela">
+  <h1 id="detalhe-titulo"></h1>
+  <p class="subtitulo" id="detalhe-resumo"></p>
+
+  <div class="nota-geral oculto" id="detalhe-bloco-nota">
+    <span class="valor" id="detalhe-nota"></span>
+    <span>/ 10 na avaliação objetiva</span>
+  </div>
+
+  <div id="detalhe-criterios"></div>
+
+  <h2>Transcrição</h2>
+  <div id="detalhe-mensagens" class="fluxo-mensagens"></div>
+
+  <button id="botao-detalhe-voltar" class="botao secundario">← Voltar ao painel</button>
 </section>
 
 <section id="tela-consulta" class="tela">
@@ -172,7 +203,7 @@
     </div>
   </div>
 
-  <div id="mensagens"></div>
+  <div id="mensagens" class="fluxo-mensagens"></div>
 
   <div class="entrada">
     <div class="interno">
@@ -503,6 +534,102 @@ async function carregarCapacidades() {
   configurarMicrofone();
 }
 
+/* ---------- Renderizadores compartilhados ---------- */
+
+function formatarNota(nota) {
+  return nota.toFixed(1).replace(".", ",");
+}
+
+function renderizarChecklist(container, checklist) {
+  container.innerHTML = "";
+  for (const criterio of checklist.criterios) {
+    const bloco = document.createElement("div");
+    bloco.className = "criterio";
+    const itens = criterio.itens
+      .map((item) => `<span class="item ${item.atendido ? "ok" : "falha"}">${item.atendido ? "✓" : "✗"} ${item.nome}</span>`)
+      .join("");
+    bloco.innerHTML = `
+      <h3><span>${criterio.nome}</span><span>${criterio.nota.toFixed(1)}/${criterio.peso.toFixed(1)}</span></h3>
+      <p class="objetivo">${criterio.objetivo}</p>
+      <div class="itens">${itens}</div>`;
+    container.appendChild(bloco);
+  }
+}
+
+function balaoDeEvento(evento) {
+  const balao = document.createElement("div");
+  if (evento.tipo === "exame") {
+    balao.className = "balao exame";
+    const titulo = document.createElement("strong");
+    titulo.textContent = `${evento.titulo} — ${evento.nome}`;
+    balao.appendChild(titulo);
+    balao.append(evento.texto);
+  } else {
+    balao.className = `balao ${evento.tipo === "profissional" ? "aluno" : "paciente"}`;
+    balao.textContent = evento.texto;
+  }
+  return balao;
+}
+
+/* ---------- Painel do professor ---------- */
+
+async function abrirPainel() {
+  mostrarTela("tela-painel");
+  const lista = $("lista-consultas");
+  lista.innerHTML = "<p class='subtitulo'>Carregando…</p>";
+
+  try {
+    const consultas = await (await fetch("/api/relatorio")).json();
+    lista.innerHTML = consultas.length
+      ? ""
+      : "<p class='subtitulo'>Nenhuma consulta gravada ainda.</p>";
+
+    for (const consulta of consultas) {
+      const item = document.createElement("button");
+      item.className = "cartao linha-consulta";
+      const nota = consulta.nota == null ? "—" : formatarNota(consulta.nota);
+      const situacao = consulta.encerrada ? "" : " · em aberto";
+      item.innerHTML = `
+        <h3><span>${consulta.aluno || "—"}</span><span class="nota-linha">${nota}</span></h3>
+        <p>${consulta.caso || "?"} · ${consulta.inicio || "—"}${situacao}</p>`;
+      item.addEventListener("click", () => abrirDetalhe(consulta.arquivo));
+      lista.appendChild(item);
+    }
+  } catch {
+    lista.innerHTML = "<p class='subtitulo'>Erro ao carregar o painel.</p>";
+  }
+}
+
+async function abrirDetalhe(arquivo) {
+  try {
+    const resposta = await fetch(`/api/relatorio/${encodeURIComponent(arquivo)}`);
+    if (!resposta.ok) return;
+    const detalhe = await resposta.json();
+
+    $("detalhe-titulo").textContent = detalhe.aluno || "Consulta";
+    $("detalhe-resumo").textContent =
+      `${detalhe.caso || "?"} · ${detalhe.inicio || "—"} · ${detalhe.arquivo}`;
+
+    const temChecklist = Boolean(detalhe.checklist);
+    $("detalhe-bloco-nota").classList.toggle("oculto", !temChecklist);
+    $("detalhe-criterios").innerHTML = "";
+    if (temChecklist) {
+      $("detalhe-nota").textContent = formatarNota(detalhe.checklist.nota_total);
+      renderizarChecklist($("detalhe-criterios"), detalhe.checklist);
+    }
+
+    const mensagens = $("detalhe-mensagens");
+    mensagens.innerHTML = "";
+    for (const evento of detalhe.eventos) {
+      mensagens.appendChild(balaoDeEvento(evento));
+    }
+
+    mostrarTela("tela-detalhe");
+  } catch {
+    /* mantém a tela atual */
+  }
+}
+
 /* ---------- Avaliação ---------- */
 
 async function encerrarConsulta() {
@@ -544,19 +671,8 @@ function mostrarAvaliacao(dados) {
   $("criterios").innerHTML = "";
 
   if (temChecklist) {
-    $("nota-final").textContent = dados.checklist.nota_total.toFixed(1).replace(".", ",");
-    for (const criterio of dados.checklist.criterios) {
-      const bloco = document.createElement("div");
-      bloco.className = "criterio";
-      const itens = criterio.itens
-        .map((item) => `<span class="item ${item.atendido ? "ok" : "falha"}">${item.atendido ? "✓" : "✗"} ${item.nome}</span>`)
-        .join("");
-      bloco.innerHTML = `
-        <h3><span>${criterio.nome}</span><span>${criterio.nota.toFixed(1)}/${criterio.peso.toFixed(1)}</span></h3>
-        <p class="objetivo">${criterio.objetivo}</p>
-        <div class="itens">${itens}</div>`;
-      $("criterios").appendChild(bloco);
-    }
+    $("nota-final").textContent = formatarNota(dados.checklist.nota_total);
+    renderizarChecklist($("criterios"), dados.checklist);
   }
 
   const temParecer = Boolean(dados.parecer);
@@ -583,6 +699,9 @@ $("botao-nova").addEventListener("click", () => {
   $("botao-iniciar").disabled = !estado.casoSelecionado;
   mostrarTela("tela-inicio");
 });
+$("botao-painel").addEventListener("click", abrirPainel);
+$("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
+$("botao-detalhe-voltar").addEventListener("click", abrirPainel);
 
 carregarCasos();
 carregarCapacidades();

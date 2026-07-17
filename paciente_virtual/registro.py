@@ -68,6 +68,77 @@ def extrair_caso_do_cabecalho(texto):
     return None
 
 
+def extrair_metadados(texto):
+    """Lê o cabeçalho/rodapé de metadados do transcript.
+
+    Retorna ``{"caso", "aluno", "inicio", "encerrada"}`` — campos ausentes
+    (históricos antigos) vêm como None.
+    """
+
+    def campo(nome):
+        encontrado = re.search(rf"^{nome}:\s*(.+)$", texto, re.MULTILINE)
+        return encontrado.group(1).strip() if encontrado else None
+
+    return {
+        "caso": campo("CASO"),
+        "aluno": campo("ALUNO"),
+        "inicio": campo("INICIO"),
+        "encerrada": campo("ENCERRADA") is not None,
+    }
+
+
+def estruturar_transcript(texto):
+    """Converte o transcript em uma lista de eventos para exibição.
+
+    Cada evento é ``{"tipo": "profissional"|"paciente"|"exame", ...}``;
+    falas com múltiplas linhas são agrupadas no mesmo evento. Linhas de
+    cabeçalho/rodapé (metadados) ficam de fora.
+    """
+    eventos = []
+    atual = None
+
+    def fechar():
+        nonlocal atual
+        if atual is not None:
+            atual["texto"] = atual["texto"].strip()
+            if atual["texto"] or atual["tipo"] == "exame":
+                eventos.append(atual)
+            atual = None
+
+    for linha in texto.splitlines():
+        conteudo = linha.strip()
+
+        if not conteudo or set(conteudo) == {"="}:
+            continue
+        if re.match(r"^(CASO|ALUNO|INICIO|ENCERRADA):", conteudo):
+            continue
+
+        if conteudo.startswith(PREFIXO_PROFISSIONAL):
+            fechar()
+            atual = {
+                "tipo": "profissional",
+                "texto": conteudo[len(PREFIXO_PROFISSIONAL) :].strip(),
+            }
+        elif conteudo.startswith(PREFIXO_PACIENTE):
+            fechar()
+            atual = {
+                "tipo": "paciente",
+                "texto": conteudo[len(PREFIXO_PACIENTE) :].strip(),
+            }
+        elif conteudo.startswith((f"{TITULO_EXAME_FISICO}:", f"{TITULO_EXAME_SOLICITADO}:")):
+            fechar()
+            titulo, nome = conteudo.split(":", 1)
+            atual = {"tipo": "exame", "titulo": titulo, "nome": nome.strip(), "texto": ""}
+        elif conteudo.startswith(PREFIXO_RESULTADO) and atual and atual["tipo"] == "exame":
+            atual["texto"] = conteudo[len(PREFIXO_RESULTADO) :].strip()
+        elif atual is not None:
+            # Continuação de uma fala com múltiplas linhas.
+            atual["texto"] += f"\n{conteudo}"
+
+    fechar()
+    return eventos
+
+
 def extrair_texto_profissional(texto):
     """Mantém apenas as falas do profissional e os exames que ele solicitou."""
     linhas = [
