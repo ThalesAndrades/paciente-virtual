@@ -11,14 +11,20 @@ frases como "costuma verificar sua pressão em casa?" ainda disparam a medição
 Casos ambíguos assim são raros e o custo é baixo; a alternativa (interpretar a
 intenção com o LLM) tornaria o resultado não determinístico para avaliação.
 
-Cada motor entrega TODOS os exames solicitados na frase e retorna a lista de
-exames entregues (vazia se nenhum), para que a consulta informe o modelo de
-linguagem do que aconteceu.
+A detecção (``detectar_exames``) é pura — sem som, console ou arquivo — para
+que interfaces diferentes (CLI, web) entreguem o resultado do seu jeito.
+Os ``verificar_*`` embrulham a detecção com a entrega da CLI e retornam a
+lista de exames entregues (vazia se nenhum).
 """
 
 import re
 
-from .registro import TITULO_EXAME_FISICO, TITULO_EXAME_SOLICITADO, registrar
+from .registro import (
+    PREFIXO_RESULTADO,
+    TITULO_EXAME_FISICO,
+    TITULO_EXAME_SOLICITADO,
+    registrar,
+)
 from .texto import contem_algum_termo, normalizar
 from .voz.falar import falar
 
@@ -86,6 +92,49 @@ def _termos_do_exame(chave, dados):
     return [termo for termo in termos if termo]
 
 
+def _detectar(texto, exames):
+    if not exames or not _ha_solicitacao(texto):
+        return []
+    return [
+        dados
+        for chave, dados in exames.items()
+        if contem_algum_termo(texto, _termos_do_exame(chave, dados))
+    ]
+
+
+def detectar_exames(texto, caso):
+    """Exames solicitados na frase, sem efeitos colaterais.
+
+    Retorna uma lista de pares ``(titulo, dados)`` — complementares primeiro,
+    exame físico depois, na mesma ordem de entrega da CLI.
+    """
+    return [
+        (TITULO_EXAME_SOLICITADO, dados)
+        for dados in _detectar(texto, caso.get("exames_disponiveis"))
+    ] + [
+        (TITULO_EXAME_FISICO, dados)
+        for dados in _detectar(texto, caso.get("exame_fisico"))
+    ]
+
+
+def registrar_exame(arquivo_historico, titulo, dados):
+    """Anexa um exame entregue ao histórico, no formato que o avaliador lê."""
+    registrar(arquivo_historico, f"\n{titulo}: {dados['nome']}\n")
+    registrar(arquivo_historico, f"{PREFIXO_RESULTADO} {dados['resultado']}\n")
+
+
+def contexto_para_paciente(exames_entregues):
+    """Mensagem de sistema que informa o paciente dos exames recém-realizados."""
+    itens = "; ".join(
+        f"{dados['nome']}: {dados['resultado']}" for dados in exames_entregues
+    )
+    return (
+        f"O profissional acabou de realizar/solicitar: {itens}. "
+        "Você, como paciente, sabe que esses procedimentos aconteceram agora "
+        "e pode comentá-los se perguntado."
+    )
+
+
 def _entregar_resultado(titulo, dados, arquivo_historico, voz):
     print(f"\n{titulo}\n\n{dados['nome']}\n")
     print("Resultado:\n")
@@ -94,20 +143,13 @@ def _entregar_resultado(titulo, dados, arquivo_historico, voz):
 
     falar(dados["resultado"], voz)
 
-    registrar(arquivo_historico, f"\n{titulo}: {dados['nome']}\n")
-    registrar(arquivo_historico, f"RESULTADO: {dados['resultado']}\n")
+    registrar_exame(arquivo_historico, titulo, dados)
 
 
 def _verificar(texto, exames, titulo, arquivo_historico, voz):
-    if not exames or not _ha_solicitacao(texto):
-        return []
-
-    entregues = []
-    for chave, dados in exames.items():
-        if contem_algum_termo(texto, _termos_do_exame(chave, dados)):
-            _entregar_resultado(titulo, dados, arquivo_historico, voz)
-            entregues.append(dados)
-
+    entregues = _detectar(texto, exames)
+    for dados in entregues:
+        _entregar_resultado(titulo, dados, arquivo_historico, voz)
     return entregues
 
 

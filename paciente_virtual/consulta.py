@@ -3,7 +3,7 @@
 import json
 
 from .config import DIR_CASOS
-from .exames import verificar_exame_fisico, verificar_exames
+from .exames import contexto_para_paciente, verificar_exame_fisico, verificar_exames
 from .ia import avisar_falha, conversar
 from .prompt import criar_prompt
 from .registro import (
@@ -31,18 +31,6 @@ def obter_pergunta():
     if entrada:
         return entrada
     return ouvir_microfone()
-
-
-def _contexto_exames(exames_entregues):
-    """Mensagem de sistema que informa o paciente dos exames recém-realizados."""
-    itens = "; ".join(
-        f"{dados['nome']}: {dados['resultado']}" for dados in exames_entregues
-    )
-    return (
-        f"O profissional acabou de realizar/solicitar: {itens}. "
-        "Você, como paciente, sabe que esses procedimentos aconteceram agora "
-        "e pode comentá-los se perguntado."
-    )
 
 
 def main():
@@ -89,7 +77,7 @@ def main():
             # O paciente precisa "saber" que foi examinado para a conversa
             # seguinte não contradizer o transcript.
             historico.append(
-                {"role": "system", "content": _contexto_exames(exames_entregues)}
+                {"role": "system", "content": contexto_para_paciente(exames_entregues)}
             )
             continue
 
