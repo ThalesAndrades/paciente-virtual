@@ -20,6 +20,7 @@ import { AVISO_DEMO, responderDemo } from "./motor/demo.js";
 import { contextoParaPaciente, detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
 import { criarPrompt } from "./motor/prompt.js";
+import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
 const DIR_APP = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.resolve(DIR_APP, "..", "..");
@@ -67,6 +68,75 @@ function carregarRubrica(casoId) {
   const caminho = path.join(DIR_AVALIACOES, `${casoId}.json`);
   if (!fs.existsSync(caminho)) return null;
   return lerJson(caminho);
+}
+
+function casoDoTranscript(nomeArquivo, texto) {
+  const { caso } = extrairMetadados(texto);
+  if (caso) return caso;
+
+  // Compatibilidade com históricos antigos, sem cabeçalho de metadados.
+  const rubricas = fs
+    .readdirSync(DIR_AVALIACOES)
+    .filter((nome) => nome.endsWith(".json"))
+    .map((nome) => nome.replace(/\.json$/, ""))
+    .sort((a, b) => b.length - a.length);
+  const base = nomeArquivo.replace(/\.txt$/, "");
+  return rubricas.find((id) => base === id || base.startsWith(`${id}_`)) || null;
+}
+
+function resumirTranscript(nomeArquivo, texto) {
+  const metadados = extrairMetadados(texto);
+  const caso = casoDoTranscript(nomeArquivo, texto);
+
+  let nota = null;
+  const rubrica = caso ? carregarRubrica(caso) : null;
+  if (rubrica) {
+    nota = pontuarChecklist(rubrica, extrairTextoProfissional(texto)).nota_total;
+  }
+
+  return {
+    arquivo: nomeArquivo,
+    caso,
+    aluno: metadados.aluno,
+    inicio: metadados.inicio,
+    encerrada: metadados.encerrada,
+    nota,
+  };
+}
+
+function transcriptsGravados() {
+  try {
+    return fs
+      .readdirSync(DIR_HISTORICO)
+      .filter((nome) => nome.endsWith(".txt"))
+      .sort()
+      .reverse();
+  } catch {
+    return [];
+  }
+}
+
+function listarRelatorio() {
+  return transcriptsGravados().map((nome) =>
+    resumirTranscript(nome, fs.readFileSync(path.join(DIR_HISTORICO, nome), "utf-8"))
+  );
+}
+
+function detalharRelatorio(nomeArquivo) {
+  // Compara com a listagem real do diretório — nunca monta caminho com a
+  // entrada do usuário (evita path traversal).
+  if (!transcriptsGravados().includes(nomeArquivo)) return null;
+
+  const texto = fs.readFileSync(path.join(DIR_HISTORICO, nomeArquivo), "utf-8");
+  const detalhe = resumirTranscript(nomeArquivo, texto);
+  detalhe.eventos = estruturarTranscript(texto);
+
+  const rubrica = detalhe.caso ? carregarRubrica(detalhe.caso) : null;
+  detalhe.checklist = rubrica
+    ? pontuarChecklist(rubrica, extrairTextoProfissional(texto))
+    : null;
+
+  return detalhe;
 }
 
 function agora() {
@@ -273,6 +343,17 @@ export function criarServidor() {
 
       if (req.method === "GET" && pathname === "/api/casos") {
         return json(res, 200, listarCasos());
+      }
+
+      if (req.method === "GET" && pathname === "/api/relatorio") {
+        return json(res, 200, listarRelatorio());
+      }
+
+      const relatorio = pathname.match(/^\/api\/relatorio\/([^/]+)$/);
+      if (req.method === "GET" && relatorio) {
+        const detalhe = detalharRelatorio(decodeURIComponent(relatorio[1]));
+        if (!detalhe) return json(res, 404, { erro: "Consulta não encontrada." });
+        return json(res, 200, detalhe);
       }
 
       if (req.method === "GET" && pathname === "/api/voz") {

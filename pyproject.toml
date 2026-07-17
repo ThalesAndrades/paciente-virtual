@@ -38,6 +38,7 @@ voz-local = [
 [project.scripts]
 paciente-virtual = "paciente_virtual.consulta:main"
 paciente-virtual-avaliador = "paciente_virtual.avaliador:main"
+paciente-virtual-relatorio = "paciente_virtual.relatorio:main"
 paciente-virtual-web = "paciente_virtual.web.servidor:main"
 
 [tool.setuptools.packages.find]

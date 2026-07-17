@@ -7,6 +7,7 @@ from paciente_virtual.web.servidor import criar_app
 @pytest.fixture
 def app(tmp_path, monkeypatch):
     monkeypatch.setattr("paciente_virtual.registro.DIR_HISTORICO", tmp_path)
+    monkeypatch.setattr("paciente_virtual.relatorio.DIR_HISTORICO", tmp_path)
     return criar_app()
 
 
@@ -155,6 +156,30 @@ def test_encerrar_sem_modelo_mantem_nota_objetiva(cliente, monkeypatch):
     assert resultado["parecer"] is None
     assert "aviso" in resultado
     assert "checklist" in resultado
+
+
+def test_painel_lista_e_detalha_consultas(app, cliente, monkeypatch):
+    def falhar(mensagens):
+        raise ConnectionError("ollama fora do ar")
+
+    monkeypatch.setattr(servidor, "conversar", falhar)
+    monkeypatch.setattr("paciente_virtual.avaliador.conversar", falhar)
+
+    consulta = _iniciar(cliente, aluno="Painel Teste")
+    cliente.post(f"/api/consultas/{consulta['id']}/mensagem", json={"texto": "solicito ecg"})
+    cliente.post(f"/api/consultas/{consulta['id']}/encerrar")
+
+    listagem = cliente.get("/api/relatorio").get_json()
+    assert any(item["aluno"] == "Painel Teste" for item in listagem)
+
+    alvo = next(item for item in listagem if item["aluno"] == "Painel Teste")
+    assert alvo["nota"] > 0
+
+    detalhe = cliente.get(f"/api/relatorio/{alvo['arquivo']}").get_json()
+    assert detalhe["checklist"]["nota_total"] == alvo["nota"]
+    assert any(evento["tipo"] == "exame" for evento in detalhe["eventos"])
+
+    assert cliente.get("/api/relatorio/inexistente.txt").status_code == 404
 
 
 def test_capacidades_de_voz(cliente, monkeypatch):

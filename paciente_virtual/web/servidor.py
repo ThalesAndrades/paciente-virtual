@@ -32,6 +32,7 @@ from ..registro import (
     extrair_texto_profissional,
     registrar,
 )
+from ..relatorio import detalhar_consulta, listar_consultas
 from ..voz import falar as sintese
 from ..voz import transcricao
 
@@ -87,6 +88,18 @@ def criar_app():
     @app.get("/api/casos")
     def listar_casos():
         return jsonify(_listar_casos())
+
+    @app.get("/api/relatorio")
+    def relatorio():
+        """Painel do professor: resumo de todas as consultas gravadas."""
+        return jsonify(listar_consultas())
+
+    @app.get("/api/relatorio/<nome_arquivo>")
+    def relatorio_detalhe(nome_arquivo):
+        detalhe = detalhar_consulta(nome_arquivo)
+        if detalhe is None:
+            return jsonify({"erro": "Consulta não encontrada."}), 404
+        return jsonify(detalhe)
 
     @app.get("/api/voz")
     def capacidades_de_voz():

@@ -131,3 +131,38 @@ test("prompt inclui dados do caso sem repr estranho", () => {
 test("limparRaciocinio remove blocos think", () => {
   assert.equal(limparRaciocinio("<think>hum...</think>Dói no peito."), "Dói no peito.");
 });
+
+test("relatorio extrai metadados e estrutura o transcript", async () => {
+  const { estruturarTranscript, extrairMetadados } = await import("../motor/relatorio.js");
+
+  const transcript = [
+    "=".repeat(50),
+    "CASO: infarto",
+    "ALUNO: Maria Silva",
+    "INICIO: 2026-07-17 10:00:00",
+    "=".repeat(50),
+    "",
+    "PROFISSIONAL: quando começou a dor?",
+    "",
+    "PACIENTE: Começou há 2 horas.",
+    "Estou com muito medo, doutor.",
+    "",
+    "EXAME SOLICITADO: Eletrocardiograma",
+    "RESULTADO: Supradesnivelamento de ST",
+    "",
+    "ENCERRADA: 2026-07-17 10:12:00",
+  ].join("\n");
+
+  const metadados = extrairMetadados(transcript);
+  assert.equal(metadados.caso, "infarto");
+  assert.equal(metadados.aluno, "Maria Silva");
+  assert.equal(metadados.encerrada, true);
+
+  const eventos = estruturarTranscript(transcript);
+  assert.deepEqual(
+    eventos.map((evento) => evento.tipo),
+    ["profissional", "paciente", "exame"]
+  );
+  assert.match(eventos[1].texto, /muito medo/);
+  assert.equal(eventos[2].nome, "Eletrocardiograma");
+});

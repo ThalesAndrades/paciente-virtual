@@ -97,6 +97,15 @@ paciente-virtual-avaliador
 # ou: python -m paciente_virtual.avaliador
 ```
 
+Painel do professor — todas as consultas gravadas, com nota objetiva recalculada
+pela rubrica atual (na interface web, botão **📊 Painel do professor**; cada
+consulta abre com o checklist e a transcrição completa):
+
+```bash
+paciente-virtual-relatorio
+# ou: python -m paciente_virtual.relatorio
+```
+
 Testar áudio (voz e microfone):
 
 ```bash
@@ -153,6 +162,7 @@ cada gravação; reduza o piso se o seu microfone tiver pouco ganho.
 paciente_virtual/        # Pacote Python
 ├── consulta.py          # Loop principal da consulta (CLI)
 ├── avaliador.py         # Avaliação objetiva + semântica (CLI)
+├── relatorio.py         # Painel do professor: resumo das consultas gravadas
 ├── prompt.py            # Prompt de sistema do paciente
 ├── exames.py            # Motores de exame físico e complementares
 ├── registro.py          # Formato do histórico: escrita e leitura do transcript
