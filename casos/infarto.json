@@ -1,0 +1,134 @@
+{
+  "identificacao": {
+    "nome": "João Carlos Ferreira",
+    "idade": 58,
+    "sexo": "Masculino",
+    "voz": "masculino",
+    "estado_civil": "Casado",
+    "escolaridade": "Ensino Fundamental Completo",
+    "profissao": "Pedreiro"
+  },
+  "queixa_principal": "Dor no peito",
+  "historia_doenca_atual": {
+    "inicio": "Há 2 horas",
+    "localizacao": "Região central do tórax",
+    "intensidade": "8/10",
+    "irradiacao": "Braço esquerdo",
+    "duracao": "Contínua",
+    "fatores_piora": "Esforço físico",
+    "fatores_melhora": "Nenhum",
+    "sintomas_associados": [
+      "Sudorese",
+      "Náusea",
+      "Falta de ar"
+    ]
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": true,
+    "diabetes": false,
+    "dislipidemia": true,
+    "cirurgias": "Nega",
+    "alergias": "Nega"
+  },
+  "antecedentes_familiares": {
+    "pai": "Infarto aos 62 anos",
+    "mae": "Hipertensão arterial"
+  },
+  "habitos_de_vida": {
+    "tabagismo": "1 maço por dia há 35 anos",
+    "alcool": "Socialmente",
+    "atividade_fisica": "Não pratica",
+    "sono": "6 horas por noite"
+  },
+  "emocao_atual": {
+    "ansioso": true,
+    "medo": true,
+    "irritado": false
+  },
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": [
+        "pressão",
+        "pressao",
+        "pa",
+        "aferir pressão",
+        "medir pressão",
+        "pressão arterial"
+      ],
+      "resultado": "170/100 mmHg"
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "108 bpm"
+    },
+    "frequencia_respiratoria": {
+      "nome": "Frequência respiratória",
+      "sinonimos": [
+        "frequência respiratória",
+        "frequencia respiratoria",
+        "fr",
+        "respiração",
+        "respiracao"
+      ],
+      "resultado": "24 irpm"
+    },
+    "temperatura": {
+      "nome": "Temperatura",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termômetro"
+      ],
+      "resultado": "36,5°C"
+    },
+    "saturacao": {
+      "nome": "Saturação de oxigênio",
+      "sinonimos": [
+        "saturação",
+        "saturacao",
+        "spo2",
+        "oximetria",
+        "oxímetro"
+      ],
+      "resultado": "93%"
+    }
+  },
+  "exames_disponiveis": {
+    "ecg": {
+      "nome": "Eletrocardiograma",
+      "sinonimos": [
+        "ecg",
+        "eletro",
+        "eletrocardiograma"
+      ],
+      "resultado": "Supradesnivelamento de ST em DII, DIII e aVF"
+    },
+    "troponina": {
+      "nome": "Troponina",
+      "sinonimos": [
+        "troponina",
+        "troponinas"
+      ],
+      "resultado": "Positiva"
+    },
+    "raio_x": {
+      "nome": "Raio X",
+      "sinonimos": [
+        "raio x",
+        "raiox",
+        "raio-x",
+        "rx",
+        "radiografia"
+      ],
+      "resultado": "Sem alterações agudas"
+    }
+  }
+}
