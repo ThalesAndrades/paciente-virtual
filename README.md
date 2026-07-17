@@ -45,9 +45,9 @@ psicomotricidade) — peça "vou aplicar o PHQ-9" ou "observe a aparência".
   ```
 
 - Microfone e saída de áudio.
-- Internet para a transcrição de fala (Google Speech Recognition) e para as vozes
-  neurais (edge-tts). Sem internet, a fala do paciente usa a voz local do sistema
-  e as perguntas podem ser digitadas.
+- **Recomendado**: o extra `voz-local` (veja abaixo) para ouvir e falar 100%
+  offline com software livre. Sem ele, a transcrição usa o serviço do Google e
+  a fala usa edge-tts — ambos exigem internet.
 - No Linux, a captura de áudio requer a biblioteca PortAudio
   (`sudo apt install libportaudio2`).
 
@@ -104,6 +104,31 @@ python -m paciente_virtual.diagnostico fala
 python -m paciente_virtual.diagnostico microfone
 ```
 
+## Voz local e open source (recomendado)
+
+```bash
+pip install -e ".[voz-local]"
+```
+
+Instala motores de software livre que rodam **offline, na CPU**:
+
+- **[faster-whisper](https://github.com/SYSTRAN/faster-whisper)** (MIT) — transcrição
+  do Whisper com excelente português brasileiro; substitui o serviço do Google.
+- **[Piper](https://github.com/rhasspy/piper)** (MIT) — voz neural local; usado
+  para a voz **masculina** (`pt_BR-faber-medium`).
+- **[Kokoro](https://github.com/hexgrad/kokoro)** (Apache-2.0) — voz neural local;
+  usado para a voz **feminina** (`pf_dora`), já que o Piper ainda não tem voz
+  feminina em pt-BR.
+
+Os modelos são baixados do Hugging Face na primeira utilização e ficam em cache.
+Com o extra instalado, a **interface web também passa a usar os motores locais**:
+o navegador grava o áudio e o servidor transcreve (Whisper) e sintetiza
+(Piper/Kokoro) — funciona em qualquer navegador, sem depender da Web Speech API
+do Chrome.
+
+A ordem dos motores é: voz local → edge-tts → voz do sistema (fala) e
+Whisper → Google (escuta), configurável pelas variáveis abaixo.
+
 ## Configuração
 
 | Variável de ambiente           | Padrão       | Descrição                                            |
@@ -113,6 +138,11 @@ python -m paciente_virtual.diagnostico microfone
 | `PACIENTE_VIRTUAL_LIMIAR_FALA` | `120`        | Piso de sensibilidade do microfone (amplitude int16) |
 | `PACIENTE_VIRTUAL_HOST`        | `127.0.0.1`  | Endereço do servidor web                              |
 | `PACIENTE_VIRTUAL_PORTA`       | `8000`       | Porta do servidor web                                 |
+| `PACIENTE_VIRTUAL_STT`         | `auto`       | Motor de transcrição: `auto`, `whisper` ou `google`   |
+| `PACIENTE_VIRTUAL_TTS`         | `auto`       | Motor de fala: `auto`, `local`, `edge` ou `pyttsx3`   |
+| `PACIENTE_VIRTUAL_WHISPER`     | `small`      | Tamanho do modelo Whisper (`base`, `small`, `medium`) |
+| `PACIENTE_VIRTUAL_VOZ_FEMININA`  | `kokoro:pf_dora` | Voz local feminina, formato `motor:voz`          |
+| `PACIENTE_VIRTUAL_VOZ_MASCULINA` | `piper:pt_BR-faber-medium` | Voz local masculina, formato `motor:voz` |
 
 O limiar de fala é calibrado automaticamente pelo ruído ambiente no início de
 cada gravação; reduza o piso se o seu microfone tiver pouco ganho.
@@ -172,12 +202,25 @@ A detecção é por palavras-chave (determinística, avaliável), não por
 interpretação de intenção — frases ambíguas como "costuma verificar sua
 pressão em casa?" ainda disparam a medição.
 
+## Deploy na Hostinger (Node.js)
+
+O repositório inclui um servidor Node **sem dependências** que roda o protótipo em
+hospedagens Node.js (como a da Hostinger), reutilizando os mesmos casos, rubricas
+e página web. Sem Ollama, funciona em modo demonstração com avaliação objetiva.
+
+```bash
+npm start   # http://127.0.0.1:3000
+```
+
+Passo a passo completo em [`deploy/hostinger/README.md`](deploy/hostinger/README.md).
+
 ## Desenvolvimento
 
 ```bash
 pip install -e ".[dev]"
 ruff check .   # lint
-pytest         # testes
+pytest         # testes Python
+npm test       # testes do servidor Node (deploy)
 ```
 
 ## Privacidade
