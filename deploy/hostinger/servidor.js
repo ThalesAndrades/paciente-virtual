@@ -336,6 +336,19 @@ export function criarServidor() {
     const { pathname } = new URL(req.url, "http://localhost");
 
     try {
+      // Verificação de saúde para o painel da Hostinger / monitoramento de uptime.
+      if (req.method === "GET" && (pathname === "/healthz" || pathname === "/api/health")) {
+        return json(res, 200, {
+          status: "ok",
+          modo: process.env.OLLAMA_URL ? "ia" : "demonstracao",
+        });
+      }
+
+      if (req.method === "GET" && pathname === "/favicon.ico") {
+        res.writeHead(204);
+        return res.end();
+      }
+
       if (req.method === "GET" && (pathname === "/" || pathname === "/index.html")) {
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
         return res.end(fs.readFileSync(PAGINA));
@@ -387,13 +400,35 @@ export function criarServidor() {
   });
 }
 
+export function iniciar() {
+  const bruto = process.env.PORT || process.env.PACIENTE_VIRTUAL_PORTA || 3000;
+  const servidor = criarServidor();
+
+  const anunciar = () => {
+    const onde = servidor.address();
+    const alvo = typeof onde === "string" ? onde : `http://${onde.address}:${onde.port}`;
+    console.log(`Paciente Virtual (Node) em ${alvo}`);
+  };
+
+  // Porta numérica (Hostinger define PORT) ou caminho de socket Unix, que o
+  // Phusion Passenger pode entregar em PORT em vez de um número.
+  if (/^\d+$/.test(String(bruto))) {
+    servidor.listen(Number(bruto), process.env.HOST || "0.0.0.0", anunciar);
+  } else {
+    servidor.listen(String(bruto), anunciar);
+  }
+
+  // Encerramento limpo quando a hospedagem reinicia a aplicação.
+  const encerrar = () => servidor.close(() => process.exit(0));
+  process.on("SIGTERM", encerrar);
+  process.on("SIGINT", encerrar);
+
+  return servidor;
+}
+
 const executadoDiretamente =
   process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
 if (executadoDiretamente) {
-  const porta = Number(process.env.PORT || process.env.PACIENTE_VIRTUAL_PORTA || 3000);
-  const host = process.env.HOST || "0.0.0.0";
-  criarServidor().listen(porta, host, () => {
-    console.log(`Paciente Virtual (Node) em http://${host}:${porta}`);
-  });
+  iniciar();
 }

@@ -17,6 +17,29 @@ async function api(base, caminho, corpo) {
   return { status: resposta.status, dados: await resposta.json() };
 }
 
+test("health check reflete o modo conforme OLLAMA_URL", async () => {
+  const servidor = criarServidor();
+  await new Promise((resolver) => servidor.listen(0, "127.0.0.1", resolver));
+  const base = `http://127.0.0.1:${servidor.address().port}`;
+  const original = process.env.OLLAMA_URL;
+
+  try {
+    process.env.OLLAMA_URL = "http://127.0.0.1:11434";
+    const comIa = await api(base, "/healthz");
+    assert.equal(comIa.status, 200);
+    assert.equal(comIa.dados.status, "ok");
+    assert.equal(comIa.dados.modo, "ia");
+
+    delete process.env.OLLAMA_URL;
+    const semIa = await api(base, "/api/health");
+    assert.equal(semIa.status, 200);
+    assert.equal(semIa.dados.modo, "demonstracao");
+  } finally {
+    process.env.OLLAMA_URL = original;
+    servidor.close();
+  }
+});
+
 test("fluxo completo de consulta em modo demonstração", async () => {
   const servidor = criarServidor();
   await new Promise((resolver) => servidor.listen(0, "127.0.0.1", resolver));
