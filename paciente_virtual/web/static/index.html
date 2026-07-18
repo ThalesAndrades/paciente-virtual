@@ -267,11 +267,76 @@
   .linha-consulta h3 { display: flex; justify-content: space-between; gap: 8px; }
   .nota-linha { color: var(--primaria); font-weight: 700; }
   #tela-detalhe h2, #tela-consulta h2 { font-size: 1.05rem; margin: 22px 0 12px; }
+
+  /* Splash */
+  #splash {
+    position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+    background:
+      radial-gradient(900px 500px at 70% 8%, color-mix(in srgb, var(--primaria) 30%, transparent), transparent 60%),
+      radial-gradient(800px 500px at 20% 100%, color-mix(in srgb, var(--psi) 22%, transparent), transparent 60%),
+      var(--fundo-2);
+    transition: opacity .5s ease, visibility .5s; text-align: center;
+  }
+  #splash.sai { opacity: 0; visibility: hidden; }
+  .splash-selo {
+    width: 78px; height: 78px; border-radius: 22px; margin: 0 auto 18px; display: grid; place-items: center;
+    font-size: 2.4rem; color: #fff; background: linear-gradient(160deg, var(--primaria), color-mix(in srgb, var(--primaria) 55%, #000 10%));
+    box-shadow: var(--sombra-forte); animation: pulsaSelo 1.8s ease-in-out infinite;
+  }
+  @keyframes pulsaSelo { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.04); } }
+  .splash-tit { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; }
+  .splash-sub { color: var(--texto-suave); margin-top: 4px; }
+  .splash-barra { width: 168px; height: 5px; border-radius: 999px; background: var(--borda); margin: 20px auto 0; overflow: hidden; }
+  .splash-barra i { display: block; height: 100%; width: 40%; border-radius: 999px; background: var(--primaria); animation: correBarra 1.1s ease-in-out infinite; }
+  @keyframes correBarra { 0% { transform: translateX(-120%); } 100% { transform: translateX(320%); } }
+
+  /* Tela de análise (geração da nota) */
+  #tela-analise { max-width: 640px; }
+  .analise-wrap { text-align: center; padding: 8px 0 20px; }
+  .analise-topo { width: 84px; height: 84px; margin: 22px auto 16px; border-radius: 50%; display: grid; place-items: center; background: var(--primaria-suave); }
+  .analise-topo .spinner { width: 44px; height: 44px; border-radius: 50%; border: 4px solid color-mix(in srgb, var(--primaria) 25%, transparent); border-top-color: var(--primaria); animation: gira .9s linear infinite; }
+  @keyframes gira { to { transform: rotate(360deg); } }
+  .etapas { list-style: none; padding: 0; margin: 22px auto 0; max-width: 440px; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+  .etapas li { display: flex; align-items: center; gap: 13px; padding: 13px 15px; border: 1px solid var(--borda); border-radius: var(--raio-sm); background: var(--superficie); color: var(--texto-suave); box-shadow: var(--sombra); transition: color .3s, border-color .3s, transform .2s; }
+  .etapas li .marca-etapa { width: 24px; height: 24px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: .8rem; border: 2px solid var(--borda-forte); color: transparent; transition: all .3s; }
+  .etapas li.ativo { color: var(--texto); border-color: color-mix(in srgb, var(--primaria) 45%, var(--borda)); }
+  .etapas li.ativo .marca-etapa { border-color: var(--primaria); border-top-color: transparent; animation: gira .8s linear infinite; }
+  .etapas li.feito { color: var(--texto); }
+  .etapas li.feito .marca-etapa { background: var(--ok); border-color: var(--ok); color: #fff; animation: none; }
+
+  /* Resultado — anel de nota + veredito */
+  .resultado-topo { display: flex; align-items: center; gap: 22px; background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 22px; box-shadow: var(--sombra); margin-bottom: 20px; flex-wrap: wrap; }
+  .anel-box { position: relative; width: 128px; height: 128px; flex: none; }
+  .anel { width: 128px; height: 128px; transform: rotate(-90deg); }
+  .anel .trilho { fill: none; stroke: var(--borda); stroke-width: 11; }
+  .anel .progresso { fill: none; stroke: var(--cor-nota, var(--primaria)); stroke-width: 11; stroke-linecap: round; transition: stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1); }
+  .anel-valor { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .anel-valor span { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--cor-nota, var(--primaria)); }
+  .anel-valor small { color: var(--texto-suave); font-size: .8rem; margin-top: 2px; }
+  .resultado-info { flex: 1; min-width: 190px; }
+  .veredito-badge { display: inline-block; font-weight: 750; font-size: .82rem; padding: 5px 13px; border-radius: 999px; margin-bottom: 8px; color: var(--cor-nota, var(--primaria)); background: color-mix(in srgb, var(--cor-nota, var(--primaria)) 14%, transparent); }
+  .resultado-info h1 { margin: 2px 0; font-size: 1.35rem; }
+
+  /* Critérios com barra (decomposição da nota) */
+  .criterio .topo-crit { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .criterio .pts { font-weight: 750; color: var(--primaria); font-size: .92rem; white-space: nowrap; }
+  .criterio .barra-crit { height: 8px; border-radius: 999px; background: var(--borda); overflow: hidden; margin: 9px 0 11px; }
+  .criterio .barra-crit i { display: block; height: 100%; border-radius: 999px; background: var(--cor-crit, var(--primaria)); width: 0; transition: width .9s cubic-bezier(.22,1,.36,1); }
+
   .oculto { display: none !important; }
 </style>
 </head>
 <body>
 <audio id="player-voz" preload="auto" playsinline></audio>
+
+<div id="splash">
+  <div class="splash-in">
+    <div class="splash-selo">🩺</div>
+    <div class="splash-tit">Paciente Virtual</div>
+    <div class="splash-sub">Simulador de consulta clínica</div>
+    <div class="splash-barra"><i></i></div>
+  </div>
+</div>
 
 <section id="tela-inicio" class="tela ativa">
   <div class="marca">
@@ -373,10 +438,32 @@
   </div>
 </section>
 
+<section id="tela-analise" class="tela">
+  <div class="analise-wrap">
+    <div class="analise-topo"><div class="spinner"></div></div>
+    <h1>Analisando a consulta</h1>
+    <p class="subtitulo">Avaliando a sua entrevista pela rubrica do caso…</p>
+    <ul class="etapas" id="etapas-analise"></ul>
+  </div>
+</section>
+
 <section id="tela-avaliacao" class="tela">
-  <div class="marca"><div class="selo">✅</div><div><div class="tit">Resultado da consulta</div><div class="sub" id="resumo-avaliacao"></div></div></div>
+  <div class="resultado-topo">
+    <div class="anel-box">
+      <svg class="anel" viewBox="0 0 128 128" aria-hidden="true">
+        <circle class="trilho" cx="64" cy="64" r="56"></circle>
+        <circle class="progresso" id="anel-progresso" cx="64" cy="64" r="56"></circle>
+      </svg>
+      <div class="anel-valor"><span id="nota-final">0,0</span><small>de 10</small></div>
+    </div>
+    <div class="resultado-info">
+      <span class="veredito-badge oculto" id="veredito-badge"></span>
+      <h1>Resultado da consulta</h1>
+      <p class="subtitulo" id="resumo-avaliacao"></p>
+    </div>
+  </div>
   <div id="aviso-avaliacao" class="faixa-aviso oculto"></div>
-  <div class="nota-geral oculto" id="bloco-nota"><span class="valor" id="nota-final"></span><span>/ 10 na avaliação objetiva</span></div>
+  <h2 id="titulo-criterios" class="oculto">Por que essa nota — critérios avaliados</h2>
   <div id="criterios"></div>
   <h2 id="titulo-parecer" class="oculto">Parecer pedagógico (IA)</h2>
   <div id="parecer" class="parecer oculto"></div>
@@ -639,11 +726,59 @@ function formatarNota(n) { return n.toFixed(1).replace(".", ","); }
 function renderizarChecklist(cont, cl) {
   cont.innerHTML = "";
   for (const c of cl.criterios) {
+    const pct = c.peso > 0 ? Math.round((c.nota / c.peso) * 100) : 0;
+    const cor = pct >= 80 ? "var(--ok)" : pct >= 40 ? "#c98a1e" : "var(--falha)";
     const b = document.createElement("div"); b.className = "criterio";
     const itens = c.itens.map((i) => `<span class="item ${i.atendido ? "ok" : "falha"}">${i.atendido ? "✓" : "✗"} ${i.nome}</span>`).join("");
-    b.innerHTML = `<h3><span>${c.nome}</span><span>${c.nota.toFixed(1)}/${c.peso.toFixed(1)}</span></h3><p class="objetivo">${c.objetivo}</p><div class="itens">${itens}</div>`;
+    b.innerHTML = `<div class="topo-crit"><h3 style="margin:0;font-size:1rem">${c.nome}</h3><span class="pts">${c.nota.toFixed(1)}/${c.peso.toFixed(1)} pts</span></div><div class="barra-crit"><i style="--cor-crit:${cor}"></i></div><p class="objetivo">${c.objetivo}</p><div class="itens">${itens}</div>`;
     cont.appendChild(b);
+    const barra = b.querySelector(".barra-crit i");
+    requestAnimationFrame(() => setTimeout(() => { barra.style.width = pct + "%"; }, 60));
   }
+}
+
+/* ---------- Análise + resultado visual ---------- */
+const ETAPAS = [
+  "Reunindo a transcrição da consulta",
+  "Conferindo a rubrica do caso",
+  "Pontuando os critérios objetivos",
+  "Gerando o parecer pedagógico (IA)",
+  "Montando o resultado",
+];
+let etapaTimer = null, etapaAtual = 0;
+function iniciarAnalise() {
+  const ul = $("etapas-analise"); ul.innerHTML = "";
+  ETAPAS.forEach((t) => { const li = document.createElement("li"); li.innerHTML = `<span class="marca-etapa">✓</span><span>${t}</span>`; ul.appendChild(li); });
+  etapaAtual = 0; mostrarTela("tela-analise"); avancarEtapa();
+}
+function avancarEtapa() {
+  const lis = $("etapas-analise").children;
+  for (let i = 0; i < lis.length; i++) { lis[i].classList.remove("ativo", "feito"); if (i < etapaAtual) lis[i].classList.add("feito"); else if (i === etapaAtual) lis[i].classList.add("ativo"); }
+  if (etapaAtual >= 3) return; // segura em "Gerando o parecer" até a resposta chegar
+  etapaTimer = setTimeout(() => { etapaAtual++; avancarEtapa(); }, etapaAtual === 2 ? 1300 : 900);
+}
+function concluirAnalise(cb) {
+  if (etapaTimer) clearTimeout(etapaTimer);
+  const lis = $("etapas-analise").children;
+  for (let i = 0; i <= 3; i++) { lis[i].classList.remove("ativo"); lis[i].classList.add("feito"); }
+  lis[4].classList.add("ativo");
+  setTimeout(() => { lis[4].classList.remove("ativo"); lis[4].classList.add("feito"); setTimeout(cb, 420); }, 650);
+}
+function vereditoTexto(n) { return n >= 9 ? "Excelente" : n >= 7 ? "Muito bom" : n >= 5 ? "Bom" : n >= 3 ? "Precisa melhorar" : "Insuficiente"; }
+function anelNota(nota) {
+  const circ = 2 * Math.PI * 56;
+  const anel = $("anel-progresso");
+  anel.style.strokeDasharray = String(circ);
+  anel.style.strokeDashoffset = String(circ);
+  const cor = nota >= 8 ? "var(--ok)" : nota >= 6 ? "var(--primaria)" : nota >= 4 ? "#c98a1e" : "var(--falha)";
+  document.querySelector(".resultado-topo").style.setProperty("--cor-nota", cor);
+  const frac = Math.max(0, Math.min(1, nota / 10));
+  requestAnimationFrame(() => setTimeout(() => { anel.style.strokeDashoffset = String(circ * (1 - frac)); }, 90));
+}
+function contarNota(nota) {
+  const el = $("nota-final"); const dur = 950; let t0 = null;
+  function passo(t) { if (t0 === null) t0 = t; const p = Math.min(1, (t - t0) / dur); const v = nota * (1 - Math.pow(1 - p, 3)); el.textContent = v.toFixed(1).replace(".", ","); if (p < 1) requestAnimationFrame(passo); }
+  requestAnimationFrame(passo);
 }
 function balaoDeEvento(e) {
   const b = document.createElement("div");
@@ -682,22 +817,38 @@ async function encerrarConsulta() {
   if (!estado.consultaId || estado.ocupado) return;
   if (!confirm("Encerrar a consulta e gerar a avaliação?")) return;
   pararFala(); pararDigitacao(); estado.ocupado = true; $("botao-encerrar").disabled = true;
-  const ag = adicionarBalao("aviso", "Encerrando e gerando a avaliação…");
+  const t0 = Date.now();
+  iniciarAnalise();
   try {
-    const r = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, { method: "POST" }); const d = await r.json();
-    if (!r.ok) { ag.textContent = d.erro || "Erro ao encerrar a consulta."; return; }
-    mostrarAvaliacao(d);
-  } catch { ag.textContent = "Falha de conexão ao encerrar a consulta."; }
-  finally { estado.ocupado = false; $("botao-encerrar").disabled = false; }
+    const r = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, { method: "POST" });
+    const d = await r.json();
+    const espera = Math.max(0, 2600 - (Date.now() - t0)); // garante que as etapas apareçam
+    setTimeout(() => concluirAnalise(() => {
+      if (!r.ok) { mostrarTela("tela-consulta"); adicionarBalao("aviso", d.erro || "Erro ao encerrar a consulta."); }
+      else mostrarAvaliacao(d);
+    }), espera);
+  } catch {
+    concluirAnalise(() => { mostrarTela("tela-consulta"); adicionarBalao("aviso", "Falha de conexão ao encerrar a consulta."); });
+  } finally { estado.ocupado = false; $("botao-encerrar").disabled = false; }
 }
 function mostrarAvaliacao(d) {
   estado.consultaId = null; pararFala(); pararDigitacao();
+  mostrarTela("tela-avaliacao");
   $("resumo-avaliacao").textContent = `Transcrição salva em historico/${d.transcript}`;
   const av = $("aviso-avaliacao"); av.classList.toggle("oculto", !d.aviso); if (d.aviso) av.textContent = d.aviso;
-  const tem = Boolean(d.checklist); $("bloco-nota").classList.toggle("oculto", !tem); $("criterios").innerHTML = "";
-  if (tem) { $("nota-final").textContent = formatarNota(d.checklist.nota_total); renderizarChecklist($("criterios"), d.checklist); }
+  const badge = $("veredito-badge");
+  const tem = Boolean(d.checklist);
+  $("titulo-criterios").classList.toggle("oculto", !tem);
+  $("criterios").innerHTML = "";
+  if (tem) {
+    const nota = d.checklist.nota_total;
+    anelNota(nota); contarNota(nota);
+    badge.textContent = vereditoTexto(nota); badge.classList.remove("oculto");
+    renderizarChecklist($("criterios"), d.checklist);
+  } else {
+    anelNota(0); $("nota-final").textContent = "—"; badge.classList.add("oculto");
+  }
   const tp = Boolean(d.parecer); $("titulo-parecer").classList.toggle("oculto", !tp); $("parecer").classList.toggle("oculto", !tp); if (tp) $("parecer").textContent = d.parecer;
-  mostrarTela("tela-avaliacao");
 }
 
 /* ---------- Ligações ---------- */
@@ -719,9 +870,12 @@ $("fechar-inst").addEventListener("click", () => $("painel-instrumentos").classL
 if (window.speechSynthesis) { carregarVozesTTS(); speechSynthesis.onvoiceschanged = carregarVozesTTS; }
 ["pointerdown", "touchend", "click", "keydown"].forEach((ev) => window.addEventListener(ev, destravarAudio, { once: true, passive: true }));
 
+function esconderSplash() { const s = $("splash"); if (s && !s.classList.contains("sai")) { s.classList.add("sai"); setTimeout(() => s.remove(), 650); } }
+
 aplicarPreferenciaAudio(estado.falarRespostas);
-carregarCasos();
+carregarCasos().finally(() => setTimeout(esconderSplash, 350));
 carregarCapacidades();
+setTimeout(esconderSplash, 2200); // rede de segurança
 </script>
 </body>
 </html>

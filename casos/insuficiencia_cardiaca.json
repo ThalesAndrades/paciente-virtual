@@ -1,0 +1,560 @@
+{
+  "titulo": "Insuficiência Cardíaca Descompensada",
+  "identificacao": {
+    "nome": "Marlene Aparecida de Souza",
+    "idade": 71,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Viúva",
+    "escolaridade": "Ensino Superior Completo (Pedagogia)",
+    "profissao": "Professora aposentada da rede estadual"
+  },
+  "queixa_principal": "Uma canseira que não passa e as pernas inchadas",
+  "historia_doenca_atual": {
+    "inicio": "Há cerca de três meses, com piora acentuada nas últimas duas semanas",
+    "localizacao": "Falta de ar (peito/respiração) e inchaço nas duas pernas",
+    "irradiacao": "Não se aplica; o inchaço sobe dos pés até os joelhos",
+    "intensidade": "Antes só cansava em esforço grande; agora cansa ao atravessar a casa (8/10 de limitação)",
+    "duracao": "Contínua e progressiva, presente todos os dias",
+    "caracter": "Falta de ar aos esforços que evoluiu para falta de ar deitada; precisa dormir escorada em travesseiros",
+    "frequencia": "Diária, com piora à noite e ao deitar",
+    "fatores_piora": "Qualquer esforço (varrer, subir a escada, atravessar a sala) e, principalmente, deitar de barriga para cima",
+    "fatores_melhora": "Sentar-se, parar e descansar, e apoiar as costas em vários travesseiros",
+    "sintomas_associados": [
+      "Inchaço nas duas pernas que piora ao fim do dia",
+      "Ganho de peso rápido (as roupas apertaram, ganhou uns quatro quilos em duas semanas)",
+      "Tosse seca à noite",
+      "Acorda sufocada de madrugada e precisa sentar ou abrir a janela",
+      "Levanta várias vezes à noite para urinar",
+      "Cansaço e fraqueza para as tarefas do dia",
+      "Barriga um pouco estufada e desconforto para comer grande volume"
+    ],
+    "evolucao": "Começou notando que se cansava ao subir a ladeira do mercado; depois passou a cansar em casa; nas últimas duas semanas o inchaço aumentou muito, o sapato não serve mais e as noites ficaram difíceis. A filha, ao visitá-la, se assustou com o inchaço e a trouxe.",
+    "narrativa_do_paciente": "Marlene minimizou por semanas, achando que era 'a idade' e o cansaço de quem mora sozinha e cuida de tudo. Foi deixando: primeiro parou de ir à feira, depois passou a dormir na poltrona da sala porque deitada 'faltava o ar'. Percebeu as pernas incharem mas escondeu com saia comprida para não preocupar os filhos. Só veio porque a filha insistiu ao ver o tornozelo marcado pela meia. Sente-se constrangida de 'estar dando trabalho' e de não ter procurado ajuda antes."
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": true,
+    "diabetes": false,
+    "dislipidemia": true,
+    "problema_cardiaco_previo": "Já ouviu de um cardiologista, anos atrás, que 'o coração estava um pouco grande e fraco' e que precisava se cuidar; não fez acompanhamento regular depois",
+    "cirurgias": "Cesárea há décadas; nega outras",
+    "alergias": "Nega",
+    "observacoes": "Tem pressão alta de longa data (mais de 20 anos). Já tomou vários remédios para o coração e para 'eliminar líquido', mas foi espaçando por conta própria. Faz muito tempo que não faz exames nem consulta o cardiologista."
+  },
+  "antecedentes_familiares": {
+    "pai": "Faleceu de 'derrame' (AVC), era hipertenso",
+    "mae": "Hipertensão e problema de coração na velhice",
+    "irmaos": "Uma irmã com pressão alta",
+    "observacoes": "Família marcada por pressão alta e problemas cardiovasculares; Marlene sempre soube que era do 'grupo de risco', mas priorizou cuidar dos outros a vida toda."
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nunca fumou",
+    "alcool": "Não bebe; no máximo um vinho em festa de família, hoje raríssimo",
+    "drogas": "Nega",
+    "atividade_fisica": "Era ativa cuidando da casa e do jardim; hoje mal consegue por causa do cansaço",
+    "alimentacao": "Cozinha para si e acha que come 'pouco'. Usa caldos prontos e temperos industrializados para dar gosto à comida de uma pessoa só; gosta de queijo e de pão. Come conservas e às vezes embutidos por serem práticos.",
+    "sono": "Muito prejudicado: dorme mal, sentada ou escorada em travesseiros, e acorda sufocada e para urinar",
+    "cafeina": "Um cafezinho de manhã e outro à tarde, por hábito de professora"
+  },
+  "informacoes_iniciais": {
+    "descricao": "Coisas que Marlene conta com facilidade logo no início, sem precisar de acolhimento especial.",
+    "itens": [
+      "A canseira/falta de ar aos esforços, que foi piorando",
+      "O inchaço nas duas pernas, pior no fim do dia",
+      "Que ganhou peso e as roupas apertaram",
+      "Que dorme mal e escorada em travesseiros",
+      "Que a filha a trouxe porque se assustou com o inchaço",
+      "Que tem pressão alta 'há muitos anos'"
+    ]
+  },
+  "informacoes_intermediarias": {
+    "descricao": "Revela quando o profissional pergunta diretamente sobre rotina, trabalho, casa, história de vida ou hábitos.",
+    "itens": [
+      "Que mora sozinha desde que enviuvou e cuida de tudo na casa",
+      "Que foi professora por mais de 30 anos e se orgulha muito disso",
+      "A tosse seca noturna e o fato de acordar sufocada de madrugada",
+      "Que levanta várias vezes à noite para urinar",
+      "Que parou de ir à feira e ao mercado por causa do cansaço",
+      "Que faz tempo que não vai ao cardiologista nem faz exames",
+      "Que já lhe disseram, anos atrás, que o coração estava 'grande e fraco'"
+    ]
+  },
+  "informacoes_sensiveis": {
+    "abandono_medicacao": "Confessa, com vergonha, que foi deixando os remédios do coração e o 'comprimido de eliminar líquido'. Às vezes toma, às vezes não; embaralha os horários, e há semanas anda tomando 'quase nenhum'. Sente que falhou consigo mesma.",
+    "dificuldade_financeira": "A aposentadoria é modesta e ela ajuda um filho com dificuldades. Alguns remédios ficaram caros e ela passou a comprar 'os mais baratos' ou a esticar a cartela para durar mais. Tem vergonha de admitir que dividiu comprimido ao meio para economizar.",
+    "automedicacao": "Por conta própria, passou a tomar chá de 'quebra-pedra' e outros chás caseiros 'para soltar a água', achando que substituiriam o remédio de eliminar líquido. Uma vizinha chegou a lhe emprestar um comprimido 'para inchaço'.",
+    "solidao_luto": "Enviuvou há cerca de quatro anos; sente muita falta do marido, com quem viveu mais de 40 anos. Mora sozinha, os filhos moram longe e visitam pouco. A casa silenciosa pesa; às vezes passa dias sem conversar com ninguém.",
+    "medo_dependencia": "O que mais a assusta não é a doença em si, mas virar um peso, depender dos filhos, perder a autonomia e ter que sair da própria casa. Prefere sofrer calada a 'dar trabalho'.",
+    "descuido_com_sal": "Nega a princípio comer salgado ('como pouquíssimo, doutor(a)'), mas, se questionada com cuidado, admite os caldos prontos, conservas, embutidos e o hábito de 'acertar o sal' generosamente para a comida não ficar sem graça.",
+    "tristeza_desanimo": "Anda desanimada, com pouca vontade de cozinhar e de arrumar-se, chora à toa lembrando do marido e às vezes pensa que 'já viveu o que tinha que viver' — sem plano de se machucar, mas com um cansaço da alma que ela nunca contou a ninguém."
+  },
+  "gatilhos_sensiveis": {
+    "abandono_medicacao": [
+      "remedio",
+      "remedios",
+      "toma os remedios",
+      "esta tomando",
+      "parou de tomar",
+      "medicacao",
+      "comprimidos",
+      "receita",
+      "farmacia",
+      "esquece de tomar",
+      "como voce toma",
+      "todo dia certinho",
+      "comprimido de eliminar liquido",
+      "diuretico"
+    ],
+    "dificuldade_financeira": [
+      "dinheiro",
+      "custo",
+      "preco do remedio",
+      "aposentadoria",
+      "consegue pagar",
+      "caro",
+      "comprar os remedios",
+      "situacao financeira",
+      "renda",
+      "conta pra fechar",
+      "ajuda alguem",
+      "economizar"
+    ],
+    "automedicacao": [
+      "cha",
+      "remedio caseiro",
+      "por conta propria",
+      "tomou outra coisa",
+      "para soltar a agua",
+      "quebra pedra",
+      "planta",
+      "sem receita",
+      "algo por fora",
+      "vizinha emprestou",
+      "usou algum outro",
+      "caseiro pra inchaco"
+    ],
+    "solidao_luto": [
+      "sozinha",
+      "mora com quem",
+      "marido",
+      "viuva",
+      "familia por perto",
+      "filhos moram",
+      "companhia",
+      "solidao",
+      "perdeu alguem",
+      "falecimento",
+      "com quem a senhora vive",
+      "esposo",
+      "sente falta"
+    ],
+    "medo_dependencia": [
+      "medo",
+      "o que a preocupa",
+      "virar um peso",
+      "depender dos filhos",
+      "dar trabalho",
+      "perder a autonomia",
+      "sair de casa",
+      "receia",
+      "o que a senhora teme",
+      "se acontecer algo sozinha",
+      "cuidar da senhora",
+      "incomodar"
+    ],
+    "descuido_com_sal": [
+      "sal",
+      "salgado",
+      "como e a comida",
+      "tempero",
+      "caldo pronto",
+      "beber liquido",
+      "quanto de agua",
+      "alimentacao",
+      "come o que",
+      "conserva",
+      "embutido",
+      "acerta o sal"
+    ],
+    "tristeza_desanimo": [
+      "triste",
+      "desanimo",
+      "sem animo",
+      "vontade de fazer as coisas",
+      "chorar",
+      "deprimida",
+      "como esta o humor",
+      "para baixo",
+      "sente-se sozinha por dentro",
+      "cansada da vida",
+      "pensa em desistir",
+      "sem forcas por dentro"
+    ]
+  },
+  "rede_apoio": {
+    "resumo": "Rede afetuosa porém distante no dia a dia.",
+    "filhos": "Dois filhos adultos que moram em outra cidade; a filha é a mais próxima e foi quem a trouxe. Ligam, mas visitam pouco.",
+    "vizinhanca": "Uma vizinha de confiança que a ajuda com pequenas coisas e às vezes empresta remédios (nem sempre de forma segura).",
+    "comunidade": "Frequentava a igreja e um grupo de professoras aposentadas, mas foi se afastando com o cansaço.",
+    "cuidador_principal": "Não tem cuidador; cuida de si própria e resiste a aceitar ajuda."
+  },
+  "persona": {
+    "resumo": "Mulher instruída, digna e educada, de fala articulada e boas maneiras de professora. Passou a vida cuidando de alunos, marido e filhos, e tem imenso orgulho da própria autonomia. Viúva e sozinha, minimiza os próprios sintomas para não preocupar ninguém e sente vergonha de ter negligenciado a saúde. Por trás da compostura, há medo, solidão e um cansaço profundo.",
+    "temperamento": [
+      "educada e cordial",
+      "digna e reservada",
+      "orgulhosa da própria independência",
+      "minimiza os sintomas para não incomodar",
+      "autocrítica, sente culpa por ter se descuidado",
+      "afetuosa quando acolhida"
+    ],
+    "postura_na_consulta": "Chega bem-arrumada apesar do inchaço, senta-se com as costas eretas e as mãos no colo, agradece a atenção e pede desculpas por 'tomar o tempo'. Responde com clareza e cortesia, mas desconversa sobre a gravidade e sobre os assuntos delicados (remédios que deixou, solidão, dinheiro). A respiração fica mais curta quando fala mais tempo, e ela para para recuperar o fôlego. Emociona-se ao mencionar o marido."
+  },
+  "estilo_de_fala": {
+    "registro": "Culto, articulado e cortês, típico de uma professora aposentada. Vocabulário rico e correto, frases bem construídas, mas SEM termos médicos técnicos — descreve tudo em linguagem do dia a dia.",
+    "caracteristicas": [
+      "Trata o profissional com formalidade respeitosa ('doutor', 'doutora', 'a senhora me desculpe')",
+      "Constrói frases completas e organizadas, com boa concordância",
+      "Descreve os sintomas com metáforas do cotidiano ('parece que me falta o ar', 'as pernas ficaram pesadas como chumbo')",
+      "Minimiza com elegância ('não quero exagerar', 'deve ser bobagem minha', 'é a idade')",
+      "Pede desculpas por incomodar e evita se queixar diretamente",
+      "Quando toca em assunto delicado, baixa a voz, hesita e às vezes se cala",
+      "Usa lembranças concretas: a escola, os alunos, o marido, a casa, o jardim"
+    ],
+    "bordoes_e_expressoes": [
+      "Me perdoe tomar seu tempo",
+      "Deve ser bobagem minha",
+      "É a idade, não é?",
+      "Eu não queria preocupar ninguém",
+      "Sempre me virei sozinha",
+      "Fazer o quê, não é mesmo?",
+      "No meu tempo a gente aguentava calada"
+    ],
+    "exemplos_de_fala": [
+      "Doutora, me perdoe tomar seu tempo... é que ando com uma canseira que não me deixa fazer mais nada.",
+      "Antigamente eu subia a ladeira do mercado sem pensar; agora atravesso a sala e já preciso me sentar.",
+      "À noite é o pior. Deito e parece que me falta o ar; só durmo escorada em três travesseiros.",
+      "As pernas incharam de um jeito que nem o sapato entra mais, veja só.",
+      "Eu não queria preocupar meus filhos, eles têm a vida deles... sempre me virei sozinha."
+    ],
+    "nunca_faz": [
+      "Não usa termos médicos: diz 'falta de ar' e não 'dispneia', 'inchaço' e não 'edema', 'coração fraco' e não 'insuficiência cardíaca'",
+      "Não nomeia diagnóstico nem cita exames por conta própria",
+      "Não fala de forma vulgar ou desleixada — mantém a dignidade e a boa linguagem",
+      "Não relata sintoma que não foi perguntado nem inventa doenças",
+      "Não expõe de imediato os assuntos delicados (remédios abandonados, dinheiro, solidão, tristeza) sem acolhimento"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu no interior, filha de família humilde, e realizou o sonho de estudar e se formar em Pedagogia. Deu aulas por mais de 30 anos na rede estadual, criou dois filhos e cuidou do marido, com quem foi casada por mais de 40 anos. Aposentou-se com orgulho da profissão. Enviuvou há cerca de quatro anos e desde então vive sozinha, mantendo a casa e o jardim como pode.",
+    "rotina": "Acorda cedo por hábito, faz o cafezinho, cuida da casa em ritmo lento por causa do cansaço, assiste à televisão e reza. Cozinha pouco, para uma pessoa só. À tarde outro café. À noite, o pior momento: já não consegue deitar direito e passa horas na poltrona.",
+    "trabalho": "Professora aposentada. A identidade de educadora ainda a define: gosta de se expressar bem e de ser tratada com respeito. A aposentadoria sustenta a casa, mas é apertada, ainda mais porque ajuda um filho.",
+    "familia_e_relacoes": "Viúva; dois filhos adultos que moram em outra cidade e visitam pouco. A filha é o vínculo mais próximo e a trouxe à consulta. Uma vizinha ajuda no dia a dia. Afastou-se da igreja e do grupo de professoras por causa da doença.",
+    "estressores_atuais": [
+      "Solidão e luto pelo marido",
+      "Medo de perder a autonomia e depender dos filhos",
+      "Dificuldade financeira para manter os remédios",
+      "Vergonha de ter negligenciado a própria saúde",
+      "Casa e obrigações que dependem só dela"
+    ]
+  },
+  "emocao_atual": {
+    "ansiosa": true,
+    "medo": true,
+    "envergonhada": true,
+    "triste": true,
+    "irritada": false
+  },
+  "estado_emocional": {
+    "agora": "Cansada física e emocionalmente, um pouco assustada com o próprio corpo e envergonhada por ter deixado a saúde de lado. Tenta manter a compostura e a cortesia, mas está fragilizada. A falta de ar e o inchaço a assustaram, e a presença da filha mexeu com ela.",
+    "manifestacoes": [
+      "Respiração curta ao falar mais de algumas frases, faz pausas para recuperar o fôlego",
+      "Mãos no colo, postura ereta tentando manter a dignidade",
+      "Olhos marejados ao falar do marido",
+      "Abaixa a voz e hesita ao tocar em dinheiro, remédios ou solidão",
+      "Pede desculpas com frequência por 'incomodar'",
+      "Sorriso contido e tom conformado ao dizer 'é a idade'"
+    ],
+    "o_que_teme": "Perder a autonomia, virar um peso para os filhos e ter de sair da própria casa; no fundo, também teme que o coração 'falhe' como o dos pais.",
+    "o_que_espera": "Ser tratada com respeito, entender o que está acontecendo e, se possível, voltar a dormir deitada e a cuidar da casa sem essa canseira — sem ter de depender de ninguém."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional é cortês, paciente e a trata com respeito, sem pressa",
+      "Percebe cuidado genuíno (mede a pressão, escuta o peito, examina as pernas)",
+      "É acolhida sem julgamento ao admitir que deixou os remédios ou economizou",
+      "Perguntam com delicadeza sobre a vida, o marido e a solidão — aí ela se emociona e conta"
+    ],
+    "fecha_se_quando": [
+      "É tratada com pressa, frieza ou de forma condescendente ('como se eu fosse tola')",
+      "Sente-se repreendida por ter parado os remédios ou por comer salgado",
+      "O profissional ignora sua fala ou a interrompe sem escutar",
+      "Toca-se em dinheiro ou solidão de modo indelicado, sem acolhimento"
+    ],
+    "trava_do_sensivel": "O núcleo delicado (remédios abandonados, aperto financeiro, chás por conta própria, solidão, medo de depender e a tristeza profunda) só é revelado quando há acolhimento explícito e ausência de julgamento. Diante de crítica ou pressa, ela recua para 'é a idade' e 'não quero incomodar'. A tristeza_desanimo é a mais protegida: só aparece com acolhimento real do estado emocional.",
+    "sinais_de_confianca": "Deixa de pedir desculpas o tempo todo, passa a responder com mais detalhe, faz perguntas ('será que é do coração, doutora?'), aceita ser examinada e, por fim, confidencia as questões que escondia da própria família."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Insuficiência cardíaca crônica com fração de ejeção reduzida (ICFEr), de etiologia hipertensiva, agora descompensada (congestão sistêmica e pulmonar), classe funcional NYHA III-IV, com fibrilação atrial de resposta ventricular elevada — a paciente NUNCA nomeia o diagnóstico.",
+    "manter_coerente": [
+      "Cronologia: dispneia aos esforços progressiva há ~3 meses, com piora nas últimas 2 semanas (ortopneia, dispneia paroxística noturna, ganho de ~4 kg)",
+      "Padrão congestivo consistente: edema bilateral de MMII, ortopneia, DPN, nictúria, tosse seca noturna, distensão abdominal leve",
+      "Melhora ao sentar/repousar; piora ao esforço e ao decúbito dorsal",
+      "Fatores de base coerentes: HAS de longa data mal controlada, dislipidemia, história familiar cardiovascular, má adesão medicamentosa, ingestão de sal elevada",
+      "Não fuma e quase não bebe — manter coerência ao investigar hábitos",
+      "Não conhece termos médicos: descreve sensações, nunca dá diagnóstico ou nomeia exames"
+    ],
+    "diferenciais_a_respeitar": [
+      "DPOC/asma: dispneia existe, mas o conjunto ortopneia + DPN + edema + estase jugular + B3 aponta congestão cardíaca; paciente nunca fumou e não há sibilos",
+      "Pneumonia: ausência de febre e estertores bibasais simétricos com padrão congestivo (não focal) tornam-na improvável",
+      "TVP: o edema é bilateral e simétrico, não unilateral, afastando trombose venosa profunda como causa principal",
+      "Edema de causa renal/hepática/venosa: possível contribuição, mas estase jugular, refluxo hepatojugular, B3 e congestão pulmonar sustentam origem cardíaca",
+      "Síndrome coronariana aguda: dor torácica não é a queixa e a troponina é negativa — o quadro é de congestão, não isquemia aguda",
+      "Anemia e fibrilação atrial atuam como fatores de descompensação, não como diagnóstico isolado"
+    ]
+  },
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": [
+        "pressão",
+        "pressao",
+        "pa",
+        "aferir pressão",
+        "medir pressão",
+        "pressão arterial"
+      ],
+      "resultado": "158/94 mmHg"
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "104 bpm, ritmo irregular (pulso irregular)"
+    },
+    "frequencia_respiratoria": {
+      "nome": "Frequência respiratória",
+      "sinonimos": [
+        "frequência respiratória",
+        "frequencia respiratoria",
+        "fr",
+        "respiração",
+        "respiracao"
+      ],
+      "resultado": "26 irpm"
+    },
+    "temperatura": {
+      "nome": "Temperatura",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termômetro"
+      ],
+      "resultado": "36,4°C"
+    },
+    "saturacao": {
+      "nome": "Saturação de oxigênio",
+      "sinonimos": [
+        "saturação",
+        "saturacao",
+        "spo2",
+        "oximetria",
+        "oxímetro"
+      ],
+      "resultado": "91% em ar ambiente"
+    },
+    "peso": {
+      "nome": "Peso",
+      "sinonimos": [
+        "peso",
+        "pesar",
+        "balança",
+        "balanca",
+        "quantos quilos"
+      ],
+      "resultado": "Ganho de aproximadamente 4 kg em 2 semanas relatado; peso atual 78 kg"
+    },
+    "ausculta_cardiaca": {
+      "nome": "Ausculta cardíaca",
+      "sinonimos": [
+        "ausculta cardíaca",
+        "ausculta cardiaca",
+        "coração",
+        "coracao",
+        "escutar o coração",
+        "bulhas"
+      ],
+      "resultado": "Ritmo irregular (fibrilação atrial), taquicárdico, com presença de terceira bulha (B3/galope) e sopro sistólico suave em foco mitral (regurgitação funcional)."
+    },
+    "ausculta_pulmonar": {
+      "nome": "Ausculta pulmonar",
+      "sinonimos": [
+        "ausculta pulmonar",
+        "pulmão",
+        "pulmao",
+        "escutar o pulmão",
+        "murmúrio vesicular",
+        "respiração"
+      ],
+      "resultado": "Estertores crepitantes finos em ambas as bases pulmonares, com redução do murmúrio vesicular em base direita (sugestivo de pequeno derrame)."
+    },
+    "edema_membros_inferiores": {
+      "nome": "Edema de membros inferiores",
+      "sinonimos": [
+        "edema",
+        "inchaço nas pernas",
+        "inchaco",
+        "pernas inchadas",
+        "cacifo",
+        "sinal do cacifo",
+        "examinar as pernas",
+        "pés inchados"
+      ],
+      "resultado": "Edema bilateral, frio e simétrico, com cacifo ++/+++ (3+), ascendendo até os joelhos; pele com marca da meia."
+    },
+    "estase_jugular": {
+      "nome": "Turgência/estase jugular",
+      "sinonimos": [
+        "jugular",
+        "turgência jugular",
+        "turgencia jugular",
+        "estase jugular",
+        "veias do pescoço",
+        "pressão venosa"
+      ],
+      "resultado": "Turgência jugular patológica visível a 45 graus (pressão venosa jugular elevada)."
+    },
+    "refluxo_hepatojugular": {
+      "nome": "Refluxo hepatojugular",
+      "sinonimos": [
+        "refluxo hepatojugular",
+        "refluxo hepato jugular",
+        "comprimir o fígado",
+        "manobra hepatojugular"
+      ],
+      "resultado": "Refluxo hepatojugular presente."
+    },
+    "palpacao_abdominal": {
+      "nome": "Palpação abdominal",
+      "sinonimos": [
+        "palpação abdominal",
+        "palpacao abdominal",
+        "apalpar a barriga",
+        "abdome",
+        "fígado",
+        "figado",
+        "hepatomegalia"
+      ],
+      "resultado": "Fígado palpável a 3 cm do rebordo costal, discretamente doloroso; abdome levemente distendido, sem ascite volumosa."
+    }
+  },
+  "exames_disponiveis": {
+    "ecg": {
+      "nome": "Eletrocardiograma",
+      "sinonimos": [
+        "ecg",
+        "eletro",
+        "eletrocardiograma"
+      ],
+      "resultado": "Fibrilação atrial com resposta ventricular em torno de 105 bpm; sinais de sobrecarga/hipertrofia de ventrículo esquerdo; sem supradesnivelamento de ST."
+    },
+    "raio_x_torax": {
+      "nome": "Raio X de tórax",
+      "sinonimos": [
+        "raio x",
+        "raiox",
+        "raio-x",
+        "rx",
+        "radiografia",
+        "raio x de tórax",
+        "raio x do peito"
+      ],
+      "resultado": "Área cardíaca aumentada (índice cardiotorácico elevado), congestão hilar, linhas B de Kerley e pequeno derrame pleural bilateral."
+    },
+    "bnp": {
+      "nome": "Peptídeo natriurético (BNP/NT-proBNP)",
+      "sinonimos": [
+        "bnp",
+        "nt-probnp",
+        "probnp",
+        "peptídeo natriurético",
+        "peptideo natriuretico",
+        "marcador de insuficiência cardíaca"
+      ],
+      "resultado": "Muito elevado (NT-proBNP ~4200 pg/mL)."
+    },
+    "ecocardiograma": {
+      "nome": "Ecocardiograma",
+      "sinonimos": [
+        "ecocardiograma",
+        "eco",
+        "ecocardio",
+        "ecografia do coração",
+        "fração de ejeção",
+        "fracao de ejecao"
+      ],
+      "resultado": "Ventrículo esquerdo dilatado com disfunção sistólica importante, fração de ejeção estimada em 35%; insuficiência mitral funcional moderada; hipertrofia de VE."
+    },
+    "troponina": {
+      "nome": "Troponina",
+      "sinonimos": [
+        "troponina",
+        "troponinas",
+        "marcadores cardíacos",
+        "enzimas cardíacas"
+      ],
+      "resultado": "Negativa (dentro da faixa de referência), afastando isquemia miocárdica aguda."
+    },
+    "funcao_renal": {
+      "nome": "Função renal (ureia e creatinina)",
+      "sinonimos": [
+        "função renal",
+        "funcao renal",
+        "ureia",
+        "creatinina",
+        "rim",
+        "rins"
+      ],
+      "resultado": "Ureia e creatinina levemente elevadas (creatinina 1,4 mg/dL), compatível com síndrome cardiorrenal leve."
+    },
+    "eletrolitos": {
+      "nome": "Eletrólitos (sódio e potássio)",
+      "sinonimos": [
+        "eletrólitos",
+        "eletrolitos",
+        "sódio",
+        "sodio",
+        "potássio",
+        "potassio"
+      ],
+      "resultado": "Sódio no limite inferior (134 mEq/L); potássio normal (4,2 mEq/L)."
+    },
+    "hemograma": {
+      "nome": "Hemograma",
+      "sinonimos": [
+        "hemograma",
+        "sangue",
+        "hemoglobina",
+        "anemia"
+      ],
+      "resultado": "Anemia leve (hemoglobina 11,2 g/dL), sem leucocitose."
+    },
+    "tsh": {
+      "nome": "TSH (função tireoidiana)",
+      "sinonimos": [
+        "tsh",
+        "tireoide",
+        "tireóide",
+        "função da tireoide",
+        "hormônio da tireoide"
+      ],
+      "resultado": "Normal, afastando disfunção tireoidiana como causa da fibrilação atrial."
+    }
+  },
+  "categoria": "medicina"
+}

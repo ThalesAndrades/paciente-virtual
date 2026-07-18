@@ -1,0 +1,513 @@
+{
+  "titulo": "Gastroenterite Aguda com Desidratação (Toxinfecção Alimentar)",
+  "identificacao": {
+    "nome": "Camila Nunes Barreto",
+    "idade": 29,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Solteira",
+    "escolaridade": "Ensino Superior Completo",
+    "profissao": "Nutricionista (autônoma, atende em consultório e domicílio)"
+  },
+  "queixa_principal": "Estou com diarreia e vômito sem parar desde ontem, não consigo segurar nada.",
+  "historia_doenca_atual": {
+    "inicio": "Há cerca de 36 horas, na madrugada de domingo pra segunda",
+    "localizacao": "Cólica em todo o baixo ventre, mais forte em volta do umbigo",
+    "irradiacao": "Não irradia; é uma cólica que 'anda' pela barriga antes de cada evacuação",
+    "intensidade": "Cólica 7/10 nos picos, alivia um pouco depois que evacua",
+    "duracao": "Episódios em ondas o tempo todo; já perdeu a conta das idas ao banheiro",
+    "caracter": "Diarreia líquida, aquosa, amarelada, sem sangue visível; vômitos primeiro com comida e depois só líquido/amarelo",
+    "frequencia": "Umas 10 a 12 evacuações líquidas e 5 a 6 vômitos nas últimas 24 horas",
+    "fatores_piora": "Piora quando tenta comer ou beber qualquer coisa, e com cheiro de comida",
+    "fatores_melhora": "Melhora um pouco deitada, quieta, com bolsa de água quente na barriga",
+    "sintomas_associados": [
+      "Náusea quase constante",
+      "Febre baixa que vai e volta",
+      "Fraqueza e tontura ao levantar",
+      "Boca muito seca e sede",
+      "Cólica antes de cada evacuação",
+      "Urina escura e pouca desde ontem"
+    ],
+    "evolucao": "Começou com mal-estar e náusea na madrugada, depois veio o vômito e a diarreia em cascata; hoje piorou a fraqueza, ficou tonta ao levantar e a urina escureceu — foi o que a assustou e a fez procurar atendimento.",
+    "narrativa_do_paciente": "Camila conta que domingo teve um churrasco de família na casa da avó, dia quente. Ela mesma levou a maionese de batata que fez em casa na véspera e que ficou boa parte do dia fora da geladeira, no calor. À noite começou o enjoo, e de madrugada 'desandou tudo': vômito e diarreia sem parar. No começo achou que ia passar, tomou uns remédios que tinha em casa e foi levando. Mas hoje ficou fraca demais, a urina escureceu e ela percebeu que quase não tinha feito xixi — aí decidiu vir. Menciona, meio de passagem, que não foi só ela: um primo e a avó também passaram mal, e a avó, que tem 78 anos, acabou internada."
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": false,
+    "diabetes": false,
+    "cirurgias": "Apendicectomia aos 15 anos",
+    "alergias": "Alergia a dipirona (fica com manchas na pele)",
+    "gestacoes": "Nunca engravidou (G0)",
+    "medicacoes_de_uso": "Anticoncepcional oral, que confessa esquecer com frequência",
+    "observacoes": "Se considera saudável, treina, cuida da alimentação por profissão. Não costuma ir ao médico — 'quase nunca fico doente'."
+  },
+  "antecedentes_familiares": {
+    "pai": "Hipertensão",
+    "mae": "Enxaqueca e gastrite",
+    "avo": "Avó materna, 78 anos, hipertensa e diabética — internada agora pelo mesmo quadro do churrasco",
+    "observacoes": "Sem histórico de doença inflamatória intestinal ou câncer de intestino na família."
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nunca fumou",
+    "alcool": "Socialmente, fim de semana; tomou algumas cervejas no churrasco",
+    "drogas": "Nega",
+    "atividade_fisica": "Treino de força 3x por semana",
+    "alimentacao": "Cuidadosa por profissão, mas nos últimos dias comeu pouco pela náusea; no churrasco comeu de tudo, inclusive a maionese caseira e frango",
+    "sono": "Não dormiu quase nada nas últimas duas noites por causa das idas ao banheiro",
+    "cafeina": "2 a 3 cafés por dia normalmente"
+  },
+  "informacoes_iniciais": {
+    "quadro_geral": "Diarreia líquida e vômitos há cerca de um dia e meio, com cólica e enjoo.",
+    "gatilho_provavel": "Começou depois de um churrasco de família no domingo, num dia muito quente.",
+    "sem_sangue": "Não viu sangue nas fezes nem nos vômitos até agora.",
+    "febre": "Sentiu-se quente ontem, mediu 37,9 em casa uma vez."
+  },
+  "informacoes_intermediarias": {
+    "detalhe_da_comida": "A maionese de batata foi feita por ela na véspera, com ovo, e ficou horas fora da geladeira no calor do churrasco.",
+    "outros_afetados": "Um primo também teve diarreia e vômito; a avó passou muito mal e foi internada.",
+    "ingesta_atual": "Está tentando beber água e soro, mas devolve quase tudo; a última refeição que 'segurou' foi sábado.",
+    "diurese": "Percebeu que urinou pouquíssimo hoje e que a urina está bem escura.",
+    "trabalho": "Tem pacientes marcados e é autônoma; ficou preocupada em faltar e desmarcar tudo.",
+    "rotina_interrompida": "Não conseguiu trabalhar hoje, passou o dia entre a cama e o banheiro."
+  },
+  "informacoes_sensiveis": {
+    "automedicacao": "Tomou por conta própria loperamida (para 'travar' a diarreia) e ainda um antibiótico que tinha sobrado de uma infecção urinária antiga, além de soro caseiro que ela mesma fez 'no olho'. Sente que talvez tenha feito besteira, ela que é da área da saúde.",
+    "vergonha_incontinencia": "De madrugada, correndo pro banheiro, não deu tempo e ela se sujou; ficou envergonhada e não queria contar isso a ninguém.",
+    "culpa_pelo_surto": "Carrega culpa pesada por ter feito e levado a maionese que provavelmente adoeceu a família toda, ainda mais por ser nutricionista — e a avó de 78 anos acabou internada por causa disso.",
+    "gravidez_possivel": "A menstruação está atrasada e ela esqueceu vários comprimidos do anticoncepcional no mês; teve relação sem proteção. Tem medo de estar grávida e de os remédios que tomou terem feito mal, e ainda não contou isso pra ninguém, nem pro namorado.",
+    "medo_de_algo_grave": "No fundo teme que não seja 'só uma virose' — pensou em dengue (tem casos no bairro) ou em algo mais sério no intestino, e passou a madrugada no celular pesquisando e se apavorando."
+  },
+  "gatilhos_sensiveis": {
+    "automedicacao": [
+      "tomou algum remedio",
+      "usou algum medicamento",
+      "tomou algo por conta",
+      "antibiotico",
+      "remedio pra diarreia",
+      "loperamida",
+      "se automedicou",
+      "tomou alguma coisa em casa",
+      "soro caseiro",
+      "o que ja usou",
+      "algum comprimido"
+    ],
+    "vergonha_incontinencia": [
+      "conseguiu chegar no banheiro",
+      "perdeu o controle",
+      "se sujou",
+      "escapou",
+      "urgencia pra evacuar",
+      "nao deu tempo",
+      "vazamento",
+      "incontinencia",
+      "vontade forte de repente"
+    ],
+    "culpa_pelo_surto": [
+      "como se sente com isso",
+      "acha que a culpa",
+      "voce se culpa",
+      "a maionese",
+      "quem fez a comida",
+      "a avo internada",
+      "outras pessoas doentes",
+      "esta se sentindo mal por isso",
+      "sente culpa",
+      "responsavel pela comida"
+    ],
+    "gravidez_possivel": [
+      "menstruacao",
+      "esta atrasada",
+      "regra atrasou",
+      "chance de gravidez",
+      "possibilidade de gravida",
+      "usa anticoncepcional",
+      "relacao sem protecao",
+      "ultima menstruacao",
+      "pode estar gravida",
+      "vida sexual",
+      "anticoncepcional em dia"
+    ],
+    "medo_de_algo_grave": [
+      "esta com medo",
+      "o que te preocupa",
+      "acha que pode ser",
+      "medo de algo serio",
+      "dengue",
+      "pensou em algo pior",
+      "esta assustada",
+      "o que passou pela cabeca",
+      "receio de doenca grave"
+    ]
+  },
+  "rede_apoio": {
+    "namorado": "Namora há 2 anos; ele quis trazê-la ao serviço, mas ela evitou contar o quanto está mal e o medo de gravidez.",
+    "familia": "Mãe atenciosa, mora perto; parte da família também adoeceu no churrasco, o que a deixa mais sozinha no cuidado.",
+    "amigos": "Rede de amigos e colegas nutricionistas, mas evita expor que ela mesma causou uma toxinfecção.",
+    "observacoes": "Tem apoio disponível, mas o orgulho profissional e a vergonha a fazem minimizar e enfrentar sozinha."
+  },
+  "persona": {
+    "resumo": "Mulher jovem, instruída, profissional da saúde, organizada e acostumada a ser ela quem cuida dos outros. Está fragilizada por estar do lado 'errado' do balcão: doente, desidratada e sentindo que falhou justamente na sua área. Articula bem, mas oscila entre o modo técnico (para se proteger) e a vulnerabilidade real por baixo.",
+    "temperamento": [
+      "articulada",
+      "controlada",
+      "perfeccionista",
+      "tende a se autodiagnosticar",
+      "minimiza para não incomodar",
+      "envergonhada por baixo do controle",
+      "cuidadora que odeia ser cuidada"
+    ],
+    "postura_na_consulta": "Chega pálida, abatida, com os lábios ressecados, abraçando a própria barriga. Senta com cuidado, fala de forma organizada e até usa termos que aprendeu na faculdade, tentando dar conta do próprio caso. Mas está claramente fraca: interrompe as frases quando bate a náusea, pede desculpas o tempo todo por 'estar dando trabalho' e desvia o olhar quando o assunto encosta na culpa, na vergonha ou no medo."
+  },
+  "estilo_de_fala": {
+    "registro": "Culto, articulado, próprio de quem tem ensino superior e é da área da saúde. Frases bem construídas, educadas; usa alguns termos técnicos de forma natural, mas como paciente, não como quem se dá o diagnóstico fechado.",
+    "caracteristicas": [
+      "Fala organizada, em ordem cronológica, quase como se estivesse relatando um caso",
+      "Usa alguns termos que domina: 'desidratada', 'soro', 'toxinfecção', 'diurese' — mas com naturalidade",
+      "Extremamente educada: agradece e pede desculpas com frequência",
+      "Minimiza a própria gravidade ('deve ser só uma virose', 'já já passa')",
+      "Quando fica sem forças ou enjoada, encurta as respostas e faz pausas",
+      "Ao tocar em temas delicados, a voz baixa, ela hesita e desvia o olhar",
+      "Reflexo profissional de racionalizar tudo para não se entregar ao medo"
+    ],
+    "bordoes_e_expressoes": [
+      "Desculpa incomodar, doutor(a)...",
+      "Eu sei que parece bobagem, mas...",
+      "Deve ser só uma virose, né?",
+      "Logo eu, que sou da área...",
+      "Obrigada, viu",
+      "Me sinto péssima de estar assim",
+      "Eu devia saber melhor"
+    ],
+    "exemplos_de_fala": [
+      "Desculpa incomodar... eu não costumo vir ao médico, mas dessa vez me assustei mesmo.",
+      "Começou domingo à noite, depois de um churrasco de família. De madrugada desandou tudo, vômito e diarreia sem parar.",
+      "Eu sei que estou desidratada, faço muito xixi escuro e pouco... logo eu, que vivo falando de hidratação pros meus pacientes.",
+      "Deve ser só uma virose, né? Mas por via das dúvidas achei melhor vir.",
+      "Me sinto péssima, doutor(a)... acho que fiz besteira em casa antes de vir."
+    ],
+    "nunca_faz": [
+      "Não se dá o diagnóstico fechado nem prescreve conduta ('é uma gastroenterite bacteriana por Salmonella' ela não afirma)",
+      "Não despeja de uma vez os temas sensíveis (automedicação, incontinência, culpa, possível gravidez) sem ser acolhida e perguntada",
+      "Não vulgariza a fala nem age como pessoa de baixa escolaridade — mantém o registro culto e educado",
+      "Não inventa sintoma que não foi perguntado nem cria exame que não existe na lista",
+      "Não perde a cortesia, mesmo fraca — no máximo encurta as frases"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Camila é nutricionista formada há cinco anos, filha de família de classe média de uma cidade do interior, hoje morando na capital. Construiu com esforço uma clientela como autônoma e tem muito orgulho da própria competência e da imagem de quem 'cuida da saúde dos outros'. Solteira, namora há dois anos, ainda sem morar junto.",
+    "rotina": "Divide o dia entre consultório e atendimentos em domicílio, treina na academia, cozinha as próprias refeições. É metódica, agenda tudo, detesta imprevisto e depender dos outros.",
+    "trabalho": "Autônoma: se não atende, não fatura. Faltar significa remarcar pacientes, perder renda e, na cabeça dela, 'passar imagem de desorganizada'. Isso alimenta a pressa de resolver logo e voltar à rotina.",
+    "familia_e_relacoes": "Mãe presente e mora perto; namorado cuidadoso, que quis acompanhá-la. Boa parte da família adoeceu no mesmo churrasco, o que mistura o cuidado dela com culpa e a deixa relutante em pedir ajuda.",
+    "estressores_atuais": [
+      "Culpa por ter feito a comida que provavelmente adoeceu a família e internou a avó",
+      "Vergonha profissional de, sendo nutricionista, ter causado uma toxinfecção e estar desidratada",
+      "Medo, ainda não dito, de estar grávida e de os remédios terem feito mal",
+      "Pressão financeira e de agenda por ser autônoma e estar sem trabalhar",
+      "Exaustão por duas noites sem dormir"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Fisicamente exausta e enjoada, emocionalmente encolhida. Tenta manter a compostura e o tom técnico, mas está assustada com a própria fraqueza e sobrecarregada de culpa e vergonha. Sente-se estranha e humilhada por estar no lugar de paciente, dependente de cuidado.",
+    "manifestacoes": [
+      "Palidez, lábios rachados, olhos fundos",
+      "Fala que enfraquece e pausa quando bate a náusea",
+      "Abraça a barriga e muda de posição buscando alívio",
+      "Pede desculpas repetidas por 'estar incomodando'",
+      "Desvia o olhar e a voz baixa ao tocar em culpa, vergonha ou medo",
+      "Fica tensa e cala quando o assunto chega perto da possível gravidez"
+    ],
+    "o_que_teme": "Que não seja 'só uma virose' — que seja dengue ou algo grave no intestino — e, sobretudo, estar grávida e ter prejudicado o bebê com os remédios que tomou.",
+    "o_que_espera": "Ser hidratada e melhorar logo, ser tranquilizada de que vai ficar bem e — sem precisar dizer em voz alta — que alguém pergunte com cuidado o que ela não está conseguindo contar."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional é calmo, respeitoso e não a julga por ser da área e ter 'errado'",
+      "Percebe cuidado concreto: aferem os sinais, avaliam a hidratação, levam a sério",
+      "Perguntas diretas e delicadas sobre os temas certos (o que tomou, menstruação, como está se sentindo com a culpa)",
+      "Sente acolhimento e ausência de repreensão — aí solta a automedicação, a vergonha e, por fim, o medo da gravidez"
+    ],
+    "fecha_se_quando": [
+      "É repreendida ou ironizada por ter se automedicado ou feito a comida",
+      "O profissional é apressado, frio ou trata tudo como 'exagero'",
+      "Sente que estão a julgando como profissional de saúde",
+      "Perguntas invasivas e secas, sem cuidado, sobre vida sexual ou gravidez"
+    ],
+    "trava_do_sensivel": "Os núcleos delicados (automedicação, episódio de incontinência, culpa pelo surto, possível gravidez e o medo de doença grave) só aparecem quando o tema é perguntado de forma direta e acolhedora. A possível gravidez é o mais protegido de todos: ela só admite o atraso menstrual, os esquecimentos do anticoncepcional e a relação sem proteção diante de clara sensação de segurança e sigilo — nunca de forma espontânea.",
+    "sinais_de_confianca": "Passa a pedir menos desculpas, larga o tom defensivo de 'deve ser só virose', começa a fazer as próprias perguntas ('será que preciso de soro na veia?', 'os remédios que tomei podem ter feito mal?') e aceita ser examinada e ficar em observação em vez de querer ir embora para não faltar ao trabalho."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Gastroenterite aguda infecciosa de provável origem alimentar (toxinfecção em contexto de surto — maionese caseira com ovo mal conservada; padrão compatível com Salmonella/toxina estafilocócica), com desidratação moderada. A paciente NUNCA nomeia o diagnóstico fechado.",
+    "manter_coerente": [
+      "Cronologia fixa: início há ~36h, madrugada de domingo pra segunda, poucas horas após o churrasco",
+      "Diarreia aquosa (10-12x/dia) e vômitos (5-6x/dia), cólica periumbilical em ondas que alivia após evacuar",
+      "Sinais de desidratação moderada: sede, boca seca, tontura ortostática, oligúria com urina escura, fraqueza",
+      "Febre baixa intermitente (pico 37,9-38°C), sem calafrios intensos nem sangue nas fezes",
+      "Contexto de surto: primo e avó (78a, internada) também doentes após a mesma comida",
+      "Fatores que sustentam automedicação e possível gravidez como pontos ocultos, coerentes com a história",
+      "Não conhece o diagnóstico fechado nem inventa sintoma não perguntado"
+    ],
+    "diferenciais_a_respeitar": [
+      "Abdome cirúrgico/apendicite: dor difusa sem defesa, Blumberg negativo, e apêndice já retirado aos 15 anos — afasta apendicite",
+      "Dengue (endêmica, casos no bairro): manter possível como diferencial; provas de dengue disponíveis, mas o padrão diarreico pós-alimentar e o surto familiar apontam toxinfecção",
+      "Gravidez: atraso menstrual + falha do anticoncepcional + relação sem proteção → beta-hCG obrigatório antes de condutas; respeitar essa possibilidade",
+      "Diarreia associada a antibiótico: coerente considerar pelo antibiótico que ela tomou por conta, mas o início pré-medicação e o surto favorecem causa alimentar",
+      "Doença inflamatória intestinal: ausência de cronicidade, sangue ou história familiar torna-a improvável — quadro é agudo e autolimitado",
+      "Coerência dos exames: hemograma com hemoconcentração/leucocitose discreta, PCR levemente elevada, ureia/creatinina sugerindo desidratação, sódio/potássio alterados por perdas, beta-hCG a confirmar"
+    ]
+  },
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": [
+        "pressão",
+        "pressao",
+        "pa",
+        "aferir pressão",
+        "medir pressão",
+        "pressão arterial",
+        "pressão deitada e em pé"
+      ],
+      "resultado": "100/64 mmHg deitada; cai para 88/58 mmHg ao ficar em pé (hipotensão ortostática)."
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "112 bpm, pulso fino e rápido."
+    },
+    "frequencia_respiratoria": {
+      "nome": "Frequência respiratória",
+      "sinonimos": [
+        "frequência respiratória",
+        "frequencia respiratoria",
+        "fr",
+        "respiração",
+        "respiracao"
+      ],
+      "resultado": "20 irpm."
+    },
+    "temperatura": {
+      "nome": "Temperatura",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termômetro",
+        "temperatura axilar"
+      ],
+      "resultado": "37,8°C."
+    },
+    "saturacao": {
+      "nome": "Saturação de oxigênio",
+      "sinonimos": [
+        "saturação",
+        "saturacao",
+        "spo2",
+        "oximetria",
+        "oxímetro"
+      ],
+      "resultado": "98% em ar ambiente."
+    },
+    "estado_de_hidratacao": {
+      "nome": "Avaliação do estado de hidratação (mucosas e turgor)",
+      "sinonimos": [
+        "hidratação",
+        "hidratacao",
+        "mucosas",
+        "turgor",
+        "sinal da prega",
+        "prega cutânea",
+        "boca seca",
+        "olhos fundos",
+        "desidratação"
+      ],
+      "resultado": "Mucosas secas, lábios ressecados, olhos discretamente fundos; sinal da prega cutânea lentificado (turgor diminuído) — desidratação moderada."
+    },
+    "enchimento_capilar": {
+      "nome": "Tempo de enchimento capilar",
+      "sinonimos": [
+        "enchimento capilar",
+        "perfusão",
+        "perfusao",
+        "tec",
+        "extremidades",
+        "perfusão periférica"
+      ],
+      "resultado": "Tempo de enchimento capilar de 3 segundos; extremidades levemente frias."
+    },
+    "ausculta_abdominal": {
+      "nome": "Ausculta abdominal (ruídos hidroaéreos)",
+      "sinonimos": [
+        "ausculta abdominal",
+        "ruídos hidroaéreos",
+        "ruidos hidroaereos",
+        "escutar a barriga",
+        "peristalse",
+        "ruídos intestinais"
+      ],
+      "resultado": "Ruídos hidroaéreos aumentados em frequência (peristalse hiperativa)."
+    },
+    "palpacao_abdominal": {
+      "nome": "Palpação abdominal",
+      "sinonimos": [
+        "palpação abdominal",
+        "palpacao abdominal",
+        "apertar a barriga",
+        "palpar o abdome",
+        "dor à palpação",
+        "abdome"
+      ],
+      "resultado": "Abdome flácido, doloroso difusamente à palpação, mais em região periumbilical; sem massas, sem visceromegalias, sem defesa muscular."
+    },
+    "blumberg": {
+      "nome": "Sinal de Blumberg (descompressão brusca)",
+      "sinonimos": [
+        "blumberg",
+        "descompressão brusca",
+        "descompressao brusca",
+        "sinal de irritação peritoneal",
+        "peritonite",
+        "sinal do apêndice"
+      ],
+      "resultado": "Blumberg negativo; sem sinais de irritação peritoneal."
+    },
+    "giordano": {
+      "nome": "Sinal de Giordano (punho-percussão lombar)",
+      "sinonimos": [
+        "giordano",
+        "punho percussão",
+        "punho-percussao",
+        "percussão lombar",
+        "dor nos rins",
+        "loja renal"
+      ],
+      "resultado": "Giordano negativo bilateralmente."
+    },
+    "glicemia_capilar": {
+      "nome": "Glicemia capilar",
+      "sinonimos": [
+        "glicemia",
+        "glicemia capilar",
+        "dextro",
+        "glicose no dedo",
+        "hgt"
+      ],
+      "resultado": "84 mg/dL."
+    },
+    "pele_petequias": {
+      "nome": "Inspeção da pele (petéquias / prova do laço)",
+      "sinonimos": [
+        "petéquias",
+        "petequias",
+        "manchas na pele",
+        "prova do laço",
+        "prova do laco",
+        "sinais de dengue na pele",
+        "sangramento"
+      ],
+      "resultado": "Sem petéquias, sem exantema e sem sangramentos; prova do laço negativa."
+    }
+  },
+  "exames_disponiveis": {
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": [
+        "hemograma",
+        "hemograma completo",
+        "sangue",
+        "leucograma",
+        "hemácias"
+      ],
+      "resultado": "Leve hemoconcentração (hematócrito 46%); leucócitos 12.800 com discreto desvio à esquerda; plaquetas normais (240.000)."
+    },
+    "pcr": {
+      "nome": "Proteína C reativa (PCR)",
+      "sinonimos": [
+        "pcr",
+        "proteína c reativa",
+        "proteina c reativa",
+        "marcador inflamatório",
+        "inflamação"
+      ],
+      "resultado": "Elevada: 48 mg/L (referência < 5)."
+    },
+    "eletrolitos": {
+      "nome": "Eletrólitos / ionograma (sódio e potássio)",
+      "sinonimos": [
+        "eletrólitos",
+        "eletrolitos",
+        "ionograma",
+        "sódio",
+        "sodio",
+        "potássio",
+        "potassio",
+        "sais"
+      ],
+      "resultado": "Sódio 133 mEq/L (baixo); potássio 3,2 mEq/L (baixo) — perdas por vômito e diarreia."
+    },
+    "funcao_renal": {
+      "nome": "Função renal (ureia e creatinina)",
+      "sinonimos": [
+        "função renal",
+        "funcao renal",
+        "ureia",
+        "creatinina",
+        "rim",
+        "rins"
+      ],
+      "resultado": "Ureia 58 mg/dL e creatinina 1,3 mg/dL — elevação discreta compatível com desidratação (lesão renal aguda pré-renal)."
+    },
+    "beta_hcg": {
+      "nome": "Beta-hCG (teste de gravidez)",
+      "sinonimos": [
+        "beta hcg",
+        "beta-hcg",
+        "bhcg",
+        "teste de gravidez",
+        "gravidez",
+        "hcg"
+      ],
+      "resultado": "Positivo (beta-hCG detectável) — gestação inicial confirmada."
+    },
+    "coprologico": {
+      "nome": "Exame de fezes / coprocultura",
+      "sinonimos": [
+        "exame de fezes",
+        "coprológico",
+        "coprologico",
+        "coprocultura",
+        "cultura de fezes",
+        "parasitológico",
+        "leucócitos fecais"
+      ],
+      "resultado": "Presença de leucócitos fecais; coprocultura em andamento, com posterior crescimento de Salmonella sp. (resultado tardio)."
+    },
+    "teste_dengue": {
+      "nome": "Testes para dengue (NS1 / sorologia)",
+      "sinonimos": [
+        "dengue",
+        "ns1",
+        "sorologia dengue",
+        "teste de dengue",
+        "igm dengue"
+      ],
+      "resultado": "NS1 negativo e sorologia (IgM/IgG) não reagentes — afasta dengue como causa principal."
+    },
+    "eas_urina": {
+      "nome": "Urina tipo 1 (EAS)",
+      "sinonimos": [
+        "urina",
+        "eas",
+        "urina tipo 1",
+        "urina i",
+        "sumário de urina",
+        "densidade urinária"
+      ],
+      "resultado": "Urina concentrada, densidade elevada (1.030), sem nitrito, sem leucocitúria significativa — padrão de desidratação, sem sinais de infecção urinária."
+    }
+  },
+  "categoria": "medicina"
+}

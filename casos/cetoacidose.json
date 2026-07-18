@@ -1,0 +1,550 @@
+{
+  "titulo": "Cetoacidose Diabética",
+  "identificacao": {
+    "nome": "Beatriz Almeida Nogueira",
+    "idade": 20,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Solteira",
+    "escolaridade": "Ensino Superior Incompleto",
+    "profissao": "Estudante de Publicidade"
+  },
+  "queixa_principal": "Não paro de vomitar e minha barriga dói muito",
+  "historia_doenca_atual": {
+    "inicio": "Piora nas últimas 24 horas, mas 'estranha' já há umas duas semanas",
+    "localizacao": "Barriga toda, difícil apontar um lugar só",
+    "intensidade": "7/10",
+    "irradiacao": "Não sabe dizer, é mais espalhado",
+    "duracao": "Contínua, sem parar desde ontem",
+    "caracter": "Aperto/cólica difusa, junto com muito enjoo",
+    "frequencia": "Constante, com ondas piores quando tenta beber água",
+    "fatores_piora": "Piora quando tenta comer ou beber, e quando se mexe",
+    "fatores_melhora": "Nada ajuda; só deitar quietinha alivia um pouco",
+    "sintomas_associados": [
+      "Vômitos repetidos",
+      "Muita sede, boca seca o tempo todo",
+      "Urinando demais, várias vezes de madrugada",
+      "Fraqueza e cansaço fora do normal",
+      "Visão meio embaçada",
+      "Emagreceu sem querer nas últimas semanas",
+      "Respiração cansada, como se faltasse ar"
+    ],
+    "evolucao": "Começou com muita sede e xixi demais há umas duas semanas; nos últimos dias veio o enjoo e a fraqueza; ontem começou o vômito e a dor na barriga, que só pioraram.",
+    "narrativa_do_paciente": "Beatriz conta que faz umas duas semanas que vive com uma sede que não passa, bebendo água direto e mesmo assim com a boca seca, e levantando de madrugada pra fazer xixi um monte de vezes. Achou que era o calor e o estresse da faculdade, período de provas. Foi ficando cansada, sem energia pra nada, e reparou que a roupa começou a folgar. De ontem pra cá empacou de vez: começou a enjoar, vomitou várias vezes, e a barriga travou numa dor que não passa. A mãe chegou em casa, viu ela caída no sofá 'respirando esquisito' e trouxe pro pronto-socorro na marra."
+  },
+  "antecedentes_pessoais": {
+    "diabetes": true,
+    "tipo_diabetes": "Diabetes tipo 1 desde os 12 anos",
+    "hipertensao": false,
+    "cirurgias": "Nega",
+    "alergias": "Nega",
+    "medicacoes_de_uso": "Insulina (caneta) — em teoria de uso diário, mas o controle está 'bagunçado'",
+    "observacoes": "Diagnosticada com diabetes tipo 1 aos 12 anos. Sabe medir a glicose e aplicar insulina desde criança, conhece os termos ('glicemia', 'insulina', 'hipo'), mas nos últimos meses parou de acompanhar direito — não mede a glicose com frequência e vem pulando doses. Fazia acompanhamento na endocrinologia, mas faltou às últimas consultas."
+  },
+  "antecedentes_familiares": {
+    "mae": "Hipotireoidismo",
+    "pai": "Saudável, segundo ela",
+    "avo_materna": "Diabetes tipo 2",
+    "observacoes": "Foi a única da casa a desenvolver diabetes tipo 1 na infância; sempre se sentiu 'a diferente' por causa disso."
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nega",
+    "alcool": "Socialmente, em festas da faculdade",
+    "drogas": "Nega",
+    "atividade_fisica": "Fazia academia, parou nos últimos meses",
+    "alimentacao": "Irregular por causa da faculdade; pula refeições e vive de café e lanche rápido, principalmente em época de prova. Anda comendo pouco 'de propósito'.",
+    "sono": "Bagunçado, dorme tarde estudando, umas 5 horas por noite",
+    "cafeina": "Muito café ao longo do dia para estudar"
+  },
+  "informacoes_iniciais": {
+    "sintomas": "Fala fácil da sede, do xixi demais, do enjoo, do vômito e da dor de barriga quando perguntada.",
+    "diabetes_conhecido": "Conta sem problema que é diabética tipo 1 desde os 12 anos.",
+    "gatilho_aparente": "Menciona que estava resfriada na semana passada, com dor de garganta e nariz escorrendo.",
+    "rotina_faculdade": "Fala do estresse das provas e da correria da faculdade."
+  },
+  "informacoes_intermediarias": {
+    "controle_da_glicose": "Se perguntada diretamente sobre como anda medindo/controlando a glicose, admite que largou a rotina: quase não fura o dedo, não sabe seus números atuais.",
+    "consultas": "Se perguntada, conta que faltou às últimas consultas com a endocrinologista e que 'sumiu' do acompanhamento.",
+    "perda_de_peso": "Se perguntada sobre o peso, confirma que emagreceu vários quilos nas últimas semanas e que 'até que gostou' de ter emagrecido.",
+    "vida_academica": "Se perguntada sobre a rotina, descreve a pressão da faculdade, o sono ruim e a alimentação picada."
+  },
+  "informacoes_sensiveis": {
+    "omissao_insulina": "Vem pulando e reduzindo as doses de insulina de propósito há semanas — não foi esquecimento. Nos últimos dias praticamente não aplicou.",
+    "imagem_corporal": "Descobriu que quando toma menos insulina emagrece rápido, e passou a usar isso para perder peso, mesmo sabendo que faz mal. Anda muito insatisfeita com o corpo.",
+    "exaustao_do_manejo": "Está exausta de ser diabética há 8 anos — cansada de furar o dedo, contar carboidrato, aplicar agulha todo dia. Às vezes finge que a doença não existe.",
+    "vergonha": "Tem vergonha da diabetes, esconde as canetas de insulina dos amigos e da família, não gosta de aplicar na frente de ninguém.",
+    "isolamento": "Não contou pra ninguém que parou de se cuidar; guarda tudo sozinha e afastou-se dos amigos para esconder o descontrole.",
+    "medo": "No fundo está com muito medo — sabe que exagerou, tem medo de ter estragado algo no corpo e medo de morrer nova, mas não conseguia pedir ajuda."
+  },
+  "gatilhos_sensiveis": {
+    "omissao_insulina": [
+      "insulina",
+      "aplicou insulina",
+      "tomou a insulina",
+      "pulou dose",
+      "esqueceu a insulina",
+      "parou a insulina",
+      "aplicando direitinho",
+      "quantas doses",
+      "faz tempo que nao aplica",
+      "usou a caneta",
+      "tomou o remedio do diabetes",
+      "de proposito"
+    ],
+    "imagem_corporal": [
+      "emagrecer",
+      "perder peso",
+      "seu corpo",
+      "peso",
+      "queria emagrecer",
+      "dieta",
+      "gordinha",
+      "se acha",
+      "emagrecimento",
+      "corpo",
+      "aparencia",
+      "menos insulina pra emagrecer"
+    ],
+    "exaustao_do_manejo": [
+      "cansada do diabetes",
+      "cansada de se cuidar",
+      "e dificil cuidar",
+      "convive com a doenca",
+      "furar o dedo",
+      "contar carboidrato",
+      "aplicar agulha",
+      "cansaco de tratar",
+      "voce se cuida",
+      "e chato",
+      "desistiu de cuidar",
+      "sobrecarregada"
+    ],
+    "vergonha": [
+      "vergonha",
+      "esconde",
+      "esconde a insulina",
+      "aplica na frente",
+      "os amigos sabem",
+      "constrangida",
+      "envergonhada",
+      "voce conta pra alguem",
+      "se sente diferente",
+      "incomoda ser diabetica"
+    ],
+    "isolamento": [
+      "conta pra alguem",
+      "com quem voce fala",
+      "esta sozinha",
+      "afastou dos amigos",
+      "contou pra familia",
+      "pediu ajuda",
+      "amigos",
+      "se isolou",
+      "guarda pra voce",
+      "sozinha nisso"
+    ],
+    "medo": [
+      "medo",
+      "esta com medo",
+      "assustada",
+      "preocupada",
+      "medo de morrer",
+      "acha que exagerou",
+      "medo de complicacao",
+      "o que voce sente por dentro",
+      "esta com receio",
+      "medo de estragar algo"
+    ]
+  },
+  "rede_apoio": {
+    "mae": "Presente, foi quem a trouxe ao pronto-socorro; preocupada, mas Beatriz esconde muita coisa dela.",
+    "pai": "Mora na mesma casa, relação mais distante.",
+    "amigos": "Alguns amigos da faculdade, mas ela se afastou nos últimos meses.",
+    "equipe_de_saude": "Tem uma endocrinologista de referência, mas abandonou o acompanhamento."
+  },
+  "persona": {
+    "resumo": "Jovem universitária inteligente e articulada, diabética tipo 1 desde a infância, que carrega há anos o peso silencioso de conviver com uma doença crônica. Por fora é a menina esforçada e independente; por dentro está exausta, insatisfeita com o corpo e assustada com o que fez consigo mesma ao largar o tratamento. Minimiza a gravidade e protege seu segredo até sentir que não vai ser julgada.",
+    "temperamento": [
+      "articulada",
+      "reservada sobre o que sente",
+      "autocrítica",
+      "independente ao extremo",
+      "minimiza o próprio sofrimento",
+      "assustada por baixo do controle aparente"
+    ],
+    "postura_na_consulta": "Chega abatida, pálida, respirando fundo e rápido, com a mão na barriga. Responde de forma educada e organizada às perguntas objetivas, mas desconversa e dá respostas curtas quando o assunto chega perto do porquê de ter largado a insulina. Evita o olhar quando toca no peso e na doença. Aos poucos, se acolhida, a fala vai baixando e ela se abre."
+  },
+  "estilo_de_fala": {
+    "registro": "Jovem urbana, escolarizada. Fala organizada, com vocabulário de universitária, mas emocionalmente contida. Conhece o vocabulário da própria doença (glicemia, insulina, hipo), mas não fala como médica.",
+    "caracteristicas": [
+      "Frases relativamente bem construídas, com 'tipo', 'sei lá', 'meio que'",
+      "Usa termos do dia a dia do diabético: 'glicose', 'insulina', 'furar o dedo', 'hipo'",
+      "Minimiza: 'não é tão grave', 'eu ia resolver', 'já melhora'",
+      "Quando o assunto incomoda, encurta as respostas e muda de tema",
+      "Fala baixo e pausado quando fica emocionada",
+      "Racionaliza e se culpa ao mesmo tempo",
+      "Trata o profissional com um respeito educado ('doutora', 'doutor')"
+    ],
+    "bordoes_e_expressoes": [
+      "Sei lá...",
+      "Tipo assim...",
+      "Não é tão grave, né?",
+      "Eu ia resolver isso",
+      "É que a faculdade tá corrida",
+      "Prefiro não falar disso",
+      "Você vai achar ruim de mim"
+    ],
+    "exemplos_de_fala": [
+      "Começou com uma sede absurda, tipo, eu bebia água e não passava, e vivia no banheiro de madrugada.",
+      "Eu sei que sou diabética desde os doze, já tô acostumada... mas anda meio bagunçado, confesso.",
+      "A barriga travou ontem e eu não parei mais de vomitar, aí minha mãe surtou e me trouxe.",
+      "Não é tão grave assim, né? Eu ia acertar as coisas depois das provas.",
+      "Sei lá, doutora... prefiro não falar muito sobre isso agora."
+    ],
+    "nunca_faz": [
+      "Não usa termos técnicos como 'cetoacidose', 'acidose metabólica' ou 'respiração de Kussmaul'",
+      "Não dá o próprio diagnóstico nem nomeia a gravidade real do quadro",
+      "Não fala 'desidratação hiperosmolar' — diz 'boca seca', 'muita sede'",
+      "Não descreve sintoma que não foi perguntado nem inventa achado clínico",
+      "Não entrega o segredo da insulina sem acolhimento; racionaliza antes de admitir"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Filha do meio de uma família de classe média, foi diagnosticada com diabetes tipo 1 aos 12 anos, no começo da adolescência, o que a fez crescer diferente dos colegas: contando carboidrato, aplicando insulina, medindo glicose. Sempre foi boa aluna, passou em Publicidade e saiu um pouco da bolha da família ao entrar na faculdade. Por fora, a jovem que 'dá conta de tudo'.",
+    "rotina": "Faculdade de manhã, estágio e trabalhos à tarde, estudo à noite. Dorme pouco, come mal e de forma irregular, principalmente em época de provas. Nos últimos meses largou a academia e o autocuidado.",
+    "trabalho": "Estudante e estagiária em uma agência pequena; ambiente competitivo e cheio de gente com corpos 'perfeitos', o que mexe com ela.",
+    "familia_e_relacoes": "Mora com os pais. A mãe é presente mas ela esconde muita coisa; o pai é mais distante. Afastou-se dos amigos para não ter que explicar a doença nem o descontrole.",
+    "estressores_atuais": [
+      "Pressão da faculdade e das provas",
+      "Insatisfação com o próprio corpo e comparação constante",
+      "Cansaço de conviver com o diabetes há 8 anos",
+      "Medo de decepcionar a família se souberem que largou o tratamento"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Fisicamente muito mal — enjoada, fraca, com dor e respirando fundo. Emocionalmente assustada e envergonhada, tentando manter a compostura e o controle da narrativa. Sente que perdeu o controle da situação e teme ser repreendida por ter largado o tratamento.",
+    "manifestacoes": [
+      "Respiração profunda e rápida, fala entrecortada",
+      "Palidez, lábios ressecados, aparência abatida",
+      "Mão sobre a barriga, muda de posição procurando alívio",
+      "Desvia o olhar quando fala do peso e da insulina",
+      "Voz que baixa e falha quando se emociona",
+      "Tenta sorrir e minimizar para parecer que está tudo sob controle"
+    ],
+    "o_que_teme": "Ter causado um dano grave e permanente ao próprio corpo, ser julgada por 'ter feito isso consigo mesma' e, no fundo, morrer nova.",
+    "o_que_espera": "Que alguém cuide dela sem brigar nem humilhá-la; alívio dos sintomas e, embora não peça em voz alta, ser acolhida e entendida no que a levou a largar o tratamento."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional é acolhedor, sem tom de bronca nem julgamento",
+      "Percebe que estão cuidando dela de verdade (mede a glicose, examina, explica com calma)",
+      "As perguntas sobre insulina e peso vêm com empatia, não como acusação",
+      "Sente que pode falar do cansaço e da vergonha sem ser repreendida"
+    ],
+    "fecha_se_quando": [
+      "O profissional a repreende ('como você deixou chegar a isso?') ou soa acusatório",
+      "É frio, apressado ou parece decepcionado com ela",
+      "Toca no peso ou na insulina de forma brusca, sem acolhimento",
+      "Sente que vai ser vista como irresponsável ou 'problemática'"
+    ],
+    "trava_do_sensivel": "O núcleo sensível — que ela vinha OMITINDO insulina de propósito, em parte para emagrecer, exausta e envergonhada da doença — só é verbalizado quando há acolhimento explícito E a pergunta toca no tema (via gatilhos). Sem isso, ela racionaliza ('andei esquecendo', 'tava corrido') e não entrega o motivo real. A parte física do caso (sintomas, exame, exames) é revelada normalmente ao ser perguntada.",
+    "sinais_de_confianca": "Para de minimizar, passa a admitir que 'não foi bem esquecimento', começa a falar do cansaço de ser diabética e do medo, aceita ajuda e pergunta se vai ficar bem em vez de tentar ir embora."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Cetoacidose diabética (CAD) em paciente com diabetes tipo 1, precipitada por omissão deliberada de insulina somada a uma infecção viral recente de vias aéreas superiores — a paciente NUNCA nomeia o diagnóstico.",
+    "manter_coerente": [
+      "Cronologia fixa: poliúria, polidipsia e perda de peso há ~2 semanas; náusea, vômitos e dor abdominal difusa nas últimas 24h",
+      "Hálito cetônico, respiração profunda e rápida (padrão de Kussmaul), sinais de desidratação",
+      "Dor abdominal difusa sem sinais de peritonite verdadeira (pseudoperitonite da CAD): Blumberg negativo",
+      "Glicemia muito elevada, acidose metabólica com ânion gap alto e cetonúria/cetonemia positivas",
+      "Fatores precipitantes consistentes: omissão de insulina + quadro viral recente; DM1 de longa data mal controlado (HbA1c alta)",
+      "Não inventar sintoma não perguntado, não trocar localização da dor nem os achados",
+      "Conhece termos do diabético (glicose, insulina, hipo), mas não nomeia a cetoacidose"
+    ],
+    "diferenciais_a_respeitar": [
+      "Abdome agudo cirúrgico: afastado por dor difusa sem defesa/Blumberg e por melhora esperada com correção metabólica — manter coerência se o médico investigar o abdome",
+      "Estado hiperglicêmico hiperosmolar (EHH): tem hiperglicemia, mas AQUI há cetose e acidose (pH baixo, ânion gap alto), o que caracteriza CAD e não EHH",
+      "Gastroenterite/intoxicação alimentar: os vômitos são parte da CAD, acompanhados de hiperglicemia e cetose, não de quadro entérico isolado",
+      "Acidose de outra origem: o ânion gap elevado com cetonemia e hiperglicemia sustenta origem cetoacidótica diabética"
+    ]
+  },
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": [
+        "pressão",
+        "pressao",
+        "pa",
+        "aferir pressão",
+        "medir pressão",
+        "pressão arterial"
+      ],
+      "resultado": "100/62 mmHg (limítrofe baixa, por desidratação)"
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "118 bpm (taquicárdica)"
+    },
+    "frequencia_respiratoria": {
+      "nome": "Frequência respiratória",
+      "sinonimos": [
+        "frequência respiratória",
+        "frequencia respiratoria",
+        "fr",
+        "respiração",
+        "respiracao",
+        "ritmo respiratório"
+      ],
+      "resultado": "28 irpm, respiração profunda e rápida (padrão de Kussmaul)"
+    },
+    "temperatura": {
+      "nome": "Temperatura",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termômetro"
+      ],
+      "resultado": "37,2°C"
+    },
+    "saturacao": {
+      "nome": "Saturação de oxigênio",
+      "sinonimos": [
+        "saturação",
+        "saturacao",
+        "spo2",
+        "oximetria",
+        "oxímetro"
+      ],
+      "resultado": "98% em ar ambiente"
+    },
+    "glicemia_capilar": {
+      "nome": "Glicemia capilar (ponta de dedo)",
+      "sinonimos": [
+        "glicemia capilar",
+        "glicemia",
+        "glicose",
+        "dextro",
+        "hgt",
+        "ponta de dedo",
+        "furar o dedo",
+        "açúcar no sangue"
+      ],
+      "resultado": "512 mg/dL"
+    },
+    "hidratacao": {
+      "nome": "Estado de hidratação",
+      "sinonimos": [
+        "hidratação",
+        "hidratacao",
+        "mucosas",
+        "turgor",
+        "desidratação",
+        "desidratacao",
+        "pele e mucosas"
+      ],
+      "resultado": "Mucosas secas, turgor cutâneo diminuído, olhos levemente encovados — desidratação moderada."
+    },
+    "halito": {
+      "nome": "Hálito",
+      "sinonimos": [
+        "hálito",
+        "halito",
+        "cheiro do hálito",
+        "odor",
+        "bafo",
+        "respiração cheiro"
+      ],
+      "resultado": "Hálito cetônico (odor adocicado, de fruta/acetona)."
+    },
+    "ausculta_cardiaca": {
+      "nome": "Ausculta cardíaca",
+      "sinonimos": [
+        "ausculta cardíaca",
+        "ausculta cardiaca",
+        "coração",
+        "coracao",
+        "escutar o coração",
+        "bulhas"
+      ],
+      "resultado": "Bulhas taquicárdicas, ritmo regular, sem sopros."
+    },
+    "ausculta_pulmonar": {
+      "nome": "Ausculta pulmonar",
+      "sinonimos": [
+        "ausculta pulmonar",
+        "pulmão",
+        "pulmao",
+        "escutar o pulmão",
+        "murmúrio vesicular",
+        "respiração"
+      ],
+      "resultado": "Murmúrio vesicular presente bilateralmente, sem estertores; incursões amplas e frequentes."
+    },
+    "palpacao_abdominal": {
+      "nome": "Palpação abdominal",
+      "sinonimos": [
+        "palpação abdominal",
+        "palpacao abdominal",
+        "apalpar a barriga",
+        "palpar o abdome",
+        "abdome",
+        "abdômen",
+        "barriga"
+      ],
+      "resultado": "Abdome doloroso difusamente à palpação, sem massas, sem defesa involuntária; ruídos hidroaéreos diminuídos."
+    },
+    "sinal_de_blumberg": {
+      "nome": "Sinal de Blumberg (descompressão)",
+      "sinonimos": [
+        "blumberg",
+        "descompressão",
+        "descompressao",
+        "descompressão brusca",
+        "sinal de irritação peritoneal",
+        "peritonite"
+      ],
+      "resultado": "Negativo — sem sinais de irritação peritoneal verdadeira (pseudoperitonite da cetoacidose)."
+    },
+    "exame_neurologico": {
+      "nome": "Exame neurológico / nível de consciência",
+      "sinonimos": [
+        "neurológico",
+        "neurologico",
+        "nível de consciência",
+        "nivel de consciencia",
+        "consciência",
+        "orientação",
+        "glasgow",
+        "está lúcida"
+      ],
+      "resultado": "Alerta e orientada, porém prostrada e lentificada; Glasgow 15, sem déficits focais."
+    }
+  },
+  "exames_disponiveis": {
+    "glicemia_venosa": {
+      "nome": "Glicemia venosa (laboratório)",
+      "sinonimos": [
+        "glicemia venosa",
+        "glicose no sangue",
+        "glicemia laboratorial",
+        "glicose sérica",
+        "açúcar no sangue laboratório"
+      ],
+      "resultado": "498 mg/dL"
+    },
+    "gasometria_arterial": {
+      "nome": "Gasometria arterial",
+      "sinonimos": [
+        "gasometria",
+        "gaso",
+        "gasometria arterial",
+        "ph do sangue",
+        "gases arteriais"
+      ],
+      "resultado": "pH 7,18 · HCO3 10 mEq/L · pCO2 22 mmHg — acidose metabólica com compensação respiratória."
+    },
+    "cetonas": {
+      "nome": "Cetonas (corpos cetônicos)",
+      "sinonimos": [
+        "cetona",
+        "cetonas",
+        "corpos cetônicos",
+        "corpos cetonicos",
+        "cetonúria",
+        "cetonuria",
+        "cetonemia",
+        "beta-hidroxibutirato"
+      ],
+      "resultado": "Cetonúria +++ e beta-hidroxibutirato sérico elevado."
+    },
+    "eletrolitos": {
+      "nome": "Eletrólitos (sódio e potássio)",
+      "sinonimos": [
+        "eletrólitos",
+        "eletrolitos",
+        "sódio",
+        "sodio",
+        "potássio",
+        "potassio",
+        "sódio e potássio",
+        "íons"
+      ],
+      "resultado": "Sódio 132 mEq/L · Potássio sérico 5,4 mEq/L (potássio corporal total, porém, depletado)."
+    },
+    "anion_gap": {
+      "nome": "Ânion gap",
+      "sinonimos": [
+        "ânion gap",
+        "anion gap",
+        "gap aniônico",
+        "hiato aniônico"
+      ],
+      "resultado": "Elevado (~24 mEq/L) — acidose metabólica com ânion gap aumentado."
+    },
+    "eas_urina": {
+      "nome": "Urina tipo 1 (EAS)",
+      "sinonimos": [
+        "urina",
+        "eas",
+        "urina tipo 1",
+        "sumário de urina",
+        "sumario de urina",
+        "exame de urina",
+        "glicosúria"
+      ],
+      "resultado": "Glicosúria +++ e cetonúria +++; sem sinais claros de infecção urinária."
+    },
+    "hemograma": {
+      "nome": "Hemograma",
+      "sinonimos": [
+        "hemograma",
+        "hemograma completo",
+        "leucograma",
+        "sangue completo",
+        "série branca"
+      ],
+      "resultado": "Leucocitose leve (14.000/mm³) com neutrofilia — reação ao estresse/desidratação, sem foco infeccioso definido."
+    },
+    "funcao_renal": {
+      "nome": "Função renal (ureia e creatinina)",
+      "sinonimos": [
+        "função renal",
+        "funcao renal",
+        "ureia",
+        "creatinina",
+        "rim",
+        "rins"
+      ],
+      "resultado": "Ureia e creatinina levemente elevadas, compatíveis com desidratação (injúria pré-renal)."
+    },
+    "hba1c": {
+      "nome": "Hemoglobina glicada (HbA1c)",
+      "sinonimos": [
+        "hemoglobina glicada",
+        "hba1c",
+        "a1c",
+        "glicada",
+        "controle dos últimos meses"
+      ],
+      "resultado": "11,4% — indicando controle glicêmico cronicamente ruim nos últimos meses."
+    },
+    "ecg": {
+      "nome": "Eletrocardiograma",
+      "sinonimos": [
+        "ecg",
+        "eletro",
+        "eletrocardiograma",
+        "traçado do coração"
+      ],
+      "resultado": "Taquicardia sinusal, sem alterações agudas de isquemia; sem sinais claros de hipercalemia no traçado."
+    }
+  },
+  "categoria": "medicina"
+}
