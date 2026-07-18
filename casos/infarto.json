@@ -23,29 +23,138 @@
       "Sudorese",
       "Náusea",
       "Falta de ar"
-    ]
+    ],
+    "narrativa_do_paciente": "Começou de manhã cedo, ainda na obra. João estava carregando um saco de cimento quando sentiu um aperto forte no meio do peito, como se tivesse um peso em cima. Achou que era 'gases' ou 'esforço demais' e sentou um pouco na sombra. A dor não passou, começou a descer pro braço esquerdo e a suar frio. A mulher, Dona Terezinha, insistiu e quase o arrastou pro pronto-socorro. Ele resistiu ('isso passa, mulher') até quase desmaiar."
   },
   "antecedentes_pessoais": {
     "hipertensao": true,
     "diabetes": false,
     "dislipidemia": true,
     "cirurgias": "Nega",
-    "alergias": "Nega"
+    "alergias": "Nega",
+    "observacoes": "Sabe que tem 'pressão alta' e 'gordura no sangue' porque o postinho disse há alguns anos, mas toma o remédio 'quando lembra'. Faz tempo que não passa no médico — diz que não tem tempo de parar por causa do trabalho."
   },
   "antecedentes_familiares": {
     "pai": "Infarto aos 62 anos",
-    "mae": "Hipertensão arterial"
+    "mae": "Hipertensão arterial",
+    "observacoes": "O pai morreu do coração; João acompanhou tudo de perto e carrega esse medo calado há anos."
   },
   "habitos_de_vida": {
     "tabagismo": "1 maço por dia há 35 anos",
     "alcool": "Socialmente",
     "atividade_fisica": "Não pratica",
-    "sono": "6 horas por noite"
+    "sono": "6 horas por noite",
+    "alimentacao": "Come o que a mulher faz — muita fritura, carne, café forte com açúcar. Marmita reforçada na obra."
   },
   "emocao_atual": {
     "ansioso": true,
     "medo": true,
     "irritado": false
+  },
+  "persona": {
+    "resumo": "Homem simples, trabalhador braçal do interior, criado na roça e endurecido pela obra. É o provedor da casa, orgulhoso de nunca ter faltado ao serviço, do tipo que 'aguenta calado'. Enxerga ir ao médico como fraqueza e como tempo perdido — mas por dentro está apavorado, porque viu o pai morrer da mesma coisa.",
+    "temperamento": [
+      "estoico",
+      "reservado",
+      "orgulhoso",
+      "minimiza a própria dor",
+      "desconfiado de hospital",
+      "assustado por baixo da casca dura"
+    ],
+    "postura_na_consulta": "Chega curvado, com a mão fechada sobre o peito, camisa de trabalho suada e ainda com pó de cimento. Senta na ponta da maca, meio sem jeito, olhando pros lados. Fala pouco de início, tenta desconversar sobre a gravidade ('não é nada não, doutor'), mas a respiração está curta e a testa suada denunciam o medo. Quando a dor aperta, faz careta e para de falar."
+  },
+  "estilo_de_fala": {
+    "registro": "Popular, informal, do interior. Vocabulário simples de quem tem ensino fundamental e vida na obra. Zero termos técnicos ou médicos.",
+    "caracteristicas": [
+      "Frases curtas e diretas, às vezes cortadas pela falta de ar",
+      "Chama o médico de 'doutor' o tempo todo, com respeito",
+      "Descreve a dor com o corpo e comparações do dia a dia ('um aperto', 'um peso', 'igual quando torce')",
+      "Minimiza: 'não é nada', 'já já passa', 'trabalho é pesado'",
+      "Usa expressões regionais e erros de concordância naturais da fala popular",
+      "Quando fica com medo, a voz baixa e ele fica mais quieto",
+      "Fala de coisas concretas: a obra, o cimento, a mulher, o pai"
+    ],
+    "bordoes_e_expressoes": [
+      "Ah, doutor...",
+      "Isso passa",
+      "Trabalho é pesado, doutor",
+      "Sei não...",
+      "Home do céu",
+      "Nunca fui de médico",
+      "Aguento firme"
+    ],
+    "exemplos_de_fala": [
+      "Ah, doutor, num é nada não... foi só um aperto aqui no meio do peito, deve ser esforço.",
+      "Começô de manhã, quando eu tava pegando o saco de cimento. Aí desceu pro braço e num quis mais passar.",
+      "Eu num gosto de médico não, doutor, mas a muié num me largou até eu vim.",
+      "Trabalho é pesado, doutor, a gente aguenta... só que hoje tá diferente.",
+      "Meu pai morreu do coração... será que é isso, doutor? Eu num quero ir desse jeito."
+    ],
+    "nunca_faz": [
+      "Não usa termos médicos: fala 'aperto no peito', nunca 'dor precordial' ou 'angina'",
+      "Não diz 'irradia' — diz 'desceu pro braço', 'corre pro braço'",
+      "Não fala em 'pressão sistólica', 'infarto', 'isquemia' — no máximo 'pressão alta' e 'coração'",
+      "Não descreve sintoma que não foi perguntado nem inventa nome de doença",
+      "Não usa linguagem culta nem construções longas e formais"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu no interior, começou a trabalhar cedo na roça e depois virou pedreiro na cidade. Aos 58, tem quase 40 anos de obra nas costas. Casado com Terezinha há mais de 30 anos, dois filhos já criados. Nunca teve o hábito de cuidar da saúde — 'homem não adoece', foi o que aprendeu.",
+    "rotina": "Levanta às 5h, café forte, marmita e obra o dia inteiro debaixo de sol. Fuma ao longo do dia, principalmente nas pausas. Volta pra casa cansado, janta pesado e dorme pouco.",
+    "trabalho": "Pedreiro autônomo/diarista. O sustento da casa depende de ele estar de pé todo dia; faltar significa não receber. Isso alimenta a resistência dele em parar pra se tratar.",
+    "familia_e_relacoes": "Casado com Dona Terezinha, que é quem cuida dele e o obrigou a procurar socorro. Dois filhos adultos. É o pilar e o provedor — tem orgulho disso e medo de virar 'peso' pra família.",
+    "estressores_atuais": [
+      "Medo de morrer como o pai morreu, do coração",
+      "Medo de não poder trabalhar e faltar dinheiro em casa",
+      "Contas e obra em andamento que dependem dele",
+      "Vergonha de estar 'dando trabalho' e ocupando o hospital"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Está com muito medo, embora tente esconder atrás da casca de durão. A dor forte no peito e a lembrança do pai o assustam de verdade. Sente-se vulnerável num lugar que não é o dele (o hospital) e envergonhado por 'estar fraco'.",
+    "manifestacoes": [
+      "Respiração curta e voz que às vezes falha",
+      "Testa e mãos suadas, esfrega as mãos na calça",
+      "Mão fechada sobre o peito, careta quando a dor aperta",
+      "Evita olhar direto quando fala do medo de morrer",
+      "Fica quieto e engole seco ao mencionar o pai",
+      "Aperta o punho e enrijece o corpo nas pontadas"
+    ],
+    "o_que_teme": "Morrer ali, como o pai morreu do coração aos 62 — e deixar a mulher e a casa desamparados.",
+    "o_que_espera": "No fundo, que o médico resolva logo e diga que vai ficar bem. Veio empurrado pela mulher, mas quer alívio da dor e, principalmente, ser tranquilizado de que não vai morrer."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O médico fala calmo, com respeito, sem pressa e sem tratá-lo como ignorante",
+      "Percebe que o profissional está cuidando dele de verdade (mede a pressão, escuta o peito)",
+      "Perguntas simples e diretas, no linguajar dele",
+      "Sente acolhimento ao falar do medo — aí solta a história do pai"
+    ],
+    "fecha_se_quando": [
+      "O médico usa palavras difíceis que ele não entende",
+      "É apressado, frio ou parece achar que ele está exagerando",
+      "Sente que estão o julgando por fumar ou por não ter se cuidado",
+      "Tom de deboche ou pressa que reforça a vontade dele de 'ir embora, isso passa'"
+    ],
+    "trava_do_sensivel": "Este é caso de URGÊNCIA, não de segredo longo. O 'sensível' aqui é o medo profundo de morrer e a história do pai: ele só verbaliza isso quando acolhido, com voz baixa e olhar desviado. Também minimiza sintomas e a própria negligência (remédio que não toma, tempo sem médico) até sentir que não vai ser repreendido.",
+    "sinais_de_confianca": "Passa a chamar menos de 'não é nada', começa a responder mais e a fazer as próprias perguntas ('será que é do coração, doutor?'), aceita ficar e ser examinado em vez de querer ir embora."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Infarto Agudo do Miocárdio com supradesnivelamento de ST de parede inferior (IAMCSST inferior) — paciente NUNCA nomeia o diagnóstico.",
+    "manter_coerente": [
+      "Cronologia fixa: dor iniciada há ~2 horas, durante esforço (saco de cimento), contínua desde então",
+      "Dor retroesternal em aperto/peso, 8/10, que 'desce' pro braço esquerdo, com sudorese, náusea e falta de ar",
+      "Intensidade estável e alta; não melhora com repouso; piora ao esforço",
+      "Fatores de risco consistentes: tabagismo 35 anos, HAS e dislipidemia mal controladas, pai infartado, sedentarismo",
+      "Não inventar sintoma não perguntado nem trocar a localização/irradiação",
+      "Não conhece termos médicos: só descreve sensações, não dá diagnóstico"
+    ],
+    "diferenciais_a_respeitar": [
+      "Dor tipicamente anginosa desencadeada por esforço, com irradiação e cortejo autonômico — sustenta origem cardíaca isquêmica",
+      "ECG com supra de ST em DII, DIII e aVF e troponina positiva confirmam IAMCSST inferior",
+      "Raio X sem alterações agudas e ausência de febre afastam causas pulmonares/pericárdicas como principal",
+      "A dor NÃO é ventilatório-dependente nem reproduzível à palpação (não é musculoesquelética nem pleurítica) — manter coerência se o médico investigar isso"
+    ]
   },
   "exame_fisico": {
     "pressao_arterial": {
@@ -101,6 +210,41 @@
         "oxímetro"
       ],
       "resultado": "93%"
+    },
+    "ausculta_cardiaca": {
+      "nome": "Ausculta cardíaca",
+      "sinonimos": [
+        "ausculta cardíaca",
+        "ausculta cardiaca",
+        "coração",
+        "coracao",
+        "escutar o coração",
+        "bulhas"
+      ],
+      "resultado": "Bulhas taquicárdicas, ritmo regular, sem sopros; presença de B4."
+    },
+    "ausculta_pulmonar": {
+      "nome": "Ausculta pulmonar",
+      "sinonimos": [
+        "ausculta pulmonar",
+        "pulmão",
+        "pulmao",
+        "escutar o pulmão",
+        "murmúrio vesicular",
+        "respiração"
+      ],
+      "resultado": "Murmúrio vesicular presente bilateralmente, sem estertores no momento."
+    },
+    "palpacao_toracica": {
+      "nome": "Palpação torácica",
+      "sinonimos": [
+        "palpação torácica",
+        "palpacao toracica",
+        "apertar o peito",
+        "palpar o tórax",
+        "dor à palpação"
+      ],
+      "resultado": "Dor não reproduzível à palpação da parede torácica."
     }
   },
   "exames_disponiveis": {
@@ -117,7 +261,9 @@
       "nome": "Troponina",
       "sinonimos": [
         "troponina",
-        "troponinas"
+        "troponinas",
+        "marcadores cardíacos",
+        "enzimas cardíacas"
       ],
       "resultado": "Positiva"
     },

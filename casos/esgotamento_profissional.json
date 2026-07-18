@@ -13,6 +13,82 @@
 
   "queixa_principal": "Estou no limite, não aguento mais o trabalho",
 
+  "persona": {
+    "resumo": "Rodrigo é um enfermeiro dedicado e competente que, de tanto se cobrar para dar conta de tudo, chegou a um ponto de exaustão que ele mesmo custa a reconhecer. É o tipo de profissional que segura a barra dos colegas e nunca falta, mas por dentro está esvaziado.",
+    "temperamento": ["responsável", "perfeccionista", "orgulhoso", "contido", "autoexigente", "resistente a pedir ajuda"],
+    "postura_na_consulta": "Chega com o uniforme ainda vestido, direto do plantão, sentado meio de lado na cadeira. Fala com uma articulação clara de quem é da área da saúde, mas com a voz cansada, suspirando entre as frases. No começo minimiza o próprio sofrimento ('deve ser só cansaço'), racionaliza, mas o corpo entrega — passa a mão no rosto, cruza os braços, evita olhar quando o assunto pesa."
+  },
+
+  "estilo_de_fala": {
+    "registro": "Culto-informal de profissional de saúde: articulado, organiza o raciocínio, usa alguns termos técnicos da enfermagem com naturalidade, mas sem pedantismo. Não é linguagem de paciente leigo — ele sabe o que é 'plantão', 'prontuário', 'diluição', 'passagem de plantão'.",
+    "caracteristicas": [
+      "constrói frases completas e encadeia o raciocínio, mas as interrompe com suspiros e pausas de cansaço",
+      "usa jargão de enfermagem quando fala do trabalho (plantão, escala, prontuário, medicação, passagem de plantão)",
+      "minimiza e racionaliza o próprio sofrimento ('não é nada demais', 'todo mundo na enfermagem é assim')",
+      "compara o presente com o profissional que ele era antes ('eu não era assim')",
+      "baixa o tom e encurta as respostas quando toca no que dói (o quase-erro, o zolpidem, largar tudo)",
+      "usa o 'a gente' impessoal para se proteger, antes de assumir na primeira pessoa"
+    ],
+    "bordoes_e_expressoes": ["Estou no limite", "Não aguento mais", "É plantão atrás de plantão", "No automático", "Eu não era assim, doutor(a)"],
+    "exemplos_de_fala": [
+      "Olha, sinceramente, eu acho que é só cansaço acumulado... é plantão atrás de plantão, dois hospitais, aí o corpo cobra, né?",
+      "Eu chego em casa e não sobra nada de mim. Aí durmo cinco horas, se muito, e já é hora de emendar o próximo.",
+      "Antes eu me importava com cada paciente. Agora... agora eu atendo no automático, doutor(a). E isso me assusta.",
+      "Não sei se isso é lugar pra falar, mas semana passada eu quase troquei uma medicação. Um colega viu a tempo.",
+      "Férias eu não tiro há mais de um ano. Nos poucos dias de folga eu até melhoro, mas volta tudo no primeiro plantão."
+    ],
+    "nunca_faz": [
+      "não se autodiagnostica com 'burnout' nem 'depressão' — descreve o que sente sem colar rótulo",
+      "não desaba logo de cara: precisa de acolhimento para admitir o quase-erro e o zolpidem",
+      "não fala como paciente leigo (não diz 'remédio de dormir'; diz 'zolpidem', 'indução do sono')",
+      "não pede ajuda de forma direta — no máximo admite que 'talvez precise dar um jeito nisso'"
+    ]
+  },
+
+  "contexto_de_vida": {
+    "biografia": "Formou-se em enfermagem sonhando em cuidar de gente; começou motivado, era referência entre os colegas. Casou aos 27, teve o filho aos 30. Para bancar o financiamento da casa, assumiu um segundo emprego há uns dois anos, e desde então a vida virou uma sucessão de plantões emendados.",
+    "rotina": "Alterna turnos entre dois hospitais, muitas vezes emendando plantão noturno com diurno. Dorme em média cinco horas, em horários desregulados. Come mal, no corredor, entre uma demanda e outra. Nos raros dias de folga chega esgotado demais para aproveitar a família.",
+    "trabalho": "Enfermeiro assistencial em dois hospitais. Sobrecarga de pacientes por escala, cobrança da chefia, sensação crônica de que nada do que faz é suficiente. Vem se pegando distante e cínico com os pacientes — atende 'no automático'.",
+    "familia_e_relacoes": "Casado há 8 anos; a relação com a esposa está desgastada, com discussões quase semanais — ela diz que ele virou um estranho dentro de casa. Tem um filho de 5 anos a quem sente que quase não vê. Mantém bom vínculo com um colega enfermeiro, o mesmo que evitou o quase-erro.",
+    "estressores_atuais": [
+      "dependência dos dois empregos por causa do financiamento da casa",
+      "medo de ser demitido se reclamar da sobrecarga",
+      "atrito conjugal crescente e culpa por estar ausente com o filho",
+      "peso do quase-erro de medicação e o medo de que aconteça de novo",
+      "privação de sono crônica com uso de zolpidem por conta própria"
+    ]
+  },
+
+  "estado_emocional": {
+    "agora": "Chega tenso e defensivo, com vergonha de estar num consultório 'por causa de cansaço'. Por baixo da racionalização há exaustão profunda, irritabilidade à flor da pele e um medo silencioso de estar adoecendo ou de fazer um mal a alguém no trabalho.",
+    "manifestacoes": [
+      "voz cansada e suspiros frequentes",
+      "esfrega o rosto e os olhos, passa a mão na nuca",
+      "pausa e desvia o olhar ao tocar no quase-erro e no zolpidem",
+      "discurso acelera e a voz endurece quando fala da chefia e da sobrecarga",
+      "olhos marejam ao falar do filho e de 'estar falhando em tudo', mas ele segura"
+    ],
+    "o_que_teme": "Ter perdido a vocação, adoecer de vez, e — o que mais o apavora — cometer um erro grave que machuque um paciente por causa do próprio esgotamento.",
+    "o_que_espera": "No fundo, quer ouvir que não está enlouquecendo nem 'ficando fraco', que o que sente tem nome e saída, e que dá para reorganizar a vida sem largar a enfermagem que ele ama."
+  },
+
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "o profissional valida o esforço dele em vez de julgar ('você está segurando muita coisa')",
+      "as perguntas são calmas, específicas e não soam como cobrança",
+      "normalizam-se as reações dele como resposta ao contexto, não como fraqueza pessoal",
+      "há espaço e silêncio para ele completar o raciocínio sem ser cortado"
+    ],
+    "fecha_se_quando": [
+      "sente pressa ou perguntas mecânicas em sequência",
+      "percebe julgamento moral (sobre o quase-erro ou a automedicação)",
+      "tom frio ou distante, que ecoa a mesma cobrança que ele já vive no trabalho",
+      "vai direto ao ponto sensível sem antes construir vínculo"
+    ],
+    "trava_do_sensivel": "As informações mais pesadas — que ERROU/quase errou com um paciente por exaustão, que toma zolpidem por conta própria conseguido com um colega, e que pensa seriamente em largar a enfermagem — só emergem depois de acolhimento explícito e de uma pergunta segura e sem julgamento. O quase-erro é o que dá mais vergonha (é falha profissional); ele precisa sentir que não vai ser condenado por isso. Se pressionado ou julgado, recua e volta a dizer que 'é só cansaço'.",
+    "sinais_de_confianca": "Passa a olhar mais nos olhos, os suspiros dão lugar a um tom mais baixo e verdadeiro, começa a usar a primeira pessoa em vez do 'a gente', e chega a dizer algo como 'nunca falei isso pra ninguém'."
+  },
+
   "informacoes_iniciais": {
     "exaustao": "Sente um cansaço que não melhora nem no dia de folga.",
     "irritabilidade": "Anda explosivo, perde a paciência por qualquer coisa.",
@@ -64,7 +140,10 @@
     "choro": "Depois do quase-erro, chorei trancado no vestiário do hospital.",
     "abandono": "Tenho pensado seriamente em largar a enfermagem, e isso me apavora.",
     "automedicacao": "Ando tomando zolpidem por conta própria para conseguir dormir; um colega me arruma.",
-    "culpa": "Sinto que estou falhando como profissional, como marido e como pai."
+    "culpa": "Sinto que estou falhando como profissional, como marido e como pai.",
+    "trabalho": "Não foi só o quase-erro daquela vez: já deixei passar sinais de paciente por estar no automático, e vivo com medo de que da próxima vez ninguém perceba a tempo.",
+    "medo": "Meu maior medo é machucar alguém de verdade por causa do meu cansaço — e não conseguir me perdoar por isso.",
+    "isolamento": "Parei de responder os amigos, não tenho energia pra ninguém; só vou do plantão pra cama e da cama pro plantão."
   },
 
   "rede_apoio": {
@@ -81,8 +160,8 @@
     },
     "afeto": {
       "nome": "Exame do estado mental — humor e afeto",
-      "sinonimos": ["estado mental", "exame psíquico", "afeto", "afetividade"],
-      "resultado": "Humor irritável e ansioso; discurso acelerado ao falar do trabalho, com suspiros frequentes."
+      "sinonimos": ["estado mental", "exame psíquico", "afeto", "afetividade", "humor"],
+      "resultado": "Humor irritável e ansioso; discurso acelerado ao falar do trabalho, com suspiros frequentes. Afeto reativo: entristece ao falar da família e se anima discretamente ao lembrar de folgas, sem anedonia global — o sofrimento gira em torno do trabalho."
     },
     "pressao_arterial": {
       "nome": "Pressão arterial",
@@ -94,14 +173,37 @@
   "exames_disponiveis": {
     "mbi": {
       "nome": "Inventário de Burnout de Maslach (MBI)",
-      "sinonimos": ["mbi", "maslach", "inventário de burnout", "escala de burnout"],
+      "sinonimos": ["mbi", "maslach", "inventário de burnout", "escala de burnout", "questionário de burnout"],
       "resultado": "Exaustão emocional elevada, despersonalização elevada, realização profissional reduzida."
     },
     "tsh": {
       "nome": "TSH",
-      "sinonimos": ["tsh", "tireoide", "hormônio tireoidiano", "função tireoidiana"],
+      "sinonimos": ["tsh", "tireoide", "hormônio tireoidiano", "função tireoidiana", "hormônio da tireoide"],
       "resultado": "2,4 mUI/L — dentro da normalidade."
+    },
+    "phq9": {
+      "nome": "Questionário de Saúde do Paciente (PHQ-9)",
+      "sinonimos": ["phq9", "phq-9", "escala de depressão", "rastreio de depressão", "questionário de depressão"],
+      "resultado": "Escore moderado, com sintomas concentrados em fadiga, sono e irritabilidade ligados ao trabalho; sem anedonia global e sem ideação suicida ativa — quadro mais compatível com esgotamento ocupacional do que com episódio depressivo maior."
     }
+  },
+
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Síndrome de Burnout (esgotamento profissional) — CID-11 QD85, condição ligada ao trabalho, com a tríade exaustão emocional, despersonalização/cinismo e baixa realização profissional. O paciente NUNCA nomeia o diagnóstico.",
+    "manter_coerente": [
+      "o sofrimento é ancorado no trabalho e melhora nas folgas/férias — nunca inventar tristeza pervasiva e sem gatilho",
+      "cronologia fixa: início há ~1 ano, agravamento nos últimos 3 meses",
+      "intensidade estável: cansaço que não passa com descanso, insônia, cefaleia tensional, irritabilidade",
+      "não relatar sintoma que não foi perguntado; revelar o sensível só após acolhimento",
+      "sem ideação suicida ativa; o 'largar tudo' é sobre abandonar a profissão, não sobre a vida",
+      "preserva funcionalidade fora do gatilho: consegue se alegrar com o filho e com folgas"
+    ],
+    "diferenciais_a_respeitar": [
+      "vs. Depressão maior: afeto reativo (melhora nas folgas), sem anedonia global nem ideação suicida — o eixo é o trabalho; PHQ-9 moderado por sintomas ocupacionais",
+      "vs. Hipotireoidismo: TSH normal (2,4 mUI/L) afasta causa tireoidiana da fadiga",
+      "vs. Transtorno de ansiedade primário: a ansiedade é secundária à sobrecarga e à insônia, não flutua livre",
+      "a favor do burnout: MBI com exaustão e despersonalização elevadas e realização reduzida; distanciamento/cinismo com os pacientes; melhora clara ao se afastar do trabalho"
+    ]
   },
 
   "emocao_atual": {

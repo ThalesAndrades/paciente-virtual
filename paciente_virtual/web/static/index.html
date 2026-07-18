@@ -49,10 +49,10 @@
     color: var(--texto);
     line-height: 1.5;
   }
-  .tela { display: none; max-width: 780px; margin: 0 auto; padding: 24px 16px 90px; }
+  .tela { display: none; max-width: 780px; margin: 0 auto; padding: 24px 16px 120px; }
   .tela.ativa { display: block; }
   h1 { font-size: 1.5rem; margin: 8px 0 2px; }
-  .subtitulo { color: var(--texto-suave); margin: 0 0 24px; }
+  .subtitulo { color: var(--texto-suave); margin: 0 0 20px; }
   label { display: block; font-weight: 600; margin: 18px 0 6px; }
   input[type=text] {
     width: 100%; padding: 10px 12px; font-size: 1rem;
@@ -76,6 +76,21 @@
   .botao:hover { background: var(--primaria-escura); }
   .botao:disabled { opacity: .5; cursor: default; }
   .botao.secundario { background: transparent; color: var(--primaria); border: 1px solid var(--primaria); }
+
+  /* Preferência de áudio — controle "lá em cima" */
+  .pref-audio {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: var(--superficie); border: 1px solid var(--borda);
+    border-radius: 12px; padding: 12px 14px; margin: 4px 0 8px;
+  }
+  .pref-audio .pref-rotulo { font-weight: 600; }
+  .pref-audio .pref-dica { font-size: .82rem; color: var(--texto-suave); flex-basis: 100%; margin: 0; }
+  .segmentos { display: inline-flex; border: 1px solid var(--borda); border-radius: 999px; padding: 3px; gap: 3px; background: var(--fundo); }
+  .seg {
+    border: none; background: transparent; color: var(--texto-suave);
+    padding: 7px 14px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .92rem;
+  }
+  .seg.ativo { background: var(--primaria); color: #fff; font-weight: 600; }
 
   /* Consulta */
   .cabecalho-consulta {
@@ -107,6 +122,11 @@
   .balao { max-width: 82%; padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; }
   .balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 4px; }
   .balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 4px; }
+  .balao.paciente.digitando-vivo::after {
+    content: "▋"; margin-left: 1px; color: var(--texto-suave);
+    animation: piscar 1s steps(1) infinite;
+  }
+  @keyframes piscar { 50% { opacity: 0; } }
   .balao.exame {
     align-self: flex-start; background: var(--exame); border: 1px solid var(--exame-borda);
     border-radius: 10px; font-size: .95rem; max-width: 92%;
@@ -120,14 +140,39 @@
     position: fixed; bottom: 0; left: 0; right: 0;
     background: var(--superficie); border-top: 1px solid var(--borda); padding: 10px 16px;
   }
-  .entrada .interno { max-width: 780px; margin: 0 auto; display: flex; gap: 8px; }
+  .entrada .interno { max-width: 780px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
   .entrada input { flex: 1; }
-  .entrada button {
+  .entrada button.enviar {
     padding: 10px 16px; border: none; border-radius: 8px;
     background: var(--primaria); color: #fff; font-size: 1rem; cursor: pointer;
   }
-  #botao-mic { background: var(--superficie); color: var(--texto); border: 1px solid var(--borda); }
-  #botao-mic.gravando { background: var(--falha); color: #fff; border-color: var(--falha); }
+  /* Botão "segurar para falar" (push-to-talk) */
+  #botao-mic {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 10px 14px; min-width: 48px; min-height: 44px;
+    background: var(--superficie); color: var(--texto);
+    border: 1px solid var(--borda); border-radius: 999px;
+    font-size: 1.15rem; cursor: pointer;
+    user-select: none; -webkit-user-select: none; touch-action: none;
+  }
+  #botao-mic .mic-label { font-size: .82rem; font-weight: 600; }
+  #botao-mic:disabled { opacity: .45; cursor: default; }
+  #botao-mic.gravando {
+    background: var(--falha); color: #fff; border-color: var(--falha);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--falha) 60%, transparent);
+    animation: pulso 1.1s ease-out infinite;
+  }
+  @keyframes pulso {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--falha) 55%, transparent); }
+    100% { box-shadow: 0 0 0 14px transparent; }
+  }
+  .dica-mic {
+    max-width: 780px; margin: 6px auto 0; font-size: .82rem; color: var(--texto-suave);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dica-mic.gravando { color: var(--falha); font-weight: 600; }
+  .dica-mic .ponto { width: 9px; height: 9px; border-radius: 50%; background: var(--falha); display: none; }
+  .dica-mic.gravando .ponto { display: inline-block; animation: piscar 1s steps(1) infinite; }
 
   /* Avaliação */
   .nota-geral {
@@ -153,6 +198,15 @@
 <section id="tela-inicio" class="tela ativa">
   <h1>🩺 Paciente Virtual</h1>
   <p class="subtitulo">Simulador de entrevista clínica para treinamento</p>
+
+  <div class="pref-audio" id="pref-audio">
+    <span class="pref-rotulo">Respostas do paciente</span>
+    <div class="segmentos" role="group" aria-label="Como ouvir as respostas do paciente">
+      <button type="button" class="seg" data-audio="1">🔊 Texto + áudio</button>
+      <button type="button" class="seg" data-audio="0">📝 Somente texto</button>
+    </div>
+    <p class="pref-dica">O paciente responde por escrito. Com áudio, o relato também é lido em voz alta. Você pode mudar isso durante a consulta.</p>
+  </div>
 
   <label for="campo-aluno">Nome do aluno</label>
   <input id="campo-aluno" type="text" placeholder="Digite seu nome" autocomplete="name">
@@ -207,10 +261,11 @@
 
   <div class="entrada">
     <div class="interno">
-      <button id="botao-mic" title="Falar (reconhecimento de voz do navegador)">🎤</button>
+      <button id="botao-mic" aria-label="Segurar para falar">🎤<span class="mic-label">Segurar para falar</span></button>
       <input id="campo-mensagem" type="text" placeholder="Pergunte ao paciente…" autocomplete="off">
-      <button id="botao-enviar">Enviar</button>
+      <button id="botao-enviar" class="enviar">Enviar</button>
     </div>
+    <div id="dica-mic" class="dica-mic" aria-live="polite"><span class="ponto"></span><span id="dica-mic-texto"></span></div>
   </div>
 </section>
 
@@ -236,12 +291,23 @@
 <script>
 "use strict";
 
+const PREF_AUDIO = "pv_audio_respostas";
+
+// localStorage pode lançar (modo privacidade, iframe sandbox) — nunca deixar isso
+// derrubar a inicialização da página.
+function lerPreferenciaAudio() {
+  try { return localStorage.getItem(PREF_AUDIO) !== "0"; } catch { return true; }
+}
+function salvarPreferenciaAudio(ligado) {
+  try { localStorage.setItem(PREF_AUDIO, ligado ? "1" : "0"); } catch { /* ignora */ }
+}
+
 const estado = {
   casos: [],
   casoSelecionado: null,
   consultaId: null,
   voz: "feminino",
-  falarRespostas: true,
+  falarRespostas: lerPreferenciaAudio(), // padrão: com áudio
   avisoDemoExibido: false,
   ocupado: false,
   capacidades: { stt: false, tts: {} },
@@ -252,6 +318,27 @@ const $ = (id) => document.getElementById(id);
 function mostrarTela(id) {
   document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa"));
   $(id).classList.add("ativa");
+}
+
+/* ---------- Preferência de áudio (sincroniza topo + cabeçalho) ---------- */
+
+function aplicarPreferenciaAudio(ligado) {
+  estado.falarRespostas = ligado;
+  salvarPreferenciaAudio(ligado);
+  if (!ligado) pararFala();
+
+  // Segmentos na tela inicial
+  document.querySelectorAll("#pref-audio .seg").forEach((seg) => {
+    const ativo = (seg.dataset.audio === "1") === ligado;
+    seg.classList.toggle("ativo", ativo);
+    seg.setAttribute("aria-pressed", ativo ? "true" : "false");
+  });
+  // Botão no cabeçalho da consulta
+  const botaoSom = $("botao-som");
+  botaoSom.classList.toggle("ligado", ligado);
+  botaoSom.textContent = ligado ? "🔊 Voz" : "🔇 Voz";
+  botaoSom.setAttribute("aria-pressed", ligado ? "true" : "false");
+  botaoSom.title = ligado ? "Respostas lidas em voz alta (clique para desligar)" : "Somente texto (clique para ligar o áudio)";
 }
 
 /* ---------- Tela inicial ---------- */
@@ -319,33 +406,69 @@ function adicionarBalao(tipo, texto, extra = {}) {
     balao.append(texto);
   } else {
     balao.textContent = texto;
-    if (extra.demo) {
-      const rotulo = document.createElement("span");
-      rotulo.className = "rotulo-demo";
-      rotulo.textContent = "modo demonstração";
-      balao.appendChild(rotulo);
-    }
   }
   $("mensagens").appendChild(balao);
   balao.scrollIntoView({ behavior: "smooth", block: "end" });
   return balao;
 }
 
+/* ---------- Voz do paciente: texto "sendo digitado" + áudio em paralelo ---------- */
+
 let audioAtual = null;
+let temporizadorDigitacao = null;
+let balaoDigitando = null;   // balão do paciente em digitação no momento
+let textoDigitando = "";     // texto completo esperado desse balão
+let demoDigitando = false;   // se o balão deve receber o rótulo "modo demonstração"
 
 function pararFala() {
-  if (audioAtual) {
-    audioAtual.pause();
-    audioAtual = null;
-  }
+  if (audioAtual) { audioAtual.pause(); audioAtual = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
+}
+
+// Conclui a digitação em curso: completa o texto, remove o cursor e insere o rótulo
+// demo. Chamado tanto ao terminar naturalmente quanto ao interromper (nova pergunta).
+function finalizarDigitacao() {
+  if (temporizadorDigitacao) { clearInterval(temporizadorDigitacao); temporizadorDigitacao = null; }
+  if (!balaoDigitando) return;
+  balaoDigitando.textContent = textoDigitando;
+  balaoDigitando.classList.remove("digitando-vivo");
+  if (demoDigitando) {
+    const rotulo = document.createElement("span");
+    rotulo.className = "rotulo-demo";
+    rotulo.textContent = "modo demonstração";
+    balaoDigitando.appendChild(rotulo);
+  }
+  balaoDigitando = null;
+  textoDigitando = "";
+  demoDigitando = false;
+}
+
+// Alias nos pontos de interrupção (nova pergunta, encerrar, avaliar).
+function pararDigitacao() { finalizarDigitacao(); }
+
+// Anima o texto do paciente caractere a caractere; ao final, insere o rótulo demo se houver.
+function digitarResposta(balao, texto, ehDemo) {
+  finalizarDigitacao(); // conclui qualquer digitação anterior antes de iniciar outra
+  balaoDigitando = balao;
+  textoDigitando = texto;
+  demoDigitando = ehDemo;
+  balao.textContent = "";
+  balao.classList.add("digitando-vivo");
+  let i = 0;
+  const passo = 2; // caracteres por tique
+  temporizadorDigitacao = setInterval(() => {
+    i = Math.min(i + passo, texto.length);
+    balao.textContent = texto.slice(0, i);
+    balao.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (i >= texto.length) finalizarDigitacao();
+  }, 22);
 }
 
 function falarComNavegador(texto) {
   if (!window.speechSynthesis) return;
   const fala = new SpeechSynthesisUtterance(texto);
   fala.lang = "pt-BR";
-  const vozes = speechSynthesis.getVoices().filter((v) => v.lang.startsWith("pt"));
+  const vozes = speechSynthesis.getVoices().filter((v) => v.lang && v.lang.startsWith("pt"));
   if (vozes.length) {
     const querFeminina = estado.voz !== "masculino";
     const preferida = vozes.find((v) =>
@@ -383,10 +506,21 @@ async function falarTexto(texto) {
   falarComNavegador(texto);
 }
 
+// Mostra a resposta do paciente: texto digitado + (se ligado) áudio ao mesmo tempo.
+function responderPaciente(texto, ehDemo) {
+  const balao = adicionarBalao("paciente", "");
+  falarTexto(texto);            // áudio começa em paralelo (se ligado)
+  digitarResposta(balao, texto, ehDemo); // texto "sendo escrito"
+}
+
 async function enviarMensagem() {
   const campo = $("campo-mensagem");
   const texto = campo.value.trim();
   if (!texto || estado.ocupado || !estado.consultaId) return;
+
+  // Interrompe fala/digitação anteriores ao mandar nova pergunta.
+  pararFala();
+  pararDigitacao();
 
   campo.value = "";
   adicionarBalao("aluno", texto);
@@ -410,10 +544,8 @@ async function enviarMensagem() {
     for (const evento of dados.eventos) {
       if (evento.tipo === "exame") {
         adicionarBalao("exame", evento.resultado, { titulo: evento.titulo, nome: evento.nome });
-        falarTexto(evento.resultado);
       } else if (evento.tipo === "paciente") {
-        adicionarBalao("paciente", evento.texto, { demo: evento.origem === "demo" });
-        falarTexto(evento.texto);
+        responderPaciente(evento.texto, evento.origem === "demo");
       } else if (evento.tipo === "aviso") {
         if (!estado.avisoDemoExibido) {
           adicionarBalao("aviso", evento.texto);
@@ -430,98 +562,104 @@ async function enviarMensagem() {
   }
 }
 
-/* ---------- Reconhecimento de voz (navegador) ---------- */
+/* ---------- Microfone: "segurar para falar, soltar para enviar" ---------- */
 
 const ReconhecimentoFala = window.SpeechRecognition || window.webkitSpeechRecognition;
 let reconhecedor = null;
-let gravador = null;
+let segurandoMic = false;      // usuário está com o botão pressionado
+let pararSolicitado = false;   // soltou o botão (fim do turno)
+let transcricaoFinal = "";
 
-function usaTranscricaoLocal() {
-  return estado.capacidades.stt && navigator.mediaDevices && window.MediaRecorder;
+function definirDicaMic(texto, gravando) {
+  const dica = $("dica-mic");
+  $("dica-mic-texto").textContent = texto;
+  dica.classList.toggle("gravando", Boolean(gravando));
 }
 
 function configurarMicrofone() {
   const botao = $("botao-mic");
 
-  if (usaTranscricaoLocal()) {
-    botao.disabled = false;
-    botao.title = "Falar (transcrição local com Whisper no servidor)";
+  if (!ReconhecimentoFala) {
+    botao.disabled = true;
+    botao.querySelector(".mic-label").textContent = "Voz indisponível";
+    definirDicaMic("Reconhecimento de voz indisponível neste navegador — digite sua pergunta (Chrome ou Edge têm o recurso).", false);
     return;
   }
 
-  if (ReconhecimentoFala) {
-    reconhecedor = new ReconhecimentoFala();
-    reconhecedor.lang = "pt-BR";
-    reconhecedor.interimResults = false;
-    reconhecedor.onresult = (evento) => {
-      $("campo-mensagem").value = evento.results[0][0].transcript;
-      enviarMensagem();
-    };
-    reconhecedor.onend = () => botao.classList.remove("gravando");
-    reconhecedor.onerror = () => botao.classList.remove("gravando");
-    botao.disabled = false;
-    botao.title = "Falar (reconhecimento de voz do navegador)";
-    return;
-  }
+  reconhecedor = new ReconhecimentoFala();
+  reconhecedor.lang = "pt-BR";
+  reconhecedor.continuous = true;
+  reconhecedor.interimResults = true;
 
-  botao.disabled = true;
-  botao.title =
-    "Voz indisponível: instale o extra voz-local no servidor ou use Chrome/Edge";
-}
+  reconhecedor.onresult = (evento) => {
+    let interino = "";
+    for (let i = evento.resultIndex; i < evento.results.length; i++) {
+      const trecho = evento.results[i][0].transcript;
+      if (evento.results[i].isFinal) transcricaoFinal += trecho + " ";
+      else interino += trecho;
+    }
+    $("campo-mensagem").value = (transcricaoFinal + interino).trim();
+  };
 
-async function gravarParaServidor() {
-  const botao = $("botao-mic");
-  if (gravador) {
-    gravador.stop();
-    return;
-  }
+  reconhecedor.onend = () => {
+    // Se ainda está segurando e não pediu para parar, o reconhecedor parou sozinho
+    // (silêncio momentâneo): reinicia para continuar ouvindo até soltar.
+    if (segurandoMic && !pararSolicitado) {
+      try { reconhecedor.start(); return; } catch { segurandoMic = false; /* não reiniciou: encerra abaixo */ }
+    }
+    botao.classList.remove("gravando");
+    definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
+    const texto = ($("campo-mensagem").value || transcricaoFinal).trim();
+    $("campo-mensagem").placeholder = "Pergunte ao paciente…";
+    if (texto) { $("campo-mensagem").value = texto; enviarMensagem(); }
+  };
 
-  try {
-    const midia = await navigator.mediaDevices.getUserMedia({ audio: true });
-    gravador = new MediaRecorder(midia);
-    const pedacos = [];
-    gravador.ondataavailable = (evento) => pedacos.push(evento.data);
-    gravador.onstop = async () => {
-      midia.getTracks().forEach((faixa) => faixa.stop());
+  reconhecedor.onerror = (evento) => {
+    if (evento.error === "not-allowed" || evento.error === "service-not-allowed") {
+      segurandoMic = false;
       botao.classList.remove("gravando");
-      const blob = new Blob(pedacos, { type: gravador.mimeType });
-      gravador = null;
+      definirDicaMic("Permita o microfone no navegador para falar.", false);
+    }
+    // "no-speech"/"aborted" são tratados no onend.
+  };
 
-      const forma = new FormData();
-      forma.append("audio", blob, "fala.webm");
-      try {
-        const resposta = await fetch("/api/transcrever", { method: "POST", body: forma });
-        const dados = await resposta.json();
-        if (resposta.ok && dados.texto) {
-          $("campo-mensagem").value = dados.texto;
-          enviarMensagem();
-        } else {
-          adicionarBalao("aviso", dados.erro || "Não foi possível entender a fala.");
-        }
-      } catch {
-        adicionarBalao("aviso", "Falha ao enviar o áudio para transcrição.");
-      }
-    };
-    gravador.start();
-    botao.classList.add("gravando");
-  } catch {
-    adicionarBalao("aviso", "Não foi possível acessar o microfone.");
-  }
-}
+  definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
 
-function alternarMicrofone() {
-  if (usaTranscricaoLocal()) {
-    gravarParaServidor();
-    return;
-  }
-  if (!reconhecedor) return;
-  const botao = $("botao-mic");
-  if (botao.classList.contains("gravando")) {
-    reconhecedor.stop();
-  } else {
+  const iniciar = (evento) => {
+    if (evento) evento.preventDefault();
+    if (segurandoMic || estado.ocupado || !estado.consultaId) return;
+    segurandoMic = true;
+    pararSolicitado = false;
+    transcricaoFinal = "";
+    $("campo-mensagem").value = "";
+    $("campo-mensagem").placeholder = "Ouvindo…";
     botao.classList.add("gravando");
-    reconhecedor.start();
-  }
+    definirDicaMic("Ouvindo… solte para enviar", true);
+    try { reconhecedor.start(); } catch { /* já iniciado */ }
+    if (evento && evento.pointerId != null) {
+      try { botao.setPointerCapture(evento.pointerId); } catch { /* ok */ }
+    }
+  };
+
+  const parar = () => {
+    if (!segurandoMic) return;
+    segurandoMic = false;
+    pararSolicitado = true;
+    try { reconhecedor.stop(); } catch { /* já parado */ }
+  };
+
+  botao.addEventListener("pointerdown", iniciar);
+  botao.addEventListener("pointerup", parar);
+  botao.addEventListener("pointercancel", parar);
+  botao.addEventListener("lostpointercapture", parar);
+  botao.addEventListener("contextmenu", (e) => e.preventDefault());
+  // Rede de segurança: se o pointer capture falhar e o dedo soltar fora do botão,
+  // o pointerup global encerra a gravação assim mesmo (parar() é idempotente).
+  window.addEventListener("pointerup", parar);
+  window.addEventListener("pointercancel", parar);
+  // Acessibilidade: teclado (Espaço/Enter segura enquanto pressionado).
+  botao.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") iniciar(e); });
+  botao.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") parar(); });
 }
 
 async function carregarCapacidades() {
@@ -636,6 +774,8 @@ async function encerrarConsulta() {
   if (!estado.consultaId || estado.ocupado) return;
   if (!confirm("Encerrar a consulta e gerar a avaliação?")) return;
 
+  pararFala();
+  pararDigitacao();
   estado.ocupado = true;
   $("botao-encerrar").disabled = true;
   const aguardando = adicionarBalao("aviso", "Encerrando e gerando a avaliação…");
@@ -659,6 +799,7 @@ async function encerrarConsulta() {
 function mostrarAvaliacao(dados) {
   estado.consultaId = null;
   pararFala();
+  pararDigitacao();
 
   $("resumo-avaliacao").textContent = `Transcrição salva em historico/${dados.transcript}`;
 
@@ -688,13 +829,14 @@ function mostrarAvaliacao(dados) {
 $("botao-iniciar").addEventListener("click", iniciarConsulta);
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
-$("botao-mic").addEventListener("click", alternarMicrofone);
 $("botao-encerrar").addEventListener("click", encerrarConsulta);
-$("botao-som").addEventListener("click", () => {
-  estado.falarRespostas = !estado.falarRespostas;
-  $("botao-som").classList.toggle("ligado", estado.falarRespostas);
-  if (!estado.falarRespostas) pararFala();
+
+// Preferência de áudio: segmentos no topo + botão no cabeçalho, sempre em sincronia.
+document.querySelectorAll("#pref-audio .seg").forEach((seg) => {
+  seg.addEventListener("click", () => aplicarPreferenciaAudio(seg.dataset.audio === "1"));
 });
+$("botao-som").addEventListener("click", () => aplicarPreferenciaAudio(!estado.falarRespostas));
+
 $("botao-nova").addEventListener("click", () => {
   $("botao-iniciar").disabled = !estado.casoSelecionado;
   mostrarTela("tela-inicio");
@@ -703,6 +845,13 @@ $("botao-painel").addEventListener("click", abrirPainel);
 $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
 
+// Aquece a lista de vozes do navegador (algumas só carregam após este evento).
+if (window.speechSynthesis) {
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+}
+
+aplicarPreferenciaAudio(estado.falarRespostas);
 carregarCasos();
 carregarCapacidades();
 </script>
