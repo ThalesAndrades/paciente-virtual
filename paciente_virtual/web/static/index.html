@@ -2,272 +2,370 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paciente Virtual</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Paciente Virtual — Simulador de Consulta</title>
 <style>
   :root {
-    --fundo: #f4f6f9;
+    --fundo: #eef2f6;
+    --fundo-2: #e4eaf0;
     --superficie: #ffffff;
-    --borda: #dde3ec;
-    --texto: #1c2733;
-    --texto-suave: #5b6b7d;
-    --primaria: #1668b0;
-    --primaria-escura: #0f4d85;
-    --aluno: #1668b0;
-    --paciente: #eef2f7;
-    --exame: #fff8e6;
-    --exame-borda: #e8d9a0;
-    --ok: #1e8a4c;
-    --falha: #c23b3b;
-    --aviso-fundo: #fdf0e3;
-    --aviso-texto: #8a5a1e;
+    --superficie-2: #f7f9fb;
+    --borda: #dce3ec;
+    --borda-forte: #c6d2df;
+    --texto: #16222e;
+    --texto-suave: #5a6b7b;
+    --texto-fraco: #8493a3;
+    --primaria: #0f766e;
+    --primaria-escura: #0b5f58;
+    --primaria-suave: #d7efec;
+    --med: #1e6fd0;
+    --med-suave: #e2edfb;
+    --psi: #7c5cbf;
+    --psi-suave: #ece5f8;
+    --aluno: #0f766e;
+    --paciente: #f0f3f7;
+    --exame: #fff6e0;
+    --exame-borda: #ecd79a;
+    --exame-texto: #7a5a12;
+    --ok: #14884a;
+    --falha: #c8382f;
+    --aviso-fundo: #eef4f8;
+    --aviso-texto: #4a6072;
+    --sombra: 0 1px 2px rgba(16,34,46,.04), 0 8px 24px rgba(16,34,46,.06);
+    --sombra-forte: 0 2px 6px rgba(16,34,46,.08), 0 18px 40px rgba(16,34,46,.12);
+    --raio: 16px;
+    --raio-sm: 10px;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --fundo: #12181f;
-      --superficie: #1a222c;
-      --borda: #2b3644;
-      --texto: #e6edf5;
-      --texto-suave: #93a4b8;
-      --primaria: #3d8fd6;
-      --primaria-escura: #5aa4e0;
-      --aluno: #23578a;
-      --paciente: #242f3c;
-      --exame: #33301f;
-      --exame-borda: #5a5230;
-      --ok: #4cc07e;
-      --falha: #e07070;
-      --aviso-fundo: #362a1a;
-      --aviso-texto: #e0b87a;
+      --fundo: #0c1116;
+      --fundo-2: #0a0f14;
+      --superficie: #151c24;
+      --superficie-2: #1b232c;
+      --borda: #26313c;
+      --borda-forte: #33414f;
+      --texto: #e7eef5;
+      --texto-suave: #9fb0c0;
+      --texto-fraco: #6f8194;
+      --primaria: #2dd4bf;
+      --primaria-escura: #5eecd8;
+      --primaria-suave: #123833;
+      --med: #56a2f0;
+      --med-suave: #14263c;
+      --psi: #b79ce8;
+      --psi-suave: #241a38;
+      --aluno: #167f76;
+      --paciente: #1c252f;
+      --exame: #2c2717;
+      --exame-borda: #55492a;
+      --exame-texto: #e2c987;
+      --ok: #3fca7d;
+      --falha: #ec7268;
+      --aviso-fundo: #172029;
+      --aviso-texto: #9fb2c2;
+      --sombra: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+      --sombra-forte: 0 2px 8px rgba(0,0,0,.4), 0 20px 46px rgba(0,0,0,.5);
     }
   }
   * { box-sizing: border-box; }
+  html, body { height: 100%; }
   body {
     margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--fundo);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:
+      radial-gradient(1100px 520px at 78% -8%, color-mix(in srgb, var(--primaria) 12%, transparent), transparent 60%),
+      radial-gradient(900px 500px at 8% 108%, color-mix(in srgb, var(--psi) 10%, transparent), transparent 60%),
+      var(--fundo);
     color: var(--texto);
     line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
-  .tela { display: none; max-width: 780px; margin: 0 auto; padding: 24px 16px 120px; }
-  .tela.ativa { display: block; }
-  h1 { font-size: 1.5rem; margin: 8px 0 2px; }
-  .subtitulo { color: var(--texto-suave); margin: 0 0 20px; }
-  label { display: block; font-weight: 600; margin: 18px 0 6px; }
-  input[type=text] {
-    width: 100%; padding: 10px 12px; font-size: 1rem;
-    border: 1px solid var(--borda); border-radius: 8px;
-    background: var(--superficie); color: var(--texto);
-  }
-  .cartoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 6px; }
-  .cartao {
-    text-align: left; padding: 14px 16px; border: 2px solid var(--borda); border-radius: 12px;
-    background: var(--superficie); color: var(--texto); cursor: pointer; font: inherit;
-  }
-  .cartao:hover { border-color: var(--primaria); }
-  .cartao.selecionado { border-color: var(--primaria); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primaria) 25%, transparent); }
-  .cartao h3 { margin: 0 0 4px; font-size: 1.05rem; }
-  .cartao p { margin: 2px 0; font-size: .9rem; color: var(--texto-suave); }
-  .botao {
-    display: inline-block; padding: 11px 22px; margin-top: 22px;
-    background: var(--primaria); border: none; border-radius: 8px;
-    color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer;
-  }
-  .botao:hover { background: var(--primaria-escura); }
-  .botao:disabled { opacity: .5; cursor: default; }
-  .botao.secundario { background: transparent; color: var(--primaria); border: 1px solid var(--primaria); }
+  .tela { display: none; max-width: 940px; margin: 0 auto; padding: 26px 18px calc(30px + env(safe-area-inset-bottom)); }
+  .tela.ativa { display: block; animation: entra .28s ease; }
+  @keyframes entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  h1 { font-size: 1.6rem; letter-spacing: -.02em; margin: 6px 0 2px; font-weight: 800; }
+  .subtitulo { color: var(--texto-suave); margin: 0 0 22px; }
 
-  /* Preferência de áudio — controle "lá em cima" */
+  .marca { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .marca .selo {
+    width: 46px; height: 46px; border-radius: 14px; flex: none;
+    display: grid; place-items: center; font-size: 1.5rem;
+    background: linear-gradient(160deg, var(--primaria), color-mix(in srgb, var(--primaria) 55%, #000 8%));
+    color: #fff; box-shadow: var(--sombra);
+  }
+  .marca .tit { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+  .marca .sub { color: var(--texto-suave); font-size: .92rem; }
+
+  label { display: block; font-weight: 650; margin: 20px 0 7px; font-size: .95rem; }
+  input[type=text] {
+    width: 100%; padding: 13px 14px; font-size: 1rem;
+    border: 1px solid var(--borda-forte); border-radius: var(--raio-sm);
+    background: var(--superficie); color: var(--texto); transition: border-color .15s, box-shadow .15s;
+  }
+  input[type=text]:focus { outline: none; border-color: var(--primaria); box-shadow: 0 0 0 4px var(--primaria-suave); }
+
+  /* Preferência de áudio */
   .pref-audio {
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    background: var(--superficie); border: 1px solid var(--borda);
-    border-radius: 12px; padding: 12px 14px; margin: 4px 0 8px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio);
+    padding: 13px 15px; margin: 8px 0 4px; box-shadow: var(--sombra);
   }
-  .pref-audio .pref-rotulo { font-weight: 600; }
+  .pref-audio .pref-rotulo { font-weight: 650; }
   .pref-audio .pref-dica { font-size: .82rem; color: var(--texto-suave); flex-basis: 100%; margin: 0; }
-  .segmentos { display: inline-flex; border: 1px solid var(--borda); border-radius: 999px; padding: 3px; gap: 3px; background: var(--fundo); }
-  .seg {
-    border: none; background: transparent; color: var(--texto-suave);
-    padding: 7px 14px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .92rem;
+  .segmentos { display: inline-flex; border: 1px solid var(--borda-forte); border-radius: 999px; padding: 4px; gap: 4px; background: var(--superficie-2); }
+  .seg { border: none; background: transparent; color: var(--texto-suave); padding: 8px 15px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .9rem; transition: background .15s, color .15s; }
+  .seg.ativo { background: var(--primaria); color: #fff; font-weight: 650; box-shadow: var(--sombra); }
+
+  /* Cards de categoria */
+  .categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  @media (max-width: 620px) { .categorias { grid-template-columns: 1fr; } }
+  .cat-card {
+    text-align: left; border: 1px solid var(--borda); border-radius: var(--raio);
+    background: var(--superficie); color: var(--texto); cursor: pointer; font: inherit;
+    padding: 22px; box-shadow: var(--sombra); transition: transform .16s, box-shadow .16s, border-color .16s;
+    position: relative; overflow: hidden;
   }
-  .seg.ativo { background: var(--primaria); color: #fff; font-weight: 600; }
+  .cat-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--cor); }
+  .cat-card:hover { transform: translateY(-3px); box-shadow: var(--sombra-forte); border-color: color-mix(in srgb, var(--cor) 45%, var(--borda)); }
+  .cat-card .ic { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; font-size: 1.7rem; background: var(--cor-suave); color: var(--cor); margin-bottom: 14px; }
+  .cat-card h3 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 750; }
+  .cat-card p { margin: 0; color: var(--texto-suave); font-size: .92rem; }
+  .cat-card .qtd { margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 650; color: var(--cor); background: var(--cor-suave); padding: 5px 11px; border-radius: 999px; }
+  .cat-card.med { --cor: var(--med); --cor-suave: var(--med-suave); }
+  .cat-card.psi { --cor: var(--psi); --cor-suave: var(--psi-suave); }
+
+  /* Grade de casos */
+  .topo-secao { display: flex; align-items: center; gap: 12px; margin: 4px 0 18px; }
+  .voltar { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--borda-forte); background: var(--superficie); color: var(--texto); border-radius: 999px; padding: 8px 14px; cursor: pointer; font: inherit; font-size: .9rem; }
+  .voltar:hover { border-color: var(--primaria); color: var(--primaria); }
+  .chip-cat { font-size: .78rem; font-weight: 700; padding: 5px 11px; border-radius: 999px; }
+  .chip-cat.med { color: var(--med); background: var(--med-suave); }
+  .chip-cat.psi { color: var(--psi); background: var(--psi-suave); }
+  .cartoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .cartao {
+    text-align: left; padding: 17px; border: 1px solid var(--borda); border-radius: var(--raio);
+    background: var(--superficie); color: var(--texto); cursor: pointer; font: inherit; box-shadow: var(--sombra);
+    transition: transform .15s, box-shadow .15s, border-color .15s; display: flex; gap: 13px; align-items: flex-start;
+  }
+  .cartao:hover { transform: translateY(-2px); box-shadow: var(--sombra-forte); border-color: var(--borda-forte); }
+  .cartao.selecionado { border-color: var(--cor, var(--primaria)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--cor, var(--primaria)) 30%, transparent), var(--sombra); }
+  .cartao .av { width: 44px; height: 44px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 750; color: #fff; background: var(--cor, var(--primaria)); }
+  .cartao.med { --cor: var(--med); } .cartao.psi { --cor: var(--psi); }
+  .cartao h3 { margin: 0 0 3px; font-size: 1.02rem; font-weight: 700; }
+  .cartao p { margin: 1px 0; font-size: .86rem; color: var(--texto-suave); }
+  .cartao .q { color: var(--texto); font-weight: 500; }
+
+  .botao {
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; margin-top: 22px;
+    background: var(--primaria); border: none; border-radius: var(--raio-sm);
+    color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: var(--sombra);
+    transition: filter .15s, transform .1s;
+  }
+  .botao:hover { filter: brightness(1.06); } .botao:active { transform: translateY(1px); }
+  .botao:disabled { opacity: .45; cursor: default; }
+  .botao.secundario { background: transparent; color: var(--primaria); border: 1px solid var(--borda-forte); box-shadow: none; }
+  .botao.secundario:hover { border-color: var(--primaria); }
 
   /* Consulta */
   .cabecalho-consulta {
-    position: sticky; top: 0; z-index: 2;
+    position: sticky; top: 0; z-index: 5;
     display: flex; align-items: center; gap: 12px;
-    background: var(--superficie); border-bottom: 1px solid var(--borda);
-    padding: 12px 16px; margin: -24px -16px 16px; flex-wrap: wrap;
+    background: color-mix(in srgb, var(--superficie) 88%, transparent); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--borda); padding: 12px 18px; margin: -26px -18px 16px; flex-wrap: wrap;
   }
-  .avatar {
-    width: 42px; height: 42px; border-radius: 50%; flex: none;
-    background: var(--primaria); color: #fff; display: flex;
-    align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem;
-  }
-  .cabecalho-consulta .info { flex: 1; min-width: 160px; }
-  .cabecalho-consulta .info strong { display: block; }
-  .cabecalho-consulta .info span { font-size: .85rem; color: var(--texto-suave); }
-  .acoes { display: flex; gap: 8px; }
-  .acoes button {
-    padding: 8px 12px; border-radius: 8px; border: 1px solid var(--borda);
-    background: var(--superficie); color: var(--texto); cursor: pointer; font-size: .9rem;
-  }
-  .acoes button.ligado { border-color: var(--primaria); color: var(--primaria); font-weight: 600; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; flex: none; color: #fff; display: grid; place-items: center; font-weight: 750; font-size: 1.1rem; background: var(--cor, var(--primaria)); }
+  .cab-info { flex: 1; min-width: 150px; }
+  .cab-info strong { display: block; font-weight: 700; }
+  .cab-info span { font-size: .82rem; color: var(--texto-suave); }
+  .cab-badge { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+  .cab-badge.med { color: var(--med); background: var(--med-suave); } .cab-badge.psi { color: var(--psi); background: var(--psi-suave); }
+  .acoes { display: flex; gap: 8px; align-items: center; }
+  .acoes button { padding: 9px 13px; border-radius: 999px; border: 1px solid var(--borda-forte); background: var(--superficie); color: var(--texto); cursor: pointer; font-size: .88rem; transition: border-color .15s, color .15s; }
+  .acoes button.ligado { border-color: var(--primaria); color: var(--primaria); font-weight: 650; }
+  .acoes .encerrar { color: var(--falha); border-color: color-mix(in srgb, var(--falha) 35%, var(--borda)); }
 
-  .fluxo-mensagens { display: flex; flex-direction: column; gap: 10px; }
-  .linha-consulta { width: 100%; margin-bottom: 10px; }
-  .linha-consulta h3 { display: flex; justify-content: space-between; gap: 8px; }
-  .linha-consulta .nota-linha { color: var(--primaria); }
-  #tela-detalhe h2 { font-size: 1.1rem; margin: 22px 0 12px; }
-  .balao { max-width: 82%; padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; }
-  .balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 4px; }
-  .balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 4px; }
-  .balao.paciente.digitando-vivo::after {
-    content: "▋"; margin-left: 1px; color: var(--texto-suave);
-    animation: piscar 1s steps(1) infinite;
-  }
+  .palco { display: flex; gap: 18px; align-items: flex-start; }
+  .coluna-chat { flex: 1; min-width: 0; }
+  .fluxo-mensagens { display: flex; flex-direction: column; gap: 11px; padding-bottom: 8px; }
+  .balao { max-width: 84%; padding: 11px 15px; border-radius: 16px; white-space: pre-wrap; box-shadow: var(--sombra); animation: entra .2s ease; }
+  .balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 5px; }
+  .balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 5px; }
+  .balao.paciente.digitando-vivo::after { content: "▋"; margin-left: 1px; color: var(--texto-suave); animation: piscar 1s steps(1) infinite; }
   @keyframes piscar { 50% { opacity: 0; } }
   .balao.exame {
-    align-self: flex-start; background: var(--exame); border: 1px solid var(--exame-borda);
-    border-radius: 10px; font-size: .95rem; max-width: 92%;
+    align-self: stretch; background: var(--exame); border: 1px solid var(--exame-borda); color: var(--exame-texto);
+    border-radius: 12px; font-size: .95rem; max-width: 100%;
   }
-  .balao.exame strong { display: block; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
-  .balao.aviso { align-self: center; background: var(--aviso-fundo); color: var(--aviso-texto); font-size: .85rem; border-radius: 8px; max-width: 100%; }
+  .balao.exame strong { display: block; font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; opacity: .85; }
+  .balao.aviso { align-self: center; background: var(--aviso-fundo); color: var(--aviso-texto); font-size: .84rem; border-radius: 10px; max-width: 100%; box-shadow: none; border: 1px solid var(--borda); }
   .balao.digitando { align-self: flex-start; color: var(--texto-suave); background: var(--paciente); display: flex; align-items: center; gap: 9px; }
   .balao.digitando .quem { font-size: .9rem; }
   .pontos-digita { display: inline-flex; gap: 4px; }
   .pontos-digita i { width: 7px; height: 7px; border-radius: 50%; background: var(--texto-suave); display: inline-block; animation: balancar 1.2s infinite ease-in-out; }
-  .pontos-digita i:nth-child(2) { animation-delay: .18s; }
-  .pontos-digita i:nth-child(3) { animation-delay: .36s; }
-  @keyframes balancar { 0%, 80%, 100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-4px); opacity: 1; } }
+  .pontos-digita i:nth-child(2) { animation-delay: .18s; } .pontos-digita i:nth-child(3) { animation-delay: .36s; }
+  @keyframes balancar { 0%,80%,100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-4px); opacity: 1; } }
   .rotulo-demo { font-size: .72rem; color: var(--texto-suave); margin-top: 4px; display: block; }
 
-  .entrada {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--superficie); border-top: 1px solid var(--borda); padding: 10px 16px;
+  /* Instrumentos (medicina) */
+  .painel-instrumentos { width: 268px; flex: none; position: sticky; top: 78px; align-self: flex-start; }
+  .painel-instrumentos .cabeca { font-size: .78rem; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin: 2px 0 10px; display: flex; align-items: center; gap: 7px; }
+  .grupo-inst { margin-bottom: 16px; }
+  .grupo-inst .titulo { font-size: .74rem; font-weight: 700; color: var(--med); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 7px; }
+  .inst-botoes { display: flex; flex-wrap: wrap; gap: 7px; }
+  .inst {
+    border: 1px solid var(--borda-forte); background: var(--superficie); color: var(--texto);
+    border-radius: 999px; padding: 8px 13px; cursor: pointer; font: inherit; font-size: .84rem;
+    box-shadow: var(--sombra); transition: border-color .15s, transform .1s, background .15s;
   }
-  .entrada .interno { max-width: 780px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
+  .inst:hover { border-color: var(--med); color: var(--med); }
+  .inst:active { transform: translateY(1px); }
+  .inst:disabled { opacity: .5; cursor: default; }
+  #abrir-instrumentos { display: none; }
+  @media (max-width: 860px) {
+    .painel-instrumentos {
+      position: fixed; inset: auto 0 0 0; top: auto; width: 100%; z-index: 40;
+      background: var(--superficie); border-top: 1px solid var(--borda); box-shadow: var(--sombra-forte);
+      border-radius: 18px 18px 0 0; padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
+      transform: translateY(105%); transition: transform .25s ease; max-height: 62vh; overflow-y: auto;
+    }
+    .painel-instrumentos.aberto { transform: none; }
+    #abrir-instrumentos { display: inline-flex; }
+  }
+  .fechar-inst { display: none; }
+  @media (max-width: 860px) { .fechar-inst { display: inline-flex; float: right; border: none; background: transparent; color: var(--texto-suave); font-size: 1.2rem; cursor: pointer; } }
+
+  /* Barra de entrada */
+  .entrada { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; background: color-mix(in srgb, var(--superficie) 92%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--borda); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
+  .entrada .interno { max-width: 940px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
   .entrada input { flex: 1; }
-  .entrada button.enviar {
-    padding: 10px 16px; border: none; border-radius: 8px;
-    background: var(--primaria); color: #fff; font-size: 1rem; cursor: pointer;
-  }
-  /* Botão "segurar para falar" (push-to-talk) */
-  #botao-mic {
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    padding: 10px 14px; min-width: 48px; min-height: 44px;
-    background: var(--superficie); color: var(--texto);
-    border: 1px solid var(--borda); border-radius: 999px;
-    font-size: 1.15rem; cursor: pointer;
-    user-select: none; -webkit-user-select: none; touch-action: none;
-  }
-  #botao-mic .mic-label { font-size: .82rem; font-weight: 600; }
+  .entrada button.enviar { padding: 12px 18px; border: none; border-radius: var(--raio-sm); background: var(--primaria); color: #fff; font-size: 1rem; font-weight: 650; cursor: pointer; box-shadow: var(--sombra); }
+  #botao-mic { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 15px; min-width: 50px; min-height: 46px; background: var(--superficie); color: var(--texto); border: 1px solid var(--borda-forte); border-radius: 999px; font-size: 1.15rem; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; }
+  #botao-mic .mic-label { font-size: .8rem; font-weight: 650; }
   #botao-mic:disabled { opacity: .45; cursor: default; }
-  #botao-mic.gravando {
-    background: var(--falha); color: #fff; border-color: var(--falha);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--falha) 60%, transparent);
-    animation: pulso 1.1s ease-out infinite;
-  }
-  @keyframes pulso {
-    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--falha) 55%, transparent); }
-    100% { box-shadow: 0 0 0 14px transparent; }
-  }
-  .dica-mic {
-    max-width: 780px; margin: 6px auto 0; font-size: .82rem; color: var(--texto-suave);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .dica-mic.gravando { color: var(--falha); font-weight: 600; }
+  #botao-mic.gravando { background: var(--falha); color: #fff; border-color: var(--falha); animation: pulso 1.1s ease-out infinite; }
+  @keyframes pulso { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--falha) 55%, transparent); } 100% { box-shadow: 0 0 0 14px transparent; } }
+  #inst-toggle-wrap { max-width: 940px; margin: 0 auto 8px; }
+  .dica-mic { max-width: 940px; margin: 6px auto 0; font-size: .8rem; color: var(--texto-suave); display: flex; align-items: center; gap: 6px; }
+  .dica-mic.gravando { color: var(--falha); font-weight: 650; }
   .dica-mic .ponto { width: 9px; height: 9px; border-radius: 50%; background: var(--falha); display: none; }
   .dica-mic.gravando .ponto { display: inline-block; animation: piscar 1s steps(1) infinite; }
 
-  /* Avaliação */
-  .nota-geral {
-    display: flex; align-items: baseline; gap: 10px;
-    background: var(--superficie); border: 1px solid var(--borda);
-    border-radius: 12px; padding: 18px 20px; margin-bottom: 18px;
-  }
-  .nota-geral .valor { font-size: 2.4rem; font-weight: 700; color: var(--primaria); }
-  .criterio { background: var(--superficie); border: 1px solid var(--borda); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  /* Avaliação / painel */
+  .nota-geral { display: flex; align-items: baseline; gap: 10px; background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px; margin-bottom: 18px; box-shadow: var(--sombra); }
+  .nota-geral .valor { font-size: 2.6rem; font-weight: 800; color: var(--primaria); }
+  .criterio { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 15px 17px; margin-bottom: 12px; box-shadow: var(--sombra); }
   .criterio h3 { margin: 0; font-size: 1rem; display: flex; justify-content: space-between; gap: 8px; }
-  .criterio .objetivo { margin: 4px 0 10px; font-size: .88rem; color: var(--texto-suave); }
+  .criterio .objetivo { margin: 4px 0 11px; font-size: .88rem; color: var(--texto-suave); }
   .itens { display: flex; flex-wrap: wrap; gap: 6px; }
-  .item { font-size: .85rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--borda); }
-  .item.ok { color: var(--ok); border-color: var(--ok); }
-  .item.falha { color: var(--falha); border-color: var(--falha); text-decoration: line-through; }
-  .parecer { background: var(--superficie); border: 1px solid var(--borda); border-radius: 12px; padding: 16px; white-space: pre-wrap; font-size: .95rem; }
-  .faixa-aviso { background: var(--aviso-fundo); color: var(--aviso-texto); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: .9rem; }
+  .item { font-size: .84rem; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--borda-forte); }
+  .item.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, var(--borda)); }
+  .item.falha { color: var(--falha); border-color: color-mix(in srgb, var(--falha) 40%, var(--borda)); text-decoration: line-through; opacity: .8; }
+  .parecer { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 18px; white-space: pre-wrap; font-size: .96rem; box-shadow: var(--sombra); }
+  .faixa-aviso { background: var(--aviso-fundo); color: var(--aviso-texto); border-radius: 10px; padding: 11px 15px; margin-bottom: 16px; font-size: .9rem; border: 1px solid var(--borda); }
+  .linha-consulta { width: 100%; }
+  .linha-consulta h3 { display: flex; justify-content: space-between; gap: 8px; }
+  .nota-linha { color: var(--primaria); font-weight: 700; }
+  #tela-detalhe h2, #tela-consulta h2 { font-size: 1.05rem; margin: 22px 0 12px; }
   .oculto { display: none !important; }
 </style>
 </head>
 <body>
+<audio id="player-voz" preload="auto" playsinline></audio>
 
 <section id="tela-inicio" class="tela ativa">
-  <h1>🩺 Paciente Virtual</h1>
-  <p class="subtitulo">Simulador de entrevista clínica para treinamento</p>
+  <div class="marca">
+    <div class="selo">🩺</div>
+    <div>
+      <div class="tit">Paciente Virtual</div>
+      <div class="sub">Simulador de consulta clínica por voz — treino de anamnese e entrevista</div>
+    </div>
+  </div>
 
   <div class="pref-audio" id="pref-audio">
     <span class="pref-rotulo">Respostas do paciente</span>
     <div class="segmentos" role="group" aria-label="Como ouvir as respostas do paciente">
-      <button type="button" class="seg" data-audio="1">🔊 Texto + áudio</button>
+      <button type="button" class="seg" data-audio="1">🔊 Texto + voz</button>
       <button type="button" class="seg" data-audio="0">📝 Somente texto</button>
     </div>
-    <p class="pref-dica">O paciente responde por escrito. Com áudio, o relato também é lido em voz alta. Você pode mudar isso durante a consulta.</p>
+    <p class="pref-dica">O paciente responde por escrito e, com voz ligada, o relato também é lido em voz alta (voz masculina/feminina conforme o caso). Você pode mudar durante a consulta.</p>
   </div>
 
-  <label for="campo-aluno">Nome do aluno</label>
-  <input id="campo-aluno" type="text" placeholder="Digite seu nome" autocomplete="name">
+  <label for="campo-aluno">Seu nome (profissional)</label>
+  <input id="campo-aluno" type="text" placeholder="Ex.: Dra. Marina" autocomplete="name">
 
-  <label>Caso clínico</label>
-  <div id="lista-casos" class="cartoes"><p class="subtitulo">Carregando casos…</p></div>
+  <label>Escolha a área</label>
+  <div class="categorias">
+    <button type="button" class="cat-card med" data-cat="medicina">
+      <div class="ic">🩺</div>
+      <h3>Medicina</h3>
+      <p>Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa.</p>
+      <span class="qtd" id="qtd-medicina">— casos</span>
+    </button>
+    <button type="button" class="cat-card psi" data-cat="psicologia">
+      <div class="ic">🧠</div>
+      <h3>Psicologia</h3>
+      <p>Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente.</p>
+      <span class="qtd" id="qtd-psicologia">— casos</span>
+    </button>
+  </div>
 
-  <button id="botao-iniciar" class="botao" disabled>Iniciar consulta</button>
   <button id="botao-painel" class="botao secundario">📊 Painel do professor</button>
 </section>
 
+<section id="tela-categoria" class="tela">
+  <div class="topo-secao">
+    <button class="voltar" id="cat-voltar">← Áreas</button>
+    <h1 id="cat-titulo" style="margin:0;font-size:1.3rem;"></h1>
+    <span class="chip-cat" id="cat-chip"></span>
+  </div>
+  <p class="subtitulo" id="cat-sub"></p>
+  <div id="lista-casos" class="cartoes"><p class="subtitulo">Carregando casos…</p></div>
+</section>
+
 <section id="tela-painel" class="tela">
-  <h1>📊 Painel do professor</h1>
-  <p class="subtitulo">
-    Consultas gravadas, com a nota objetiva recalculada pela rubrica atual
-  </p>
+  <div class="topo-secao"><button class="voltar" id="botao-painel-voltar">← Início</button><h1 style="margin:0;font-size:1.3rem;">📊 Painel do professor</h1></div>
+  <p class="subtitulo">Consultas gravadas, com a nota objetiva recalculada pela rubrica atual.</p>
   <div id="lista-consultas"></div>
-  <button id="botao-painel-voltar" class="botao secundario">← Voltar</button>
 </section>
 
 <section id="tela-detalhe" class="tela">
-  <h1 id="detalhe-titulo"></h1>
+  <div class="topo-secao"><button class="voltar" id="botao-detalhe-voltar">← Painel</button><h1 id="detalhe-titulo" style="margin:0;font-size:1.3rem;"></h1></div>
   <p class="subtitulo" id="detalhe-resumo"></p>
-
-  <div class="nota-geral oculto" id="detalhe-bloco-nota">
-    <span class="valor" id="detalhe-nota"></span>
-    <span>/ 10 na avaliação objetiva</span>
-  </div>
-
+  <div class="nota-geral oculto" id="detalhe-bloco-nota"><span class="valor" id="detalhe-nota"></span><span>/ 10 na avaliação objetiva</span></div>
   <div id="detalhe-criterios"></div>
-
   <h2>Transcrição</h2>
   <div id="detalhe-mensagens" class="fluxo-mensagens"></div>
-
-  <button id="botao-detalhe-voltar" class="botao secundario">← Voltar ao painel</button>
 </section>
 
 <section id="tela-consulta" class="tela">
   <div class="cabecalho-consulta">
     <div class="avatar" id="avatar-paciente">?</div>
-    <div class="info">
+    <div class="cab-info">
       <strong id="nome-paciente"></strong>
-      <span id="dados-paciente"></span>
+      <span id="dados-paciente"></span><span class="cab-badge" id="cab-badge"></span>
     </div>
     <div class="acoes">
+      <button id="abrir-instrumentos" title="Instrumentos clínicos">🩺 Instrumentos</button>
       <button id="botao-som" class="ligado" title="Ler as respostas em voz alta">🔊 Voz</button>
-      <button id="botao-encerrar">Encerrar e avaliar</button>
+      <button id="botao-encerrar" class="encerrar">Encerrar e avaliar</button>
     </div>
   </div>
 
-  <div id="mensagens" class="fluxo-mensagens"></div>
+  <div class="palco">
+    <div class="coluna-chat">
+      <div id="mensagens" class="fluxo-mensagens"></div>
+    </div>
+    <aside class="painel-instrumentos oculto" id="painel-instrumentos" aria-label="Instrumentos clínicos">
+      <div class="cabeca">🩺 Instrumentos <button class="fechar-inst" id="fechar-inst" aria-label="Fechar">✕</button></div>
+      <div id="instrumentos-corpo"></div>
+    </aside>
+  </div>
 
   <div class="entrada">
+    <div id="inst-toggle-wrap"></div>
     <div class="interno">
-      <button id="botao-mic" aria-label="Segurar para falar">🎤<span class="mic-label">Segurar para falar</span></button>
+      <button id="botao-mic" aria-label="Segurar para falar">🎤<span class="mic-label">Segurar p/ falar</span></button>
       <input id="campo-mensagem" type="text" placeholder="Pergunte ao paciente…" autocomplete="off">
       <button id="botao-enviar" class="enviar">Enviar</button>
     </div>
@@ -276,646 +374,350 @@
 </section>
 
 <section id="tela-avaliacao" class="tela">
-  <h1>Resultado da consulta</h1>
-  <p class="subtitulo" id="resumo-avaliacao"></p>
-
+  <div class="marca"><div class="selo">✅</div><div><div class="tit">Resultado da consulta</div><div class="sub" id="resumo-avaliacao"></div></div></div>
   <div id="aviso-avaliacao" class="faixa-aviso oculto"></div>
-
-  <div class="nota-geral oculto" id="bloco-nota">
-    <span class="valor" id="nota-final"></span>
-    <span>/ 10 na avaliação objetiva</span>
-  </div>
-
+  <div class="nota-geral oculto" id="bloco-nota"><span class="valor" id="nota-final"></span><span>/ 10 na avaliação objetiva</span></div>
   <div id="criterios"></div>
-
   <h2 id="titulo-parecer" class="oculto">Parecer pedagógico (IA)</h2>
   <div id="parecer" class="parecer oculto"></div>
-
   <button id="botao-nova" class="botao">Nova consulta</button>
 </section>
 
 <script>
 "use strict";
-
 const PREF_AUDIO = "pv_audio_respostas";
-
-// localStorage pode lançar (modo privacidade, iframe sandbox) — nunca deixar isso
-// derrubar a inicialização da página.
-function lerPreferenciaAudio() {
-  try { return localStorage.getItem(PREF_AUDIO) !== "0"; } catch { return true; }
-}
-function salvarPreferenciaAudio(ligado) {
-  try { localStorage.setItem(PREF_AUDIO, ligado ? "1" : "0"); } catch { /* ignora */ }
-}
+function lerPreferenciaAudio() { try { return localStorage.getItem(PREF_AUDIO) !== "0"; } catch { return true; } }
+function salvarPreferenciaAudio(l) { try { localStorage.setItem(PREF_AUDIO, l ? "1" : "0"); } catch { /* */ } }
 
 const estado = {
-  casos: [],
-  casoSelecionado: null,
-  consultaId: null,
-  voz: "feminino",
-  falarRespostas: lerPreferenciaAudio(), // padrão: com áudio
-  avisoDemoExibido: false,
-  ocupado: false,
+  casos: [], categoriaAtual: null, casoSelecionado: null, consultaId: null,
+  voz: "feminino", categoriaCaso: "psicologia", pacienteNome: "", instrumentos: null,
+  falarRespostas: lerPreferenciaAudio(), avisoDemoExibido: false, ocupado: false,
   capacidades: { stt: false, tts: {} },
 };
-
 const $ = (id) => document.getElementById(id);
+function mostrarTela(id) { document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa")); $(id).classList.add("ativa"); window.scrollTo(0, 0); }
+const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)" } };
 
-function mostrarTela(id) {
-  document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa"));
-  $(id).classList.add("ativa");
+/* ---------- Áudio: elemento <audio> destravado (mobile) + Web Speech fallback ---------- */
+let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null;
+function silencioWav() {
+  const sr = 8000, n = 800, buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf);
+  const w = (o, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
+  w(0, "RIFF"); dv.setUint32(4, 36 + n * 2, true); w(8, "WAVE"); w(12, "fmt "); dv.setUint32(16, 16, true);
+  dv.setUint16(20, 1, true); dv.setUint16(22, 1, true); dv.setUint32(24, sr, true); dv.setUint32(28, sr * 2, true);
+  dv.setUint16(32, 2, true); dv.setUint16(34, 16, true); w(36, "data"); dv.setUint32(40, n * 2, true);
+  let bin = ""; const b = new Uint8Array(buf); for (let i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+  return "data:audio/wav;base64," + btoa(bin);
 }
-
-/* ---------- Preferência de áudio (sincroniza topo + cabeçalho) ---------- */
-
-function aplicarPreferenciaAudio(ligado) {
-  estado.falarRespostas = ligado;
-  salvarPreferenciaAudio(ligado);
-  if (!ligado) pararFala();
-
-  // Segmentos na tela inicial
-  document.querySelectorAll("#pref-audio .seg").forEach((seg) => {
-    const ativo = (seg.dataset.audio === "1") === ligado;
-    seg.classList.toggle("ativo", ativo);
-    seg.setAttribute("aria-pressed", ativo ? "true" : "false");
-  });
-  // Botão no cabeçalho da consulta
-  const botaoSom = $("botao-som");
-  botaoSom.classList.toggle("ligado", ligado);
-  botaoSom.textContent = ligado ? "🔊 Voz" : "🔇 Voz";
-  botaoSom.setAttribute("aria-pressed", ligado ? "true" : "false");
-  botaoSom.title = ligado ? "Respostas lidas em voz alta (clique para desligar)" : "Somente texto (clique para ligar o áudio)";
+function carregarVozesTTS() { if (window.speechSynthesis) vozesTTS = speechSynthesis.getVoices() || []; }
+// Destrava áudio no primeiro gesto: navegadores móveis só tocam áudio iniciado numa interação.
+function destravarAudio() {
+  if (ttsDestravado) return; ttsDestravado = true;
+  try { const p = audioPlayer || ($("player-voz")); audioPlayer = p; p.src = silencioWav(); const pr = p.play(); if (pr && pr.catch) pr.catch(() => {}); } catch { /* */ }
+  try { if (window.speechSynthesis) { speechSynthesis.speak(new SpeechSynthesisUtterance(" ")); carregarVozesTTS(); } } catch { /* */ }
 }
-
-/* ---------- Tela inicial ---------- */
-
-async function carregarCasos() {
-  try {
-    const resposta = await fetch("/api/casos");
-    estado.casos = await resposta.json();
-  } catch {
-    $("lista-casos").innerHTML = "<p class='subtitulo'>Erro ao carregar os casos.</p>";
-    return;
+function escolherVozTTS() {
+  const fonte = vozesTTS.length ? vozesTTS : (window.speechSynthesis ? speechSynthesis.getVoices() : []);
+  const pts = fonte.filter((v) => v.lang && v.lang.toLowerCase().startsWith("pt"));
+  if (!pts.length) return null;
+  const fem = estado.voz !== "masculino";
+  return pts.find((v) => fem ? /maria|francisca|luciana|helena|vit[óo]ria|female|feminin/i.test(v.name) : /ant[óo]nio|antonio|daniel|felipe|jo[ãa]o|ricardo|male|masculin/i.test(v.name)) || pts[0];
+}
+function pararFala() {
+  if (audioPlayer) { try { audioPlayer.pause(); } catch {} }
+  if (temporizadorResume) { clearInterval(temporizadorResume); temporizadorResume = null; }
+  if (window.speechSynthesis) speechSynthesis.cancel();
+}
+async function falarTexto(texto) {
+  if (!estado.falarRespostas || !texto) return;
+  // Voz do servidor (Kokoro/ElevenLabs) tocada por elemento <audio> destravado — confiável no celular.
+  if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
+    try {
+      const r = await fetch("/api/falar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto, voz: estado.voz }) });
+      if (r.ok) {
+        const blob = await r.blob();
+        const p = audioPlayer || ($("player-voz")); audioPlayer = p;
+        try { p.pause(); } catch {}
+        p.src = URL.createObjectURL(blob);
+        const pr = p.play(); if (pr && pr.catch) pr.catch(() => falarComNavegador(texto));
+        return;
+      }
+    } catch { /* cai para o navegador */ }
   }
-
-  const lista = $("lista-casos");
-  lista.innerHTML = "";
-  for (const caso of estado.casos) {
-    const cartao = document.createElement("button");
-    cartao.className = "cartao";
-    cartao.innerHTML = `
-      <h3>${caso.titulo}</h3>
-      <p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao}</p>
-      <p>Queixa: ${caso.queixa}</p>`;
-    cartao.addEventListener("click", () => {
-      estado.casoSelecionado = caso.id;
-      document.querySelectorAll(".cartao").forEach((c) => c.classList.remove("selecionado"));
-      cartao.classList.add("selecionado");
-      $("botao-iniciar").disabled = false;
+  falarComNavegador(texto);
+}
+function falarComNavegador(texto) {
+  if (!window.speechSynthesis || !texto) return;
+  const emitir = () => {
+    const voz = escolherVozTTS();
+    (texto.match(/[^.!?…]+[.!?…]*/g) || [texto]).forEach((tr) => {
+      const t = tr.trim(); if (!t) return;
+      const f = new SpeechSynthesisUtterance(t); f.lang = "pt-BR"; if (voz) f.voice = voz; speechSynthesis.speak(f);
     });
-    lista.appendChild(cartao);
-  }
+    if (temporizadorResume) clearInterval(temporizadorResume);
+    temporizadorResume = setInterval(() => { if (!speechSynthesis.speaking) { clearInterval(temporizadorResume); temporizadorResume = null; return; } if (speechSynthesis.paused) speechSynthesis.resume(); }, 6000);
+  };
+  if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(emitir, 140); } else emitir();
 }
 
-async function iniciarConsulta() {
-  destravarTTS(); // este clique é um gesto do usuário — libera o áudio para o resto da sessão
-  const aluno = $("campo-aluno").value.trim() || "aluno";
-  const resposta = await fetch("/api/consultas", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ caso: estado.casoSelecionado, aluno }),
-  });
-  if (!resposta.ok) { alert("Não foi possível iniciar a consulta."); return; }
+/* ---------- Preferência de áudio ---------- */
+function aplicarPreferenciaAudio(l) {
+  estado.falarRespostas = l; salvarPreferenciaAudio(l); if (!l) pararFala();
+  document.querySelectorAll("#pref-audio .seg").forEach((s) => { const a = (s.dataset.audio === "1") === l; s.classList.toggle("ativo", a); s.setAttribute("aria-pressed", a ? "true" : "false"); });
+  const b = $("botao-som"); b.classList.toggle("ligado", l); b.textContent = l ? "🔊 Voz" : "🔇 Voz"; b.setAttribute("aria-pressed", l ? "true" : "false");
+}
 
-  const dados = await resposta.json();
-  estado.consultaId = dados.id;
-  estado.voz = dados.voz;
+/* ---------- Casos ---------- */
+async function carregarCasos() {
+  try { estado.casos = await (await fetch("/api/casos")).json(); } catch { estado.casos = []; }
+  const conta = (c) => estado.casos.filter((x) => x.categoria === c).length;
+  $("qtd-medicina").textContent = conta("medicina") + " casos";
+  $("qtd-psicologia").textContent = conta("psicologia") + " casos";
+}
+function abrirCategoria(cat) {
+  estado.categoriaAtual = cat;
+  $("cat-titulo").textContent = CAT[cat].nome;
+  $("cat-chip").textContent = CAT[cat].nome; $("cat-chip").className = "chip-cat " + CAT[cat].chip;
+  $("cat-sub").textContent = cat === "medicina" ? "Escolha um caso e conduza a consulta: anamnese, sinais vitais e exames à mão." : "Escolha um caso e conduza a entrevista terapêutica com acolhimento.";
+  const lista = $("lista-casos"); lista.innerHTML = "";
+  const doCat = estado.casos.filter((c) => c.categoria === cat);
+  if (!doCat.length) { lista.innerHTML = "<p class='subtitulo'>Nenhum caso nesta área ainda.</p>"; }
+  for (const caso of doCat) {
+    const b = document.createElement("button");
+    b.className = "cartao " + CAT[cat].chip;
+    b.innerHTML = `<div class="av">${(caso.paciente.nome || "?").charAt(0)}</div><div><h3>${caso.titulo}</h3><p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao || ""}</p><p class="q">${caso.queixa}</p></div>`;
+    b.addEventListener("click", () => iniciarConsulta(caso.id));
+    lista.appendChild(b);
+  }
+  mostrarTela("tela-categoria");
+}
+
+async function iniciarConsulta(casoId) {
+  destravarAudio();
+  const aluno = $("campo-aluno").value.trim() || "aluno";
+  let dados;
+  try {
+    const r = await fetch("/api/consultas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caso: casoId, aluno }) });
+    if (!r.ok) { alert("Não foi possível iniciar a consulta."); return; }
+    dados = await r.json();
+  } catch { alert("Falha de conexão."); return; }
+
+  estado.consultaId = dados.id; estado.voz = dados.voz; estado.avisoDemoExibido = false;
+  estado.categoriaCaso = dados.categoria; estado.instrumentos = dados.instrumentos || null;
   estado.pacienteNome = (dados.paciente.nome || "O paciente").trim().split(/\s+/)[0];
-  estado.avisoDemoExibido = false;
+  const cor = CAT[dados.categoria].cor;
 
   $("mensagens").innerHTML = "";
-  $("avatar-paciente").textContent = (dados.paciente.nome || "?").charAt(0);
+  const av = $("avatar-paciente"); av.textContent = (dados.paciente.nome || "?").charAt(0); av.style.setProperty("--cor", cor);
   $("nome-paciente").textContent = dados.paciente.nome;
-  $("dados-paciente").textContent =
-    `${dados.paciente.idade} anos · ${dados.paciente.sexo} · ${dados.paciente.profissao}`;
+  const p = dados.paciente;
+  $("dados-paciente").textContent = `${p.idade} anos · ${p.sexo}${p.profissao ? " · " + p.profissao : ""}`;
+  const badge = $("cab-badge"); badge.textContent = CAT[dados.categoria].nome; badge.className = "cab-badge " + CAT[dados.categoria].chip;
 
-  adicionarBalao("aviso", "Consulta iniciada. Converse com o paciente, solicite exames e, ao final, clique em “Encerrar e avaliar”.");
+  montarInstrumentos();
+  adicionarBalao("aviso", dados.categoria === "medicina"
+    ? "Consulta iniciada. Faça a anamnese, use os instrumentos (🩺) para sinais vitais e exames, e clique em “Encerrar e avaliar” ao final."
+    : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
   mostrarTela("tela-consulta");
   $("campo-mensagem").focus();
 }
 
+/* ---------- Instrumentos (medicina) ---------- */
+function montarInstrumentos() {
+  const painel = $("painel-instrumentos"), corpo = $("instrumentos-corpo"), wrap = $("inst-toggle-wrap");
+  corpo.innerHTML = ""; wrap.innerHTML = "";
+  const inst = estado.instrumentos;
+  const total = inst ? (inst.vitais.length + inst.fisico.length + inst.exames.length) : 0;
+  const ehMed = estado.categoriaCaso === "medicina" && total > 0;
+  painel.classList.toggle("oculto", !ehMed);
+  $("abrir-instrumentos").style.display = ehMed ? "" : "none";
+  if (!ehMed) return;
+  const grupo = (titulo, itens) => {
+    if (!itens.length) return;
+    const g = document.createElement("div"); g.className = "grupo-inst";
+    g.innerHTML = `<div class="titulo">${titulo}</div>`;
+    const bs = document.createElement("div"); bs.className = "inst-botoes";
+    for (const it of itens) {
+      const b = document.createElement("button"); b.className = "inst"; b.textContent = it.nome;
+      b.addEventListener("click", () => solicitarExame(it.chave, b));
+      bs.appendChild(b);
+    }
+    g.appendChild(bs); corpo.appendChild(g);
+  };
+  grupo("Sinais vitais", inst.vitais);
+  grupo("Exame físico", inst.fisico);
+  grupo("Exames complementares", inst.exames);
+}
+async function solicitarExame(chave, botao) {
+  if (estado.ocupado || !estado.consultaId) return;
+  estado.ocupado = true; if (botao) botao.disabled = true;
+  $("painel-instrumentos").classList.remove("aberto");
+  try {
+    const r = await fetch(`/api/consultas/${estado.consultaId}/exame`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chave }) });
+    const d = await r.json();
+    if (r.ok && d.eventos) for (const e of d.eventos) adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome });
+    else adicionarBalao("aviso", d.erro || "Não foi possível realizar o exame.");
+  } catch { adicionarBalao("aviso", "Falha ao solicitar o exame."); }
+  finally { estado.ocupado = false; if (botao) botao.disabled = false; }
+}
+
 /* ---------- Chat ---------- */
-
 function adicionarBalao(tipo, texto, extra = {}) {
-  const balao = document.createElement("div");
-  balao.className = `balao ${tipo}`;
-  if (tipo === "exame") {
-    balao.innerHTML = `<strong>${extra.titulo} — ${extra.nome}</strong>`;
-    balao.append(texto);
-  } else {
-    balao.textContent = texto;
-  }
-  $("mensagens").appendChild(balao);
-  balao.scrollIntoView({ behavior: "smooth", block: "end" });
-  return balao;
+  const b = document.createElement("div"); b.className = `balao ${tipo}`;
+  if (tipo === "exame") { b.innerHTML = `<strong>${extra.titulo} — ${extra.nome}</strong>`; b.append(texto); }
+  else b.textContent = texto;
+  $("mensagens").appendChild(b); b.scrollIntoView({ behavior: "smooth", block: "end" }); return b;
 }
-
-/* ---------- Voz do paciente: texto "sendo digitado" + áudio em paralelo ---------- */
-
-let audioAtual = null;
-let temporizadorDigitacao = null;
-let balaoDigitando = null;   // balão do paciente em digitação no momento
-let textoDigitando = "";     // texto completo esperado desse balão
-let demoDigitando = false;   // se o balão deve receber o rótulo "modo demonstração"
-
-let temporizadorResume = null;
-let vozesTTS = [];
-let ttsDestravado = false;
-
-function carregarVozesTTS() {
-  if (window.speechSynthesis) vozesTTS = speechSynthesis.getVoices() || [];
-}
-
-// Navegadores só falam depois de um gesto do usuário. Destravamos o TTS na primeira
-// interação (clique em iniciar) com um enunciado vazio, para o áudio funcionar depois.
-function destravarTTS() {
-  if (ttsDestravado || !window.speechSynthesis) return;
-  ttsDestravado = true;
-  try { speechSynthesis.speak(new SpeechSynthesisUtterance(" ")); } catch { /* ok */ }
-  carregarVozesTTS();
-}
-
-function escolherVozTTS() {
-  const fonte = vozesTTS.length ? vozesTTS : (window.speechSynthesis ? speechSynthesis.getVoices() : []);
-  const disponiveis = fonte.filter((v) => v.lang && v.lang.toLowerCase().startsWith("pt"));
-  if (!disponiveis.length) return null;
-  const querFeminina = estado.voz !== "masculino";
-  return (
-    disponiveis.find((v) =>
-      querFeminina
-        ? /maria|francisca|luciana|helena|vit[óo]ria|female|feminin/i.test(v.name)
-        : /ant[óo]nio|antonio|daniel|felipe|jo[ãa]o|ricardo|male|masculin/i.test(v.name)
-    ) || disponiveis[0]
-  );
-}
-
-function pararFala() {
-  if (audioAtual) { audioAtual.pause(); audioAtual = null; }
-  if (temporizadorResume) { clearInterval(temporizadorResume); temporizadorResume = null; }
-  if (window.speechSynthesis) speechSynthesis.cancel();
-}
-
-// Conclui a digitação em curso: completa o texto, remove o cursor e insere o rótulo
-// demo. Chamado tanto ao terminar naturalmente quanto ao interromper (nova pergunta).
+let temporizadorDigitacao = null, balaoDigitando = null, textoDigitando = "", demoDigitando = false;
 function finalizarDigitacao() {
   if (temporizadorDigitacao) { clearInterval(temporizadorDigitacao); temporizadorDigitacao = null; }
   if (!balaoDigitando) return;
-  balaoDigitando.textContent = textoDigitando;
-  balaoDigitando.classList.remove("digitando-vivo");
-  if (demoDigitando) {
-    const rotulo = document.createElement("span");
-    rotulo.className = "rotulo-demo";
-    rotulo.textContent = "modo demonstração";
-    balaoDigitando.appendChild(rotulo);
-  }
-  balaoDigitando = null;
-  textoDigitando = "";
-  demoDigitando = false;
+  balaoDigitando.textContent = textoDigitando; balaoDigitando.classList.remove("digitando-vivo");
+  if (demoDigitando) { const r = document.createElement("span"); r.className = "rotulo-demo"; r.textContent = "modo demonstração"; balaoDigitando.appendChild(r); }
+  balaoDigitando = null; textoDigitando = ""; demoDigitando = false;
 }
-
-// Alias nos pontos de interrupção (nova pergunta, encerrar, avaliar).
 function pararDigitacao() { finalizarDigitacao(); }
-
-// Anima o texto do paciente caractere a caractere; ao final, insere o rótulo demo se houver.
 function digitarResposta(balao, texto, ehDemo) {
-  finalizarDigitacao(); // conclui qualquer digitação anterior antes de iniciar outra
-  balaoDigitando = balao;
-  textoDigitando = texto;
-  demoDigitando = ehDemo;
-  balao.textContent = "";
-  balao.classList.add("digitando-vivo");
-  let i = 0;
-  const passo = 2; // caracteres por tique
-  temporizadorDigitacao = setInterval(() => {
-    i = Math.min(i + passo, texto.length);
-    balao.textContent = texto.slice(0, i);
-    balao.scrollIntoView({ behavior: "smooth", block: "end" });
-    if (i >= texto.length) finalizarDigitacao();
-  }, 22);
+  finalizarDigitacao(); balaoDigitando = balao; textoDigitando = texto; demoDigitando = ehDemo;
+  balao.textContent = ""; balao.classList.add("digitando-vivo"); let i = 0;
+  temporizadorDigitacao = setInterval(() => { i = Math.min(i + 2, texto.length); balao.textContent = texto.slice(0, i); balao.scrollIntoView({ behavior: "smooth", block: "end" }); if (i >= texto.length) finalizarDigitacao(); }, 22);
 }
-
-function falarComNavegador(texto) {
-  if (!window.speechSynthesis || !texto) return;
-
-  const emitir = () => {
-    const voz = escolherVozTTS();
-    // Fragmenta em frases curtas: mobile e Chrome cortam enunciados longos.
-    const frases = texto.match(/[^.!?…]+[.!?…]*/g) || [texto];
-    for (const trecho of frases) {
-      const t = trecho.trim();
-      if (!t) continue;
-      const fala = new SpeechSynthesisUtterance(t);
-      fala.lang = "pt-BR";
-      if (voz) fala.voice = voz;
-      fala.rate = 1;
-      fala.pitch = 1;
-      speechSynthesis.speak(fala);
-    }
-    // Chrome/Android pausam a síntese após ~15s: só chama resume() se pausou.
-    if (temporizadorResume) clearInterval(temporizadorResume);
-    temporizadorResume = setInterval(() => {
-      if (!speechSynthesis.speaking) { clearInterval(temporizadorResume); temporizadorResume = null; return; }
-      if (speechSynthesis.paused) speechSynthesis.resume();
-    }, 6000);
-  };
-
-  // NÃO cancelar e falar na mesma execução: mobile/Chrome descartam o speak()
-  // que vem logo depois de um cancel(). Se houver fala em curso, cancela e dá
-  // um respiro antes de emitir a nova.
-  if (speechSynthesis.speaking || speechSynthesis.pending) {
-    speechSynthesis.cancel();
-    setTimeout(emitir, 140);
-  } else {
-    emitir();
-  }
-}
-
-async function falarTexto(texto) {
-  if (!estado.falarRespostas || !texto) return;
-
-  // Voz neural local (Piper) servida pelo backend, quando instalada.
-  if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
-    try {
-      const resposta = await fetch("/api/falar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texto, voz: estado.voz }),
-      });
-      if (resposta.ok) {
-        const blob = await resposta.blob();
-        audioAtual = new Audio(URL.createObjectURL(blob));
-        audioAtual.play();
-        return;
-      }
-    } catch {
-      /* cai para a voz do navegador */
-    }
-  }
-  falarComNavegador(texto);
-}
-
-// Mostra a resposta do paciente: texto digitado + (se ligado) áudio ao mesmo tempo.
-function responderPaciente(texto, ehDemo) {
-  const balao = adicionarBalao("paciente", "");
-  falarTexto(texto);            // áudio começa em paralelo (se ligado)
-  digitarResposta(balao, texto, ehDemo); // texto "sendo escrito"
-}
+function responderPaciente(texto, ehDemo) { const b = adicionarBalao("paciente", ""); falarTexto(texto); digitarResposta(b, texto, ehDemo); }
 
 async function enviarMensagem() {
-  const campo = $("campo-mensagem");
-  const texto = campo.value.trim();
+  const campo = $("campo-mensagem"); const texto = campo.value.trim();
   if (!texto || estado.ocupado || !estado.consultaId) return;
-
-  // Interrompe fala/digitação anteriores ao mandar nova pergunta.
-  pararFala();
-  pararDigitacao();
-
-  campo.value = "";
-  adicionarBalao("aluno", texto);
-  const digitando = adicionarBalao("digitando", "");
-  digitando.innerHTML =
-    `<span class="quem">${estado.pacienteNome || "O paciente"} está digitando</span>` +
-    `<span class="pontos-digita"><i></i><i></i><i></i></span>`;
-  digitando.scrollIntoView({ behavior: "smooth", block: "end" });
+  pararFala(); pararDigitacao();
+  campo.value = ""; adicionarBalao("aluno", texto);
+  const dig = adicionarBalao("digitando", "");
+  dig.innerHTML = `<span class="quem">${estado.pacienteNome || "O paciente"} está digitando</span><span class="pontos-digita"><i></i><i></i><i></i></span>`;
+  dig.scrollIntoView({ behavior: "smooth", block: "end" });
   estado.ocupado = true;
-
   try {
-    const resposta = await fetch(`/api/consultas/${estado.consultaId}/mensagem`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ texto }),
-    });
-    const dados = await resposta.json();
-    digitando.remove();
-
-    if (!resposta.ok) {
-      adicionarBalao("aviso", dados.erro || "Erro ao enviar a mensagem.");
-      return;
+    const r = await fetch(`/api/consultas/${estado.consultaId}/mensagem`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto }) });
+    const d = await r.json(); dig.remove();
+    if (!r.ok) { adicionarBalao("aviso", d.erro || "Erro ao enviar a mensagem."); return; }
+    for (const e of d.eventos) {
+      if (e.tipo === "exame") adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome });
+      else if (e.tipo === "paciente") responderPaciente(e.texto, e.origem === "demo");
+      else if (e.tipo === "aviso" && !estado.avisoDemoExibido) { adicionarBalao("aviso", e.texto); estado.avisoDemoExibido = true; }
     }
-
-    for (const evento of dados.eventos) {
-      if (evento.tipo === "exame") {
-        adicionarBalao("exame", evento.resultado, { titulo: evento.titulo, nome: evento.nome });
-      } else if (evento.tipo === "paciente") {
-        responderPaciente(evento.texto, evento.origem === "demo");
-      } else if (evento.tipo === "aviso") {
-        if (!estado.avisoDemoExibido) {
-          adicionarBalao("aviso", evento.texto);
-          estado.avisoDemoExibido = true;
-        }
-      }
-    }
-  } catch {
-    digitando.remove();
-    adicionarBalao("aviso", "Falha de conexão com o servidor.");
-  } finally {
-    estado.ocupado = false;
-    campo.focus();
-  }
+  } catch { dig.remove(); adicionarBalao("aviso", "Falha de conexão com o servidor."); }
+  finally { estado.ocupado = false; campo.focus(); }
 }
 
-/* ---------- Microfone: "segurar para falar, soltar para enviar" ---------- */
-
+/* ---------- Microfone push-to-talk ---------- */
 const ReconhecimentoFala = window.SpeechRecognition || window.webkitSpeechRecognition;
-let reconhecedor = null;
-let segurandoMic = false;      // usuário está com o botão pressionado
-let pararSolicitado = false;   // soltou o botão (fim do turno)
-let transcricaoFinal = "";
-
-function definirDicaMic(texto, gravando) {
-  const dica = $("dica-mic");
-  $("dica-mic-texto").textContent = texto;
-  dica.classList.toggle("gravando", Boolean(gravando));
-}
-
+let reconhecedor = null, segurandoMic = false, pararSolicitado = false, transcricaoFinal = "";
+function definirDicaMic(t, g) { $("dica-mic-texto").textContent = t; $("dica-mic").classList.toggle("gravando", !!g); }
 function configurarMicrofone() {
   const botao = $("botao-mic");
-
-  if (!ReconhecimentoFala) {
-    botao.disabled = true;
-    botao.querySelector(".mic-label").textContent = "Voz indisponível";
-    definirDicaMic("Reconhecimento de voz indisponível neste navegador — digite sua pergunta (Chrome ou Edge têm o recurso).", false);
-    return;
-  }
-
-  reconhecedor = new ReconhecimentoFala();
-  reconhecedor.lang = "pt-BR";
-  reconhecedor.continuous = true;
-  reconhecedor.interimResults = true;
-
-  reconhecedor.onresult = (evento) => {
-    let interino = "";
-    for (let i = evento.resultIndex; i < evento.results.length; i++) {
-      const trecho = evento.results[i][0].transcript;
-      if (evento.results[i].isFinal) transcricaoFinal += trecho + " ";
-      else interino += trecho;
-    }
-    $("campo-mensagem").value = (transcricaoFinal + interino).trim();
-  };
-
+  if (!ReconhecimentoFala) { botao.disabled = true; botao.querySelector(".mic-label").textContent = "Voz indisp."; definirDicaMic("Reconhecimento de voz indisponível neste navegador — digite sua pergunta (Chrome/Edge têm o recurso).", false); return; }
+  reconhecedor = new ReconhecimentoFala(); reconhecedor.lang = "pt-BR"; reconhecedor.continuous = true; reconhecedor.interimResults = true;
+  reconhecedor.onresult = (ev) => { let inter = ""; for (let i = ev.resultIndex; i < ev.results.length; i++) { const t = ev.results[i][0].transcript; if (ev.results[i].isFinal) transcricaoFinal += t + " "; else inter += t; } $("campo-mensagem").value = (transcricaoFinal + inter).trim(); };
   reconhecedor.onend = () => {
-    // Se ainda está segurando e não pediu para parar, o reconhecedor parou sozinho
-    // (silêncio momentâneo): reinicia para continuar ouvindo até soltar.
-    if (segurandoMic && !pararSolicitado) {
-      try { reconhecedor.start(); return; } catch { segurandoMic = false; /* não reiniciou: encerra abaixo */ }
-    }
-    botao.classList.remove("gravando");
-    definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
-    const texto = ($("campo-mensagem").value || transcricaoFinal).trim();
-    $("campo-mensagem").placeholder = "Pergunte ao paciente…";
+    if (segurandoMic && !pararSolicitado) { try { reconhecedor.start(); return; } catch { segurandoMic = false; } }
+    botao.classList.remove("gravando"); definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
+    const texto = ($("campo-mensagem").value || transcricaoFinal).trim(); $("campo-mensagem").placeholder = "Pergunte ao paciente…";
     if (texto) { $("campo-mensagem").value = texto; enviarMensagem(); }
   };
-
-  reconhecedor.onerror = (evento) => {
-    if (evento.error === "not-allowed" || evento.error === "service-not-allowed") {
-      segurandoMic = false;
-      botao.classList.remove("gravando");
-      definirDicaMic("Permita o microfone no navegador para falar.", false);
-    }
-    // "no-speech"/"aborted" são tratados no onend.
-  };
-
+  reconhecedor.onerror = (ev) => { if (ev.error === "not-allowed" || ev.error === "service-not-allowed") { segurandoMic = false; botao.classList.remove("gravando"); definirDicaMic("Permita o microfone no navegador para falar.", false); } };
   definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
-
-  const iniciar = (evento) => {
-    if (evento) evento.preventDefault();
-    if (segurandoMic || estado.ocupado || !estado.consultaId) return;
-    segurandoMic = true;
-    pararSolicitado = false;
-    transcricaoFinal = "";
-    $("campo-mensagem").value = "";
-    $("campo-mensagem").placeholder = "Ouvindo…";
-    botao.classList.add("gravando");
-    definirDicaMic("Ouvindo… solte para enviar", true);
-    try { reconhecedor.start(); } catch { /* já iniciado */ }
-    if (evento && evento.pointerId != null) {
-      try { botao.setPointerCapture(evento.pointerId); } catch { /* ok */ }
-    }
-  };
-
-  const parar = () => {
-    if (!segurandoMic) return;
-    segurandoMic = false;
-    pararSolicitado = true;
-    try { reconhecedor.stop(); } catch { /* já parado */ }
-  };
-
-  botao.addEventListener("pointerdown", iniciar);
-  botao.addEventListener("pointerup", parar);
-  botao.addEventListener("pointercancel", parar);
-  botao.addEventListener("lostpointercapture", parar);
+  const iniciar = (ev) => { if (ev) ev.preventDefault(); if (segurandoMic || estado.ocupado || !estado.consultaId) return; segurandoMic = true; pararSolicitado = false; transcricaoFinal = ""; $("campo-mensagem").value = ""; $("campo-mensagem").placeholder = "Ouvindo…"; botao.classList.add("gravando"); definirDicaMic("Ouvindo… solte para enviar", true); try { reconhecedor.start(); } catch {} if (ev && ev.pointerId != null) { try { botao.setPointerCapture(ev.pointerId); } catch {} } };
+  const parar = () => { if (!segurandoMic) return; segurandoMic = false; pararSolicitado = true; try { reconhecedor.stop(); } catch {} };
+  botao.addEventListener("pointerdown", iniciar); botao.addEventListener("pointerup", parar); botao.addEventListener("pointercancel", parar); botao.addEventListener("lostpointercapture", parar);
   botao.addEventListener("contextmenu", (e) => e.preventDefault());
-  // Rede de segurança: se o pointer capture falhar e o dedo soltar fora do botão,
-  // o pointerup global encerra a gravação assim mesmo (parar() é idempotente).
-  window.addEventListener("pointerup", parar);
-  window.addEventListener("pointercancel", parar);
-  // Acessibilidade: teclado (Espaço/Enter segura enquanto pressionado).
+  window.addEventListener("pointerup", parar); window.addEventListener("pointercancel", parar);
   botao.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") iniciar(e); });
   botao.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") parar(); });
 }
+async function carregarCapacidades() { try { estado.capacidades = await (await fetch("/api/voz")).json(); } catch { estado.capacidades = { stt: false, tts: {} }; } configurarMicrofone(); }
 
-async function carregarCapacidades() {
-  try {
-    const resposta = await fetch("/api/voz");
-    estado.capacidades = await resposta.json();
-  } catch {
-    estado.capacidades = { stt: false, tts: {} };
-  }
-  configurarMicrofone();
-}
-
-/* ---------- Renderizadores compartilhados ---------- */
-
-function formatarNota(nota) {
-  return nota.toFixed(1).replace(".", ",");
-}
-
-function renderizarChecklist(container, checklist) {
-  container.innerHTML = "";
-  for (const criterio of checklist.criterios) {
-    const bloco = document.createElement("div");
-    bloco.className = "criterio";
-    const itens = criterio.itens
-      .map((item) => `<span class="item ${item.atendido ? "ok" : "falha"}">${item.atendido ? "✓" : "✗"} ${item.nome}</span>`)
-      .join("");
-    bloco.innerHTML = `
-      <h3><span>${criterio.nome}</span><span>${criterio.nota.toFixed(1)}/${criterio.peso.toFixed(1)}</span></h3>
-      <p class="objetivo">${criterio.objetivo}</p>
-      <div class="itens">${itens}</div>`;
-    container.appendChild(bloco);
+/* ---------- Renderizadores ---------- */
+function formatarNota(n) { return n.toFixed(1).replace(".", ","); }
+function renderizarChecklist(cont, cl) {
+  cont.innerHTML = "";
+  for (const c of cl.criterios) {
+    const b = document.createElement("div"); b.className = "criterio";
+    const itens = c.itens.map((i) => `<span class="item ${i.atendido ? "ok" : "falha"}">${i.atendido ? "✓" : "✗"} ${i.nome}</span>`).join("");
+    b.innerHTML = `<h3><span>${c.nome}</span><span>${c.nota.toFixed(1)}/${c.peso.toFixed(1)}</span></h3><p class="objetivo">${c.objetivo}</p><div class="itens">${itens}</div>`;
+    cont.appendChild(b);
   }
 }
-
-function balaoDeEvento(evento) {
-  const balao = document.createElement("div");
-  if (evento.tipo === "exame") {
-    balao.className = "balao exame";
-    const titulo = document.createElement("strong");
-    titulo.textContent = `${evento.titulo} — ${evento.nome}`;
-    balao.appendChild(titulo);
-    balao.append(evento.texto);
-  } else {
-    balao.className = `balao ${evento.tipo === "profissional" ? "aluno" : "paciente"}`;
-    balao.textContent = evento.texto;
-  }
-  return balao;
+function balaoDeEvento(e) {
+  const b = document.createElement("div");
+  if (e.tipo === "exame") { b.className = "balao exame"; const t = document.createElement("strong"); t.textContent = `${e.titulo} — ${e.nome}`; b.appendChild(t); b.append(e.texto); }
+  else { b.className = `balao ${e.tipo === "profissional" ? "aluno" : "paciente"}`; b.textContent = e.texto; }
+  return b;
 }
 
 /* ---------- Painel do professor ---------- */
-
 async function abrirPainel() {
-  mostrarTela("tela-painel");
-  const lista = $("lista-consultas");
-  lista.innerHTML = "<p class='subtitulo'>Carregando…</p>";
-
+  mostrarTela("tela-painel"); const lista = $("lista-consultas"); lista.innerHTML = "<p class='subtitulo'>Carregando…</p>";
   try {
-    const consultas = await (await fetch("/api/relatorio")).json();
-    lista.innerHTML = consultas.length
-      ? ""
-      : "<p class='subtitulo'>Nenhuma consulta gravada ainda.</p>";
-
-    for (const consulta of consultas) {
-      const item = document.createElement("button");
-      item.className = "cartao linha-consulta";
-      const nota = consulta.nota == null ? "—" : formatarNota(consulta.nota);
-      const situacao = consulta.encerrada ? "" : " · em aberto";
-      item.innerHTML = `
-        <h3><span>${consulta.aluno || "—"}</span><span class="nota-linha">${nota}</span></h3>
-        <p>${consulta.caso || "?"} · ${consulta.inicio || "—"}${situacao}</p>`;
-      item.addEventListener("click", () => abrirDetalhe(consulta.arquivo));
-      lista.appendChild(item);
+    const cs = await (await fetch("/api/relatorio")).json();
+    lista.innerHTML = cs.length ? "" : "<p class='subtitulo'>Nenhuma consulta gravada ainda.</p>";
+    for (const c of cs) {
+      const it = document.createElement("button"); it.className = "cartao linha-consulta";
+      const nota = c.nota == null ? "—" : formatarNota(c.nota); const sit = c.encerrada ? "" : " · em aberto";
+      it.innerHTML = `<div style="flex:1"><h3><span>${c.aluno || "—"}</span><span class="nota-linha">${nota}</span></h3><p>${c.caso || "?"} · ${c.inicio || "—"}${sit}</p></div>`;
+      it.addEventListener("click", () => abrirDetalhe(c.arquivo)); lista.appendChild(it);
     }
-  } catch {
-    lista.innerHTML = "<p class='subtitulo'>Erro ao carregar o painel.</p>";
-  }
+  } catch { lista.innerHTML = "<p class='subtitulo'>Erro ao carregar o painel.</p>"; }
 }
-
-async function abrirDetalhe(arquivo) {
+async function abrirDetalhe(arq) {
   try {
-    const resposta = await fetch(`/api/relatorio/${encodeURIComponent(arquivo)}`);
-    if (!resposta.ok) return;
-    const detalhe = await resposta.json();
-
-    $("detalhe-titulo").textContent = detalhe.aluno || "Consulta";
-    $("detalhe-resumo").textContent =
-      `${detalhe.caso || "?"} · ${detalhe.inicio || "—"} · ${detalhe.arquivo}`;
-
-    const temChecklist = Boolean(detalhe.checklist);
-    $("detalhe-bloco-nota").classList.toggle("oculto", !temChecklist);
-    $("detalhe-criterios").innerHTML = "";
-    if (temChecklist) {
-      $("detalhe-nota").textContent = formatarNota(detalhe.checklist.nota_total);
-      renderizarChecklist($("detalhe-criterios"), detalhe.checklist);
-    }
-
-    const mensagens = $("detalhe-mensagens");
-    mensagens.innerHTML = "";
-    for (const evento of detalhe.eventos) {
-      mensagens.appendChild(balaoDeEvento(evento));
-    }
-
+    const r = await fetch(`/api/relatorio/${encodeURIComponent(arq)}`); if (!r.ok) return; const d = await r.json();
+    $("detalhe-titulo").textContent = d.aluno || "Consulta"; $("detalhe-resumo").textContent = `${d.caso || "?"} · ${d.inicio || "—"} · ${d.arquivo}`;
+    const tem = Boolean(d.checklist); $("detalhe-bloco-nota").classList.toggle("oculto", !tem); $("detalhe-criterios").innerHTML = "";
+    if (tem) { $("detalhe-nota").textContent = formatarNota(d.checklist.nota_total); renderizarChecklist($("detalhe-criterios"), d.checklist); }
+    const m = $("detalhe-mensagens"); m.innerHTML = ""; for (const e of d.eventos) m.appendChild(balaoDeEvento(e));
     mostrarTela("tela-detalhe");
-  } catch {
-    /* mantém a tela atual */
-  }
+  } catch { /* */ }
 }
 
 /* ---------- Avaliação ---------- */
-
 async function encerrarConsulta() {
   if (!estado.consultaId || estado.ocupado) return;
   if (!confirm("Encerrar a consulta e gerar a avaliação?")) return;
-
-  pararFala();
-  pararDigitacao();
-  estado.ocupado = true;
-  $("botao-encerrar").disabled = true;
-  const aguardando = adicionarBalao("aviso", "Encerrando e gerando a avaliação…");
-
+  pararFala(); pararDigitacao(); estado.ocupado = true; $("botao-encerrar").disabled = true;
+  const ag = adicionarBalao("aviso", "Encerrando e gerando a avaliação…");
   try {
-    const resposta = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, { method: "POST" });
-    const dados = await resposta.json();
-    if (!resposta.ok) {
-      aguardando.textContent = dados.erro || "Erro ao encerrar a consulta.";
-      return;
-    }
-    mostrarAvaliacao(dados);
-  } catch {
-    aguardando.textContent = "Falha de conexão ao encerrar a consulta.";
-  } finally {
-    estado.ocupado = false;
-    $("botao-encerrar").disabled = false;
-  }
+    const r = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, { method: "POST" }); const d = await r.json();
+    if (!r.ok) { ag.textContent = d.erro || "Erro ao encerrar a consulta."; return; }
+    mostrarAvaliacao(d);
+  } catch { ag.textContent = "Falha de conexão ao encerrar a consulta."; }
+  finally { estado.ocupado = false; $("botao-encerrar").disabled = false; }
 }
-
-function mostrarAvaliacao(dados) {
-  estado.consultaId = null;
-  pararFala();
-  pararDigitacao();
-
-  $("resumo-avaliacao").textContent = `Transcrição salva em historico/${dados.transcript}`;
-
-  const aviso = $("aviso-avaliacao");
-  aviso.classList.toggle("oculto", !dados.aviso);
-  if (dados.aviso) aviso.textContent = dados.aviso;
-
-  const temChecklist = Boolean(dados.checklist);
-  $("bloco-nota").classList.toggle("oculto", !temChecklist);
-  $("criterios").innerHTML = "";
-
-  if (temChecklist) {
-    $("nota-final").textContent = formatarNota(dados.checklist.nota_total);
-    renderizarChecklist($("criterios"), dados.checklist);
-  }
-
-  const temParecer = Boolean(dados.parecer);
-  $("titulo-parecer").classList.toggle("oculto", !temParecer);
-  $("parecer").classList.toggle("oculto", !temParecer);
-  if (temParecer) $("parecer").textContent = dados.parecer;
-
+function mostrarAvaliacao(d) {
+  estado.consultaId = null; pararFala(); pararDigitacao();
+  $("resumo-avaliacao").textContent = `Transcrição salva em historico/${d.transcript}`;
+  const av = $("aviso-avaliacao"); av.classList.toggle("oculto", !d.aviso); if (d.aviso) av.textContent = d.aviso;
+  const tem = Boolean(d.checklist); $("bloco-nota").classList.toggle("oculto", !tem); $("criterios").innerHTML = "";
+  if (tem) { $("nota-final").textContent = formatarNota(d.checklist.nota_total); renderizarChecklist($("criterios"), d.checklist); }
+  const tp = Boolean(d.parecer); $("titulo-parecer").classList.toggle("oculto", !tp); $("parecer").classList.toggle("oculto", !tp); if (tp) $("parecer").textContent = d.parecer;
   mostrarTela("tela-avaliacao");
 }
 
 /* ---------- Ligações ---------- */
-
-$("botao-iniciar").addEventListener("click", iniciarConsulta);
+audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
 $("botao-encerrar").addEventListener("click", encerrarConsulta);
-
-// Preferência de áudio: segmentos no topo + botão no cabeçalho, sempre em sincronia.
-document.querySelectorAll("#pref-audio .seg").forEach((seg) => {
-  seg.addEventListener("click", () => aplicarPreferenciaAudio(seg.dataset.audio === "1"));
-});
+document.querySelectorAll("#pref-audio .seg").forEach((s) => s.addEventListener("click", () => aplicarPreferenciaAudio(s.dataset.audio === "1")));
 $("botao-som").addEventListener("click", () => aplicarPreferenciaAudio(!estado.falarRespostas));
-
-$("botao-nova").addEventListener("click", () => {
-  $("botao-iniciar").disabled = !estado.casoSelecionado;
-  mostrarTela("tela-inicio");
-});
+document.querySelectorAll(".cat-card").forEach((c) => c.addEventListener("click", () => abrirCategoria(c.dataset.cat)));
+$("cat-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
+$("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abrirCategoria(estado.categoriaAtual); else mostrarTela("tela-inicio"); });
 $("botao-painel").addEventListener("click", abrirPainel);
 $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
+$("abrir-instrumentos").addEventListener("click", () => $("painel-instrumentos").classList.toggle("aberto"));
+$("fechar-inst").addEventListener("click", () => $("painel-instrumentos").classList.remove("aberto"));
 
-// Aquece a lista de vozes e destrava o áudio no primeiro gesto (obrigatório em
-// mobile: iOS/Android só falam quando o TTS foi iniciado dentro de uma interação).
-if (window.speechSynthesis) {
-  carregarVozesTTS();
-  speechSynthesis.onvoiceschanged = carregarVozesTTS;
-  ["pointerdown", "touchend", "click", "keydown"].forEach((ev) =>
-    window.addEventListener(ev, destravarTTS, { once: true, passive: true })
-  );
-}
+if (window.speechSynthesis) { carregarVozesTTS(); speechSynthesis.onvoiceschanged = carregarVozesTTS; }
+["pointerdown", "touchend", "click", "keydown"].forEach((ev) => window.addEventListener(ev, destravarAudio, { once: true, passive: true }));
 
 aplicarPreferenciaAudio(estado.falarRespostas);
 carregarCasos();

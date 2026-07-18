@@ -66,6 +66,36 @@ function listarCasos() {
     });
 }
 
+// Sinais vitais / medidas rápidas (à parte dos demais achados do exame físico).
+const CHAVES_VITAIS = new Set([
+  "pressao_arterial",
+  "frequencia_cardiaca",
+  "frequencia_respiratoria",
+  "temperatura",
+  "saturacao",
+  "glicemia_capilar",
+  "glicemia",
+  "escala_dor",
+  "dor",
+  "peso",
+]);
+
+// Instrumentos que o profissional pode acionar por clique (só faz sentido pleno na
+// medicina): sinais vitais, manobras de exame físico e exames complementares.
+function instrumentosDoCaso(caso) {
+  const grupos = { vitais: [], fisico: [], exames: [] };
+  for (const [chave, dados] of Object.entries(caso.exame_fisico || {})) {
+    if (!dados || typeof dados !== "object") continue;
+    const item = { chave, nome: dados.nome || chave.replaceAll("_", " ") };
+    (CHAVES_VITAIS.has(chave) ? grupos.vitais : grupos.fisico).push(item);
+  }
+  for (const [chave, dados] of Object.entries(caso.exames_disponiveis || {})) {
+    if (!dados || typeof dados !== "object") continue;
+    grupos.exames.push({ chave, nome: dados.nome || chave.replaceAll("_", " ") });
+  }
+  return grupos;
+}
+
 function carregarRubrica(casoId) {
   const caminho = path.join(DIR_AVALIACOES, `${casoId}.json`);
   if (!fs.existsSync(caminho)) return null;
@@ -227,13 +257,17 @@ async function iniciarConsulta(req, res) {
   json(res, 200, {
     id,
     caso: casoId,
+    categoria: caso.categoria === "medicina" ? "medicina" : "psicologia",
     voz: ident.voz || "feminino",
     paciente: {
       nome: ident.nome || "",
       idade: ident.idade || "",
       sexo: ident.sexo || "",
       profissao: ident.profissao || "",
+      estado_civil: ident.estado_civil || "",
+      escolaridade: ident.escolaridade || "",
     },
+    instrumentos: instrumentosDoCaso(caso),
   });
 }
 
@@ -395,6 +429,26 @@ export function criarServidor() {
       const mensagem = pathname.match(/^\/api\/consultas\/([\w-]+)\/mensagem$/);
       if (req.method === "POST" && mensagem) {
         return await enviarMensagem(req, res, mensagem[1]);
+      }
+
+      // Instrumento por clique: devolve direto o resultado do exame/sinal vital.
+      const exame = pathname.match(/^\/api\/consultas\/([\w-]+)\/exame$/);
+      if (req.method === "POST" && exame) {
+        const consulta = consultaAtiva(res, exame[1]);
+        if (!consulta) return;
+        const dados = await lerCorpo(req);
+        const chave = String(dados.chave || "");
+        const noFisico = (consulta.caso.exame_fisico || {})[chave];
+        const noComplementar = (consulta.caso.exames_disponiveis || {})[chave];
+        const item = noFisico || noComplementar;
+        if (!item || typeof item !== "object") {
+          return json(res, 404, { erro: "Instrumento não disponível neste caso." });
+        }
+        const titulo = noFisico ? "EXAME FÍSICO" : "EXAME SOLICITADO";
+        consulta.transcript += `\n${titulo}: ${item.nome}\nRESULTADO: ${item.resultado}\n`;
+        return json(res, 200, {
+          eventos: [{ tipo: "exame", titulo, nome: item.nome, resultado: item.resultado }],
+        });
       }
 
       const encerrar = pathname.match(/^\/api\/consultas\/([\w-]+)\/encerrar$/);
