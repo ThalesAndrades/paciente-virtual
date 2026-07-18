@@ -12,6 +12,9 @@ venv/
 # Node
 node_modules/
 
+# Pacote de deploy gerado (dist/paciente-virtual-hostinger.zip)
+dist/
+
 # Dados gerados em tempo de execução (contêm dados pessoais de alunos)
 historico/*.txt
 
