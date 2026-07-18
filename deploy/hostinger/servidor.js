@@ -20,6 +20,7 @@ import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
 import { responderComoPaciente } from "./motor/humanizar.js";
+import { ttsInfo, sintetizar } from "./motor/tts.js";
 import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
 const DIR_APP = path.dirname(fileURLToPath(import.meta.url));
@@ -369,8 +370,21 @@ export function criarServidor() {
       }
 
       if (req.method === "GET" && pathname === "/api/voz") {
-        // Sem motores locais no Node: a página usa a Web Speech API.
-        return json(res, 200, { stt: false, tts: { feminino: false, masculino: false } });
+        return json(res, 200, ttsInfo());
+      }
+
+      if (req.method === "POST" && pathname === "/api/falar") {
+        const dados = await lerCorpo(req);
+        const texto = String(dados.texto || "").trim();
+        const voz = dados.voz === "masculino" ? "masculino" : "feminino";
+        if (!texto) return json(res, 400, { erro: "Texto vazio." });
+        try {
+          const { buffer, mime } = await sintetizar(texto.slice(0, 1200), voz);
+          res.writeHead(200, { "Content-Type": mime, "Content-Length": buffer.length, "Cache-Control": "no-store" });
+          return res.end(buffer);
+        } catch (erro) {
+          return json(res, 502, { erro: `Falha na síntese de voz: ${erro.message}` });
+        }
       }
 
       if (req.method === "POST" && pathname === "/api/consultas") {
