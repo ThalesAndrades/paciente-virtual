@@ -36,6 +36,28 @@ Para voz neural local (Whisper/Piper/Kokoro) é preciso do servidor Python
 
 Não há `npm install`: o servidor usa apenas módulos nativos do Node.
 
+### Upload por ZIP (sem Git)
+
+Se preferir enviar um arquivo pelo Gerenciador de Arquivos em vez de conectar o
+Git, gere o pacote pronto:
+
+```bash
+bash deploy/hostinger/empacotar.sh
+# gera dist/paciente-virtual-hostinger.zip
+```
+
+O ZIP contém apenas o necessário para rodar (motor Node, casos, rubricas e a
+página) com `app.js` na raiz do arquivo. No hPanel:
+
+1. **Gerenciador de Arquivos** → entre na pasta da aplicação Node (a
+   *Application root*) → **Upload** do `paciente-virtual-hostinger.zip`.
+2. Selecione o ZIP → **Extrair** ali mesmo. Os arquivos ficam na raiz da pasta
+   (o `app.js` fica no topo, sem pasta-invólucro).
+3. Em **Node.js**, confirme o **arquivo de inicialização** `app.js` e
+   **reinicie** a aplicação.
+
+Nada de `npm install` — o pacote não tem dependências.
+
 ### Verificar o deploy
 
 Depois de iniciar, confira a rota de saúde no seu domínio:
