@@ -112,12 +112,12 @@ function regras(caso) {
       () => (hda.inicio ? `Começou ${frase(hda.inicio).toLowerCase()}.` : null),
     ],
     [
-      ["onde", "local", "localizacao", "regiao", "lugar"],
-      () => (hda.localizacao ? `${frase(hda.localizacao)}.` : null),
+      ["irradia", "espalha", "vai para", "vai pro", "corre para", "corre pro", "espalha para"],
+      () => (hda.irradiacao ? `Vai para: ${frase(hda.irradiacao).toLowerCase()}.` : null),
     ],
     [
-      ["irradia", "espalha", "vai para"],
-      () => (hda.irradiacao ? `Vai para: ${frase(hda.irradiacao).toLowerCase()}.` : null),
+      ["onde", "local", "localizacao", "regiao"],
+      () => (hda.localizacao ? `${frase(hda.localizacao)}.` : null),
     ],
     [
       ["intensidade", "forte", "escala", "0 a 10", "zero a dez"],
