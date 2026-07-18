@@ -1,6 +1,5 @@
 {
   "titulo": "Infarto Agudo do Miocárdio",
-
   "identificacao": {
     "nome": "João Carlos Ferreira",
     "idade": 58,
@@ -278,5 +277,6 @@
       ],
       "resultado": "Sem alterações agudas"
     }
-  }
+  },
+  "categoria": "medicina"
 }

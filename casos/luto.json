@@ -1,6 +1,5 @@
 {
   "titulo": "Processo de Luto",
-
   "identificacao": {
     "nome": "Helena Vasconcelos",
     "idade": 67,
@@ -10,16 +9,13 @@
     "escolaridade": "Ensino Superior Completo",
     "profissao": "Professora aposentada"
   },
-
   "queixa_principal": "Não consigo dormir direito desde que meu marido faleceu",
-
   "informacoes_iniciais": {
     "perda": "O marido faleceu há 5 meses, após 45 anos de casamento.",
     "sono": "Demora horas para dormir; a cama parece grande demais.",
     "choro": "Chora quase todos os dias, principalmente à noite.",
     "casa": "A casa ficou vazia e silenciosa demais."
   },
-
   "historia_doenca_atual": {
     "inicio": "Desde o falecimento, há 5 meses",
     "frequencia": "Praticamente todas as noites",
@@ -34,7 +30,6 @@
     "curso": "A saudade não some, mas os dias já variam: há tardes mais leves e tardes muito pesadas. Não é uma tristeza igual e chumbada o tempo todo.",
     "funcionalidade": "Ainda cuida da casa, se arruma, paga as contas e vai à missa; o que 'travou' foi a vida social e o prazer nas coisas — não a capacidade de tocar o dia."
   },
-
   "antecedentes_pessoais": {
     "hipertensao": true,
     "diabetes": false,
@@ -43,12 +38,10 @@
     "alergias": "Nega",
     "episodios_depressivos_previos": "Nunca teve depressão nem tratamento psiquiátrico antes desta perda"
   },
-
   "antecedentes_familiares": {
     "pais": "Falecidos por causas naturais, idosos",
     "psiquiatricos": "Nega histórico de depressão, suicídio ou doença mental na família"
   },
-
   "habitos_de_vida": {
     "tabagismo": "Nunca fumou",
     "alcool": "Não bebe",
@@ -56,7 +49,6 @@
     "sono": "Dorme 4 a 5 horas por noite, com despertares",
     "alimentacao": "Cozinha pouco agora que é só ela; às vezes 'belisca' algo e vai dormir"
   },
-
   "informacoes_intermediarias": {
     "doenca_marido": "Ele teve câncer; foram 8 meses entre o diagnóstico e o fim.",
     "filhos": "Meus dois filhos moram em outro estado; ligam, mas estão ocupados com a vida deles.",
@@ -64,7 +56,6 @@
     "casamento": "Foram 45 anos juntos. O Osvaldo era o companheiro de tudo — o café da manhã, a novela da noite, a caminhada de domingo.",
     "boas_lembrancas": "Quando fala das viagens de carro que faziam e das trapalhadas dele na cozinha, chega a rir — depois vem a saudade junto."
   },
-
   "informacoes_sensiveis": {
     "culpa": "Fico remoendo que devia ter percebido os sinais da doença antes; e, no fundo, uma culpa boba de estar aqui, viva, tomando meu cafezinho, e ele não.",
     "retrato": "Converso com o retrato dele todos os dias — dou bom dia, conto as novidades; sei que parece bobagem.",
@@ -74,13 +65,11 @@
     "isolamento": "Foi se recolhendo: largou a hidroginástica, recusa convites, passa muitas horas em silêncio dentro de casa.",
     "solidao": "O mais difícil é o silêncio da casa e a cama vazia; o fim de tarde, hora em que ele chegava, é quando mais aperta."
   },
-
   "rede_apoio": {
     "vizinha": "Uma vizinha amiga de longa data, dona Cida, que a visita quase todo dia e traz um pão de queijo.",
     "igreja": "Participa do grupo de senhoras da igreja aos domingos.",
     "filhos": "Dois filhos afetuosos, porém distantes fisicamente; ligam nos fins de semana."
   },
-
   "persona": {
     "resumo": "Helena é uma professora aposentada de 67 anos, culta e afetuosa, que construiu a vida inteira ao redor da família e da sala de aula. Há 5 meses perdeu o marido de 45 anos de casamento e atravessa um luto normal, profundo mas sadio — chora a perda sem perder o carinho pela vida.",
     "temperamento": [
@@ -93,7 +82,6 @@
     ],
     "postura_na_consulta": "Chega bem arrumada, cumprimenta com gentileza e pede desculpa por 'estar tomando o tempo do doutor'. Senta-se com a bolsa no colo, aperta um lenço na mão e se emociona ao tocar no marido, mas se recompõe, enxuga os olhos e continua. Colabora com tudo e agradece a atenção."
   },
-
   "estilo_de_fala": {
     "registro": "Português correto e cuidado, de pessoa de ensino superior e ex-professora — vocabulário rico porém simples, sem gírias e sem jargão médico. Trata o profissional por 'doutor' ou 'doutora'.",
     "caracteristicas": [
@@ -128,7 +116,6 @@
       "Não dramatiza nem exagera; tende a minimizar para 'não incomodar'"
     ]
   },
-
   "contexto_de_vida": {
     "biografia": "Helena nasceu no interior, formou-se professora e deu aula de português por mais de três décadas na rede pública. Casou-se aos 22 anos com Osvaldo, um bancário aposentado; criaram dois filhos, hoje adultos e morando em outro estado. Aposentou-se aos 60 e passou a viver uma rotina tranquila a dois, até o marido adoecer.",
     "rotina": "Acorda cedo, faz o café, arruma a casa, assiste à novela reprisada, cochila à tarde e reza à noite. Antes caminhava e fazia hidroginástica; agora os dias são mais parados e silenciosos.",
@@ -142,7 +129,6 @@
       "A insônia, que a deixa exausta e mais sensível"
     ]
   },
-
   "estado_emocional": {
     "agora": "Está triste e saudosa, sensibilizada por falar do marido, mas relativamente serena e colaborativa. Não há desespero nem embotamento — é a tristeza natural de quem perdeu um grande amor há pouco tempo.",
     "manifestacoes": [
@@ -155,7 +141,6 @@
     "o_que_teme": "Teme estar 'enlouquecendo' por conversar com o retrato e por ter a impressão de ouvir a voz do marido; e teme, acima de tudo, envelhecer e ficar completamente sozinha.",
     "o_que_espera": "Quer entender se o que sente é normal, ser ouvida sem ser tratada como louca, e dormir melhor. Veio mais pela insônia e pela angústia do que por acreditar que está doente."
   },
-
   "dinamica_de_revelacao": {
     "abre_se_quando": [
       "O profissional demonstra calma, paciência e não a apressa",
@@ -173,53 +158,115 @@
     "trava_do_sensivel": "As informações mais íntimas — o 'conversar com o retrato', a impressão de ouvir a voz dele, a culpa de seguir viva e o medo de enlouquecer — só surgem depois que o profissional a acolheu e ela sentiu segurança. A pergunta sobre ideação suicida precisa ser feita com muito cuidado e vínculo prévio; feita com delicadeza, ela nega com clareza e até se comove; feita de forma brusca, ela se retrai, se assusta e responde curto.",
     "sinais_de_confianca": "Passa a usar o nome do marido com mais naturalidade, baixa a guarda ('vou te contar uma coisa que não falo pra ninguém, doutor...'), respira mais fundo e aceita falar de assuntos que antes evitava."
   },
-
   "exame_fisico": {
     "aparencia": {
       "nome": "Aparência geral",
-      "sinonimos": ["aparência", "aparencia", "inspeção", "inspecao", "estado geral", "autocuidado", "higiene", "vestimenta"],
+      "sinonimos": [
+        "aparência",
+        "aparencia",
+        "inspeção",
+        "inspecao",
+        "estado geral",
+        "autocuidado",
+        "higiene",
+        "vestimenta"
+      ],
       "resultado": "Bem cuidada, vestida adequadamente e com bom asseio; olhos lacrimejantes ao falar do marido. Autocuidado preservado."
     },
     "afeto": {
       "nome": "Exame do estado mental — humor e afeto",
-      "sinonimos": ["estado mental", "exame psíquico", "exame psiquico", "afeto", "afetividade", "humor", "psiquismo"],
+      "sinonimos": [
+        "estado mental",
+        "exame psíquico",
+        "exame psiquico",
+        "afeto",
+        "afetividade",
+        "humor",
+        "psiquismo"
+      ],
       "resultado": "Humor triste, porém afeto preservado, modulado e REATIVO: chora ao falar da perda e sorri ao lembrar de momentos bons do casamento. Sem embotamento afetivo, sem lentificação psicomotora marcante. Pensamento organizado, sem delírios; autoestima e autovalor preservados (a queixa é saudade, não desvalor)."
     },
     "contato_visual": {
       "nome": "Contato visual",
-      "sinonimos": ["contato visual", "olhar"],
+      "sinonimos": [
+        "contato visual",
+        "olhar"
+      ],
       "resultado": "Contato visual bom, interage com interesse e reciprocidade."
     },
     "pressao_arterial": {
       "nome": "Pressão arterial",
-      "sinonimos": ["pressão", "pressao", "pa", "aferir pressão", "aferir pressao", "medir pressão", "medir pressao", "pressão arterial", "pressao arterial"],
+      "sinonimos": [
+        "pressão",
+        "pressao",
+        "pa",
+        "aferir pressão",
+        "aferir pressao",
+        "medir pressão",
+        "medir pressao",
+        "pressão arterial",
+        "pressao arterial"
+      ],
       "resultado": "128/82 mmHg — controlada em uso de losartana."
     },
     "risco_suicidio": {
       "nome": "Avaliação de risco de suicídio",
-      "sinonimos": ["risco de suicídio", "risco de suicidio", "ideação suicida", "ideacao suicida", "ideação", "ideacao", "risco de vida", "vontade de morrer", "pensou em se machucar", "plano suicida"],
+      "sinonimos": [
+        "risco de suicídio",
+        "risco de suicidio",
+        "ideação suicida",
+        "ideacao suicida",
+        "ideação",
+        "ideacao",
+        "risco de vida",
+        "vontade de morrer",
+        "pensou em se machucar",
+        "plano suicida"
+      ],
       "resultado": "Nega ideação, plano ou intenção suicida. Nega desejo de morte ativo. Expressa fé e vínculo com os filhos como razões para viver. Não há histórico de tentativas. Risco de suicídio AVALIADO E BAIXO — achado que reforça luto normal e afasta episódio depressivo maior grave."
     }
   },
-
   "exames_disponiveis": {
     "phq9": {
       "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
-      "sinonimos": ["phq-9", "phq 9", "phq", "escala de depressão", "escala de depressao", "questionário de depressão", "questionario de depressao", "rastreio de depressão"],
+      "sinonimos": [
+        "phq-9",
+        "phq 9",
+        "phq",
+        "escala de depressão",
+        "escala de depressao",
+        "questionário de depressão",
+        "questionario de depressao",
+        "rastreio de depressão"
+      ],
       "resultado": "9 pontos — sintomas depressivos LEVES. Pontua sobretudo em sono, cansaço e humor triste; NÃO pontua no item de ideação de morte/autolesão nem em desvalor. Compatível com reação de luto, não com depressão maior moderada/grave."
     },
     "tsh": {
       "nome": "TSH (hormônio tireoestimulante)",
-      "sinonimos": ["tsh", "tireoide", "tireóide", "hormônio da tireoide", "hormonio da tireoide", "função tireoidiana", "funcao tireoidiana"],
+      "sinonimos": [
+        "tsh",
+        "tireoide",
+        "tireóide",
+        "hormônio da tireoide",
+        "hormonio da tireoide",
+        "função tireoidiana",
+        "funcao tireoidiana"
+      ],
       "resultado": "2,1 mUI/L — dentro da normalidade. Afasta hipotireoidismo como causa da fadiga e da alteração do humor/sono."
     },
     "hemograma": {
       "nome": "Hemograma completo",
-      "sinonimos": ["hemograma", "sangue", "exame de sangue", "anemia", "série vermelha", "serie vermelha"],
+      "sinonimos": [
+        "hemograma",
+        "sangue",
+        "exame de sangue",
+        "anemia",
+        "série vermelha",
+        "serie vermelha"
+      ],
       "resultado": "Sem anemia; séries normais. Afasta anemia como causa do cansaço."
     }
   },
-
   "emocao_atual": {
     "triste": true,
     "saudosa": true,
@@ -229,7 +276,6 @@
     "com_ideacao_suicida": false,
     "afeto_reativo": true
   },
-
   "fidelidade_clinica": {
     "diagnostico_subjacente": "Reação de luto NORMAL (não patológica), 5 meses após a perda do cônjuge. NÃO é episódio depressivo maior, NÃO é luto prolongado/complicado. A paciente jamais nomeia nenhum diagnóstico.",
     "manter_coerente": [
@@ -247,5 +293,6 @@
       "TSH e hemograma normais afastam causas orgânicas (hipotireoidismo, anemia) da fadiga e do humor",
       "Risco de suicídio avaliado e baixo confirma a natureza normal do luto e orienta conduta (escuta, psicoeducação, seguimento) em vez de tratamento farmacológico agressivo"
     ]
-  }
+  },
+  "categoria": "psicologia"
 }

@@ -276,10 +276,13 @@ const GATILHOS_GATED = {
 // nome de chave (evita falsos positivos com palavras comuns).
 export function fatoSensivelDireto(caso, pergunta) {
   const fontes = caso.informacoes_sensiveis || {};
+  const gatilhosDoCaso = caso.gatilhos_sensiveis || {};
   for (const [chave, valor] of Object.entries(fontes)) {
     if (!valor) continue;
-    const gatilhos = GATILHOS_GATED[chave];
-    if (gatilhos && contemAlgumTermo(pergunta, gatilhos)) return frase(valor);
+    // Gatilhos declarados no próprio caso têm prioridade (escala p/ temas novos);
+    // senão, cai no dicionário curado por chave conhecida.
+    const gatilhos = gatilhosDoCaso[chave] || GATILHOS_GATED[chave];
+    if (gatilhos && gatilhos.length && contemAlgumTermo(pergunta, gatilhos)) return frase(valor);
   }
   return null;
 }

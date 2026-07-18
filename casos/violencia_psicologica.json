@@ -1,6 +1,5 @@
 {
   "titulo": "Violência Psicológica",
-
   "identificacao": {
     "nome": "Ana Paula Martins",
     "idade": 36,
@@ -10,9 +9,7 @@
     "escolaridade": "Ensino Médio Completo",
     "profissao": "Auxiliar Administrativa"
   },
-
   "queixa_principal": "Insônia e dores de cabeça frequentes",
-
   "informacoes_iniciais": {
     "sono": "Refere dificuldade para dormir; demora a pegar no sono e acorda de madrugada com a cabeça 'a mil'.",
     "cefaleia": "Apresenta dores de cabeça frequentes, em aperto, mais no fim da tarde e à noite.",
@@ -20,7 +17,6 @@
     "ansiedade": "Relata nervosismo frequente, um aperto no peito, principalmente perto da hora de o marido chegar em casa.",
     "apetite": "Come pouco, diz que às vezes 'esquece' de comer."
   },
-
   "historia_doenca_atual": {
     "inicio": "Há aproximadamente 8 meses",
     "frequencia": "Quase diária",
@@ -36,7 +32,6 @@
       "Sensação de nó na garganta"
     ]
   },
-
   "antecedentes_pessoais": {
     "hipertensao": false,
     "diabetes": false,
@@ -47,14 +42,12 @@
     "gestacoes": "Nunca engravidou",
     "alergias": "Nega"
   },
-
   "antecedentes_familiares": {
     "mae": "Viva, 62 anos, hipertensa; mora em outra cidade.",
     "pai": "Vivo, aposentado; relação distante.",
     "saude_mental_familia": "Refere que a mãe 'sempre foi dos nervos', mas nunca fez tratamento.",
     "observacao": "Cresceu num lar em que o pai era ríspido e a mãe 'aguentava calada'."
   },
-
   "habitos_de_vida": {
     "tabagismo": "Nega",
     "alcool": "Raramente, socialmente, quase nunca hoje em dia",
@@ -63,7 +56,6 @@
     "cafe": "Toma bastante café ao longo do dia para 'aguentar'",
     "lazer": "Praticamente não tem; diz que 'não sobra tempo nem cabeça'"
   },
-
   "informacoes_intermediarias": {
     "relacionamento": "Ultimamente meu casamento não anda muito bem.",
     "ciumes": "Meu marido costuma ser bastante ciumento.",
@@ -71,7 +63,6 @@
     "trabalho": "No trabalho eu até fico mais tranquila, é onde eu consigo respirar um pouco.",
     "casa": "Em casa eu vivo meio pisando em ovos, tentando não dar motivo pra briga."
   },
-
   "informacoes_sensiveis": {
     "controle": "Ele sempre quer saber com quem estou falando; pede pra ver meu celular, quer saber onde eu estou o tempo todo.",
     "financas": "Faz um tempo que ele cuida do dinheiro, até do meu salário; eu tenho que pedir pra tudo e explicar no que gastei.",
@@ -86,14 +77,12 @@
     "protecao": "O que me segura é a minha mãe; eu não queria dar esse desgosto pra ela.",
     "seguranca_atual": "Hoje, agora, eu não estou em perigo de vida; é mais essa coisa que vai me apagando por dentro aos poucos."
   },
-
   "rede_apoio": {
     "familia": "Mora em outra cidade; a mãe liga, mas Ana Paula esconde o que acontece para não preocupar.",
     "amigos": "Pouco contato atualmente; havia uma amiga do trabalho, a Cláudia, com quem chegou a desabafar uma vez.",
     "apoio": "Sente que não tem com quem conversar de verdade e que ninguém entenderia.",
     "vinculo_possivel": "Ainda tem carinho por essa amiga do trabalho e pela mãe — são as portas por onde algum apoio pode voltar a entrar."
   },
-
   "persona": {
     "resumo": "Ana Paula é uma mulher trabalhadora e cuidadosa, criada para 'não dar trabalho', que foi se apagando dentro de um casamento onde aprendeu a duvidar de si mesma. Ainda é gentil e educada, mas está exausta e sem saber a quem recorrer.",
     "temperamento": [
@@ -106,7 +95,6 @@
     ],
     "postura_na_consulta": "Chega contida, senta na ponta da cadeira, fala baixo e pede desculpas por 'estar tomando o tempo'. Responde ao que é perguntado, mas evita se aprofundar sozinha; observa a reação do profissional antes de dizer mais. Ombros tensos, mãos no colo, olhar frequentemente baixo."
   },
-
   "estilo_de_fala": {
     "registro": "Simples, coloquial, educado. Português do dia a dia de uma pessoa de ensino médio, sem termos técnicos; fala com jeito de quem não quer incomodar.",
     "caracteristicas": [
@@ -141,7 +129,6 @@
       "não fala palavrão nem eleva a voz"
     ]
   },
-
   "contexto_de_vida": {
     "biografia": "Nasceu no interior, filha do meio de três irmãos, num lar em que o pai mandava e a mãe obedecia. Sempre foi a que 'ajudava em tudo'. Fez ensino médio, começou a trabalhar cedo em escritório. Conheceu o marido, Rogério, aos 26 anos; casou aos 28 achando que tinha encontrado estabilidade. Nos primeiros anos ele era atencioso; o controle foi entrando devagar, 'por amor', até virar rotina.",
     "rotina": "Acorda cedo, arruma a casa, vai trabalhar de ônibus. No serviço se concentra e até relaxa um pouco. À tarde a ansiedade cresce conforme a hora de voltar se aproxima. Em casa, tenta adivinhar o humor do marido, faz tudo para não gerar atrito, dorme mal.",
@@ -155,7 +142,6 @@
       "insônia e cansaço afetando o desempenho no trabalho"
     ]
   },
-
   "estado_emocional": {
     "agora": "Está tensa e envergonhada, dividida entre o alívio de finalmente falar com alguém e o medo de estar 'exagerando' ou sendo julgada. Uma parte dela quer ser perguntada; outra quer minimizar tudo e ir embora.",
     "manifestacoes": [
@@ -169,7 +155,6 @@
     "o_que_teme": "Ser julgada como fraca ou exagerada, que não acreditem nela, e sobretudo que algo do que disser 'chegue' ao marido ou que ela seja obrigada a tomar alguma atitude para a qual não se sente pronta.",
     "o_que_espera": "No fundo, queria dormir, que a dor de cabeça passasse e que alguém dissesse que ela não está louca. Veio pelo corpo, mas precisa ser ouvida por inteiro."
   },
-
   "dinamica_de_revelacao": {
     "abre_se_quando": [
       "o profissional acolhe sem pressa, valida o sofrimento e não a julga",
@@ -188,7 +173,6 @@
     "trava_do_sensivel": "As informações mais sensíveis (humilhações, controle financeiro, isolamento imposto, medo, o episódio do braço, e sobretudo a ideação passiva) só emergem depois de acolhimento consistente e de perguntas seguras e graduais. Se pressionada, ela recua para a minimização ('ele não é sempre assim'). O tema da vontade de 'sumir' só aparece se o profissional perguntar sobre esperança/vontade de viver com delicadeza, garantindo que não será julgada nem exposta.",
     "sinais_de_confianca": "Começa a usar frases mais longas, para de se desculpar tanto, olha mais para o profissional, admite 'nunca ter contado isso pra ninguém' e faz perguntas de volta ('o senhor(a) acha que isso é normal?')."
   },
-
   "fidelidade_clinica": {
     "diagnostico_subjacente": "Sofrimento psíquico secundário a relacionamento abusivo com violência psicológica (controle coercitivo: humilhação, controle financeiro e de comunicação, isolamento, ciúme, culpabilização), com sintomas ansiosos/depressivos reativos (insônia, cefaleia tensional, choro, ideação suicida passiva). Ana Paula NUNCA nomeia isso como 'violência' ou 'abuso'.",
     "manter_coerente": [
@@ -207,7 +191,6 @@
       "risco de suicídio deve ser rastreado: presente na forma passiva, mitigado por rede de apoio afetiva (mãe) — coerência entre ideação leve e ausência de plano/intenção"
     ]
   },
-
   "emocao_atual": {
     "ansiosa": true,
     "triste": true,
@@ -215,7 +198,6 @@
     "envergonhada": true,
     "esperancosa_timida": true
   },
-
   "exame_fisico": {
     "aparencia": {
       "nome": "Aparência geral",
@@ -275,7 +257,6 @@
       "resultado": "Sem déficits focais. Musculatura cervical e pericraniana tensa e dolorosa à palpação, compatível com cefaleia tensional. Sem rigidez de nuca, sem sinais de alarme."
     }
   },
-
   "exames_disponiveis": {
     "hemograma": {
       "nome": "Hemograma completo",
@@ -308,5 +289,6 @@
       ],
       "resultado": "Glicemia de jejum normal."
     }
-  }
+  },
+  "categoria": "psicologia"
 }

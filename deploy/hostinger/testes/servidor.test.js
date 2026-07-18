@@ -52,7 +52,9 @@ test("fluxo completo de consulta em modo demonstração", async () => {
     assert.ok(casos.dados.some((caso) => caso.id === "depressao"));
 
     const voz = await api(base, "/api/voz");
-    assert.deepEqual(voz.dados, { stt: false, tts: { feminino: false, masculino: false } });
+    assert.equal(voz.dados.stt, false);
+    assert.deepEqual(voz.dados.tts, { feminino: false, masculino: false });
+    assert.equal(voz.dados.provedor, "nenhum");
 
     const invalido = await api(base, "/api/consultas", { caso: "../etc/passwd" });
     assert.equal(invalido.status, 404);

@@ -52,6 +52,7 @@ function listarCasos() {
       const ident = caso.identificacao || {};
       return {
         id,
+        categoria: caso.categoria === "medicina" ? "medicina" : "psicologia",
         titulo: caso.titulo || id.replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase()),
         queixa: caso.queixa_principal || "",
         paciente: {
