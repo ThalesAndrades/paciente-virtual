@@ -209,6 +209,31 @@ function regras(caso) {
       ["te segura", "motivo para viver", "protecao", "te impede"],
       () => frase(sensiveis.protecao || "") || null,
     ],
+    // Bem-estar geral (perguntas vagas): resposta em personagem, NUNCA sensível.
+    // Fica perto do fim, para as perguntas específicas casarem primeiro.
+    [
+      [
+        "como esta",
+        "como voce esta",
+        "como o senhor esta",
+        "como a senhora esta",
+        "como se sente",
+        "como esta se sentindo",
+        "como vai",
+        "como tem passado",
+        "como tem sido",
+        "no geral",
+        "de modo geral",
+        "de forma geral",
+        "como estao as coisas",
+        "conte um pouco",
+        "me fala um pouco",
+      ],
+      () => {
+        const queixa = caso.queixa_principal ? frase(caso.queixa_principal).toLowerCase() : null;
+        return queixa ? `Não estou bem não, doutor. É esse(a) ${queixa} que não passa.` : "Não estou muito bem, doutor.";
+      },
+    ],
     // Saudações por último: "bom dia, qual é o seu nome?" responde o nome.
     [["bom dia", "boa tarde", "boa noite", "ola", "oi"], () => "Olá."],
     [["obrigado", "obrigada"], () => "De nada."],
