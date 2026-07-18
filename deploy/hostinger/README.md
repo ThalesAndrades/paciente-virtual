@@ -24,15 +24,29 @@ Para voz neural local (Whisper/Piper/Kokoro) é preciso do servidor Python
    `https://github.com/ThalesAndrades/paciente-virtual` e branch `main`) ou enviando
    os arquivos pelo Gerenciador de Arquivos.
 3. Configure a aplicação:
-   - **Versão do Node**: 18 ou superior.
-   - **Arquivo de inicialização**: `deploy/hostinger/servidor.js`
-     (ou deixe o `npm start` do `package.json` da raiz fazer isso).
-   - **Porta**: a Hostinger injeta a variável `PORT` automaticamente — o servidor a usa.
+   - **Versão do Node**: 18 ou superior (o repositório fixa `20` em `.nvmrc`).
+   - **Arquivo de inicialização**: `app.js` (na raiz do repositório — é o valor
+     que a Hostinger já pré-preenche). Alternativas equivalentes: `npm start`
+     ou apontar direto para `deploy/hostinger/servidor.js`.
+   - **Porta**: a Hostinger injeta a variável `PORT` automaticamente — o servidor
+     a usa, seja um número ou um socket Unix (Phusion Passenger).
 4. (Opcional, VPS/Cloud) exporte `OLLAMA_URL=http://127.0.0.1:11434` e rode
    `ollama pull qwen3:8b` para o paciente responder com IA.
 5. Reinicie a aplicação. Pronto: a página do simulador estará no seu domínio.
 
 Não há `npm install`: o servidor usa apenas módulos nativos do Node.
+
+### Verificar o deploy
+
+Depois de iniciar, confira a rota de saúde no seu domínio:
+
+```bash
+curl https://SEU-DOMINIO/healthz
+# {"status":"ok","modo":"demonstracao"}   (ou "ia" com OLLAMA_URL definido)
+```
+
+`modo` indica se há `OLLAMA_URL` configurado. Use `/healthz` (ou `/api/health`)
+como URL de monitoramento de uptime.
 
 ## Rodando localmente
 
@@ -56,6 +70,7 @@ npm test           # testes do motor portado e do servidor (node --test)
   sistema de arquivos restrito, a consulta e a avaliação seguem funcionando (o
   transcript vive em memória durante a sessão).
 - **Sessões em memória**: consultas abertas são perdidas quando a aplicação
-  reinicia — adequado para demonstrações e turmas pequenas.
+  reinicia — adequado para demonstrações e turmas pequenas. O servidor trata
+  `SIGTERM`/`SIGINT` e encerra as conexões de forma limpa nos reinícios.
 - **LGPD**: como no restante do projeto, as transcrições contêm nome do aluno e o
   conteúdo da consulta; trate esses dados de acordo.
