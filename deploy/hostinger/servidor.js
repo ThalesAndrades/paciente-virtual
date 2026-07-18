@@ -17,9 +17,9 @@ import { fileURLToPath } from "node:url";
 
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo } from "./motor/demo.js";
-import { contextoParaPaciente, detectarExames } from "./motor/exames.js";
+import { detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
-import { criarPrompt } from "./motor/prompt.js";
+import { humanizar } from "./motor/humanizar.js";
 import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
 const DIR_APP = path.dirname(fileURLToPath(import.meta.url));
@@ -218,7 +218,6 @@ async function iniciarConsulta(req, res) {
     casoId,
     aluno,
     voz: ident.voz || "feminino",
-    mensagens: [{ role: "system", content: criarPrompt(caso) }],
     transcript: iniciarTranscript(casoId, aluno),
     encerrada: false,
   });
@@ -274,27 +273,24 @@ async function enviarMensagem(req, res, id) {
         resultado: dadosExame.resultado,
       });
     }
-    consulta.mensagens.push({
-      role: "system",
-      content: contextoParaPaciente(exames.map(([, dadosExame]) => dadosExame)),
-    });
     return json(res, 200, { eventos });
   }
 
-  consulta.mensagens.push({ role: "user", content: texto });
+  // Essência determinística (rápida, com revelação gradual garantida) → a IA humaniza.
+  const essencia = responderDemo(consulta.caso, texto);
 
   let resposta;
   let origem;
   try {
-    resposta = await conversar(consulta.mensagens);
+    resposta = await humanizar(consulta.caso, essencia);
     origem = "ia";
   } catch {
-    resposta = responderDemo(consulta.caso, texto);
+    // Sem IA acessível, entrega a essência crua — ainda correta, só menos natural.
+    resposta = essencia;
     origem = "demo";
     eventos.push({ tipo: "aviso", texto: AVISO_DEMO });
   }
 
-  consulta.mensagens.push({ role: "assistant", content: resposta });
   consulta.transcript += `\nPACIENTE: ${resposta}\n`;
 
   eventos.push({ tipo: "paciente", texto: resposta, origem });
