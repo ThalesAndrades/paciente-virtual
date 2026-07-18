@@ -378,6 +378,7 @@ async function carregarCasos() {
 }
 
 async function iniciarConsulta() {
+  destravarTTS(); // este clique é um gesto do usuário — libera o áudio para o resto da sessão
   const aluno = $("campo-aluno").value.trim() || "aluno";
   const resposta = await fetch("/api/consultas", {
     method: "POST",
@@ -427,8 +428,40 @@ let balaoDigitando = null;   // balão do paciente em digitação no momento
 let textoDigitando = "";     // texto completo esperado desse balão
 let demoDigitando = false;   // se o balão deve receber o rótulo "modo demonstração"
 
+let temporizadorResume = null;
+let vozesTTS = [];
+let ttsDestravado = false;
+
+function carregarVozesTTS() {
+  if (window.speechSynthesis) vozesTTS = speechSynthesis.getVoices() || [];
+}
+
+// Navegadores só falam depois de um gesto do usuário. Destravamos o TTS na primeira
+// interação (clique em iniciar) com um enunciado vazio, para o áudio funcionar depois.
+function destravarTTS() {
+  if (ttsDestravado || !window.speechSynthesis) return;
+  ttsDestravado = true;
+  try { speechSynthesis.speak(new SpeechSynthesisUtterance(" ")); } catch { /* ok */ }
+  carregarVozesTTS();
+}
+
+function escolherVozTTS() {
+  const fonte = vozesTTS.length ? vozesTTS : (window.speechSynthesis ? speechSynthesis.getVoices() : []);
+  const disponiveis = fonte.filter((v) => v.lang && v.lang.toLowerCase().startsWith("pt"));
+  if (!disponiveis.length) return null;
+  const querFeminina = estado.voz !== "masculino";
+  return (
+    disponiveis.find((v) =>
+      querFeminina
+        ? /maria|francisca|luciana|helena|vit[óo]ria|female|feminin/i.test(v.name)
+        : /ant[óo]nio|antonio|daniel|felipe|jo[ãa]o|ricardo|male|masculin/i.test(v.name)
+    ) || disponiveis[0]
+  );
+}
+
 function pararFala() {
   if (audioAtual) { audioAtual.pause(); audioAtual = null; }
+  if (temporizadorResume) { clearInterval(temporizadorResume); temporizadorResume = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
 }
 
@@ -472,20 +505,28 @@ function digitarResposta(balao, texto, ehDemo) {
 }
 
 function falarComNavegador(texto) {
-  if (!window.speechSynthesis) return;
-  const fala = new SpeechSynthesisUtterance(texto);
-  fala.lang = "pt-BR";
-  const vozes = speechSynthesis.getVoices().filter((v) => v.lang && v.lang.startsWith("pt"));
-  if (vozes.length) {
-    const querFeminina = estado.voz !== "masculino";
-    const preferida = vozes.find((v) =>
-      querFeminina
-        ? /maria|francisca|luciana|female|feminin/i.test(v.name)
-        : /antonio|daniel|felipe|male|masculin/i.test(v.name)
-    );
-    fala.voice = preferida || vozes[0];
+  if (!window.speechSynthesis || !texto) return;
+  destravarTTS();
+  speechSynthesis.cancel();
+  const voz = escolherVozTTS();
+  // Fragmenta em frases curtas: mobile e Chrome cortam enunciados longos.
+  const frases = texto.match(/[^.!?…]+[.!?…]*/g) || [texto];
+  for (const trecho of frases) {
+    const t = trecho.trim();
+    if (!t) continue;
+    const fala = new SpeechSynthesisUtterance(t);
+    fala.lang = "pt-BR";
+    if (voz) fala.voice = voz;
+    fala.rate = 1;
+    fala.pitch = 1;
+    speechSynthesis.speak(fala);
   }
-  speechSynthesis.speak(fala);
+  // Chrome/Android pausam a síntese após ~15s: mantém viva com resume() periódico.
+  if (temporizadorResume) clearInterval(temporizadorResume);
+  temporizadorResume = setInterval(() => {
+    if (!speechSynthesis.speaking) { clearInterval(temporizadorResume); temporizadorResume = null; return; }
+    speechSynthesis.resume();
+  }, 7000);
 }
 
 async function falarTexto(texto) {
@@ -856,10 +897,14 @@ $("botao-painel").addEventListener("click", abrirPainel);
 $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
 
-// Aquece a lista de vozes do navegador (algumas só carregam após este evento).
+// Aquece a lista de vozes e destrava o áudio no primeiro gesto (obrigatório em
+// mobile: iOS/Android só falam quando o TTS foi iniciado dentro de uma interação).
 if (window.speechSynthesis) {
-  speechSynthesis.getVoices();
-  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+  carregarVozesTTS();
+  speechSynthesis.onvoiceschanged = carregarVozesTTS;
+  ["pointerdown", "touchend", "click", "keydown"].forEach((ev) =>
+    window.addEventListener(ev, destravarTTS, { once: true, passive: true })
+  );
 }
 
 aplicarPreferenciaAudio(estado.falarRespostas);

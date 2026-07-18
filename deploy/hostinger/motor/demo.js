@@ -240,6 +240,50 @@ function regras(caso) {
   ];
 }
 
+// Temas GATED (intermediários + sensíveis) → palavras da PERGUNTA que os liberam.
+// O portão é determinístico: o assunto sensível só é entregue à IA quando o
+// profissional pergunta DIRETAMENTE sobre ele. Isso garante a revelação gradual
+// e impede que a IA despeje ideação/abuso numa pergunta genérica.
+const GATILHOS_GATED = {
+  ideacao: ["morte", "morrer", "morrendo", "suicid", "se matar", "me matar", "tirar a vida", "tirar a propria vida", "se machucar", "me machucar", "fazer algo contra", "fazer alguma coisa contra", "pensar em fazer algo", "acabar com tudo", "acabar com a vida", "por um fim", "dar um fim", "melhor nao estar", "nao estar aqui", "nao estar mais", "nao querer viver", "nao vale a pena viver", "nao vale a pena", "nao valia a pena", "valia a pena", "dormir e nao acordar", "nao acordar mais", "melhor nao existir", "desistir da vida", "vontade de viver", "vontade de morrer", "pensamento de morte", "pensou em morrer", "pensa em morrer", "pensa em morte"],
+  plano: ["plano", "planejou", "planejar", "como faria", "chegou a tentar", "tentativa", "pensou em como", "ja tentou", "tentou tirar"],
+  protecao: ["o que segura", "te segura", "o que te prende", "o que te impede", "motivo para viver", "motivo pra viver", "razao de viver", "o que faz continuar", "o que te faz continuar", "o que te sustenta", "o que te da forca", "esperanca", "o que te ajuda a seguir", "ficar mais leve", "vao melhorar"],
+  culpa: ["culpa", "culpado", "culpada", "peso pros outros", "peso para os outros", "um peso", "fardo", "falhando", "falha", "incapaz", "se cobra", "cobranca", "se sente um peso", "esta falhando"],
+  choro: ["chorar", "chora", "chorou", "chorado", "lagrimas", "se emociona", "vontade de chorar", "aperta e chora"],
+  abandono: ["largar tudo", "largar a profissao", "largar o trabalho", "largar o emprego", "abandonar a profissao", "desistir da profissao", "parar de trabalhar", "jogar tudo pro alto", "pensa em largar", "pensou em largar", "sair da enfermagem", "sair da profissao"],
+  automedicacao: ["por conta propria", "se automedica", "automedica", "toma pra dormir", "tomar pra dormir", "remedio pra dormir", "sem receita", "se medica sozinho", "medicacao por conta", "trocou uma medicacao", "pega remedio", "tomando algo por conta"],
+  medo_enlouquecer: ["enlouquecer", "ficando louca", "ficar louca", "perdendo o controle", "perder o controle", "perder a cabeca", "ficando maluca", "medo de enlouquecer", "medo de morrer na crise", "vai morrer na crise", "ficar doida"],
+  termino: ["terminou", "termino", "separou", "separacao", "rompimento", "acabou o namoro", "fim do relacionamento", "levou um fora", "terminaram", "acabou o relacionamento"],
+  medo: ["medo", "receio", "com medo", "teme", "assustad", "tem medo", "da medo", "com receio", "te da medo"],
+  vergonha: ["vergonha", "envergonhad", "constrang", "com vergonha", "levam a serio", "acham que e frescura"],
+  controle: ["controla", "controle", "vigia", "vigiar", "olha seu celular", "ve seu celular", "proibe", "proibir", "deixa voce sair", "impede voce", "impede de sair", "da permissao", "manda em voce", "decide por voce", "sua liberdade", "te controla", "tem que dar satisfacao"],
+  financas: ["controla o dinheiro", "voce tem dinheiro", "dinheiro seu", "dinheiro em casa", "tem liberdade", "sua propria", "acesso ao dinheiro", "ele que paga", "pedir dinheiro", "liberdade financeira", "conta bancaria", "gastar sem", "seu salario"],
+  humilhacoes: ["humilha", "xinga", "ofende", "ofensa", "diminui", "desvaloriza", "machuca com palavra", "te machucaram", "chama voce de", "grita com voce", "te diminuiu", "te xingou", "te ofendeu", "fala coisas que te", "coisas que machucam", "palavras que"],
+  minimizacao: ["ele nao e sempre assim", "ele e bom", "culpa minha", "foi minha culpa", "exagero", "nao e bem assim", "ele muda", "e so as vezes", "ele se arrepende"],
+  relacionamento: ["seu relacionamento", "seu casamento", "seu marido", "seu esposo", "seu companheiro", "seu parceiro", "sua relacao", "como e em casa", "vida a dois", "relacao com ele", "com o seu marido"],
+  agressao_fisica: ["bater", "bateu", "agrediu", "agressao", "empurrou", "te empurrar", "segurou", "te segurar", "te machucou fisicamente", "forca fisica", "chegou a te", "encostou a mao", "te bateu", "ja te tocou"],
+  seguranca_atual: ["segura em casa", "se sente segura", "sente seguranca", "corre risco", "em perigo", "medo dele", "medo que ele", "seguro agora", "sair de casa", "lugar pra ir", "denunciar", "pedir ajuda", "protecao contra"],
+  isolamento: ["se afastou", "se afastando", "foi se afastando", "se isolou", "afastado das pessoas", "afastando de amigos", "evita as pessoas", "evitando sair", "evitado companhia", "evitar companhia", "deixou de ver", "parou de sair", "nao sai mais", "se recolhe", "recolhid", "longe das pessoas", "longe da familia", "longe dos amigos", "afastou dos amigos"],
+  solidao: ["solidao", "se sente so", "se sente sozinh", "sente falta dele", "solitari", "a solidao"],
+  retrato: ["retrato", "foto dele", "conversa com ele", "fala com ele", "fala com o retrato", "conversar com o retrato"],
+  presenca: ["ouve a voz", "escuta a voz", "sente a presenca", "ve ele", "impressao de ouvir", "impressao de ver", "sinal dele", "presenca dele", "acha que ele esta"],
+  trabalho: ["no trabalho", "no servico", "no plantao", "no emprego", "no automatico", "atender no automatico", "erro no trabalho", "no hospital"],
+};
+
+// Se o profissional perguntou DIRETAMENTE sobre um tema SENSÍVEL presente no caso,
+// devolve o conteúdo (para a IA revelar com cuidado). Senão, null. Só olha
+// `informacoes_sensiveis` — o intermediário fica no contexto da IA. Sem fallback por
+// nome de chave (evita falsos positivos com palavras comuns).
+export function fatoSensivelDireto(caso, pergunta) {
+  const fontes = caso.informacoes_sensiveis || {};
+  for (const [chave, valor] of Object.entries(fontes)) {
+    if (!valor) continue;
+    const gatilhos = GATILHOS_GATED[chave];
+    if (gatilhos && contemAlgumTermo(pergunta, gatilhos)) return frase(valor);
+  }
+  return null;
+}
+
 export function responderDemo(caso, pergunta) {
   const respostaSintoma = responderSintoma(caso, pergunta);
   if (respostaSintoma) return respostaSintoma;

@@ -16,10 +16,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
-import { AVISO_DEMO, responderDemo } from "./motor/demo.js";
+import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
-import { humanizar } from "./motor/humanizar.js";
+import { responderComoPaciente } from "./motor/humanizar.js";
 import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
 const DIR_APP = path.dirname(fileURLToPath(import.meta.url));
@@ -276,17 +276,20 @@ async function enviarMensagem(req, res, id) {
     return json(res, 200, { eventos });
   }
 
-  // Essência determinística (rápida, com revelação gradual garantida) → a IA humaniza.
-  const essencia = responderDemo(consulta.caso, texto);
+  // Portão determinístico do sensível: só entrega o tema delicado à IA se o
+  // profissional perguntou diretamente sobre ele (revelação gradual garantida).
+  const fatoLiberado = fatoSensivelDireto(consulta.caso, texto);
 
   let resposta;
   let origem;
   try {
-    resposta = await humanizar(consulta.caso, essencia);
+    // A IA responde como o paciente a partir do contexto NÃO-sensível + o fato
+    // liberado (quando houver). Cobre qualquer fraseado de pergunta comum.
+    resposta = await responderComoPaciente(consulta.caso, texto, fatoLiberado);
     origem = "ia";
   } catch {
-    // Sem IA acessível, entrega a essência crua — ainda correta, só menos natural.
-    resposta = essencia;
+    // Sem IA acessível, cai no matcher de demonstração (fixo, mas correto).
+    resposta = responderDemo(consulta.caso, texto);
     origem = "demo";
     eventos.push({ tipo: "aviso", texto: AVISO_DEMO });
   }

@@ -1,11 +1,11 @@
-// Humanização: a ESSÊNCIA da resposta (o conteúdo honesto, com revelação gradual já
-// garantida) vem do matcher determinístico em demo.js — instantâneo. A IA só reescreve
-// essa essência como o paciente falaria, dando naturalidade e emoção ao diálogo.
+// A IA responde COMO o paciente, a partir de um contexto de sistema ESTÁVEL por caso
+// (dados NÃO-sensíveis: identidade, HDA, antecedentes, hábitos, vida). Isso dá cobertura
+// a qualquer fraseado de pergunta. O prompt é o mesmo em todos os turnos → o Ollama
+// cacheia o prefixo → respostas rápidas.
 //
-// Por que é rápido: o prompt de sistema é COMPACTO e ESTÁVEL por caso. O Ollama cacheia
-// o prefixo do sistema entre turnos, então cada pergunta só processa a pequena essência
-// nova → respostas de poucos segundos. E a IA nunca recebe o diagnóstico nem o bloco
-// sensível inteiro (só a essência do turno), então não há como vazar.
+// Os temas SENSÍVEIS (ideação, abuso, etc.) NÃO entram no contexto estável: eles só são
+// injetados no turno quando o matcher determinístico (demo.js#fatoSensivelDireto) confirma
+// uma pergunta direta sobre o tema. Assim a revelação gradual é garantida e não vaza.
 
 import { conversar } from "./ia.js";
 
@@ -13,57 +13,90 @@ function primeiroNome(caso) {
   return String((caso.identificacao || {}).nome || "o paciente").trim().split(/\s+/)[0];
 }
 
-// Prompt de sistema compacto e ESTÁVEL (idêntico em todos os turnos do mesmo caso).
-export function sistemaHumanizador(caso) {
+// Converte um objeto em linhas "rótulo: valor" (só as chaves com conteúdo).
+function linhasDe(obj) {
+  const out = [];
+  for (const [k, v] of Object.entries(obj || {})) {
+    if (v === null || v === undefined || v === "") continue;
+    const rotulo = k.replaceAll("_", " ");
+    if (Array.isArray(v)) {
+      if (v.length) out.push(`${rotulo}: ${v.join(", ")}`);
+    } else if (typeof v === "object") {
+      const vals = Object.values(v).filter(Boolean);
+      if (vals.length) out.push(`${rotulo}: ${vals.join("; ")}`);
+    } else {
+      out.push(`${rotulo}: ${v}`);
+    }
+  }
+  return out;
+}
+
+// Prompt de sistema compacto e ESTÁVEL por caso (cacheado entre turnos).
+export function sistemaPaciente(caso) {
   const id = caso.identificacao || {};
   const persona = caso.persona || {};
   const estilo = caso.estilo_de_fala || {};
   const emo = caso.estado_emocional || {};
   const nome = id.nome || "o paciente";
   const primeiro = primeiroNome(caso);
-  const ident = [id.idade && `${id.idade} anos`, id.sexo, id.profissao].filter(Boolean).join(", ");
-
-  const caracteristicas = Array.isArray(estilo.caracteristicas) ? estilo.caracteristicas.slice(0, 5) : [];
+  const ident = [
+    id.idade && `${id.idade} anos`,
+    id.sexo,
+    id.profissao,
+    id.estado_civil,
+    id.escolaridade,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  const carac = Array.isArray(estilo.caracteristicas) ? estilo.caracteristicas.slice(0, 5) : [];
   const exemplos = Array.isArray(estilo.exemplos_de_fala) ? estilo.exemplos_de_fala.slice(0, 3) : [];
 
+  // Dados NÃO-sensíveis que a IA pode usar para responder qualquer pergunta comum.
+  const dados = [];
+  if (caso.queixa_principal) dados.push(`Queixa principal: ${caso.queixa_principal}`);
+  dados.push(...linhasDe(caso.historia_doenca_atual).map((l) => `HDA — ${l}`));
+  dados.push(...linhasDe(caso.antecedentes_pessoais).map((l) => `Antecedente pessoal — ${l}`));
+  dados.push(...linhasDe(caso.antecedentes_familiares).map((l) => `Antecedente familiar — ${l}`));
+  dados.push(...linhasDe(caso.habitos_de_vida).map((l) => `Hábito — ${l}`));
+  dados.push(...linhasDe(caso.informacoes_iniciais).map((l) => `Sobre você — ${l}`));
+  dados.push(...linhasDe(caso.informacoes_intermediarias).map((l) => `Sua vida (revele se perguntarem do tema) — ${l}`));
+  dados.push(...linhasDe(caso.contexto_de_vida).map((l) => `Vida — ${l}`));
+  dados.push(...linhasDe(caso.rede_apoio).map((l) => `Apoio — ${l}`));
+
   return [
-    `Você INTERPRETA ${nome}${ident ? ` — ${ident}` : ""} — numa consulta clínica. Você É essa pessoa: um paciente humano, de verdade.`,
+    `Você INTERPRETA ${nome}${ident ? ` (${ident})` : ""} numa consulta clínica. Você É essa pessoa — um paciente humano, de verdade.`,
     persona.resumo ? `Quem você é: ${persona.resumo}` : "",
     estilo.registro ? `Seu jeito de falar: ${estilo.registro}.` : "",
-    caracteristicas.length ? `Marcas da sua fala: ${caracteristicas.join("; ")}.` : "",
+    carac.length ? `Marcas da sua fala: ${carac.join("; ")}.` : "",
     exemplos.length ? `Exemplos de como você fala: ${exemplos.map((s) => `"${s}"`).join("  ")}` : "",
     emo.agora ? `Como você se sente agora: ${emo.agora}` : "",
     "",
-    "COMO FUNCIONA: a cada turno eu te dou a ESSÊNCIA — a informação VERDADEIRA que você quer",
-    "dizer, às vezes escrita de forma resumida ou em termo técnico. Sua tarefa é DIZER essa",
-    `informação com as SUAS palavras, na voz de ${primeiro}: uma fala curta, natural, em primeira`,
-    "pessoa, com a sua emoção.",
+    "COMO RESPONDER: o profissional te faz perguntas; responda como esse paciente responderia —",
+    `uma fala curta e natural, em primeira pessoa, no jeito de ${primeiro}, com a sua emoção. Regras:`,
+    "- Responda SÓ o que foi perguntado; não conte tudo de uma vez; não se antecipe.",
+    "- Use SÓ os seus dados abaixo. Se perguntarem algo que não está neles, diga de forma natural que",
+    "  não sabe, não lembra ou não tem — nunca invente sintoma, exame, remédio ou dado.",
+    "- Traduza qualquer termo técnico dos seus dados para o seu jeito simples de falar.",
+    "- NUNCA diga que é uma IA/assistente, nunca ofereça ajuda ao profissional, nunca diga o nome de uma",
+    "  doença nem se diagnostique (mesmo se perguntarem 'o que o senhor tem?', responda com os sintomas).",
+    "- Quando eu marcar [entre colchetes] que você pode revelar um assunto delicado, revele com hesitação,",
+    "  aos poucos, no seu jeito — nunca de uma vez só.",
     "",
-    "REGRAS:",
-    "- A essência é a SUA informação. NUNCA pergunte o que ela significa, NUNCA a ignore, NUNCA",
-    "  responda outra coisa. Traduza qualquer termo técnico dela para o seu jeito simples de falar.",
-    "- Diga só o que está na essência. Não invente sintomas, exames, datas nem histórias a mais.",
-    "- NUNCA diga que é uma IA/assistente, NUNCA ofereça ajuda ao profissional, NUNCA diga o nome",
-    "  de uma doença nem se diagnostique.",
-    "",
-    `EXEMPLOS (essência → como ${primeiro} diria com naturalidade):`,
-    'essência: "Região central do tórax." → "É aqui, ó, bem no meio do peito."',
-    'essência: "Vai para: braço esquerdo." → "Ela corre pro meu braço esquerdo, doutor."',
-    'essência: "1 maço por dia há 35 anos." → "Fumo sim... um maço por dia, já faz uns 35 anos."',
-    'essência: "Sim, tenho sentido isso também." → "Tenho sim, doutor, sinto isso também."',
-    'essência: "(não entendi)" → "Desculpa, não entendi bem... pode repetir, doutor?"',
-    "",
-    "Responda APENAS com a fala do paciente — sem aspas, sem preâmbulo, sem narração, sem repetir",
-    'a palavra "essência".',
+    "SEUS DADOS:",
+    ...dados,
   ]
     .filter(Boolean)
     .join("\n");
 }
 
-// Reescreve a essência na voz do paciente. Sistema estável (cacheado) + essência curta.
-export async function humanizar(caso, essencia) {
+// Responde como o paciente. Se `fatoLiberado` vier (o profissional tocou num tema
+// sensível diretamente), ele é injetado para revelação cuidadosa neste turno.
+export async function responderComoPaciente(caso, pergunta, fatoLiberado) {
+  const conteudoUsuario = fatoLiberado
+    ? `O profissional perguntou: "${pergunta}"\n[Ele tocou diretamente, com acolhimento, num assunto delicado. Você PODE revelar isto agora — com hesitação, aos poucos, no seu jeito, sem despejar tudo: ${fatoLiberado}]`
+    : `O profissional perguntou: "${pergunta}"`;
   return await conversar([
-    { role: "system", content: sistemaHumanizador(caso) },
-    { role: "user", content: `Essência da sua resposta a esta pergunta do profissional: ${essencia}` },
+    { role: "system", content: sistemaPaciente(caso) },
+    { role: "user", content: conteudoUsuario },
   ]);
 }
