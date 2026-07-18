@@ -17,8 +17,16 @@ export async function conversar(mensagens) {
   const resposta = await fetch(`${urlOllama()}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ model: modelo(), messages: mensagens, stream: false }),
-    signal: AbortSignal.timeout(120000),
+    // keep_alive mantém o modelo carregado entre turnos (evita cold start a cada
+    // pergunta em CPU); num_predict limita o tamanho da fala do paciente.
+    body: JSON.stringify({
+      model: modelo(),
+      messages: mensagens,
+      stream: false,
+      keep_alive: "30m",
+      options: { num_predict: 320, temperature: 0.8 },
+    }),
+    signal: AbortSignal.timeout(180000),
   });
 
   if (!resposta.ok) {
