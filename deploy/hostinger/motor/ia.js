@@ -23,8 +23,12 @@ export async function conversar(mensagens) {
       model: modelo(),
       messages: mensagens,
       stream: false,
+      // num_ctx 8192: o prompt do personagem tem ~2000 tokens; com o padrão (2048)
+      // ele estoura o contexto, trunca o prompt e quebra o cache de prefixo entre
+      // turnos (cada pergunta reprocessa tudo). Com folga, os turnos seguintes reusam
+      // o cache e ficam bem mais rápidos.
       keep_alive: "4h",
-      options: { num_predict: 320, temperature: 0.7 },
+      options: { num_predict: 300, temperature: 0.7, num_ctx: 8192 },
     }),
     signal: AbortSignal.timeout(180000),
   });
