@@ -23,8 +23,8 @@ export async function conversar(mensagens) {
       model: modelo(),
       messages: mensagens,
       stream: false,
-      keep_alive: "30m",
-      options: { num_predict: 320, temperature: 0.8 },
+      keep_alive: "4h",
+      options: { num_predict: 320, temperature: 0.7 },
     }),
     signal: AbortSignal.timeout(180000),
   });

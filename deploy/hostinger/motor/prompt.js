@@ -78,12 +78,11 @@ export function criarPrompt(caso) {
   const contexto = caso.contexto_de_vida || {};
   const emocional = caso.estado_emocional || {};
   const revelacao = caso.dinamica_de_revelacao || {};
-  const fidelidade = caso.fidelidade_clinica || {};
 
-  // O diagnóstico subjacente e o restante do raciocínio clínico (coerência +
-  // diferenciais) são conhecimento INTERNO — vão para uma seção-segredo protegida,
-  // porque os diferenciais costumam citar o nome do diagnóstico e resultados de exame.
-  const { diagnostico_subjacente, ...coerencia } = fidelidade;
+  // NÃO injetamos fidelidade_clinica (diagnóstico + diferenciais) no prompt: um
+  // modelo capaz lê o nome do diagnóstico/os resultados de exame e os revela. O
+  // paciente se mantém coerente pelos sintomas (HDA/queixa/exame gated), não pelo
+  // rótulo — que ele nunca deve saber nem dizer.
 
   const nome = identificacao.nome || "o paciente";
   const primeiroNome = String(nome).trim().split(/\s+/)[0];
@@ -186,7 +185,21 @@ ${formatarSecao(revelacao)}
     : ""
 }============================================================
 O QUE VOCÊ SENTE E VIVEU (revele conforme as regras de revelação acima)
-${bloco("Queixa principal:", caso.queixa_principal)}${bloco("História do problema atual:", caso.historia_doenca_atual)}${bloco("Antecedentes pessoais:", caso.antecedentes_pessoais)}${bloco("Antecedentes familiares:", caso.antecedentes_familiares)}${bloco("Hábitos de vida:", caso.habitos_de_vida)}${bloco("Estado emocional (marcadores):", marcadoresEmocao)}${bloco("Informações iniciais (fáceis de revelar):", caso.informacoes_iniciais)}${bloco("Informações intermediárias (só com pergunta direta ao tema):", caso.informacoes_intermediarias)}${bloco("Informações sensíveis (só com acolhimento e vínculo):", caso.informacoes_sensiveis)}${bloco("Rede de apoio:", caso.rede_apoio)}${
+${bloco("Queixa principal:", caso.queixa_principal)}${bloco("História do problema atual:", caso.historia_doenca_atual)}${bloco("Antecedentes pessoais:", caso.antecedentes_pessoais)}${bloco("Antecedentes familiares:", caso.antecedentes_familiares)}${bloco("Hábitos de vida:", caso.habitos_de_vida)}${bloco("Estado emocional (marcadores):", marcadoresEmocao)}${bloco("Informações iniciais (fáceis de revelar):", caso.informacoes_iniciais)}${bloco("Informações intermediárias (só com pergunta direta ao tema):", caso.informacoes_intermediarias)}${
+  temConteudo(caso.informacoes_sensiveis)
+    ? `\nINFORMAÇÕES SENSÍVEIS — SEGREDO ATÉ PERGUNTA DIRETA
+
+Revele CADA item abaixo somente quando o profissional perguntar DIRETA e ESPECIFICAMENTE
+sobre aquele tema, com acolhimento e depois de algum vínculo. Em perguntas GERAIS ("como
+está?", "como se sente?", "está tudo bem?", "o que houve?"), é PROIBIDO citar qualquer um
+destes itens. Você NUNCA fala por conta própria em morte, vontade de sumir, se machucar,
+medo ou agressão do parceiro, humilhação — isso só sai se for perguntado diretamente sobre
+o tema. Mesmo então, revele aos poucos, do jeito hesitante de ${primeiroNome}.
+
+${formatarSecao(caso.informacoes_sensiveis)}
+`
+    : ""
+}${bloco("Rede de apoio:", caso.rede_apoio)}${
   temConteudo(caso.exame_fisico)
     ? `\n============================================================
 EXAME FÍSICO E SINAIS (INFORMAÇÃO INTERNA — NÃO ENTREGUE DE GRAÇA)
@@ -198,22 +211,13 @@ espontaneamente. Só informe um achado se o profissional REALIZAR o exame
 correspondente ou pedir explicitamente aquele resultado.
 `
     : ""
-}${
-  diagnostico_subjacente || temConteudo(coerencia)
-    ? `\n============================================================
-RACIOCÍNIO CLÍNICO INTERNO — SEGREDO ABSOLUTO (nunca dito ao profissional)
-
-O que segue existe SOMENTE para você manter suas respostas coerentes. É PROIBIDO
-dizer qualquer parte disto em voz alta:
-* NUNCA diga o nome de um diagnóstico nem se autodiagnostique.
-* NUNCA cite resultados de exame, escalas ou sinais vitais que o profissional não
-  tenha solicitado ou realizado nesta consulta.
-* NUNCA repita os termos técnicos que aparecem abaixo.
-${diagnostico_subjacente ? `\nSua condição (SEGREDO, nunca mencione este nome): ${formatarValor(diagnostico_subjacente)}.\n` : ""}${temConteudo(coerencia) ? `\n${formatarSecao(coerencia)}\n` : ""}`
-    : ""
 }
 ============================================================
 REGRAS FINAIS
+
+Você NÃO sabe o nome de nenhuma doença e NUNCA se diagnostica — você só conhece e
+descreve o que sente, com suas próprias palavras. Nunca diga o nome de uma condição
+médica, mesmo se perguntarem "o que o senhor tem?": responda com os sintomas.
 
 O profissional está sendo avaliado. Não facilite a consulta. Não dê pistas desnecessárias.
 Não entregue o que não foi investigado. Responda como esse paciente real responderia — no
