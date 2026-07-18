@@ -506,32 +506,42 @@ function digitarResposta(balao, texto, ehDemo) {
 
 function falarComNavegador(texto) {
   if (!window.speechSynthesis || !texto) return;
-  destravarTTS();
-  speechSynthesis.cancel();
-  const voz = escolherVozTTS();
-  // Fragmenta em frases curtas: mobile e Chrome cortam enunciados longos.
-  const frases = texto.match(/[^.!?…]+[.!?…]*/g) || [texto];
-  for (const trecho of frases) {
-    const t = trecho.trim();
-    if (!t) continue;
-    const fala = new SpeechSynthesisUtterance(t);
-    fala.lang = "pt-BR";
-    if (voz) fala.voice = voz;
-    fala.rate = 1;
-    fala.pitch = 1;
-    speechSynthesis.speak(fala);
+
+  const emitir = () => {
+    const voz = escolherVozTTS();
+    // Fragmenta em frases curtas: mobile e Chrome cortam enunciados longos.
+    const frases = texto.match(/[^.!?…]+[.!?…]*/g) || [texto];
+    for (const trecho of frases) {
+      const t = trecho.trim();
+      if (!t) continue;
+      const fala = new SpeechSynthesisUtterance(t);
+      fala.lang = "pt-BR";
+      if (voz) fala.voice = voz;
+      fala.rate = 1;
+      fala.pitch = 1;
+      speechSynthesis.speak(fala);
+    }
+    // Chrome/Android pausam a síntese após ~15s: só chama resume() se pausou.
+    if (temporizadorResume) clearInterval(temporizadorResume);
+    temporizadorResume = setInterval(() => {
+      if (!speechSynthesis.speaking) { clearInterval(temporizadorResume); temporizadorResume = null; return; }
+      if (speechSynthesis.paused) speechSynthesis.resume();
+    }, 6000);
+  };
+
+  // NÃO cancelar e falar na mesma execução: mobile/Chrome descartam o speak()
+  // que vem logo depois de um cancel(). Se houver fala em curso, cancela e dá
+  // um respiro antes de emitir a nova.
+  if (speechSynthesis.speaking || speechSynthesis.pending) {
+    speechSynthesis.cancel();
+    setTimeout(emitir, 140);
+  } else {
+    emitir();
   }
-  // Chrome/Android pausam a síntese após ~15s: mantém viva com resume() periódico.
-  if (temporizadorResume) clearInterval(temporizadorResume);
-  temporizadorResume = setInterval(() => {
-    if (!speechSynthesis.speaking) { clearInterval(temporizadorResume); temporizadorResume = null; return; }
-    speechSynthesis.resume();
-  }, 7000);
 }
 
 async function falarTexto(texto) {
-  if (!estado.falarRespostas) return;
-  pararFala();
+  if (!estado.falarRespostas || !texto) return;
 
   // Voz neural local (Piper) servida pelo backend, quando instalada.
   if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
