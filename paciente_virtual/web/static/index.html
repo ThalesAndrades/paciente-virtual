@@ -566,8 +566,10 @@ function iniciarAleatorio(categoria) {
 }
 
 /* ---------- Áudio: elemento <audio> destravado (mobile) + Web Speech fallback ---------- */
-let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null, geracaoFala = 0, vozBlobUrl = null;
-function revogarVozBlob() { if (vozBlobUrl) { try { URL.revokeObjectURL(vozBlobUrl); } catch {} vozBlobUrl = null; } }
+let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null, geracaoFala = 0;
+// Fila de fala por FRASE: cada frase é sintetizada assim que fecha (pipeline) e
+// tocada em ordem, para a voz começar junto com o texto em vez de só no fim.
+let filaFala = [], tocandoFila = false, urlClipeAtual = null;
 function silencioWav() {
   const sr = 8000, n = 800, buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf);
   const w = (o, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
@@ -592,33 +594,70 @@ function escolherVozTTS() {
   return pts.find((v) => fem ? /maria|francisca|luciana|helena|vit[óo]ria|female|feminin/i.test(v.name) : /ant[óo]nio|antonio|daniel|felipe|jo[ãa]o|ricardo|male|masculin/i.test(v.name)) || pts[0];
 }
 function pararFala() {
-  geracaoFala++; // invalida áudios ainda em busca (evita fala obsoleta sobrepor a atual)
-  if (audioPlayer) { try { audioPlayer.pause(); } catch {} }
+  geracaoFala++; // invalida a fila e sínteses em voo (evita fala obsoleta sobrepor a atual)
+  filaFala = []; tocandoFila = false;
+  if (audioPlayer) { try { audioPlayer.pause(); audioPlayer.onended = null; audioPlayer.onerror = null; } catch {} }
+  if (urlClipeAtual) { try { URL.revokeObjectURL(urlClipeAtual); } catch {} urlClipeAtual = null; }
   if (temporizadorResume) { clearInterval(temporizadorResume); temporizadorResume = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
-  revogarVozBlob();
 }
-async function falarTexto(texto) {
+// Divide texto em frases (para o fallback JSON, que recebe a fala inteira).
+function dividirFrases(texto) { return (texto.match(/[^.!?…]+[.!?…]*/g) || [texto]).map((s) => s.trim()).filter(Boolean); }
+// Extrai frases COMPLETAS de um buffer que ainda cresce; devolve o resto (frase em curso).
+function extrairFrases(buf) {
+  const re = /[^.!?…]*[.!?…]+["'”’)\]]*\s*/g; const frases = []; let m, last = 0;
+  while ((m = re.exec(buf))) { const f = m[0].trim(); if (f) frases.push(f); last = re.lastIndex; }
+  return { frases, resto: buf.slice(last) };
+}
+// Fala a mensagem INTEIRA (fallback/JSON): quebra em frases e enfileira cada uma.
+function falarTexto(texto) {
   if (!estado.falarRespostas || !texto) return;
-  const g = ++geracaoFala;
-  // Voz do servidor (Kokoro/ElevenLabs) tocada por elemento <audio> destravado — confiável no celular.
+  const g = geracaoFala;
+  for (const f of dividirFrases(texto)) falarFrase(f, g);
+}
+// Fala UMA frase. Servidor: sintetiza já (pipeline) e enfileira p/ tocar em ordem.
+// Navegador (fallback): o speechSynthesis já enfileira sozinho, mantendo a ordem.
+function falarFrase(texto, g) {
+  if (!estado.falarRespostas || !texto || g !== geracaoFala) return;
   if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
-    try {
-      const r = await fetch("/api/falar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto, voz: estado.voz }) });
-      if (r.ok) {
-        const blob = await r.blob();
-        if (g !== geracaoFala) return; // já veio uma pergunta mais nova — descarta este áudio
-        const p = audioPlayer || ($("player-voz")); audioPlayer = p;
-        try { p.pause(); } catch {}
-        revogarVozBlob(); // libera o blob da fala anterior antes de criar o novo
-        vozBlobUrl = URL.createObjectURL(blob);
-        p.src = vozBlobUrl;
-        const pr = p.play(); if (pr && pr.catch) pr.catch(() => { if (g === geracaoFala) falarComNavegador(texto); });
-        return;
-      }
-    } catch { /* cai para o navegador */ }
+    const urlPromise = fetch("/api/falar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto, voz: estado.voz }) })
+      .then((r) => (r.ok ? r.blob() : null))
+      .then((b) => (b ? URL.createObjectURL(b) : null))
+      .catch(() => null);
+    filaFala.push({ g, urlPromise, texto });
+    drenarFila();
+  } else {
+    falarComNavegador(texto);
   }
-  if (g === geracaoFala) falarComNavegador(texto);
+}
+async function drenarFila() {
+  if (tocandoFila) return;
+  tocandoFila = true;
+  while (filaFala.length) {
+    const item = filaFala.shift();
+    if (item.g !== geracaoFala) continue;
+    let url = null; try { url = await item.urlPromise; } catch {}
+    if (!url) continue;
+    if (item.g !== geracaoFala) { try { URL.revokeObjectURL(url); } catch {} continue; }
+    await tocarClipe(url, item);
+  }
+  tocandoFila = false;
+}
+function tocarClipe(url, item) {
+  return new Promise((resolve) => {
+    const p = audioPlayer || ($("player-voz")); audioPlayer = p; urlClipeAtual = url;
+    const limpar = (falhou) => {
+      p.onended = null; p.onerror = null;
+      if (urlClipeAtual === url) urlClipeAtual = null;
+      try { URL.revokeObjectURL(url); } catch {}
+      if (falhou && item && item.g === geracaoFala) falarComNavegador(item.texto);
+      resolve();
+    };
+    p.onended = () => limpar(false); p.onerror = () => limpar(true);
+    try { p.pause(); } catch {}
+    p.src = url;
+    const pr = p.play(); if (pr && pr.catch) pr.catch(() => limpar(true));
+  });
 }
 function falarComNavegador(texto) {
   if (!window.speechSynthesis || !texto) return;
@@ -782,7 +821,7 @@ async function enviarMensagem() {
     if (!r.ok) { tirarDig(); let d = {}; try { d = await r.json(); } catch {} adicionarBalao("aviso", d.erro || "Erro ao enviar a mensagem."); return; }
     const reader = r.body.getReader();
     const dec = new TextDecoder();
-    let buffer = "", balao = null, textoPac = "", origem = "ia";
+    let buffer = "", balao = null, textoPac = "", origem = "ia", bufFala = "", gFala = geracaoFala;
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -807,15 +846,17 @@ async function enviarMensagem() {
           tirarDig();
           if (!balao) { balao = adicionarBalao("paciente", ""); balao.classList.add("digitando-vivo"); }
           textoPac += ev.t; balao.textContent = textoPac; balao.scrollIntoView({ behavior: "smooth", block: "end" });
+          // Áudio por frase: fala cada frase assim que ela fecha (voz junto do texto).
+          if (estado.falarRespostas) { bufFala += ev.t; const fr = extrairFrases(bufFala); bufFala = fr.resto; for (const f of fr.frases) falarFrase(f, gFala); }
         }
         else if (ev.tipo === "fim") { origem = ev.origem || "ia"; }
       }
     }
     tirarDig();
+    if (estado.falarRespostas && bufFala.trim()) falarFrase(bufFala.trim(), gFala); // última frase (sem pontuação final)
     if (balao) {
       balao.classList.remove("digitando-vivo");
       if (origem === "demo") { const rr = document.createElement("span"); rr.className = "rotulo-demo"; rr.textContent = "modo demonstração"; balao.appendChild(rr); }
-      if (textoPac) falarTexto(textoPac); // áudio da fala completa (após o texto fluir)
     }
   } catch { tirarDig(); adicionarBalao("aviso", "Falha de conexão com o servidor."); }
   finally { estado.ocupado = false; campo.focus(); }
