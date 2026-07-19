@@ -315,8 +315,11 @@
     ],
     "presenca": [
       "ouve a voz dele",
+      "ouvir a voz",
       "escuta a voz",
+      "escutar a voz",
       "sente a presenca",
+      "sentir a presenca",
       "impressao de ouvir",
       "impressao de ver",
       "acha que ele esta",
