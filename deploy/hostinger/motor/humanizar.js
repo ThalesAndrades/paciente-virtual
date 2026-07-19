@@ -7,7 +7,7 @@
 // injetados no turno quando o matcher determinístico (demo.js#fatoSensivelDireto) confirma
 // uma pergunta direta sobre o tema. Assim a revelação gradual é garantida e não vaza.
 
-import { conversar } from "./ia.js";
+import { conversar, conversarStream } from "./ia.js";
 
 function primeiroNome(caso) {
   return String((caso.identificacao || {}).nome || "o paciente").trim().split(/\s+/)[0];
@@ -73,6 +73,8 @@ export function sistemaPaciente(caso) {
     "",
     "COMO RESPONDER: o profissional te faz perguntas; responda como esse paciente responderia —",
     `uma fala curta e natural, em primeira pessoa, no jeito de ${primeiro}, com a sua emoção. Regras:`,
+    "- SEJA BREVE: no MÁXIMO 1 ou 2 frases curtas por resposta. Paciente responde direto ao que",
+    "  foi perguntado; só se estende se o profissional pedir ('me conta mais', 'como assim?').",
     "- Responda SÓ o que foi perguntado; não conte tudo de uma vez; não se antecipe.",
     "- Use SÓ os seus dados abaixo. Se perguntarem algo que não está neles, diga de forma natural que",
     "  não sabe, não lembra ou não tem — nunca invente sintoma, exame, remédio ou dado.",
@@ -89,14 +91,25 @@ export function sistemaPaciente(caso) {
     .join("\n");
 }
 
-// Responde como o paciente. Se `fatoLiberado` vier (o profissional tocou num tema
-// sensível diretamente), ele é injetado para revelação cuidadosa neste turno.
-export async function responderComoPaciente(caso, pergunta, fatoLiberado) {
+// Monta as mensagens (system estável + turno do usuário). Compartilhado pelos
+// caminhos com e sem streaming. Se `fatoLiberado` vier (o profissional tocou num
+// tema sensível diretamente), ele é injetado para revelação cuidadosa neste turno.
+function montarMensagens(caso, pergunta, fatoLiberado) {
   const conteudoUsuario = fatoLiberado
     ? `O profissional perguntou: "${pergunta}"\n[Ele tocou diretamente, com acolhimento, num assunto delicado. Você PODE revelar isto agora — com hesitação, aos poucos, no seu jeito, sem despejar tudo: ${fatoLiberado}]`
     : `O profissional perguntou: "${pergunta}"`;
-  return await conversar([
+  return [
     { role: "system", content: sistemaPaciente(caso) },
     { role: "user", content: conteudoUsuario },
-  ]);
+  ];
+}
+
+// Responde como o paciente (não-streaming — usado como fallback e nos testes).
+export async function responderComoPaciente(caso, pergunta, fatoLiberado) {
+  return await conversar(montarMensagens(caso, pergunta, fatoLiberado));
+}
+
+// Versão em STREAMING: onDelta(t) recebe cada pedaço da fala; resolve com o texto completo.
+export async function responderComoPacienteStream(caso, pergunta, fatoLiberado, onDelta) {
+  return await conversarStream(montarMensagens(caso, pergunta, fatoLiberado), onDelta);
 }

@@ -55,3 +55,54 @@ export async function conversar(mensagens) {
   if (!saida) throw new Error("Ollama devolveu resposta vazia");
   return saida;
 }
+
+// Igual a conversar, mas em STREAMING: chama onDelta(t) a cada pedaço de texto
+// (a fala do paciente aparece na tela conforme é gerada) e resolve com o texto
+// completo já limpo. num_predict menor: fala do paciente é curta → gera rápido.
+export async function conversarStream(mensagens, onDelta) {
+  const resposta = await fetch(`${urlOllama()}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: modelo(),
+      messages: mensagens,
+      stream: true,
+      think: false,
+      keep_alive: "4h",
+      options: { num_predict: 160, temperature: 0.7, num_ctx: 8192 },
+    }),
+    signal: AbortSignal.timeout(180000),
+  });
+  if (!resposta.ok || !resposta.body) throw new Error(`Ollama respondeu HTTP ${resposta.status}`);
+
+  // /api/chat com stream:true devolve NDJSON (uma linha JSON por chunk).
+  const reader = resposta.body.getReader();
+  const dec = new TextDecoder();
+  let buffer = "";
+  let bruto = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += dec.decode(value, { stream: true });
+    let nl;
+    while ((nl = buffer.indexOf("\n")) >= 0) {
+      const linha = buffer.slice(0, nl).trim();
+      buffer = buffer.slice(nl + 1);
+      if (!linha) continue;
+      let obj;
+      try {
+        obj = JSON.parse(linha);
+      } catch {
+        continue;
+      }
+      const t = obj.message && obj.message.content;
+      if (t) {
+        bruto += t;
+        onDelta(t);
+      }
+    }
+  }
+  const saida = limparRaciocinio(bruto);
+  if (!saida) throw new Error("Ollama devolveu resposta vazia");
+  return saida;
+}

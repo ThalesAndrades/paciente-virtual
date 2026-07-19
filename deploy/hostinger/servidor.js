@@ -19,7 +19,7 @@ import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } fro
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
-import { responderComoPaciente } from "./motor/humanizar.js";
+import { responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
 import { ttsInfo, sintetizar } from "./motor/tts.js";
 import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
@@ -324,49 +324,89 @@ async function enviarMensagem(req, res, id) {
 
   consulta.transcript += `\nPROFISSIONAL: ${texto}\n`;
 
-  const eventos = [];
+  const streaming = new URL(req.url, "http://localhost").searchParams.get("stream") === "1";
   const exames = detectarExames(texto, consulta.caso);
 
+  // ---------- Caminho STREAMING (fala do paciente aparece conforme é gerada) ----------
+  if (streaming) {
+    res.writeHead(200, {
+      "Content-Type": "application/x-ndjson; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
+      "X-Accel-Buffering": "no", // não bufferizar atrás de proxy
+    });
+    const emitir = (obj) => {
+      try {
+        res.write(JSON.stringify(obj) + "\n");
+      } catch {}
+    };
+
+    if (exames.length) {
+      for (const [titulo, dadosExame] of exames) {
+        consulta.transcript += `\n${titulo}: ${dadosExame.nome}\nRESULTADO: ${dadosExame.resultado}\n`;
+        emitir({ tipo: "exame", titulo, nome: dadosExame.nome, resultado: dadosExame.resultado });
+      }
+      emitir({ tipo: "fim", origem: "exame" });
+      return res.end();
+    }
+
+    const fatoLiberado = fatoSensivelDireto(consulta.caso, texto);
+    let acc = "";
+    let resposta = "";
+    let origem = "ia";
+    try {
+      resposta = await responderComoPacienteStream(consulta.caso, texto, fatoLiberado, (t) => {
+        acc += t;
+        emitir({ tipo: "delta", t });
+      });
+    } catch {
+      if (acc) {
+        // IA falhou no meio: mantém o que já apareceu (não dá pra reconstruir o total).
+        resposta = acc;
+      } else {
+        resposta = responderDemo(consulta.caso, texto);
+        origem = "demo";
+        emitir({ tipo: "aviso", texto: AVISO_DEMO });
+        emitir({ tipo: "delta", t: resposta });
+      }
+    }
+
+    if (consulta.encerrada || !consultas.has(id)) {
+      emitir({ tipo: "fim", origem, encerrada: true });
+      return res.end();
+    }
+    consulta.transcript += `\nPACIENTE: ${resposta}\n`;
+    emitir({ tipo: "fim", origem });
+    return res.end();
+  }
+
+  // ---------- Caminho JSON (fallback + testes) ----------
+  const eventos = [];
   if (exames.length) {
     for (const [titulo, dadosExame] of exames) {
       consulta.transcript += `\n${titulo}: ${dadosExame.nome}\nRESULTADO: ${dadosExame.resultado}\n`;
-      eventos.push({
-        tipo: "exame",
-        titulo,
-        nome: dadosExame.nome,
-        resultado: dadosExame.resultado,
-      });
+      eventos.push({ tipo: "exame", titulo, nome: dadosExame.nome, resultado: dadosExame.resultado });
     }
     return json(res, 200, { eventos });
   }
 
-  // Portão determinístico do sensível: só entrega o tema delicado à IA se o
-  // profissional perguntou diretamente sobre ele (revelação gradual garantida).
   const fatoLiberado = fatoSensivelDireto(consulta.caso, texto);
-
   let resposta;
   let origem;
   try {
-    // A IA responde como o paciente a partir do contexto NÃO-sensível + o fato
-    // liberado (quando houver). Cobre qualquer fraseado de pergunta comum.
     resposta = await responderComoPaciente(consulta.caso, texto, fatoLiberado);
     origem = "ia";
   } catch {
-    // Sem IA acessível, cai no matcher de demonstração (fixo, mas correto).
     resposta = responderDemo(consulta.caso, texto);
     origem = "demo";
     eventos.push({ tipo: "aviso", texto: AVISO_DEMO });
   }
 
-  // A consulta pode ter sido encerrada concorrentemente durante o await da IA
-  // (o usuário clicou "encerrar" enquanto a resposta era gerada). Se foi, o
-  // transcript já está salvo e a entrada removida — não anexa num objeto órfão.
+  // A consulta pode ter sido encerrada concorrentemente durante o await da IA.
   if (consulta.encerrada || !consultas.has(id)) {
     return json(res, 409, { erro: "Consulta já encerrada." });
   }
 
   consulta.transcript += `\nPACIENTE: ${resposta}\n`;
-
   eventos.push({ tipo: "paciente", texto: resposta, origem });
   json(res, 200, { eventos });
 }

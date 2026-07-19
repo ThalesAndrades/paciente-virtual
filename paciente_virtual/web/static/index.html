@@ -771,19 +771,53 @@ async function enviarMensagem() {
   pararFala(); pararDigitacao();
   campo.value = ""; adicionarBalao("aluno", texto);
   const dig = adicionarBalao("digitando", "");
-  dig.innerHTML = `<span class="quem">${estado.pacienteNome || "O paciente"} está digitando</span><span class="pontos-digita"><i></i><i></i><i></i></span>`;
+  dig.innerHTML = `<span class="quem">${estado.pacienteNome || "O paciente"} está pensando</span><span class="pontos-digita"><i></i><i></i><i></i></span>`;
   dig.scrollIntoView({ behavior: "smooth", block: "end" });
   estado.ocupado = true;
+  let digVivo = true;
+  const tirarDig = () => { if (digVivo) { dig.remove(); digVivo = false; } };
   try {
-    const r = await fetch(`/api/consultas/${estado.consultaId}/mensagem`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto }) });
-    const d = await r.json(); dig.remove();
-    if (!r.ok) { adicionarBalao("aviso", d.erro || "Erro ao enviar a mensagem."); return; }
-    for (const e of d.eventos) {
-      if (e.tipo === "exame") adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome });
-      else if (e.tipo === "paciente") responderPaciente(e.texto, e.origem === "demo");
-      else if (e.tipo === "aviso" && !estado.avisoDemoExibido) { adicionarBalao("aviso", e.texto); estado.avisoDemoExibido = true; }
+    // Streaming: a fala do paciente chega em pedaços (ndjson) e aparece na hora.
+    const r = await fetch(`/api/consultas/${estado.consultaId}/mensagem?stream=1`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto }) });
+    if (!r.ok) { tirarDig(); let d = {}; try { d = await r.json(); } catch {} adicionarBalao("aviso", d.erro || "Erro ao enviar a mensagem."); return; }
+    const reader = r.body.getReader();
+    const dec = new TextDecoder();
+    let buffer = "", balao = null, textoPac = "", origem = "ia";
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += dec.decode(value, { stream: true });
+      let nl;
+      while ((nl = buffer.indexOf("\n")) >= 0) {
+        const linha = buffer.slice(0, nl).trim(); buffer = buffer.slice(nl + 1);
+        if (!linha) continue;
+        let ev; try { ev = JSON.parse(linha); } catch { continue; }
+        if (ev.eventos) { // servidor sem streaming (transição de deploy) — renderiza o JSON
+          tirarDig();
+          for (const e of ev.eventos) {
+            if (e.tipo === "exame") adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome });
+            else if (e.tipo === "paciente") responderPaciente(e.texto, e.origem === "demo");
+            else if (e.tipo === "aviso" && !estado.avisoDemoExibido) { adicionarBalao("aviso", e.texto); estado.avisoDemoExibido = true; }
+          }
+          return;
+        }
+        if (ev.tipo === "exame") { tirarDig(); adicionarBalao("exame", ev.resultado, { titulo: ev.titulo, nome: ev.nome }); }
+        else if (ev.tipo === "aviso") { if (!estado.avisoDemoExibido) { tirarDig(); adicionarBalao("aviso", ev.texto); estado.avisoDemoExibido = true; } }
+        else if (ev.tipo === "delta") {
+          tirarDig();
+          if (!balao) { balao = adicionarBalao("paciente", ""); balao.classList.add("digitando-vivo"); }
+          textoPac += ev.t; balao.textContent = textoPac; balao.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+        else if (ev.tipo === "fim") { origem = ev.origem || "ia"; }
+      }
     }
-  } catch { dig.remove(); adicionarBalao("aviso", "Falha de conexão com o servidor."); }
+    tirarDig();
+    if (balao) {
+      balao.classList.remove("digitando-vivo");
+      if (origem === "demo") { const rr = document.createElement("span"); rr.className = "rotulo-demo"; rr.textContent = "modo demonstração"; balao.appendChild(rr); }
+      if (textoPac) falarTexto(textoPac); // áudio da fala completa (após o texto fluir)
+    }
+  } catch { tirarDig(); adicionarBalao("aviso", "Falha de conexão com o servidor."); }
   finally { estado.ocupado = false; campo.focus(); }
 }
 
