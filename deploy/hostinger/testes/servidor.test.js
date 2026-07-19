@@ -82,8 +82,9 @@ test("fluxo completo de consulta em modo demonstração", async () => {
     assert.ok(fim.dados.checklist.nota_total > 0);
     assert.equal(fim.dados.parecer, null);
 
+    // Após encerrar, a consulta é removida da memória (transcrição já em disco).
     const depois = await api(base, `/api/consultas/${id}/mensagem`, { texto: "oi" });
-    assert.equal(depois.status, 409);
+    assert.equal(depois.status, 404);
 
     // Painel do professor: a consulta recém-gravada aparece e é detalhável.
     const arquivo = fim.dados.transcript;

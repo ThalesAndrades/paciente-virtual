@@ -245,6 +245,16 @@ async function iniciarConsulta(req, res) {
   const ident = caso.identificacao || {};
   const id = crypto.randomUUID().slice(0, 8);
 
+  // Poda de segurança: evita o Map crescer sem limite com consultas abandonadas
+  // (nunca encerradas). O Map preserva a ordem de inserção — removemos as mais antigas.
+  if (consultas.size >= 800) {
+    let remover = consultas.size - 600;
+    for (const k of consultas.keys()) {
+      if (remover-- <= 0) break;
+      consultas.delete(k);
+    }
+  }
+
   consultas.set(id, {
     caso,
     casoId,
@@ -349,6 +359,7 @@ async function encerrarConsulta(res, id) {
   const rubrica = carregarRubrica(consulta.casoId);
   if (!rubrica) {
     resultado.aviso = AVISO_SEM_RUBRICA;
+    consultas.delete(id); // transcrição já salva em disco — libera a memória
     return json(res, 200, resultado);
   }
 
@@ -363,6 +374,7 @@ async function encerrarConsulta(res, id) {
     resultado.aviso = AVISO_SEM_PARECER;
   }
 
+  consultas.delete(id); // consulta encerrada e gravada — remove do Map
   json(res, 200, resultado);
 }
 

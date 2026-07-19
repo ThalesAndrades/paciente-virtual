@@ -268,6 +268,25 @@
   .nota-linha { color: var(--primaria); font-weight: 700; }
   #tela-detalhe h2, #tela-consulta h2 { font-size: 1.05rem; margin: 22px 0 12px; }
 
+  /* Botão de caso aleatório */
+  .aleatorio-linha { display: flex; justify-content: flex-end; margin: -6px 0 14px; }
+  .btn-aleatorio { display: inline-flex; align-items: center; gap: 8px; border: 1px dashed var(--borda-forte); background: var(--superficie); color: var(--texto); border-radius: 999px; padding: 9px 16px; cursor: pointer; font: inherit; font-size: .9rem; font-weight: 600; transition: border-color .15s, color .15s, transform .1s; }
+  .btn-aleatorio:hover { border-color: var(--primaria); color: var(--primaria); border-style: solid; }
+  .btn-aleatorio:active { transform: translateY(1px); }
+  .aleatorio-home { margin-top: 16px; }
+
+  /* Modal (código de acesso) */
+  .modal { position: fixed; inset: 0; z-index: 150; display: grid; place-items: center; padding: 20px; background: color-mix(in srgb, #05121b 62%, transparent); backdrop-filter: blur(4px); animation: entra .2s ease; }
+  .modal-box { background: var(--superficie); border: 1px solid var(--borda); border-radius: 20px; box-shadow: var(--sombra-forte); padding: 28px 26px; max-width: 380px; width: 100%; text-align: center; animation: subiModal .25s cubic-bezier(.22,1,.36,1); }
+  @keyframes subiModal { from { transform: translateY(14px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal-selo { width: 60px; height: 60px; border-radius: 18px; margin: 0 auto 14px; display: grid; place-items: center; font-size: 1.7rem; background: var(--primaria-suave); color: var(--primaria); }
+  .modal-box h2 { margin: 0 0 4px; font-size: 1.25rem; }
+  .modal-box input { width: 100%; text-align: center; letter-spacing: .5em; font-size: 1.4rem; padding: 14px; border: 1px solid var(--borda-forte); border-radius: var(--raio-sm); background: var(--superficie-2); color: var(--texto); }
+  .modal-box input:focus { outline: none; border-color: var(--primaria); box-shadow: 0 0 0 4px var(--primaria-suave); }
+  .modal-erro { color: var(--falha); font-size: .88rem; font-weight: 600; margin-top: 10px; }
+  .modal-acoes { display: flex; gap: 10px; margin-top: 18px; }
+  .modal-acoes .botao { flex: 1; margin-top: 0; justify-content: center; }
+
   /* Splash */
   #splash {
     position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
@@ -338,6 +357,20 @@
   </div>
 </div>
 
+<div id="modal-codigo" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modal-codigo-tit">
+  <div class="modal-box">
+    <div class="modal-selo">🔒</div>
+    <h2 id="modal-codigo-tit">Código de acesso</h2>
+    <p class="subtitulo" style="margin-bottom:16px">Digite o código para iniciar a simulação.</p>
+    <input id="campo-codigo" type="password" inputmode="numeric" placeholder="••••" maxlength="12" autocomplete="off" aria-label="Código de acesso">
+    <div class="modal-erro oculto" id="codigo-erro">Código incorreto. Tente novamente.</div>
+    <div class="modal-acoes">
+      <button class="botao secundario" id="codigo-cancelar" type="button">Cancelar</button>
+      <button class="botao" id="codigo-ok" type="button">Liberar</button>
+    </div>
+  </div>
+</div>
+
 <section id="tela-inicio" class="tela ativa">
   <div class="marca">
     <div class="selo">🩺</div>
@@ -375,6 +408,7 @@
     </button>
   </div>
 
+  <div class="aleatorio-linha aleatorio-home"><button class="btn-aleatorio" id="aleatorio-geral" type="button">🎲 Caso clínico aleatório</button></div>
   <button id="botao-painel" class="botao secundario">📊 Painel do professor</button>
 </section>
 
@@ -385,6 +419,7 @@
     <span class="chip-cat" id="cat-chip"></span>
   </div>
   <p class="subtitulo" id="cat-sub"></p>
+  <div class="aleatorio-linha"><button class="btn-aleatorio" id="aleatorio-cat" type="button">🎲 Sortear caso desta área</button></div>
   <div id="lista-casos" class="cartoes"><p class="subtitulo">Carregando casos…</p></div>
 </section>
 
@@ -486,6 +521,33 @@ const $ = (id) => document.getElementById(id);
 function mostrarTela(id) { document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa")); $(id).classList.add("ativa"); window.scrollTo(0, 0); }
 const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)" } };
 
+/* ---------- Código de acesso + modo aleatório ---------- */
+const CODIGO_ACESSO = "1010";
+function liberado() { try { return localStorage.getItem("pv_liberado") === "1"; } catch { return false; } }
+let acaoLiberacao = null;
+function exigirCodigo(fn) {
+  if (liberado()) { fn(); return; }
+  acaoLiberacao = fn;
+  $("campo-codigo").value = ""; $("codigo-erro").classList.add("oculto");
+  $("modal-codigo").classList.remove("oculto");
+  setTimeout(() => { try { $("campo-codigo").focus(); } catch {} }, 60);
+}
+function confirmarCodigo() {
+  if ($("campo-codigo").value.trim() === CODIGO_ACESSO) {
+    try { localStorage.setItem("pv_liberado", "1"); } catch {}
+    $("modal-codigo").classList.add("oculto");
+    const fn = acaoLiberacao; acaoLiberacao = null; if (fn) fn();
+  } else { $("codigo-erro").classList.remove("oculto"); try { $("campo-codigo").select(); } catch {} }
+}
+function fecharCodigo() { $("modal-codigo").classList.add("oculto"); acaoLiberacao = null; }
+// Modo aleatório: sorteia um caso (da categoria ou de todos) sem revelar qual.
+function iniciarAleatorio(categoria) {
+  const pool = categoria ? estado.casos.filter((c) => c.categoria === categoria) : estado.casos;
+  if (!pool.length) return;
+  const c = pool[Math.floor(Math.random() * pool.length)];
+  exigirCodigo(() => iniciarConsulta(c.id, true));
+}
+
 /* ---------- Áudio: elemento <audio> destravado (mobile) + Web Speech fallback ---------- */
 let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null;
 function silencioWav() {
@@ -574,14 +636,17 @@ function abrirCategoria(cat) {
     const b = document.createElement("button");
     b.className = "cartao " + CAT[cat].chip;
     b.innerHTML = `<div class="av">${(caso.paciente.nome || "?").charAt(0)}</div><div><h3>${caso.titulo}</h3><p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao || ""}</p><p class="q">${caso.queixa}</p></div>`;
-    b.addEventListener("click", () => iniciarConsulta(caso.id));
+    b.addEventListener("click", () => exigirCodigo(() => iniciarConsulta(caso.id, false)));
     lista.appendChild(b);
   }
   mostrarTela("tela-categoria");
 }
 
-async function iniciarConsulta(casoId) {
+async function iniciarConsulta(casoId, aleatorio) {
   destravarAudio();
+  estado.aleatorio = !!aleatorio;
+  const info = estado.casos.find((c) => c.id === casoId);
+  estado.casoTitulo = info ? info.titulo : "";
   const aluno = $("campo-aluno").value.trim() || "aluno";
   let dados;
   try {
@@ -834,7 +899,7 @@ async function encerrarConsulta() {
 function mostrarAvaliacao(d) {
   estado.consultaId = null; pararFala(); pararDigitacao();
   mostrarTela("tela-avaliacao");
-  $("resumo-avaliacao").textContent = `Transcrição salva em historico/${d.transcript}`;
+  $("resumo-avaliacao").textContent = (estado.casoTitulo ? "Caso: " + estado.casoTitulo + " · " : "") + `transcrição salva em historico/${d.transcript}`;
   const av = $("aviso-avaliacao"); av.classList.toggle("oculto", !d.aviso); if (d.aviso) av.textContent = d.aviso;
   const badge = $("veredito-badge");
   const tem = Boolean(d.checklist);
@@ -864,6 +929,12 @@ $("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abr
 $("botao-painel").addEventListener("click", abrirPainel);
 $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
+$("codigo-ok").addEventListener("click", confirmarCodigo);
+$("codigo-cancelar").addEventListener("click", fecharCodigo);
+$("campo-codigo").addEventListener("keydown", (e) => { if (e.key === "Enter") confirmarCodigo(); });
+$("modal-codigo").addEventListener("click", (e) => { if (e.target === $("modal-codigo")) fecharCodigo(); });
+$("aleatorio-geral").addEventListener("click", () => iniciarAleatorio(null));
+$("aleatorio-cat").addEventListener("click", () => iniciarAleatorio(estado.categoriaAtual));
 $("abrir-instrumentos").addEventListener("click", () => $("painel-instrumentos").classList.toggle("aberto"));
 $("fechar-inst").addEventListener("click", () => $("painel-instrumentos").classList.remove("aberto"));
 
