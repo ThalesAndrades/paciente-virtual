@@ -1,0 +1,408 @@
+{
+  "nome_caso": "Transtorno por Uso de Álcool (Dependência)",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 0.8
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 2.4
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.2
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 0.8
+    },
+    {
+      "nome": "Acolhimento e vinculo",
+      "objetivo": "Estabelecer vinculo e escuta empatica.",
+      "itens": [
+        {
+          "nome": "escuta aberta/acolhimento",
+          "termos": [
+            "me conta",
+            "como voce esta",
+            "como tem sido",
+            "fale um pouco",
+            "quer falar",
+            "estou aqui",
+            "pode confiar"
+          ]
+        }
+      ],
+      "peso": 0.8
+    },
+    {
+      "nome": "Investigacao dos sintomas",
+      "objetivo": "Investigar os sintomas e o contexto do quadro.",
+      "itens": [
+        {
+          "nome": "motivo da vinda",
+          "termos": [
+            "motivo da vinda",
+            "motivo",
+            "vinda"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "sono",
+            "sono"
+          ]
+        },
+        {
+          "nome": "estresse",
+          "termos": [
+            "estresse",
+            "estresse"
+          ]
+        },
+        {
+          "nome": "humor",
+          "termos": [
+            "humor",
+            "humor"
+          ]
+        },
+        {
+          "nome": "trabalho",
+          "termos": [
+            "trabalho",
+            "trabalho"
+          ]
+        },
+        {
+          "nome": "rotina",
+          "termos": [
+            "rotina",
+            "rotina"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "Temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
+      "itens": [
+        {
+          "nome": "quantidade real",
+          "termos": [
+            "quanto o senhor bebe",
+            "quantas doses",
+            "qual a quantidade",
+            "quanto por dia",
+            "quantas garrafas",
+            "de verdade quanto"
+          ]
+        },
+        {
+          "nome": "beber de manha",
+          "termos": [
+            "bebe de manha",
+            "logo que acorda",
+            "antes de sair de casa",
+            "gole pela manha",
+            "beber cedo",
+            "assim que levanta"
+          ]
+        },
+        {
+          "nome": "abstinencia",
+          "termos": [
+            "quando fica sem beber",
+            "sem beber como se sente",
+            "tremor",
+            "tremendo",
+            "suor frio",
+            "sudorese"
+          ]
+        },
+        {
+          "nome": "blackouts",
+          "termos": [
+            "lembra do que aconteceu",
+            "apagao",
+            "apagou",
+            "esquecimento depois de beber",
+            "lapso de memoria",
+            "nao lembra"
+          ]
+        },
+        {
+          "nome": "direcao alcoolizado",
+          "termos": [
+            "dirigir bebido",
+            "dirigiu depois de beber",
+            "pegou o carro bebendo",
+            "volante alcoolizado",
+            "dirige tendo bebido",
+            "carro depois do bar"
+          ]
+        },
+        {
+          "nome": "perda de controle",
+          "termos": [
+            "consegue parar",
+            "so uma dose",
+            "para depois que comeca",
+            "controla a quantidade",
+            "perde o controle",
+            "consegue tomar so uma"
+          ]
+        },
+        {
+          "nome": "esconder bebida",
+          "termos": [
+            "esconde bebida",
+            "esconde garrafa",
+            "bebe escondido",
+            "guarda garrafa escondida",
+            "esconde da esposa",
+            "bebe as escondidas"
+          ]
+        },
+        {
+          "nome": "conflito conjugal",
+          "termos": [
+            "sua esposa",
+            "seu casamento",
+            "brigas em casa",
+            "ela falou em separar",
+            "problema no relacionamento",
+            "esposa ameacou sair"
+          ]
+        }
+      ],
+      "peso": 1.2
+    },
+    {
+      "nome": "Rede de apoio e fatores de protecao",
+      "objetivo": "Mapear apoio e fatores de protecao.",
+      "itens": [
+        {
+          "nome": "rede de apoio",
+          "termos": [
+            "apoio",
+            "com quem conta",
+            "familia",
+            "amigos",
+            "quem te ajuda",
+            "conversar com alguem",
+            "suporte"
+          ]
+        }
+      ],
+      "peso": 0.8
+    }
+  ]
+}

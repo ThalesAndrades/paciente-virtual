@@ -1,0 +1,417 @@
+{
+  "nome_caso": "Crise Existencial / Sofrimento de Sentido (Languishing)",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 2.2
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.1
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Acolhimento e vinculo",
+      "objetivo": "Estabelecer vinculo e escuta empatica.",
+      "itens": [
+        {
+          "nome": "escuta aberta/acolhimento",
+          "termos": [
+            "me conta",
+            "como voce esta",
+            "como tem sido",
+            "fale um pouco",
+            "quer falar",
+            "estou aqui",
+            "pode confiar"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Investigacao dos sintomas",
+      "objetivo": "Investigar os sintomas e o contexto do quadro.",
+      "itens": [
+        {
+          "nome": "vazio",
+          "termos": [
+            "vazio",
+            "vazio"
+          ]
+        },
+        {
+          "nome": "desmotivacao",
+          "termos": [
+            "desmotivacao",
+            "desmotivacao"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "sono",
+            "sono"
+          ]
+        },
+        {
+          "nome": "energia",
+          "termos": [
+            "energia",
+            "energia"
+          ]
+        },
+        {
+          "nome": "trabalho",
+          "termos": [
+            "trabalho",
+            "trabalho"
+          ]
+        },
+        {
+          "nome": "rotina",
+          "termos": [
+            "rotina",
+            "rotina"
+          ]
+        }
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Avaliacao de risco e temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
+      "itens": [
+        {
+          "nome": "vazio de sentido",
+          "termos": [
+            "sentido",
+            "proposito",
+            "pra que",
+            "sem graca",
+            "vazio",
+            "faz sentido"
+          ]
+        },
+        {
+          "nome": "comparacao e inveja",
+          "termos": [
+            "comparar",
+            "comparacao",
+            "redes sociais",
+            "instagram",
+            "feed",
+            "inveja"
+          ]
+        },
+        {
+          "nome": "vergonha do privilegio",
+          "termos": [
+            "vergonha",
+            "direito de reclamar",
+            "tem tudo",
+            "ingrata",
+            "mimada",
+            "privilegio"
+          ]
+        },
+        {
+          "nome": "impostora",
+          "termos": [
+            "impostora",
+            "impostor",
+            "medo de descobrirem",
+            "fraude",
+            "nao merece",
+            "sorte"
+          ]
+        },
+        {
+          "nome": "solidao afetiva",
+          "termos": [
+            "sozinha",
+            "solidao",
+            "solitaria",
+            "desabafar",
+            "com quem conversa",
+            "alguem sabe"
+          ]
+        },
+        {
+          "nome": "pressao e expectativa",
+          "termos": [
+            "familia",
+            "expectativa",
+            "cobranca",
+            "orgulho da familia",
+            "pressao",
+            "primeira a se formar"
+          ]
+        },
+        {
+          "nome": "ideacao passiva",
+          "termos": [
+            "morte",
+            "morrer",
+            "sumir",
+            "nao fazer falta",
+            "nao estar aqui",
+            "desaparecer"
+          ]
+        },
+        {
+          "nome": "valvula de escape",
+          "termos": [
+            "vinho",
+            "beber",
+            "alcool",
+            "anestesiar",
+            "valvula de escape",
+            "fugir"
+          ]
+        }
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Rede de apoio e fatores de protecao",
+      "objetivo": "Mapear apoio e fatores de protecao.",
+      "itens": [
+        {
+          "nome": "rede de apoio",
+          "termos": [
+            "apoio",
+            "com quem conta",
+            "familia",
+            "amigos",
+            "quem te ajuda",
+            "conversar com alguem",
+            "suporte"
+          ]
+        }
+      ],
+      "peso": 0.8
+    }
+  ]
+}

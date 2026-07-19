@@ -1,0 +1,396 @@
+{
+  "nome_caso": "Pielonefrite Aguda",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 3
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "pressao",
+            "aferir",
+            "frequencia cardiaca",
+            "pulso",
+            "saturacao",
+            "temperatura",
+            "sinais vitais",
+            "medir"
+          ]
+        },
+        {
+          "nome": "Estado geral e hidratação",
+          "termos": [
+            "estado geral",
+            "aparência",
+            "aparencia",
+            "hidratação",
+            "hidratacao",
+            "mucosas"
+          ]
+        },
+        {
+          "nome": "Sinal de Giordano (punho-percussão lombar)",
+          "termos": [
+            "giordano",
+            "punho percussao",
+            "punho-percussão",
+            "bater nas costas",
+            "percussão lombar",
+            "percussao lombar"
+          ]
+        },
+        {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "apertar a barriga",
+            "palpar o abdome",
+            "abdome",
+            "barriga"
+          ]
+        },
+        {
+          "nome": "Sinal de Blumberg (descompressão dolorosa)",
+          "termos": [
+            "blumberg",
+            "descompressão",
+            "descompressao",
+            "irritação peritoneal",
+            "irritacao peritoneal",
+            "peritonite"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes ao caso.",
+      "itens": [
+        {
+          "nome": "Urina tipo 1 (EAS / sumário de urina)",
+          "termos": [
+            "urina tipo 1",
+            "urina tipo i",
+            "eas",
+            "sumário de urina",
+            "sumario de urina",
+            "urina 1"
+          ]
+        },
+        {
+          "nome": "Urocultura com antibiograma",
+          "termos": [
+            "urocultura",
+            "cultura de urina",
+            "antibiograma",
+            "cultura"
+          ]
+        },
+        {
+          "nome": "Hemograma completo",
+          "termos": [
+            "hemograma",
+            "sangue",
+            "leucograma",
+            "hemograma completo"
+          ]
+        },
+        {
+          "nome": "Proteína C reativa (PCR)",
+          "termos": [
+            "pcr",
+            "proteína c reativa",
+            "proteina c reativa",
+            "provas inflamatórias",
+            "provas inflamatorias"
+          ]
+        },
+        {
+          "nome": "Função renal (ureia e creatinina)",
+          "termos": [
+            "função renal",
+            "funcao renal",
+            "ureia",
+            "creatinina",
+            "rim",
+            "escórias"
+          ]
+        },
+        {
+          "nome": "Beta-HCG (teste de gravidez)",
+          "termos": [
+            "beta hcg",
+            "beta-hcg",
+            "bhcg",
+            "teste de gravidez",
+            "hcg",
+            "gravidez"
+          ]
+        },
+        {
+          "nome": "Ultrassonografia de rins e vias urinárias",
+          "termos": [
+            "ultrassom",
+            "ultrassonografia",
+            "us",
+            "usg",
+            "ecografia",
+            "ultrassom dos rins"
+          ]
+        },
+        {
+          "nome": "Hemocultura",
+          "termos": [
+            "hemocultura",
+            "cultura de sangue",
+            "sangue para cultura"
+          ]
+        }
+      ],
+      "peso": 2
+    }
+  ]
+}

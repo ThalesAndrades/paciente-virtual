@@ -1,0 +1,398 @@
+{
+  "nome_caso": "Transtorno Obsessivo-Compulsivo",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 0.8
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 2.4
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.2
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 0.8
+    },
+    {
+      "nome": "Acolhimento e vinculo",
+      "objetivo": "Estabelecer vinculo e escuta empatica.",
+      "itens": [
+        {
+          "nome": "escuta aberta/acolhimento",
+          "termos": [
+            "me conta",
+            "como voce esta",
+            "como tem sido",
+            "fale um pouco",
+            "quer falar",
+            "estou aqui",
+            "pode confiar"
+          ]
+        }
+      ],
+      "peso": 0.8
+    },
+    {
+      "nome": "Investigacao dos sintomas",
+      "objetivo": "Investigar os sintomas e o contexto do quadro.",
+      "itens": [
+        {
+          "nome": "ansiedade",
+          "termos": [
+            "ansiedade",
+            "ansiedade"
+          ]
+        },
+        {
+          "nome": "preocupacao",
+          "termos": [
+            "preocupacao",
+            "preocupacao"
+          ]
+        },
+        {
+          "nome": "cansaco",
+          "termos": [
+            "cansaco",
+            "cansaco"
+          ]
+        },
+        {
+          "nome": "maos ressecadas",
+          "termos": [
+            "maos ressecadas",
+            "maos",
+            "ressecadas"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "sono",
+            "sono"
+          ]
+        },
+        {
+          "nome": "trabalho",
+          "termos": [
+            "trabalho",
+            "trabalho"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "Temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
+      "itens": [
+        {
+          "nome": "lavagem",
+          "termos": [
+            "lavar as maos",
+            "lava a mao",
+            "quantas vezes lava",
+            "higiene",
+            "alcool em gel",
+            "suas maos"
+          ]
+        },
+        {
+          "nome": "verificacao",
+          "termos": [
+            "conferir",
+            "confere",
+            "verificar",
+            "checar",
+            "trancar a porta",
+            "fogao"
+          ]
+        },
+        {
+          "nome": "tempo perdido",
+          "termos": [
+            "quanto tempo",
+            "quantas horas",
+            "perde tempo",
+            "atrasa",
+            "demora",
+            "tempo gasto"
+          ]
+        },
+        {
+          "nome": "pensamentos intrusivos",
+          "termos": [
+            "pensamentos",
+            "o que passa na cabeca",
+            "pensa em",
+            "imagens na mente",
+            "ideias que voltam",
+            "pensamento ruim"
+          ]
+        },
+        {
+          "nome": "medo de causar dano",
+          "termos": [
+            "fazer mal",
+            "machucar alguem",
+            "causar dano",
+            "prejudicar",
+            "contaminar alguem",
+            "passar doenca"
+          ]
+        },
+        {
+          "nome": "rituais mentais",
+          "termos": [
+            "reza",
+            "rezar",
+            "conta",
+            "contar",
+            "numeros",
+            "repetir na mente"
+          ]
+        },
+        {
+          "nome": "evitacao",
+          "termos": [
+            "evita",
+            "deixa de fazer",
+            "nao toca",
+            "evitar lugares",
+            "banheiro publico",
+            "dinheiro"
+          ]
+        },
+        {
+          "nome": "vergonha e segredo",
+          "termos": [
+            "vergonha",
+            "contou pra alguem",
+            "escondendo",
+            "ninguem sabe",
+            "seu marido sabe",
+            "segredo"
+          ]
+        }
+      ],
+      "peso": 1.2
+    },
+    {
+      "nome": "Rede de apoio e fatores de protecao",
+      "objetivo": "Mapear apoio e fatores de protecao.",
+      "itens": [
+        {
+          "nome": "rede de apoio",
+          "termos": [
+            "apoio",
+            "com quem conta",
+            "familia",
+            "amigos",
+            "quem te ajuda",
+            "conversar com alguem",
+            "suporte"
+          ]
+        }
+      ],
+      "peso": 0.8
+    }
+  ]
+}

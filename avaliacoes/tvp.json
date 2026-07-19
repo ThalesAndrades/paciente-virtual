@@ -1,0 +1,387 @@
+{
+  "nome_caso": "Trombose Venosa Profunda",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 3
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "pressao",
+            "aferir",
+            "frequencia cardiaca",
+            "pulso",
+            "saturacao",
+            "temperatura",
+            "sinais vitais",
+            "medir"
+          ]
+        },
+        {
+          "nome": "Inspeção do membro inferior",
+          "termos": [
+            "inspeção da perna",
+            "olhar a perna",
+            "ver a perna",
+            "aspecto da perna",
+            "comparar as pernas",
+            "inspecao do membro"
+          ]
+        },
+        {
+          "nome": "Medida da circunferência das panturrilhas",
+          "termos": [
+            "medir a panturrilha",
+            "circunferência",
+            "circunferencia",
+            "diferença entre as pernas",
+            "medir as duas pernas",
+            "assimetria"
+          ]
+        },
+        {
+          "nome": "Palpação da panturrilha",
+          "termos": [
+            "palpar a panturrilha",
+            "apertar a batata da perna",
+            "palpação da perna",
+            "empastamento",
+            "dor à palpação",
+            "palpar a perna"
+          ]
+        },
+        {
+          "nome": "Temperatura e coloração da pele local",
+          "termos": [
+            "perna quente",
+            "calor local",
+            "temperatura da perna",
+            "pele quente",
+            "vermelhidão",
+            "coloração"
+          ]
+        },
+        {
+          "nome": "Sinal de Homans",
+          "termos": [
+            "homans",
+            "sinal de homans",
+            "dorsiflexão do pé",
+            "dobrar o pé pra cima",
+            "flexionar o pé"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes ao caso.",
+      "itens": [
+        {
+          "nome": "Escore de Wells para TVP",
+          "termos": [
+            "wells",
+            "escore de wells",
+            "score de wells",
+            "probabilidade de tvp",
+            "escore clínico"
+          ]
+        },
+        {
+          "nome": "D-dímero",
+          "termos": [
+            "d dimero",
+            "d-dímero",
+            "dimero",
+            "d dímero",
+            "marcador de coágulo"
+          ]
+        },
+        {
+          "nome": "Ultrassom Doppler venoso de membro inferior",
+          "termos": [
+            "doppler",
+            "eco doppler",
+            "ultrassom doppler",
+            "ultrassom da perna",
+            "usg doppler venoso",
+            "doppler venoso"
+          ]
+        },
+        {
+          "nome": "Hemograma",
+          "termos": [
+            "hemograma",
+            "sangue",
+            "exame de sangue",
+            "hemoglobina",
+            "leucócitos"
+          ]
+        },
+        {
+          "nome": "Função renal e coagulação (creatinina, TP/INR, TTPa)",
+          "termos": [
+            "função renal",
+            "funcao renal",
+            "creatinina",
+            "coagulação",
+            "coagulacao",
+            "inr"
+          ]
+        },
+        {
+          "nome": "Eletrocardiograma",
+          "termos": [
+            "ecg",
+            "eletro",
+            "eletrocardiograma"
+          ]
+        },
+        {
+          "nome": "Raio X de tórax",
+          "termos": [
+            "raio x",
+            "raiox",
+            "raio-x",
+            "rx",
+            "radiografia",
+            "raio x do tórax"
+          ]
+        }
+      ],
+      "peso": 2
+    }
+  ]
+}

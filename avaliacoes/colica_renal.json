@@ -1,0 +1,379 @@
+{
+  "nome_caso": "Cólica Renal (Litíase Ureteral)",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 3
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "pressao",
+            "aferir",
+            "frequencia cardiaca",
+            "pulso",
+            "saturacao",
+            "temperatura",
+            "sinais vitais",
+            "medir"
+          ]
+        },
+        {
+          "nome": "Estado geral e inspeção",
+          "termos": [
+            "estado geral",
+            "inspeção",
+            "inspecao",
+            "aparência",
+            "aparencia",
+            "como ele está"
+          ]
+        },
+        {
+          "nome": "Punho-percussão lombar (sinal de Giordano)",
+          "termos": [
+            "giordano",
+            "punho percussão",
+            "punho-percussão",
+            "punho percussao",
+            "percussão lombar",
+            "bater nas costas"
+          ]
+        },
+        {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "apalpar a barriga",
+            "palpar o abdome",
+            "exame do abdome",
+            "abdome"
+          ]
+        },
+        {
+          "nome": "Sinal de Blumberg (descompressão dolorosa)",
+          "termos": [
+            "blumberg",
+            "descompressão",
+            "descompressao",
+            "irritação peritoneal",
+            "sinal de blumberg",
+            "descompressão brusca"
+          ]
+        },
+        {
+          "nome": "Sinal de Murphy",
+          "termos": [
+            "murphy",
+            "sinal de murphy",
+            "vesícula",
+            "vesicula",
+            "hipocôndrio direito"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes ao caso.",
+      "itens": [
+        {
+          "nome": "Urina tipo 1 (EAS)",
+          "termos": [
+            "urina",
+            "urina tipo 1",
+            "eas",
+            "sumário de urina",
+            "exame de urina",
+            "urina i"
+          ]
+        },
+        {
+          "nome": "Ultrassonografia de rins e vias urinárias",
+          "termos": [
+            "ultrassom",
+            "ultrassonografia",
+            "usg",
+            "eco",
+            "us de rins",
+            "ultrassom de rins"
+          ]
+        },
+        {
+          "nome": "Tomografia de abdome sem contraste (protocolo de cálculo)",
+          "termos": [
+            "tomografia",
+            "tc",
+            "tc de abdome",
+            "tomografia sem contraste",
+            "tomografia de abdome",
+            "tc de vias urinárias"
+          ]
+        },
+        {
+          "nome": "Hemograma",
+          "termos": [
+            "hemograma",
+            "exame de sangue",
+            "sangue",
+            "leucograma"
+          ]
+        },
+        {
+          "nome": "Função renal (ureia e creatinina)",
+          "termos": [
+            "função renal",
+            "funcao renal",
+            "creatinina",
+            "ureia",
+            "uréia",
+            "rins funcionando"
+          ]
+        },
+        {
+          "nome": "Proteína C reativa (PCR)",
+          "termos": [
+            "pcr",
+            "proteína c reativa",
+            "proteina c reativa",
+            "marcador inflamatório",
+            "inflamação"
+          ]
+        }
+      ],
+      "peso": 2
+    }
+  ]
+}

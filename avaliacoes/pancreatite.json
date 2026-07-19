@@ -1,0 +1,428 @@
+{
+  "nome_caso": "Pancreatite Aguda",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 3
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "pressao",
+            "aferir",
+            "frequencia cardiaca",
+            "pulso",
+            "saturacao",
+            "temperatura",
+            "sinais vitais",
+            "medir"
+          ]
+        },
+        {
+          "nome": "Estado geral e hidratação",
+          "termos": [
+            "estado geral",
+            "aparência",
+            "aparencia",
+            "inspeção",
+            "hidratação",
+            "hidratacao"
+          ]
+        },
+        {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "palpar a barriga",
+            "apertar a barriga",
+            "abdome",
+            "abdomen"
+          ]
+        },
+        {
+          "nome": "Ausculta abdominal (ruídos hidroaéreos)",
+          "termos": [
+            "ausculta abdominal",
+            "ruídos hidroaéreos",
+            "ruidos hidroaereos",
+            "peristalse",
+            "escutar a barriga",
+            "rha"
+          ]
+        },
+        {
+          "nome": "Sinal de Murphy",
+          "termos": [
+            "murphy",
+            "sinal de murphy",
+            "vesícula",
+            "vesicula"
+          ]
+        },
+        {
+          "nome": "Sinais de Cullen e Grey-Turner",
+          "termos": [
+            "cullen",
+            "grey turner",
+            "grey-turner",
+            "equimose periumbilical",
+            "equimose nos flancos",
+            "manchas no flanco"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes ao caso.",
+      "itens": [
+        {
+          "nome": "Lipase sérica",
+          "termos": [
+            "lipase",
+            "lipase serica",
+            "enzima pancreática",
+            "enzimas do pâncreas"
+          ]
+        },
+        {
+          "nome": "Amilase sérica",
+          "termos": [
+            "amilase",
+            "amilase serica"
+          ]
+        },
+        {
+          "nome": "Hemograma",
+          "termos": [
+            "hemograma",
+            "exame de sangue",
+            "sangue",
+            "leucócitos",
+            "leucocitos"
+          ]
+        },
+        {
+          "nome": "Proteína C reativa (PCR)",
+          "termos": [
+            "pcr",
+            "proteína c reativa",
+            "proteina c reativa",
+            "marcador inflamatório"
+          ]
+        },
+        {
+          "nome": "Enzimas hepáticas e gama-GT",
+          "termos": [
+            "tgo",
+            "tgp",
+            "ast",
+            "alt",
+            "gama gt",
+            "gama-gt"
+          ]
+        },
+        {
+          "nome": "Triglicerídeos",
+          "termos": [
+            "triglicerídeos",
+            "triglicerideos",
+            "triglicérides",
+            "triglicerides",
+            "gordura no sangue"
+          ]
+        },
+        {
+          "nome": "Cálcio sérico",
+          "termos": [
+            "cálcio",
+            "calcio",
+            "cálcio sérico"
+          ]
+        },
+        {
+          "nome": "Glicemia",
+          "termos": [
+            "glicemia",
+            "glicose",
+            "açúcar no sangue",
+            "acucar no sangue",
+            "dextro",
+            "glicemia capilar"
+          ]
+        },
+        {
+          "nome": "Ureia e creatinina",
+          "termos": [
+            "ureia",
+            "uréia",
+            "creatinina",
+            "função renal",
+            "funcao renal",
+            "rins"
+          ]
+        },
+        {
+          "nome": "Eletrocardiograma",
+          "termos": [
+            "ecg",
+            "eletro",
+            "eletrocardiograma"
+          ]
+        },
+        {
+          "nome": "Ultrassonografia de abdome",
+          "termos": [
+            "ultrassom",
+            "ultrassonografia",
+            "us abdome",
+            "usg",
+            "ecografia"
+          ]
+        },
+        {
+          "nome": "Tomografia de abdome",
+          "termos": [
+            "tomografia",
+            "tc",
+            "tc de abdome",
+            "tomo"
+          ]
+        }
+      ],
+      "peso": 2
+    }
+  ]
+}

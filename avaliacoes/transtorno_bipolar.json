@@ -1,0 +1,398 @@
+{
+  "nome_caso": "Transtorno Bipolar tipo II — Episódio Depressivo Atual",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 2.2
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.1
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Acolhimento e vinculo",
+      "objetivo": "Estabelecer vinculo e escuta empatica.",
+      "itens": [
+        {
+          "nome": "escuta aberta/acolhimento",
+          "termos": [
+            "me conta",
+            "como voce esta",
+            "como tem sido",
+            "fale um pouco",
+            "quer falar",
+            "estou aqui",
+            "pode confiar"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Investigacao dos sintomas",
+      "objetivo": "Investigar os sintomas e o contexto do quadro.",
+      "itens": [
+        {
+          "nome": "desanimo",
+          "termos": [
+            "desanimo",
+            "desanimo"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "sono",
+            "sono"
+          ]
+        },
+        {
+          "nome": "trabalho",
+          "termos": [
+            "trabalho",
+            "trabalho"
+          ]
+        },
+        {
+          "nome": "prazer",
+          "termos": [
+            "prazer",
+            "prazer"
+          ]
+        },
+        {
+          "nome": "trabalho detalhe",
+          "termos": [
+            "trabalho detalhe",
+            "trabalho",
+            "detalhe"
+          ]
+        },
+        {
+          "nome": "relacionamento",
+          "termos": [
+            "relacionamento",
+            "relacionamento"
+          ]
+        }
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Avaliacao de risco e temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
+      "itens": [
+        {
+          "nome": "impulsividade gastos",
+          "termos": [
+            "gastar",
+            "dinheiro",
+            "compras",
+            "cartao",
+            "gastou",
+            "comprou"
+          ]
+        },
+        {
+          "nome": "dividas",
+          "termos": [
+            "divida",
+            "dividas",
+            "emprestimo",
+            "deve",
+            "boleto",
+            "conta atrasada"
+          ]
+        },
+        {
+          "nome": "comportamento sexual risco",
+          "termos": [
+            "sexo",
+            "transou",
+            "ficou com",
+            "pegou",
+            "se envolveu",
+            "comportamento sexual"
+          ]
+        },
+        {
+          "nome": "uso substancias",
+          "termos": [
+            "bebida",
+            "alcool",
+            "beber",
+            "droga",
+            "drogas",
+            "usou"
+          ]
+        },
+        {
+          "nome": "vergonha do episodio",
+          "termos": [
+            "vergonha",
+            "arrependida",
+            "o que fez",
+            "aquela fase",
+            "descontrolada",
+            "exagerou"
+          ]
+        },
+        {
+          "nome": "medo loucura",
+          "termos": [
+            "louca",
+            "doida",
+            "surtar",
+            "enlouquecer",
+            "perder o controle",
+            "bipolar"
+          ]
+        },
+        {
+          "nome": "culpa",
+          "termos": [
+            "culpa",
+            "culpada",
+            "magoou",
+            "machucou",
+            "decepcionou",
+            "afastou"
+          ]
+        },
+        {
+          "nome": "ideacao",
+          "termos": [
+            "morte",
+            "morrer",
+            "nao vale a pena",
+            "sumir",
+            "desaparecer",
+            "tirar a vida"
+          ]
+        }
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Rede de apoio e fatores de protecao",
+      "objetivo": "Mapear apoio e fatores de protecao.",
+      "itens": [
+        {
+          "nome": "rede de apoio",
+          "termos": [
+            "apoio",
+            "com quem conta",
+            "familia",
+            "amigos",
+            "quem te ajuda",
+            "conversar com alguem",
+            "suporte"
+          ]
+        }
+      ],
+      "peso": 0.8
+    }
+  ]
+}

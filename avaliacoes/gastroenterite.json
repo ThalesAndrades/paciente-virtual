@@ -1,0 +1,402 @@
+{
+  "nome_caso": "Gastroenterite Aguda com Desidratação (Toxinfecção Alimentar)",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "forte",
+            "de zero a dez",
+            "escala",
+            "quanto doi"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "latejante"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 3
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais",
+          "termos": [
+            "problema de saude",
+            "doenca",
+            "pressao alta",
+            "diabetes",
+            "faz tratamento",
+            "toma remedio",
+            "cirurgia",
+            "alergia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "outras substancias",
+          "termos": [
+            "droga",
+            "substancia",
+            "maconha",
+            "usa alguma coisa"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "pressao",
+            "aferir",
+            "frequencia cardiaca",
+            "pulso",
+            "saturacao",
+            "temperatura",
+            "sinais vitais",
+            "medir"
+          ]
+        },
+        {
+          "nome": "Avaliação do estado de hidratação (mucosas e turgor)",
+          "termos": [
+            "hidratação",
+            "hidratacao",
+            "mucosas",
+            "turgor",
+            "sinal da prega",
+            "prega cutânea"
+          ]
+        },
+        {
+          "nome": "Tempo de enchimento capilar",
+          "termos": [
+            "enchimento capilar",
+            "perfusão",
+            "perfusao",
+            "tec",
+            "extremidades",
+            "perfusão periférica"
+          ]
+        },
+        {
+          "nome": "Ausculta abdominal (ruídos hidroaéreos)",
+          "termos": [
+            "ausculta abdominal",
+            "ruídos hidroaéreos",
+            "ruidos hidroaereos",
+            "escutar a barriga",
+            "peristalse",
+            "ruídos intestinais"
+          ]
+        },
+        {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "apertar a barriga",
+            "palpar o abdome",
+            "dor à palpação",
+            "abdome"
+          ]
+        },
+        {
+          "nome": "Sinal de Blumberg (descompressão brusca)",
+          "termos": [
+            "blumberg",
+            "descompressão brusca",
+            "descompressao brusca",
+            "sinal de irritação peritoneal",
+            "peritonite",
+            "sinal do apêndice"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes ao caso.",
+      "itens": [
+        {
+          "nome": "Hemograma completo",
+          "termos": [
+            "hemograma",
+            "hemograma completo",
+            "sangue",
+            "leucograma",
+            "hemácias"
+          ]
+        },
+        {
+          "nome": "Proteína C reativa (PCR)",
+          "termos": [
+            "pcr",
+            "proteína c reativa",
+            "proteina c reativa",
+            "marcador inflamatório",
+            "inflamação"
+          ]
+        },
+        {
+          "nome": "Eletrólitos / ionograma (sódio e potássio)",
+          "termos": [
+            "eletrólitos",
+            "eletrolitos",
+            "ionograma",
+            "sódio",
+            "sodio",
+            "potássio"
+          ]
+        },
+        {
+          "nome": "Função renal (ureia e creatinina)",
+          "termos": [
+            "função renal",
+            "funcao renal",
+            "ureia",
+            "creatinina",
+            "rim",
+            "rins"
+          ]
+        },
+        {
+          "nome": "Beta-hCG (teste de gravidez)",
+          "termos": [
+            "beta hcg",
+            "beta-hcg",
+            "bhcg",
+            "teste de gravidez",
+            "gravidez",
+            "hcg"
+          ]
+        },
+        {
+          "nome": "Exame de fezes / coprocultura",
+          "termos": [
+            "exame de fezes",
+            "coprológico",
+            "coprologico",
+            "coprocultura",
+            "cultura de fezes",
+            "parasitológico"
+          ]
+        },
+        {
+          "nome": "Testes para dengue (NS1 / sorologia)",
+          "termos": [
+            "dengue",
+            "ns1",
+            "sorologia dengue",
+            "teste de dengue",
+            "igm dengue"
+          ]
+        },
+        {
+          "nome": "Urina tipo 1 (EAS)",
+          "termos": [
+            "urina",
+            "eas",
+            "urina tipo 1",
+            "urina i",
+            "sumário de urina",
+            "densidade urinária"
+          ]
+        }
+      ],
+      "peso": 2
+    }
+  ]
+}
