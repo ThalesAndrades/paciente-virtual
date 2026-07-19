@@ -269,17 +269,6 @@
           ]
         },
         {
-          "nome": "Estado geral e hidratação",
-          "termos": [
-            "estado geral",
-            "aparência",
-            "aparencia",
-            "hidratação",
-            "hidratacao",
-            "mucosas"
-          ]
-        },
-        {
           "nome": "Sinal de Giordano (punho-percussão lombar)",
           "termos": [
             "giordano",
@@ -313,6 +302,28 @@
           ]
         },
         {
+          "nome": "Exame ginecológico / toque",
+          "termos": [
+            "exame ginecológico",
+            "exame ginecologico",
+            "toque vaginal",
+            "especular",
+            "corrimento",
+            "mobilização do colo"
+          ]
+        },
+        {
+          "nome": "Estado geral e hidratação",
+          "termos": [
+            "estado geral",
+            "aparência",
+            "aparencia",
+            "hidratação",
+            "hidratacao",
+            "mucosas"
+          ]
+        },
+        {
           "nome": "Ausculta pulmonar",
           "termos": [
             "ausculta pulmonar",
@@ -320,6 +331,16 @@
             "pulmao",
             "escutar o pulmão",
             "murmúrio vesicular"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "bulhas"
           ]
         }
       ],

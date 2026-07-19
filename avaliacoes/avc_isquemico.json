@@ -302,6 +302,28 @@
           ]
         },
         {
+          "nome": "Ausculta das carótidas",
+          "termos": [
+            "carótida",
+            "carotida",
+            "ausculta carotídea",
+            "sopro no pescoço",
+            "pescoço",
+            "sopro carotídeo"
+          ]
+        },
+        {
+          "nome": "Escala de AVC (NIHSS)",
+          "termos": [
+            "nihss",
+            "escala de avc",
+            "escala nih",
+            "cincinnati",
+            "escala de derrame",
+            "gravidade do avc"
+          ]
+        },
+        {
           "nome": "Ausculta cardíaca",
           "termos": [
             "ausculta cardíaca",

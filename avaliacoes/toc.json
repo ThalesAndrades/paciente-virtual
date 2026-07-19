@@ -30,7 +30,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Caracterizacao da queixa (HDA)",
@@ -69,12 +69,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -117,7 +118,7 @@
           ]
         }
       ],
-      "peso": 2.4
+      "peso": 2.1
     },
     {
       "nome": "Antecedentes",
@@ -168,7 +169,7 @@
           ]
         }
       ],
-      "peso": 1.2
+      "peso": 1.1
     },
     {
       "nome": "Habitos de vida",
@@ -229,7 +230,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Acolhimento e vinculo",
@@ -248,7 +249,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Investigacao dos sintomas",
@@ -257,7 +258,6 @@
         {
           "nome": "ansiedade",
           "termos": [
-            "ansiedade",
             "ansiedade"
           ]
         },
@@ -273,7 +273,11 @@
           "nome": "cansaco",
           "termos": [
             "cansaco",
-            "cansaco"
+            "cansada",
+            "cansado",
+            "fadiga",
+            "sem energia",
+            "exausta"
           ]
         },
         {
@@ -297,11 +301,14 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         }
       ],
-      "peso": 2
+      "peso": 1.8
     },
     {
       "nome": "Temas sensiveis",
@@ -396,7 +403,65 @@
           ]
         }
       ],
-      "peso": 1.2
+      "peso": 1.1
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "Y-BOCS (Escala Yale-Brown de Obsessões e Compulsões)",
+          "termos": [
+            "y-bocs",
+            "ybocs",
+            "yale brown",
+            "escala de toc",
+            "escala de obsessoes e compulsoes",
+            "escala yale"
+          ]
+        },
+        {
+          "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
+          "termos": [
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "questionário de ansiedade"
+          ]
+        },
+        {
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+          "termos": [
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "OCI-R (Inventário Obsessivo-Compulsivo Revisado)",
+          "termos": [
+            "oci-r",
+            "oci r",
+            "oci",
+            "inventario obsessivo compulsivo",
+            "inventário obsessivo-compulsivo"
+          ]
+        },
+        {
+          "nome": "TSH",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "tireóide",
+            "função tireoidiana",
+            "hormônio tireoidiano"
+          ]
+        }
+      ],
+      "peso": 1.1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -415,7 +480,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     }
   ]
 }

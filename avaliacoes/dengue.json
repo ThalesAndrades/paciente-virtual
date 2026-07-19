@@ -301,6 +301,28 @@
           ]
         },
         {
+          "nome": "Avaliação de hidratação e perfusão",
+          "termos": [
+            "hidratação",
+            "hidratacao",
+            "mucosas",
+            "turgor",
+            "enchimento capilar",
+            "perfusão"
+          ]
+        },
+        {
+          "nome": "Avaliação de sangramento de mucosas",
+          "termos": [
+            "sangramento",
+            "gengiva",
+            "sangramento gengival",
+            "sangramento nasal",
+            "epistaxe",
+            "boca"
+          ]
+        },
+        {
           "nome": "Ausculta cardíaca",
           "termos": [
             "ausculta cardíaca",

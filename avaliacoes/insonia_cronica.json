@@ -79,12 +79,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -127,7 +128,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -178,7 +179,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -275,7 +276,6 @@
         {
           "nome": "despertares",
           "termos": [
-            "despertares",
             "despertares"
           ]
         },
@@ -298,7 +298,6 @@
         {
           "nome": "frequencia",
           "termos": [
-            "frequencia",
             "frequencia"
           ]
         },
@@ -306,11 +305,14 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
@@ -394,7 +396,77 @@
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "Índice de Gravidade da Insônia (ISI)",
+          "termos": [
+            "isi",
+            "índice de gravidade da insônia",
+            "indice de gravidade da insonia",
+            "escala de insônia",
+            "escala de insonia",
+            "questionário de insônia"
+          ]
+        },
+        {
+          "nome": "Escala de Sonolência de Epworth",
+          "termos": [
+            "epworth",
+            "escala de sonolência",
+            "escala de sonolencia",
+            "sonolência diurna",
+            "sonolencia diurna",
+            "escala de epworth"
+          ]
+        },
+        {
+          "nome": "GAD-7 (Transtorno de Ansiedade Generalizada)",
+          "termos": [
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "questionário de ansiedade"
+          ]
+        },
+        {
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+          "termos": [
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "Diário do sono (2 semanas)",
+          "termos": [
+            "diário do sono",
+            "diario do sono",
+            "registro do sono",
+            "agenda do sono",
+            "actigrafia"
+          ]
+        },
+        {
+          "nome": "Exames laboratoriais (TSH, hemograma, ferritina)",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "hemograma",
+            "exame de sangue",
+            "ferritina",
+            "função tireoidiana"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -413,7 +485,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

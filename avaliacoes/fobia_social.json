@@ -79,12 +79,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -127,7 +128,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -179,7 +180,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -284,7 +285,6 @@
         {
           "nome": "antecipacao",
           "termos": [
-            "antecipacao",
             "antecipacao"
           ]
         },
@@ -299,7 +299,6 @@
         {
           "nome": "rotina",
           "termos": [
-            "rotina",
             "rotina"
           ]
         },
@@ -307,11 +306,14 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
@@ -326,6 +328,17 @@
             "toma algo antes",
             "remedio pra acalmar",
             "calmante"
+          ]
+        },
+        {
+          "nome": "isolamento afetivo",
+          "termos": [
+            "relacionamento",
+            "namoro",
+            "namorar",
+            "vida amorosa",
+            "sozinha",
+            "solidao"
           ]
         },
         {
@@ -351,17 +364,6 @@
           ]
         },
         {
-          "nome": "isolamento afetivo",
-          "termos": [
-            "relacionamento",
-            "namoro",
-            "namorar",
-            "vida amorosa",
-            "sozinha",
-            "solidao"
-          ]
-        },
-        {
           "nome": "pensamentos desesperanca",
           "termos": [
             "desanimo",
@@ -373,7 +375,63 @@
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "LSAS (Escala de Ansiedade Social de Liebowitz)",
+          "termos": [
+            "lsas",
+            "escala de liebowitz",
+            "liebowitz",
+            "escala de ansiedade social",
+            "escala de fobia social"
+          ]
+        },
+        {
+          "nome": "SPIN (Inventário de Fobia Social)",
+          "termos": [
+            "spin",
+            "inventario de fobia social",
+            "inventário de fobia social",
+            "escala spin"
+          ]
+        },
+        {
+          "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
+          "termos": [
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "questionário de ansiedade"
+          ]
+        },
+        {
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+          "termos": [
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "AUDIT (Teste de Identificação de Distúrbios por Uso de Álcool)",
+          "termos": [
+            "audit",
+            "escala de alcool",
+            "teste de alcool",
+            "uso de álcool",
+            "questionário de álcool"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -392,7 +450,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

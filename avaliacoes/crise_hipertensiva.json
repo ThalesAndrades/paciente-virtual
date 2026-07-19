@@ -290,6 +290,17 @@
           ]
         },
         {
+          "nome": "Edema de membros inferiores",
+          "termos": [
+            "edema",
+            "inchaço",
+            "inchaco",
+            "perna inchada",
+            "pés inchados",
+            "membros inferiores"
+          ]
+        },
+        {
           "nome": "Ausculta cardíaca",
           "termos": [
             "ausculta cardíaca",
@@ -309,17 +320,6 @@
             "escutar o pulmão",
             "murmúrio vesicular",
             "respiração"
-          ]
-        },
-        {
-          "nome": "Edema de membros inferiores",
-          "termos": [
-            "edema",
-            "inchaço",
-            "inchaco",
-            "perna inchada",
-            "pés inchados",
-            "membros inferiores"
           ]
         }
       ],

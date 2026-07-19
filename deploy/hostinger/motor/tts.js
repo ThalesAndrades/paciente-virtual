@@ -22,10 +22,22 @@ function provedor() {
   return "nenhum";
 }
 
+// Disponibilidade POR GÊNERO, espelhando o despacho de sintetizar() — assim a UI
+// só habilita a voz que realmente tem síntese (evita 502 para voz anunciada).
+function vozDisponivel(chave) {
+  const p = provedor();
+  if (p === "elevenlabs" && ELEVEN_VOZ[chave]) return true;
+  if (p === "kokoro" || (p === "elevenlabs" && KOKORO_URL)) return true;
+  return false;
+}
+
 export function ttsInfo() {
   const p = provedor();
-  const on = p !== "nenhum";
-  return { stt: false, tts: { feminino: on, masculino: on }, provedor: p };
+  return {
+    stt: false,
+    tts: { feminino: vozDisponivel("feminino"), masculino: vozDisponivel("masculino") },
+    provedor: p,
+  };
 }
 
 // Retorna { buffer, mime } com o áudio, ou lança se indisponível/erro.
@@ -50,7 +62,9 @@ async function viaKokoro(texto, voice) {
     signal: AbortSignal.timeout(60000),
   });
   if (!resposta.ok) throw new Error(`Kokoro HTTP ${resposta.status}`);
-  return { buffer: Buffer.from(await resposta.arrayBuffer()), mime: "audio/mpeg" };
+  const buffer = Buffer.from(await resposta.arrayBuffer());
+  if (!buffer.length) throw new Error("Kokoro devolveu áudio vazio");
+  return { buffer, mime: "audio/mpeg" };
 }
 
 async function viaElevenLabs(texto, voiceId) {
@@ -64,5 +78,7 @@ async function viaElevenLabs(texto, voiceId) {
     }
   );
   if (!resposta.ok) throw new Error(`ElevenLabs HTTP ${resposta.status}`);
-  return { buffer: Buffer.from(await resposta.arrayBuffer()), mime: "audio/mpeg" };
+  const buffer = Buffer.from(await resposta.arrayBuffer());
+  if (!buffer.length) throw new Error("ElevenLabs devolveu áudio vazio");
+  return { buffer, mime: "audio/mpeg" };
 }

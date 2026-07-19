@@ -30,7 +30,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Caracterizacao da queixa (HDA)",
@@ -79,12 +79,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -127,7 +128,7 @@
           ]
         }
       ],
-      "peso": 2.4
+      "peso": 2.1
     },
     {
       "nome": "Antecedentes",
@@ -178,7 +179,7 @@
           ]
         }
       ],
-      "peso": 1.2
+      "peso": 1.1
     },
     {
       "nome": "Habitos de vida",
@@ -239,7 +240,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Acolhimento e vinculo",
@@ -258,7 +259,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Investigacao dos sintomas",
@@ -284,7 +285,6 @@
         {
           "nome": "estresse",
           "termos": [
-            "estresse",
             "estresse"
           ]
         },
@@ -300,18 +300,20 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         },
         {
           "nome": "rotina",
           "termos": [
-            "rotina",
             "rotina"
           ]
         }
       ],
-      "peso": 2
+      "peso": 1.8
     },
     {
       "nome": "Temas sensiveis",
@@ -406,7 +408,74 @@
           ]
         }
       ],
-      "peso": 1.2
+      "peso": 1.1
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "AUDIT (Teste de Identificação de Transtornos por Uso de Álcool)",
+          "termos": [
+            "audit",
+            "escala de alcool",
+            "questionario de alcool",
+            "teste de alcool",
+            "escala audit"
+          ]
+        },
+        {
+          "nome": "Questionário CAGE",
+          "termos": [
+            "cage",
+            "questionario cage",
+            "teste cage",
+            "quatro perguntas do alcool"
+          ]
+        },
+        {
+          "nome": "Gama-GT (GGT)",
+          "termos": [
+            "gama gt",
+            "gamma gt",
+            "ggt",
+            "gama glutamil",
+            "enzima do figado alcool"
+          ]
+        },
+        {
+          "nome": "TGO e TGP (transaminases)",
+          "termos": [
+            "tgo",
+            "tgp",
+            "transaminases",
+            "ast alt",
+            "enzimas hepaticas",
+            "funcao do figado"
+          ]
+        },
+        {
+          "nome": "Hemograma com VCM",
+          "termos": [
+            "hemograma",
+            "vcm",
+            "volume corpuscular",
+            "exame de sangue",
+            "macrocitose"
+          ]
+        },
+        {
+          "nome": "Ultrassonografia de abdome",
+          "termos": [
+            "ultrassom",
+            "ultrassonografia",
+            "usg",
+            "ultrassom do figado",
+            "ecografia abdominal"
+          ]
+        }
+      ],
+      "peso": 1.1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -425,7 +494,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     }
   ]
 }

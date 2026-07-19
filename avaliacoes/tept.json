@@ -59,12 +59,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -107,7 +108,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -158,7 +159,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -257,21 +258,32 @@
           "nome": "sobressalto",
           "termos": [
             "sobressalto",
-            "sobressalto"
+            "assusta",
+            "assustada",
+            "sobressaltada",
+            "sempre alerta",
+            "vigilante"
           ]
         },
         {
           "nome": "nervosismo",
           "termos": [
+            "nervosa",
+            "nervoso",
             "nervosismo",
-            "nervosismo"
+            "ansiosa",
+            "agitada",
+            "tensa"
           ]
         },
         {
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         },
         {
@@ -290,12 +302,45 @@
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
+        {
+          "nome": "automedicacao",
+          "termos": [
+            "remedio",
+            "remedios",
+            "calmante",
+            "rivotril",
+            "tarja preta",
+            "clonazepam"
+          ]
+        },
+        {
+          "nome": "isolamento",
+          "termos": [
+            "isolada",
+            "isolamento",
+            "sozinha",
+            "se afasta",
+            "nao ve ninguem",
+            "amigas"
+          ]
+        },
+        {
+          "nome": "ideacao",
+          "termos": [
+            "morte",
+            "morrer",
+            "nao vale a pena",
+            "sumir",
+            "apagar",
+            "nao acordar"
+          ]
+        },
         {
           "nome": "revivencias",
           "termos": [
@@ -350,42 +395,57 @@
             "podia ter feito",
             "devia ter"
           ]
-        },
+        }
+      ],
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
         {
-          "nome": "vergonha",
+          "nome": "PCL-5 (Checklist de TEPT do DSM-5)",
           "termos": [
-            "vergonha",
-            "vexame",
-            "humilhada",
-            "envergonhada",
-            "constrangida",
-            "todo mundo viu"
+            "pcl-5",
+            "pcl 5",
+            "pcl",
+            "escala de tept",
+            "checklist de trauma",
+            "escala de trauma"
           ]
         },
         {
-          "nome": "entorpecimento",
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
           "termos": [
-            "anestesiada",
-            "entorpecida",
-            "morta por dentro",
-            "distante",
-            "desligada",
-            "sem sentir"
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
           ]
         },
         {
-          "nome": "irritabilidade",
+          "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
           "termos": [
-            "irritada",
-            "irritacao",
-            "raiva",
-            "nervosa",
-            "estourada",
-            "explode"
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "questionário de ansiedade"
+          ]
+        },
+        {
+          "nome": "AUDIT (Teste de Identificação de Uso de Álcool)",
+          "termos": [
+            "audit",
+            "escala de álcool",
+            "uso de álcool",
+            "questionário de álcool",
+            "triagem de álcool"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -404,7 +464,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

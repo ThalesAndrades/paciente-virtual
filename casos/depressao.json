@@ -253,5 +253,45 @@
       "PHQ-9 = 18 com item 9 positivo coerente com depressão moderadamente grave e necessidade de avaliação de risco"
     ]
   },
-  "categoria": "psicologia"
+  "categoria": "psicologia",
+  "gatilhos_sensiveis": {
+    "ideacao": [
+      "pensou em morrer",
+      "vontade de sumir",
+      "seria melhor nao acordar",
+      "dormir e nao acordar",
+      "nao vale a pena viver",
+      "pensamentos de morte",
+      "tirar a propria vida",
+      "melhor nao existir",
+      "nao quer mais viver",
+      "melhor nao estar aqui"
+    ],
+    "plano": [
+      "como faria",
+      "pensou em como",
+      "tem um plano",
+      "chegou a planejar",
+      "pensou em algum jeito",
+      "ja tentou algo"
+    ],
+    "culpa": [
+      "se sente culpada",
+      "se sente um peso",
+      "peso para os outros",
+      "um fardo",
+      "se sente falhando",
+      "acha que atrapalha",
+      "se cobra"
+    ],
+    "protecao": [
+      "o que te segura",
+      "o que te faz continuar",
+      "motivo para viver",
+      "razao de viver",
+      "o que te prende aqui",
+      "pela sua filha",
+      "com quem se importa"
+    ]
+  }
 }

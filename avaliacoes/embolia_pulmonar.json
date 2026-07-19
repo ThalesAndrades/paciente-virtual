@@ -269,6 +269,27 @@
           ]
         },
         {
+          "nome": "Exame dos membros inferiores",
+          "termos": [
+            "pernas",
+            "membros inferiores",
+            "examinar a perna",
+            "panturrilha",
+            "edema de perna",
+            "sinal de homans"
+          ]
+        },
+        {
+          "nome": "Palpação torácica",
+          "termos": [
+            "palpação torácica",
+            "palpacao toracica",
+            "apertar o peito",
+            "palpar o tórax",
+            "dor à palpação"
+          ]
+        },
+        {
           "nome": "Ausculta pulmonar",
           "termos": [
             "ausculta pulmonar",
@@ -288,27 +309,6 @@
             "coracao",
             "escutar o coração",
             "bulhas"
-          ]
-        },
-        {
-          "nome": "Exame dos membros inferiores",
-          "termos": [
-            "pernas",
-            "membros inferiores",
-            "examinar a perna",
-            "panturrilha",
-            "edema de perna",
-            "sinal de homans"
-          ]
-        },
-        {
-          "nome": "Palpação torácica",
-          "termos": [
-            "palpação torácica",
-            "palpacao toracica",
-            "apertar o peito",
-            "palpar o tórax",
-            "dor à palpação"
           ]
         },
         {

@@ -87,7 +87,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -138,7 +138,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -243,18 +243,20 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         },
         {
           "nome": "vergonha",
           "termos": [
-            "vergonha",
             "vergonha"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
@@ -263,29 +265,84 @@
         {
           "nome": "ideacao",
           "termos": [
-            "ideacao"
+            "pensou em morrer",
+            "vontade de sumir",
+            "seria melhor nao acordar",
+            "dormir e nao acordar",
+            "nao vale a pena viver",
+            "pensamentos de morte"
           ]
         },
         {
           "nome": "plano",
           "termos": [
-            "plano"
-          ]
-        },
-        {
-          "nome": "culpa",
-          "termos": [
-            "culpa"
+            "como faria",
+            "pensou em como",
+            "tem um plano",
+            "chegou a planejar",
+            "pensou em algum jeito",
+            "ja tentou algo"
           ]
         },
         {
           "nome": "protecao",
           "termos": [
-            "protecao"
+            "o que te segura",
+            "o que te faz continuar",
+            "motivo para viver",
+            "razao de viver",
+            "o que te prende aqui",
+            "pela sua filha"
+          ]
+        },
+        {
+          "nome": "culpa",
+          "termos": [
+            "se sente culpada",
+            "se sente um peso",
+            "peso para os outros",
+            "um fardo",
+            "se sente falhando",
+            "acha que atrapalha"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+          "termos": [
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "TSH",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "tireóide",
+            "hormônio tireoidiano",
+            "função tireoidiana"
+          ]
+        },
+        {
+          "nome": "Hemograma",
+          "termos": [
+            "hemograma",
+            "exame de sangue",
+            "sangue"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -304,7 +361,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

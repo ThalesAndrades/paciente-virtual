@@ -192,7 +192,10 @@ function salvarTranscript(consulta) {
       .replace(/[-:T]/g, "")
       .slice(0, 14)
       .replace(/^(\d{8})/, "$1_");
-    const nome = `${consulta.casoId}_${aluno}_${momento}.txt`;
+    // Sufixo aleatório: dois transcripts do mesmo caso+aluno no mesmo segundo
+    // não se sobrescrevem no disco (turma rodando o mesmo caso em paralelo).
+    const sufixo = crypto.randomUUID().slice(0, 6);
+    const nome = `${consulta.casoId}_${aluno}_${momento}_${sufixo}.txt`;
     fs.writeFileSync(path.join(DIR_HISTORICO, nome), consulta.transcript, "utf-8");
     return nome;
   } catch {
@@ -201,6 +204,13 @@ function salvarTranscript(consulta) {
 }
 
 function json(res, status, corpo) {
+  // Se os cabeçalhos já foram enviados (ex.: erro no meio de uma resposta),
+  // um segundo writeHead lançaria ERR_HTTP_HEADERS_ALREADY_SENT e derrubaria o
+  // processo. Aborta a conexão em vez de tentar reescrever o cabeçalho.
+  if (res.headersSent) {
+    res.destroy();
+    return;
+  }
   const dados = JSON.stringify(corpo);
   res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
   res.end(dados);
@@ -243,15 +253,23 @@ async function iniciarConsulta(req, res) {
 
   const caso = lerJson(path.join(DIR_CASOS, `${casoId}.json`));
   const ident = caso.identificacao || {};
-  const id = crypto.randomUUID().slice(0, 8);
+  // id curto único: nunca sobrescreve uma consulta viva por colisão de truncamento.
+  let id;
+  do {
+    id = crypto.randomUUID().slice(0, 8);
+  } while (consultas.has(id));
 
-  // Poda de segurança: evita o Map crescer sem limite com consultas abandonadas
-  // (nunca encerradas). O Map preserva a ordem de inserção — removemos as mais antigas.
+  // Poda de segurança: evita o Map crescer sem limite com consultas abandonadas.
+  // Remove SÓ consultas encerradas — uma sessão em andamento nunca é despejada,
+  // mesmo sob pico (senão o aluno perderia a consulta no meio da estação).
   if (consultas.size >= 800) {
     let remover = consultas.size - 600;
-    for (const k of consultas.keys()) {
-      if (remover-- <= 0) break;
-      consultas.delete(k);
+    for (const [k, c] of consultas) {
+      if (remover <= 0) break;
+      if (c.encerrada) {
+        consultas.delete(k);
+        remover--;
+      }
     }
   }
 
@@ -340,6 +358,13 @@ async function enviarMensagem(req, res, id) {
     eventos.push({ tipo: "aviso", texto: AVISO_DEMO });
   }
 
+  // A consulta pode ter sido encerrada concorrentemente durante o await da IA
+  // (o usuário clicou "encerrar" enquanto a resposta era gerada). Se foi, o
+  // transcript já está salvo e a entrada removida — não anexa num objeto órfão.
+  if (consulta.encerrada || !consultas.has(id)) {
+    return json(res, 409, { erro: "Consulta já encerrada." });
+  }
+
   consulta.transcript += `\nPACIENTE: ${resposta}\n`;
 
   eventos.push({ tipo: "paciente", texto: resposta, origem });
@@ -397,8 +422,12 @@ export function criarServidor() {
       }
 
       if (req.method === "GET" && (pathname === "/" || pathname === "/index.html")) {
+        // Lê ANTES de enviar cabeçalhos: se o arquivo falhar, o erro cai no catch
+        // com headers ainda não enviados → 500 limpo, em vez de writeHead duplo
+        // (que viraria unhandledRejection e derrubaria o processo p/ todos).
+        const html = fs.readFileSync(PAGINA);
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-        return res.end(fs.readFileSync(PAGINA));
+        return res.end(html);
       }
 
       if (req.method === "GET" && pathname === "/api/casos") {

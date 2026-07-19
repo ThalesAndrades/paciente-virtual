@@ -256,5 +256,58 @@
       "Afeto ansioso e reativo preservado — sofre, mas há resposta emocional coerente e crítica sobre a irracionalidade do medo, o que fala contra quadro psicótico"
     ]
   },
-  "categoria": "psicologia"
+  "categoria": "psicologia",
+  "gatilhos_sensiveis": {
+    "termino": [
+      "terminou um relacionamento",
+      "terminou o noivado",
+      "separacao",
+      "fim do relacionamento",
+      "rompimento",
+      "acabou o noivado",
+      "terminou o namoro"
+    ],
+    "medo_enlouquecer": [
+      "medo de enlouquecer",
+      "medo de ficar louca",
+      "acha que esta ficando louca",
+      "medo de morrer na crise",
+      "perder o controle na crise",
+      "medo de perder a cabeca",
+      "medo de estar ficando doida"
+    ],
+    "vergonha": [
+      "tem vergonha",
+      "sente vergonha",
+      "acham que e frescura",
+      "vergonha de contar",
+      "constrangimento",
+      "nao contou pra ninguem",
+      "vergonha de comentar"
+    ],
+    "isolamento": [
+      "parou de sair",
+      "quase nao sai",
+      "recusa convites",
+      "evita sair",
+      "deixou de sair",
+      "inventa desculpa pra nao sair",
+      "nao sai de casa"
+    ],
+    "trabalho": [
+      "no trabalho",
+      "medo no trabalho",
+      "descobrirem no trabalho",
+      "acharem que nao e confiavel",
+      "no servico",
+      "medo de que descubram"
+    ],
+    "controle": [
+      "perdeu o controle",
+      "controle do corpo",
+      "sente que perde o controle",
+      "perder o controle do corpo",
+      "perdi o controle"
+    ]
+  }
 }

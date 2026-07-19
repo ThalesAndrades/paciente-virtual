@@ -279,28 +279,6 @@
           ]
         },
         {
-          "nome": "Ausculta cardíaca",
-          "termos": [
-            "ausculta cardíaca",
-            "ausculta cardiaca",
-            "coração",
-            "coracao",
-            "escutar o coração",
-            "bulhas"
-          ]
-        },
-        {
-          "nome": "Ausculta pulmonar",
-          "termos": [
-            "ausculta pulmonar",
-            "pulmão",
-            "pulmao",
-            "escutar o pulmão",
-            "murmúrio vesicular",
-            "respiração"
-          ]
-        },
-        {
           "nome": "Edema de membros inferiores",
           "termos": [
             "edema",
@@ -320,6 +298,48 @@
             "estase jugular",
             "veias do pescoço",
             "pressão venosa"
+          ]
+        },
+        {
+          "nome": "Refluxo hepatojugular",
+          "termos": [
+            "refluxo hepatojugular",
+            "refluxo hepato jugular",
+            "comprimir o fígado",
+            "manobra hepatojugular"
+          ]
+        },
+        {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "apalpar a barriga",
+            "abdome",
+            "fígado",
+            "figado"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "escutar o coração",
+            "bulhas"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular",
+            "respiração"
           ]
         }
       ],

@@ -294,5 +294,68 @@
       "Risco de suicídio avaliado e baixo confirma a natureza normal do luto e orienta conduta (escuta, psicoeducação, seguimento) em vez de tratamento farmacológico agressivo"
     ]
   },
-  "categoria": "psicologia"
+  "categoria": "psicologia",
+  "gatilhos_sensiveis": {
+    "culpa": [
+      "se sente culpada",
+      "devia ter percebido",
+      "acha que podia ter feito",
+      "fica remoendo",
+      "se culpa pela morte",
+      "culpa pela perda",
+      "podia ter evitado"
+    ],
+    "retrato": [
+      "conversa com ele",
+      "fala com o retrato",
+      "fala com a foto",
+      "conversa com a foto",
+      "da bom dia pra ele",
+      "fala com ele todo dia"
+    ],
+    "presenca": [
+      "ouve a voz dele",
+      "escuta a voz",
+      "sente a presenca",
+      "impressao de ouvir",
+      "impressao de ver",
+      "acha que ele esta",
+      "sente ele por perto"
+    ],
+    "medo": [
+      "medo de enlouquecer",
+      "medo de estar ficando louca",
+      "acha que esta ficando louca",
+      "medo dessas coisas",
+      "medo de estar ficando doida"
+    ],
+    "ideacao": [
+      "pensou em morrer",
+      "vontade de sumir",
+      "nao quer mais viver",
+      "pensamentos de morte",
+      "tirar a propria vida",
+      "vontade de ir junto",
+      "vontade de morrer tambem"
+    ],
+    "isolamento": [
+      "se afastou",
+      "parou de sair",
+      "deixou de ver amigos",
+      "largou as atividades",
+      "recusa convites",
+      "se recolheu",
+      "nao sai mais",
+      "largou a hidroginastica"
+    ],
+    "solidao": [
+      "se sente sozinha",
+      "a solidao",
+      "o silencio da casa",
+      "sente falta dele",
+      "a cama vazia",
+      "fica sozinha",
+      "sente muita falta"
+    ]
+  }
 }

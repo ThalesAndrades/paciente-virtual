@@ -269,6 +269,49 @@
           ]
         },
         {
+          "nome": "Percussão torácica",
+          "termos": [
+            "percussão",
+            "percussao",
+            "percutir o tórax",
+            "macicez",
+            "som à percussão"
+          ]
+        },
+        {
+          "nome": "Frêmito toracovocal",
+          "termos": [
+            "frêmito",
+            "fremito",
+            "frêmito toracovocal",
+            "ftv",
+            "vibração vocal",
+            "trinta e três"
+          ]
+        },
+        {
+          "nome": "Estado mental / nível de consciência",
+          "termos": [
+            "estado mental",
+            "consciência",
+            "consciencia",
+            "orientação",
+            "orientacao",
+            "confusão"
+          ]
+        },
+        {
+          "nome": "Hidratação e mucosas",
+          "termos": [
+            "hidratação",
+            "hidratacao",
+            "mucosas",
+            "desidratada",
+            "turgor",
+            "boca seca"
+          ]
+        },
+        {
           "nome": "Estado geral / inspeção",
           "termos": [
             "estado geral",
@@ -288,27 +331,6 @@
             "escutar o pulmão",
             "murmúrio vesicular",
             "murmurio vesicular"
-          ]
-        },
-        {
-          "nome": "Percussão torácica",
-          "termos": [
-            "percussão",
-            "percussao",
-            "percutir o tórax",
-            "macicez",
-            "som à percussão"
-          ]
-        },
-        {
-          "nome": "Frêmito toracovocal",
-          "termos": [
-            "frêmito",
-            "fremito",
-            "frêmito toracovocal",
-            "ftv",
-            "vibração vocal",
-            "trinta e três"
           ]
         },
         {

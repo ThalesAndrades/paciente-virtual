@@ -269,17 +269,6 @@
           ]
         },
         {
-          "nome": "Estado geral e inspeção",
-          "termos": [
-            "estado geral",
-            "inspeção",
-            "inspecao",
-            "aparência",
-            "aparencia",
-            "como ele está"
-          ]
-        },
-        {
           "nome": "Punho-percussão lombar (sinal de Giordano)",
           "termos": [
             "giordano",
@@ -320,6 +309,49 @@
             "vesícula",
             "vesicula",
             "hipocôndrio direito"
+          ]
+        },
+        {
+          "nome": "Exame testicular/genital",
+          "termos": [
+            "exame testicular",
+            "testículo",
+            "testiculo",
+            "bolsa escrotal",
+            "exame genital",
+            "torção testicular"
+          ]
+        },
+        {
+          "nome": "Estado geral e inspeção",
+          "termos": [
+            "estado geral",
+            "inspeção",
+            "inspecao",
+            "aparência",
+            "aparencia",
+            "como ele está"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "bulhas",
+            "escutar o coração"
           ]
         }
       ],

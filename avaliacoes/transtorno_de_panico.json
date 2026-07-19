@@ -30,7 +30,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Caracterizacao da queixa (HDA)",
@@ -87,7 +87,7 @@
           ]
         }
       ],
-      "peso": 2.4
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -138,7 +138,7 @@
           ]
         }
       ],
-      "peso": 1.2
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -181,7 +181,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Acolhimento e vinculo",
@@ -200,7 +200,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.7
     },
     {
       "nome": "Investigacao dos sintomas",
@@ -209,7 +209,6 @@
         {
           "nome": "crises",
           "termos": [
-            "crises",
             "crises"
           ]
         },
@@ -224,7 +223,6 @@
         {
           "nome": "medo",
           "termos": [
-            "medo",
             "medo"
           ]
         },
@@ -248,54 +246,125 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         }
       ],
-      "peso": 2
+      "peso": 1.7
     },
     {
-      "nome": "Temas sensiveis",
+      "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
         {
+          "nome": "isolamento",
+          "termos": [
+            "parou de sair",
+            "quase nao sai",
+            "recusa convites",
+            "evita sair",
+            "deixou de sair",
+            "inventa desculpa pra nao sair"
+          ]
+        },
+        {
           "nome": "termino",
           "termos": [
-            "termino"
+            "terminou um relacionamento",
+            "terminou o noivado",
+            "separacao",
+            "fim do relacionamento",
+            "rompimento",
+            "acabou o noivado"
           ]
         },
         {
           "nome": "medo enlouquecer",
           "termos": [
-            "medo enlouquecer"
+            "medo de enlouquecer",
+            "medo de ficar louca",
+            "acha que esta ficando louca",
+            "medo de morrer na crise",
+            "perder o controle na crise",
+            "medo de perder a cabeca"
           ]
         },
         {
           "nome": "vergonha",
           "termos": [
-            "vergonha"
-          ]
-        },
-        {
-          "nome": "isolamento",
-          "termos": [
-            "isolamento"
+            "tem vergonha",
+            "sente vergonha",
+            "acham que e frescura",
+            "vergonha de contar",
+            "constrangimento",
+            "nao contou pra ninguem"
           ]
         },
         {
           "nome": "trabalho",
           "termos": [
-            "trabalho"
+            "no trabalho",
+            "medo no trabalho",
+            "descobrirem no trabalho",
+            "acharem que nao e confiavel",
+            "no servico",
+            "medo de que descubram"
           ]
         },
         {
           "nome": "controle",
           "termos": [
-            "controle"
+            "perdeu o controle",
+            "controle do corpo",
+            "sente que perde o controle",
+            "perder o controle do corpo",
+            "perdi o controle"
           ]
         }
       ],
-      "peso": 1.2
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "Eletrocardiograma",
+          "termos": [
+            "ecg",
+            "eletro",
+            "eletrocardiograma",
+            "traçado",
+            "tracado"
+          ]
+        },
+        {
+          "nome": "TSH",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "tireóide",
+            "hormônio tireoidiano",
+            "hormonio tireoidiano",
+            "função tireoidiana"
+          ]
+        },
+        {
+          "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
+          "termos": [
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "questionário de ansiedade",
+            "questionario de ansiedade"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -314,7 +383,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

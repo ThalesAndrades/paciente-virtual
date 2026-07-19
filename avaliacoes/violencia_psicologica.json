@@ -96,7 +96,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -148,7 +148,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -228,7 +228,6 @@
         {
           "nome": "cefaleia",
           "termos": [
-            "cefaleia",
             "cefaleia"
           ]
         },
@@ -236,13 +235,16 @@
           "nome": "cansaco",
           "termos": [
             "cansaco",
-            "cansaco"
+            "cansada",
+            "cansado",
+            "fadiga",
+            "sem energia",
+            "exausta"
           ]
         },
         {
           "nome": "ansiedade",
           "termos": [
-            "ansiedade",
             "ansiedade"
           ]
         },
@@ -257,67 +259,146 @@
         {
           "nome": "relacionamento",
           "termos": [
-            "relacionamento",
-            "relacionamento"
+            "seu casamento",
+            "seu marido",
+            "seu relacionamento",
+            "como e em casa",
+            "a relacao com ele",
+            "vida a dois"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
         {
+          "nome": "isolamento",
+          "termos": [
+            "te impede de ver",
+            "nao deixa voce sair",
+            "te afastou dos amigos",
+            "proibe de ver a familia",
+            "deixou de ver amigos",
+            "te isolou"
+          ]
+        },
+        {
+          "nome": "agressao fisica",
+          "termos": [
+            "ele te bateu",
+            "ja te agrediu",
+            "te empurrou",
+            "te machucou fisicamente",
+            "chegou a te bater",
+            "encostou a mao"
+          ]
+        },
+        {
+          "nome": "ideacao",
+          "termos": [
+            "pensou em sumir",
+            "vontade de sumir",
+            "dormir e nao acordar",
+            "pensou em morrer",
+            "nao quer mais viver",
+            "tirar a propria vida"
+          ]
+        },
+        {
+          "nome": "protecao",
+          "termos": [
+            "o que te segura",
+            "o que te faz continuar",
+            "pela sua mae",
+            "motivo para seguir",
+            "com quem voce conta",
+            "o que te prende"
+          ]
+        },
+        {
+          "nome": "seguranca atual",
+          "termos": [
+            "esta segura",
+            "corre risco",
+            "em perigo",
+            "segura em casa",
+            "tem pra onde ir",
+            "precisa de protecao"
+          ]
+        },
+        {
           "nome": "controle",
           "termos": [
-            "controle"
+            "te controla",
+            "controla o que voce faz",
+            "quer saber com quem",
+            "olha seu celular",
+            "ve seu celular",
+            "tem que dar satisfacao"
           ]
         },
         {
           "nome": "financas",
           "termos": [
-            "financas"
+            "controla o dinheiro",
+            "cuida do seu salario",
+            "voce tem dinheiro",
+            "precisa pedir dinheiro",
+            "acesso ao dinheiro",
+            "liberdade financeira"
           ]
         },
         {
           "nome": "humilhacoes",
           "termos": [
-            "humilhacoes"
-          ]
-        },
-        {
-          "nome": "isolamento",
-          "termos": [
-            "isolamento"
-          ]
-        },
-        {
-          "nome": "medo",
-          "termos": [
-            "medo"
-          ]
-        },
-        {
-          "nome": "culpa",
-          "termos": [
-            "culpa"
-          ]
-        },
-        {
-          "nome": "minimizacao",
-          "termos": [
-            "minimizacao"
-          ]
-        },
-        {
-          "nome": "relacionamento",
-          "termos": [
-            "relacionamento"
+            "te humilha",
+            "te xinga",
+            "te ofende",
+            "te diminui",
+            "chama voce de",
+            "fala coisas que machucam"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "Hemograma completo",
+          "termos": [
+            "hemograma",
+            "sangue",
+            "exame de sangue"
+          ]
+        },
+        {
+          "nome": "TSH e T4 livre",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "tireóide",
+            "hormônio da tireoide",
+            "hormonio da tireoide",
+            "t4"
+          ]
+        },
+        {
+          "nome": "Glicemia de jejum",
+          "termos": [
+            "glicemia",
+            "glicose",
+            "açúcar no sangue",
+            "acucar no sangue"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -336,7 +417,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

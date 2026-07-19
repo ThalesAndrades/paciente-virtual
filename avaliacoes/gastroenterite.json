@@ -291,17 +291,6 @@
           ]
         },
         {
-          "nome": "Ausculta abdominal (ruídos hidroaéreos)",
-          "termos": [
-            "ausculta abdominal",
-            "ruídos hidroaéreos",
-            "ruidos hidroaereos",
-            "escutar a barriga",
-            "peristalse",
-            "ruídos intestinais"
-          ]
-        },
-        {
           "nome": "Palpação abdominal",
           "termos": [
             "palpação abdominal",
@@ -321,6 +310,39 @@
             "sinal de irritação peritoneal",
             "peritonite",
             "sinal do apêndice"
+          ]
+        },
+        {
+          "nome": "Sinal de Giordano (punho-percussão lombar)",
+          "termos": [
+            "giordano",
+            "punho percussão",
+            "punho-percussao",
+            "percussão lombar",
+            "dor nos rins",
+            "loja renal"
+          ]
+        },
+        {
+          "nome": "Inspeção da pele (petéquias / prova do laço)",
+          "termos": [
+            "petéquias",
+            "petequias",
+            "manchas na pele",
+            "prova do laço",
+            "prova do laco",
+            "sinais de dengue na pele"
+          ]
+        },
+        {
+          "nome": "Ausculta abdominal (ruídos hidroaéreos)",
+          "termos": [
+            "ausculta abdominal",
+            "ruídos hidroaéreos",
+            "ruidos hidroaereos",
+            "escutar a barriga",
+            "peristalse",
+            "ruídos intestinais"
           ]
         }
       ],

@@ -87,7 +87,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -138,7 +138,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -209,7 +209,6 @@
         {
           "nome": "exaustao",
           "termos": [
-            "exaustao",
             "exaustao"
           ]
         },
@@ -224,82 +223,150 @@
         {
           "nome": "cefaleia",
           "termos": [
-            "cefaleia",
             "cefaleia"
           ]
         },
         {
           "nome": "plantoes",
           "termos": [
-            "plantoes",
             "plantoes"
           ]
         },
         {
           "nome": "empregos",
           "termos": [
-            "empregos",
             "empregos"
           ]
         },
         {
           "nome": "cinismo",
           "termos": [
-            "cinismo",
             "cinismo"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
         {
-          "nome": "choro",
-          "termos": [
-            "choro"
-          ]
-        },
-        {
           "nome": "abandono",
           "termos": [
-            "abandono"
+            "pensa em largar",
+            "largar a profissao",
+            "abandonar a enfermagem",
+            "desistir da profissao",
+            "parar de trabalhar",
+            "largar tudo"
           ]
         },
         {
           "nome": "automedicacao",
           "termos": [
-            "automedicacao"
-          ]
-        },
-        {
-          "nome": "culpa",
-          "termos": [
-            "culpa"
-          ]
-        },
-        {
-          "nome": "trabalho",
-          "termos": [
-            "trabalho"
-          ]
-        },
-        {
-          "nome": "medo",
-          "termos": [
-            "medo"
+            "toma remedio por conta",
+            "se automedica",
+            "toma pra dormir",
+            "remedio sem receita",
+            "zolpidem por conta",
+            "medicacao por conta propria"
           ]
         },
         {
           "nome": "isolamento",
           "termos": [
-            "isolamento"
+            "se afastou dos amigos",
+            "parou de responder",
+            "nao tem energia pra ninguem",
+            "deixou de ver amigos",
+            "se isolou",
+            "parou de responder os amigos"
+          ]
+        },
+        {
+          "nome": "choro",
+          "termos": [
+            "chorou",
+            "vontade de chorar",
+            "chegou a chorar",
+            "se emocionou",
+            "chorar escondido",
+            "chorou no vestiario"
+          ]
+        },
+        {
+          "nome": "culpa",
+          "termos": [
+            "se sente falhando",
+            "acha que esta falhando",
+            "se sente culpado",
+            "falhando como profissional",
+            "falhando como pai",
+            "se cobra demais"
+          ]
+        },
+        {
+          "nome": "trabalho",
+          "termos": [
+            "no trabalho",
+            "no plantao",
+            "no hospital",
+            "deixou passar sinais",
+            "erro no trabalho",
+            "no automatico"
+          ]
+        },
+        {
+          "nome": "medo",
+          "termos": [
+            "medo de machucar alguem",
+            "medo de errar",
+            "medo de prejudicar um paciente",
+            "seu maior medo",
+            "medo por causa do cansaco",
+            "medo de cometer um erro grave"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "Inventário de Burnout de Maslach (MBI)",
+          "termos": [
+            "mbi",
+            "maslach",
+            "inventário de burnout",
+            "escala de burnout",
+            "questionário de burnout"
+          ]
+        },
+        {
+          "nome": "TSH",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "hormônio tireoidiano",
+            "função tireoidiana",
+            "hormônio da tireoide"
+          ]
+        },
+        {
+          "nome": "Questionário de Saúde do Paciente (PHQ-9)",
+          "termos": [
+            "phq9",
+            "phq-9",
+            "escala de depressão",
+            "rastreio de depressão",
+            "questionário de depressão"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -318,7 +385,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

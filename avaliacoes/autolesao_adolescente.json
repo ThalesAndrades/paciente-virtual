@@ -79,12 +79,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -127,7 +128,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -179,7 +180,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -293,14 +294,12 @@
         {
           "nome": "escola",
           "termos": [
-            "escola",
             "escola"
           ]
         },
         {
           "nome": "roupas",
           "termos": [
-            "roupas",
             "roupas"
           ]
         },
@@ -313,12 +312,45 @@
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
+        {
+          "nome": "ideacao",
+          "termos": [
+            "morte",
+            "morrer",
+            "nao vale a pena",
+            "sumir",
+            "nao existir",
+            "tirar a vida"
+          ]
+        },
+        {
+          "nome": "plano e intencao",
+          "termos": [
+            "plano",
+            "planejou",
+            "como faria",
+            "pensou em como",
+            "tem intencao",
+            "guardou algo"
+          ]
+        },
+        {
+          "nome": "protecao",
+          "termos": [
+            "o que te segura",
+            "motivo pra continuar",
+            "quem te apoia",
+            "o que te faz bem",
+            "razao pra viver",
+            "o que te ajuda"
+          ]
+        },
         {
           "nome": "autolesao",
           "termos": [
@@ -373,42 +405,60 @@
             "moletom",
             "porque cobre"
           ]
-        },
+        }
+      ],
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
         {
-          "nome": "vergonha",
+          "nome": "PHQ-A (Questionário de Saúde do Paciente — versão adolescente)",
           "termos": [
-            "vergonha",
-            "como se ve",
-            "o que acha de si",
-            "se sente envergonhada",
-            "nojo de si",
-            "se acha"
+            "phq-a",
+            "phq a",
+            "phq",
+            "phq-9",
+            "escala de depressão",
+            "questionário de depressão"
           ]
         },
         {
-          "nome": "culpa",
+          "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
           "termos": [
-            "culpa",
-            "se sente culpada",
-            "arrependida",
-            "depois de fazer",
-            "sente que errou",
-            "peso na consciencia"
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "questionário de ansiedade",
+            "ansiedade"
           ]
         },
         {
-          "nome": "ideacao",
+          "nome": "C-SSRS (Escala Columbia de Gravidade do Risco de Suicídio)",
           "termos": [
-            "morte",
-            "morrer",
-            "nao vale a pena",
-            "sumir",
-            "nao existir",
-            "tirar a vida"
+            "c-ssrs",
+            "cssrs",
+            "columbia",
+            "escala columbia",
+            "risco de suicídio",
+            "risco de suicidio"
+          ]
+        },
+        {
+          "nome": "Inventário de Autolesão (rastreio de comportamento autolesivo)",
+          "termos": [
+            "inventário de autolesão",
+            "inventario de autolesao",
+            "dshi",
+            "escala de autolesão",
+            "rastreio de autolesão",
+            "frequência de autolesão"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -427,7 +477,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

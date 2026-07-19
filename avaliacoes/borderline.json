@@ -59,12 +59,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -107,7 +108,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -159,7 +160,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -256,14 +257,12 @@
         {
           "nome": "termino",
           "termos": [
-            "termino",
             "termino"
           ]
         },
         {
           "nome": "ansiedade",
           "termos": [
-            "ansiedade",
             "ansiedade"
           ]
         },
@@ -280,34 +279,30 @@
           "nome": "vazio",
           "termos": [
             "vazio",
-            "vazio"
+            "vazia",
+            "buraco por dentro",
+            "sensacao de nada",
+            "se sente oca",
+            "falta alguma coisa dentro"
           ]
         },
         {
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
-        {
-          "nome": "autolesao",
-          "termos": [
-            "se cortar",
-            "cortar",
-            "se machucar",
-            "machucar",
-            "se ferir",
-            "marcas no braco"
-          ]
-        },
         {
           "nome": "ideacao suicida",
           "termos": [
@@ -317,6 +312,17 @@
             "sumir de vez",
             "acabar com tudo",
             "tirar a vida"
+          ]
+        },
+        {
+          "nome": "autolesao",
+          "termos": [
+            "se cortar",
+            "cortar",
+            "se machucar",
+            "machucar",
+            "se ferir",
+            "marcas no braco"
           ]
         },
         {
@@ -375,7 +381,77 @@
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "MSI-BPD (McLean Screening Instrument for Borderline Personality Disorder)",
+          "termos": [
+            "msi-bpd",
+            "msi bpd",
+            "msi",
+            "rastreio de borderline",
+            "escala de borderline",
+            "triagem de personalidade borderline"
+          ]
+        },
+        {
+          "nome": "C-SSRS (Escala Columbia de Gravidade de Risco de Suicídio)",
+          "termos": [
+            "c-ssrs",
+            "cssrs",
+            "columbia",
+            "escala columbia",
+            "risco de suicídio",
+            "avaliação de risco suicida"
+          ]
+        },
+        {
+          "nome": "BIS-11 (Escala de Impulsividade de Barratt)",
+          "termos": [
+            "bis-11",
+            "bis 11",
+            "barratt",
+            "escala de impulsividade",
+            "impulsividade"
+          ]
+        },
+        {
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+          "termos": [
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "DERS (Escala de Dificuldades na Regulação Emocional)",
+          "termos": [
+            "ders",
+            "regulação emocional",
+            "regulacao emocional",
+            "escala de regulação emocional",
+            "dificuldade de regular emoção"
+          ]
+        },
+        {
+          "nome": "Triagem toxicológica / exames gerais",
+          "termos": [
+            "toxicológico",
+            "toxicologico",
+            "exame de sangue",
+            "hemograma",
+            "tsh",
+            "função tireoidiana"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -394,7 +470,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

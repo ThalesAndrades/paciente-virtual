@@ -291,6 +291,39 @@
           ]
         },
         {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "apalpar a barriga",
+            "palpar o abdome",
+            "abdome",
+            "abdômen"
+          ]
+        },
+        {
+          "nome": "Sinal de Blumberg (descompressão)",
+          "termos": [
+            "blumberg",
+            "descompressão",
+            "descompressao",
+            "descompressão brusca",
+            "sinal de irritação peritoneal",
+            "peritonite"
+          ]
+        },
+        {
+          "nome": "Exame neurológico / nível de consciência",
+          "termos": [
+            "neurológico",
+            "neurologico",
+            "nível de consciência",
+            "nivel de consciencia",
+            "consciência",
+            "orientação"
+          ]
+        },
+        {
           "nome": "Ausculta cardíaca",
           "termos": [
             "ausculta cardíaca",
@@ -310,17 +343,6 @@
             "escutar o pulmão",
             "murmúrio vesicular",
             "respiração"
-          ]
-        },
-        {
-          "nome": "Palpação abdominal",
-          "termos": [
-            "palpação abdominal",
-            "palpacao abdominal",
-            "apalpar a barriga",
-            "palpar o abdome",
-            "abdome",
-            "abdômen"
           ]
         }
       ],

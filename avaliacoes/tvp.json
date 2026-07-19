@@ -321,6 +321,39 @@
             "dobrar o pé pra cima",
             "flexionar o pé"
           ]
+        },
+        {
+          "nome": "Pulsos periféricos do membro",
+          "termos": [
+            "pulsos",
+            "pulso do pé",
+            "pulso pedioso",
+            "pulso tibial",
+            "perfusão do pé",
+            "circulação arterial"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular",
+            "respiração"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "escutar o coração",
+            "bulhas"
+          ]
         }
       ],
       "peso": 1.5

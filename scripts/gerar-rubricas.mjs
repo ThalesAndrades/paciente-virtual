@@ -37,6 +37,10 @@ const TERMOS_SINTOMA = {
   preocupacao: ["preocupacao", "preocupado", "ansioso"], evitacao: ["evita", "deixou de fazer", "deixa de sair"],
   compulsao: ["compulsao", "repete", "checar", "lavar", "ritual"], obsessao: ["pensamento", "obsessao", "intrusivo"],
   flashbacks: ["revive", "flashback", "pesadelo", "lembrancas"], panico: ["crise", "ataque", "coracao acelerado"],
+  cansaco: ["cansaco", "cansada", "cansado", "fadiga", "sem energia", "exausta"], fadiga: ["fadiga", "cansaco", "cansada", "sem energia", "exausto"],
+  sobressalto: ["sobressalto", "assusta", "assustada", "sobressaltada", "sempre alerta", "vigilante"], nervosismo: ["nervosa", "nervoso", "nervosismo", "ansiosa", "agitada", "tensa"],
+  trabalho: ["trabalho", "trabalha", "emprego", "no servico", "no plantao"], tristeza: ["triste", "tristeza", "pra baixo", "abatida", "desanimada"],
+  medo_geral: ["medo", "receio", "com medo", "assustada"], culpa: ["culpa", "se culpa", "se sente culpada", "peso na consciencia"],
 };
 
 function chavesComValor(obj) {
@@ -64,7 +68,7 @@ function rubrica(caso) {
   if (hda.localizacao) itHda.push({ nome: "localizacao", termos: ["onde doi", "onde e", "localizacao", "que lugar", "aponta onde"] });
   if (hda.irradiacao) itHda.push({ nome: "irradiacao", termos: ["irradia", "vai para", "corre para", "espalha", "vai pro braco"] });
   if (hda.intensidade) itHda.push({ nome: "intensidade", termos: ["intensidade", "forte", "de zero a dez", "escala", "quanto doi"] });
-  if (hda.caracter || hda.tipo || hda.qualidade) itHda.push({ nome: "carater/tipo", termos: ["como e a dor", "tipo de dor", "aperto", "queimacao", "pontada", "latejante"] });
+  if (hda.caracter || hda.tipo || hda.qualidade) itHda.push({ nome: "carater/tipo", termos: med ? ["como e a dor", "tipo de dor", "aperto", "queimacao", "pontada", "latejante"] : ["como e essa sensacao", "como e por dentro", "descreve o que sente", "esse vazio como e", "peso no peito", "como se manifesta", "o que sente exatamente"] });
   if (hda.frequencia || hda.duracao) itHda.push({ nome: "frequencia/duracao", termos: ["com que frequencia", "quanto tempo dura", "vem e vai", "continua", "quantas vezes"] });
   if (hda.fatores_piora || hda.fatores_melhora) itHda.push({ nome: "fatores de melhora/piora", termos: ["melhora", "piora", "alivia", "o que faz melhorar", "o que piora"] });
   if (hda.sintomas_associados) itHda.push({ nome: "sintomas associados", termos: ["mais alguma coisa", "outros sintomas", "sente mais", "junto com", "alem disso"] });
@@ -94,13 +98,24 @@ function rubrica(caso) {
   if (med) {
     // 5. Exame físico / sinais vitais
     const ef = caso.exame_fisico || {};
-    const itEF = [{ nome: "aferir sinais vitais", termos: ["pressao", "aferir", "frequencia cardiaca", "pulso", "saturacao", "temperatura", "sinais vitais", "medir"] }];
+    const VITAIS = ["pressao_arterial", "frequencia_cardiaca", "frequencia_respiratoria", "temperatura", "saturacao", "glicemia_capilar", "glicemia"];
+    // Manobras genéricas de baixo rendimento: entram só depois das manobras
+    // ESPECÍFICAS do caso, para o corte não descartar o sinal-assinatura (ex.:
+    // Blumberg/Rovsing na apendicite não podem ser cortados pelas auscultas).
+    const GENERICOS = ["ausculta_cardiaca", "ausculta_pulmonar", "inspecao_geral", "estado_geral", "inspecao_abdominal", "ausculta_abdominal"];
+    const especificos = [];
+    const genericos = [];
     for (const [k, d] of Object.entries(ef)) {
-      if (["pressao_arterial", "frequencia_cardiaca", "frequencia_respiratoria", "temperatura", "saturacao", "glicemia_capilar", "glicemia"].includes(k)) continue;
-      const termos = Array.isArray(d?.sinonimos) ? d.sinonimos.slice(0, 6) : [humano(k)];
-      itEF.push({ nome: d?.nome || humano(k), termos });
+      if (VITAIS.includes(k)) continue;
+      const item = { nome: d?.nome || humano(k), termos: Array.isArray(d?.sinonimos) ? d.sinonimos.slice(0, 6) : [humano(k)] };
+      (GENERICOS.includes(k) ? genericos : especificos).push(item);
     }
-    crit.push({ base: 1.5, nome: "Exame fisico", objetivo: "Realizar exame fisico direcionado.", itens: itEF.slice(0, 6) });
+    const itEF = [
+      { nome: "aferir sinais vitais", termos: ["pressao", "aferir", "frequencia cardiaca", "pulso", "saturacao", "temperatura", "sinais vitais", "medir"] },
+      ...especificos,
+      ...genericos,
+    ];
+    crit.push({ base: 1.5, nome: "Exame fisico", objetivo: "Realizar exame fisico direcionado.", itens: itEF.slice(0, 10) });
 
     // 6. Exames complementares
     const itEx = [];
@@ -115,19 +130,41 @@ function rubrica(caso) {
       { nome: "escuta aberta/acolhimento", termos: ["me conta", "como voce esta", "como tem sido", "fale um pouco", "quer falar", "estou aqui", "pode confiar"] },
     ] });
     const inter = { ...(caso.informacoes_iniciais || {}), ...(caso.informacoes_intermediarias || {}) };
+    const gatCaso = caso.gatilhos_sensiveis || {};
     if (chavesComValor(inter).length) {
-      const itSint = chavesComValor(inter).slice(0, 6).map((k) => ({ nome: humano(k), termos: TERMOS_SINTOMA[k] || [humano(k), ...humano(k).split(" ")].filter((t) => t.length > 3).slice(0, 4) }));
+      // Termos curados; senão gatilhos do próprio caso; senão o nome da chave —
+      // sempre deduplicado (evita o termo repetido do fallback antigo).
+      const itSint = chavesComValor(inter).slice(0, 6).map((k) => ({
+        nome: humano(k),
+        termos: [...new Set(TERMOS_SINTOMA[k] || gatCaso[k] || [humano(k), ...humano(k).split(" ").filter((t) => t.length > 3)])].slice(0, 6),
+      }));
       crit.push({ base: 2.5, nome: "Investigacao dos sintomas", objetivo: "Investigar os sintomas e o contexto do quadro.", itens: itSint });
     }
-    // Risco / temas sensiveis: termos = gatilhos do proprio caso
+    // Risco / temas sensiveis: termos = gatilhos do proprio caso. Chaves de RISCO
+    // sobem antes do corte (senão 'ideacao', 11ª chave no TEPT, cairia fora do top-8).
     const sens = caso.informacoes_sensiveis || {};
     const gat = caso.gatilhos_sensiveis || {};
+    const RISCO_RE = /ideacao|plano|protecao|seguranca|agressao|automedicacao|abandono|isolamento/;
     const chavesRisco = Object.keys(sens);
+    // Guarda anti-regressão: um caso com chave de risco (ideação/plano/...) SEM
+    // gatilhos_sensiveis geraria itens de risco não-pontuáveis (só o nome da chave).
+    if (chavesRisco.some((k) => RISCO_RE.test(k)) && !Object.keys(gat).length) {
+      console.warn(`  ⚠ ${caso.titulo}: caso de RISCO sem gatilhos_sensiveis — itens de risco cairão no fallback fraco.`);
+    }
+    const ordenadas = [...chavesRisco].sort((a, b) => (RISCO_RE.test(b) ? 1 : 0) - (RISCO_RE.test(a) ? 1 : 0));
     if (chavesRisco.length) {
-      const itRisco = chavesRisco.slice(0, 8).map((k) => ({ nome: humano(k), termos: (gat[k] || [humano(k)]).slice(0, 6) }));
-      const temRisco = chavesRisco.some((k) => /ideacao|plano|protecao|seguranca|agressao|automedicacao|abandono/.test(k));
+      const itRisco = ordenadas.slice(0, 8).map((k) => ({ nome: humano(k), termos: (gat[k] || [humano(k)]).slice(0, 6) }));
+      const temRisco = chavesRisco.some((k) => RISCO_RE.test(k));
       crit.push({ base: temRisco ? 2.5 : 1.5, nome: temRisco ? "Avaliacao de risco e temas sensiveis" : "Temas sensiveis", objetivo: "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).", itens: itRisco });
     }
+    // Instrumentos/escalas (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT): boa prática
+    // clínica prevista no caso, também pontuável na psicologia.
+    const itEsc = [];
+    for (const [k, d] of Object.entries(caso.exames_disponiveis || {})) {
+      const termos = Array.isArray(d?.sinonimos) ? d.sinonimos.slice(0, 6) : [humano(k)];
+      itEsc.push({ nome: d?.nome || humano(k), termos });
+    }
+    if (itEsc.length) crit.push({ base: 1.5, nome: "Instrumentos e escalas", objetivo: "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).", itens: itEsc.slice(0, 6) });
     const rede = caso.rede_apoio || {};
     if (chavesComValor(rede).length) {
       crit.push({ base: 1, nome: "Rede de apoio e fatores de protecao", objetivo: "Mapear apoio e fatores de protecao.", itens: [

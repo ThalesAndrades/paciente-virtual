@@ -59,12 +59,13 @@
         {
           "nome": "carater/tipo",
           "termos": [
-            "como e a dor",
-            "tipo de dor",
-            "aperto",
-            "queimacao",
-            "pontada",
-            "latejante"
+            "como e essa sensacao",
+            "como e por dentro",
+            "descreve o que sente",
+            "esse vazio como e",
+            "peso no peito",
+            "como se manifesta",
+            "o que sente exatamente"
           ]
         },
         {
@@ -107,7 +108,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -159,7 +160,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -248,14 +249,16 @@
         {
           "nome": "tristeza",
           "termos": [
+            "triste",
             "tristeza",
-            "tristeza"
+            "pra baixo",
+            "abatida",
+            "desanimada"
           ]
         },
         {
           "nome": "exaustao",
           "termos": [
-            "exaustao",
             "exaustao"
           ]
         },
@@ -279,7 +282,6 @@
         {
           "nome": "bebe",
           "termos": [
-            "bebe",
             "bebe"
           ]
         },
@@ -287,16 +289,52 @@
           "nome": "trabalho",
           "termos": [
             "trabalho",
-            "trabalho"
+            "trabalha",
+            "emprego",
+            "no servico",
+            "no plantao"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
+        {
+          "nome": "ideacao",
+          "termos": [
+            "nao vale a pena",
+            "morte",
+            "morrer",
+            "sumir",
+            "desaparecer",
+            "melhor sem voce"
+          ]
+        },
+        {
+          "nome": "plano",
+          "termos": [
+            "como faria",
+            "ja pensou em como",
+            "tem um plano",
+            "planejou",
+            "pensou em fazer",
+            "chegou a preparar"
+          ]
+        },
+        {
+          "nome": "protecao",
+          "termos": [
+            "o que te segura",
+            "motivo pra continuar",
+            "razao pra seguir",
+            "o que te faz ficar",
+            "quem te apoia",
+            "no que se apoia"
+          ]
+        },
         {
           "nome": "vinculo",
           "termos": [
@@ -331,28 +369,6 @@
           ]
         },
         {
-          "nome": "ideacao",
-          "termos": [
-            "nao vale a pena",
-            "morte",
-            "morrer",
-            "sumir",
-            "desaparecer",
-            "melhor sem voce"
-          ]
-        },
-        {
-          "nome": "plano",
-          "termos": [
-            "como faria",
-            "ja pensou em como",
-            "tem um plano",
-            "planejou",
-            "pensou em fazer",
-            "chegou a preparar"
-          ]
-        },
-        {
           "nome": "culpa",
           "termos": [
             "culpa",
@@ -373,20 +389,67 @@
             "tem medo de contar",
             "guarda pra voce"
           ]
+        }
+      ],
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "EPDS — Escala de Depressão Pós-Parto de Edimburgo",
+          "termos": [
+            "epds",
+            "edimburgo",
+            "escala de edimburgo",
+            "escala pos-parto",
+            "escala pós-parto",
+            "escala de depressão pós-parto"
+          ]
         },
         {
-          "nome": "medo de julgamento",
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
           "termos": [
-            "medo de contar",
-            "medo do que vao pensar",
-            "tirar o bebe",
-            "tirar o filho",
-            "acharem que e louca",
-            "internar"
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "GAD-7 (Escala de Ansiedade Generalizada)",
+          "termos": [
+            "gad-7",
+            "gad 7",
+            "gad",
+            "escala de ansiedade",
+            "ansiedade"
+          ]
+        },
+        {
+          "nome": "TSH e T4 livre",
+          "termos": [
+            "tsh",
+            "t4",
+            "tireoide",
+            "tireóide",
+            "hormônio tireoidiano",
+            "função tireoidiana"
+          ]
+        },
+        {
+          "nome": "Hemograma",
+          "termos": [
+            "hemograma",
+            "exame de sangue",
+            "sangue",
+            "anemia"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -405,7 +468,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

@@ -243,5 +243,69 @@
     "culpado": true,
     "com_medo_do_futuro": true
   },
-  "categoria": "psicologia"
+  "categoria": "psicologia",
+  "gatilhos_sensiveis": {
+    "choro": [
+      "chorou",
+      "vontade de chorar",
+      "chegou a chorar",
+      "se emocionou",
+      "chorar escondido",
+      "chorou no vestiario"
+    ],
+    "abandono": [
+      "pensa em largar",
+      "largar a profissao",
+      "abandonar a enfermagem",
+      "desistir da profissao",
+      "parar de trabalhar",
+      "largar tudo",
+      "sair da enfermagem",
+      "pensou em largar"
+    ],
+    "automedicacao": [
+      "toma remedio por conta",
+      "se automedica",
+      "toma pra dormir",
+      "remedio sem receita",
+      "zolpidem por conta",
+      "medicacao por conta propria",
+      "toma algo pra dormir",
+      "usa remedio sozinho"
+    ],
+    "culpa": [
+      "se sente falhando",
+      "acha que esta falhando",
+      "se sente culpado",
+      "falhando como profissional",
+      "falhando como pai",
+      "se cobra demais",
+      "acha que esta fracassando"
+    ],
+    "trabalho": [
+      "no trabalho",
+      "no plantao",
+      "no hospital",
+      "deixou passar sinais",
+      "erro no trabalho",
+      "no automatico",
+      "quase erro no trabalho"
+    ],
+    "medo": [
+      "medo de machucar alguem",
+      "medo de errar",
+      "medo de prejudicar um paciente",
+      "seu maior medo",
+      "medo por causa do cansaco",
+      "medo de cometer um erro grave"
+    ],
+    "isolamento": [
+      "se afastou dos amigos",
+      "parou de responder",
+      "nao tem energia pra ninguem",
+      "deixou de ver amigos",
+      "se isolou",
+      "parou de responder os amigos"
+    ]
+  }
 }

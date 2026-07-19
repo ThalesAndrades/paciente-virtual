@@ -168,6 +168,45 @@
           ]
         },
         {
+          "nome": "Palpação abdominal",
+          "termos": [
+            "palpação abdominal",
+            "palpacao abdominal",
+            "apalpar a barriga",
+            "palpar o abdome",
+            "abdome",
+            "barriga"
+          ]
+        },
+        {
+          "nome": "Sinal de Murphy",
+          "termos": [
+            "murphy",
+            "sinal de murphy",
+            "manobra de murphy"
+          ]
+        },
+        {
+          "nome": "Sinal de Blumberg (descompressão)",
+          "termos": [
+            "blumberg",
+            "descompressão dolorosa",
+            "descompressao",
+            "sinal de blumberg",
+            "irritação peritoneal"
+          ]
+        },
+        {
+          "nome": "Sinal de Giordano (punho-percussão lombar)",
+          "termos": [
+            "giordano",
+            "sinal de giordano",
+            "punho percussão",
+            "punho-percussão lombar",
+            "loja renal"
+          ]
+        },
+        {
           "nome": "Ausculta cardíaca",
           "termos": [
             "ausculta cardíaca",
@@ -187,25 +226,6 @@
             "escutar o pulmão",
             "murmúrio vesicular",
             "tórax"
-          ]
-        },
-        {
-          "nome": "Palpação abdominal",
-          "termos": [
-            "palpação abdominal",
-            "palpacao abdominal",
-            "apalpar a barriga",
-            "palpar o abdome",
-            "abdome",
-            "barriga"
-          ]
-        },
-        {
-          "nome": "Sinal de Murphy",
-          "termos": [
-            "murphy",
-            "sinal de murphy",
-            "manobra de murphy"
           ]
         }
       ],

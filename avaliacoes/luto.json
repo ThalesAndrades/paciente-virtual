@@ -96,7 +96,7 @@
           ]
         }
       ],
-      "peso": 2.2
+      "peso": 2
     },
     {
       "nome": "Antecedentes",
@@ -148,7 +148,7 @@
           ]
         }
       ],
-      "peso": 1.1
+      "peso": 1
     },
     {
       "nome": "Habitos de vida",
@@ -228,7 +228,6 @@
         {
           "nome": "perda",
           "termos": [
-            "perda",
             "perda"
           ]
         },
@@ -252,7 +251,6 @@
         {
           "nome": "casa",
           "termos": [
-            "casa",
             "casa"
           ]
         },
@@ -267,61 +265,134 @@
         {
           "nome": "filhos",
           "termos": [
-            "filhos",
             "filhos"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
     },
     {
       "nome": "Avaliacao de risco e temas sensiveis",
       "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
       "itens": [
         {
-          "nome": "culpa",
-          "termos": [
-            "culpa"
-          ]
-        },
-        {
-          "nome": "retrato",
-          "termos": [
-            "retrato"
-          ]
-        },
-        {
-          "nome": "presenca",
-          "termos": [
-            "presenca"
-          ]
-        },
-        {
-          "nome": "medo",
-          "termos": [
-            "medo"
-          ]
-        },
-        {
           "nome": "ideacao",
           "termos": [
-            "ideacao"
+            "pensou em morrer",
+            "vontade de sumir",
+            "nao quer mais viver",
+            "pensamentos de morte",
+            "tirar a propria vida",
+            "vontade de ir junto"
           ]
         },
         {
           "nome": "isolamento",
           "termos": [
-            "isolamento"
+            "se afastou",
+            "parou de sair",
+            "deixou de ver amigos",
+            "largou as atividades",
+            "recusa convites",
+            "se recolheu"
+          ]
+        },
+        {
+          "nome": "culpa",
+          "termos": [
+            "se sente culpada",
+            "devia ter percebido",
+            "acha que podia ter feito",
+            "fica remoendo",
+            "se culpa pela morte",
+            "culpa pela perda"
+          ]
+        },
+        {
+          "nome": "retrato",
+          "termos": [
+            "conversa com ele",
+            "fala com o retrato",
+            "fala com a foto",
+            "conversa com a foto",
+            "da bom dia pra ele",
+            "fala com ele todo dia"
+          ]
+        },
+        {
+          "nome": "presenca",
+          "termos": [
+            "ouve a voz dele",
+            "escuta a voz",
+            "sente a presenca",
+            "impressao de ouvir",
+            "impressao de ver",
+            "acha que ele esta"
+          ]
+        },
+        {
+          "nome": "medo",
+          "termos": [
+            "medo de enlouquecer",
+            "medo de estar ficando louca",
+            "acha que esta ficando louca",
+            "medo dessas coisas",
+            "medo de estar ficando doida"
           ]
         },
         {
           "nome": "solidao",
           "termos": [
-            "solidao"
+            "se sente sozinha",
+            "a solidao",
+            "o silencio da casa",
+            "sente falta dele",
+            "a cama vazia",
+            "fica sozinha"
           ]
         }
       ],
-      "peso": 1.9
+      "peso": 1.7
+    },
+    {
+      "nome": "Instrumentos e escalas",
+      "objetivo": "Aplicar/considerar instrumentos de rastreio e gravidade pertinentes (PHQ-9, C-SSRS, GAD-7, PCL-5, AUDIT).",
+      "itens": [
+        {
+          "nome": "PHQ-9 (Questionário de Saúde do Paciente)",
+          "termos": [
+            "phq-9",
+            "phq 9",
+            "phq",
+            "escala de depressão",
+            "escala de depressao",
+            "questionário de depressão"
+          ]
+        },
+        {
+          "nome": "TSH (hormônio tireoestimulante)",
+          "termos": [
+            "tsh",
+            "tireoide",
+            "tireóide",
+            "hormônio da tireoide",
+            "hormonio da tireoide",
+            "função tireoidiana"
+          ]
+        },
+        {
+          "nome": "Hemograma completo",
+          "termos": [
+            "hemograma",
+            "sangue",
+            "exame de sangue",
+            "anemia",
+            "série vermelha",
+            "serie vermelha"
+          ]
+        }
+      ],
+      "peso": 1
     },
     {
       "nome": "Rede de apoio e fatores de protecao",
@@ -340,7 +411,7 @@
           ]
         }
       ],
-      "peso": 0.8
+      "peso": 0.5
     }
   ]
 }

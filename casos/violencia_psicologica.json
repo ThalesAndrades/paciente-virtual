@@ -290,5 +290,120 @@
       "resultado": "Glicemia de jejum normal."
     }
   },
-  "categoria": "psicologia"
+  "categoria": "psicologia",
+  "gatilhos_sensiveis": {
+    "controle": [
+      "te controla",
+      "controla o que voce faz",
+      "quer saber com quem",
+      "olha seu celular",
+      "ve seu celular",
+      "tem que dar satisfacao",
+      "pede pra ver o celular",
+      "controla suas saidas"
+    ],
+    "financas": [
+      "controla o dinheiro",
+      "cuida do seu salario",
+      "voce tem dinheiro",
+      "precisa pedir dinheiro",
+      "acesso ao dinheiro",
+      "liberdade financeira",
+      "ele que paga tudo",
+      "controla o seu salario"
+    ],
+    "humilhacoes": [
+      "te humilha",
+      "te xinga",
+      "te ofende",
+      "te diminui",
+      "chama voce de",
+      "fala coisas que machucam",
+      "te chama de inutil",
+      "te rebaixa"
+    ],
+    "isolamento": [
+      "te impede de ver",
+      "nao deixa voce sair",
+      "te afastou dos amigos",
+      "proibe de ver a familia",
+      "deixou de ver amigos",
+      "te isolou",
+      "nao gosta que voce saia"
+    ],
+    "medo": [
+      "medo dele",
+      "medo da reacao dele",
+      "medo de discutir",
+      "medo de contrariar",
+      "fica com medo quando",
+      "com medo dele",
+      "evita discussao com medo"
+    ],
+    "culpa": [
+      "acha que tem culpa",
+      "se sente culpada",
+      "acha que e culpa sua",
+      "se culpa",
+      "acha que fez por merecer"
+    ],
+    "minimizacao": [
+      "ele nao e sempre assim",
+      "ele e bom as vezes",
+      "ele muda",
+      "ele se arrepende",
+      "e so as vezes",
+      "ele pede desculpa",
+      "tem dias que e carinhoso"
+    ],
+    "relacionamento": [
+      "seu casamento",
+      "seu marido",
+      "seu relacionamento",
+      "como e em casa",
+      "a relacao com ele",
+      "vida a dois",
+      "seu companheiro",
+      "como e o relacionamento"
+    ],
+    "agressao_fisica": [
+      "ele te bateu",
+      "ja te agrediu",
+      "te empurrou",
+      "te machucou fisicamente",
+      "chegou a te bater",
+      "encostou a mao",
+      "segurou voce com forca",
+      "apertou seu braco",
+      "ja usou forca"
+    ],
+    "ideacao": [
+      "pensou em sumir",
+      "vontade de sumir",
+      "dormir e nao acordar",
+      "pensou em morrer",
+      "nao quer mais viver",
+      "tirar a propria vida",
+      "seria mais facil sumir"
+    ],
+    "protecao": [
+      "o que te segura",
+      "o que te faz continuar",
+      "pela sua mae",
+      "motivo para seguir",
+      "com quem voce conta",
+      "o que te prende"
+    ],
+    "seguranca_atual": [
+      "esta segura",
+      "corre risco",
+      "em perigo",
+      "segura em casa",
+      "tem pra onde ir",
+      "precisa de protecao",
+      "medo de estar em perigo",
+      "denunciar",
+      "risco de vida"
+    ]
+  }
 }

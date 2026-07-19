@@ -240,6 +240,16 @@
           ]
         },
         {
+          "nome": "Palpação torácica",
+          "termos": [
+            "palpação torácica",
+            "palpacao toracica",
+            "apertar o peito",
+            "palpar o tórax",
+            "dor à palpação"
+          ]
+        },
+        {
           "nome": "Ausculta cardíaca",
           "termos": [
             "ausculta cardíaca",
@@ -259,16 +269,6 @@
             "escutar o pulmão",
             "murmúrio vesicular",
             "respiração"
-          ]
-        },
-        {
-          "nome": "Palpação torácica",
-          "termos": [
-            "palpação torácica",
-            "palpacao toracica",
-            "apertar o peito",
-            "palpar o tórax",
-            "dor à palpação"
           ]
         }
       ],

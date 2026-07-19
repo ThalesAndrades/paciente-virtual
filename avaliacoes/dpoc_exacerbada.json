@@ -269,28 +269,6 @@
           ]
         },
         {
-          "nome": "Ausculta pulmonar",
-          "termos": [
-            "ausculta pulmonar",
-            "pulmão",
-            "pulmao",
-            "escutar o pulmão",
-            "murmúrio vesicular",
-            "respiração"
-          ]
-        },
-        {
-          "nome": "Ausculta cardíaca",
-          "termos": [
-            "ausculta cardíaca",
-            "ausculta cardiaca",
-            "coração",
-            "coracao",
-            "escutar o coração",
-            "bulhas"
-          ]
-        },
-        {
           "nome": "Inspeção do tórax e esforço respiratório",
           "termos": [
             "inspeção",
@@ -321,6 +299,39 @@
             "percussao",
             "frêmito",
             "bater no peito"
+          ]
+        },
+        {
+          "nome": "Estado geral e nível de consciência",
+          "termos": [
+            "estado geral",
+            "consciência",
+            "consciencia",
+            "orientação",
+            "orientacao",
+            "sonolência"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular",
+            "respiração"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "escutar o coração",
+            "bulhas"
           ]
         }
       ],

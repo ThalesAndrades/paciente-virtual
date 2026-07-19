@@ -322,6 +322,26 @@
             "reflexos",
             "sensibilidade"
           ]
+        },
+        {
+          "nome": "Punho-percussão lombar (Giordano)",
+          "termos": [
+            "giordano",
+            "punho-percussão",
+            "punho percussao",
+            "percussão lombar",
+            "sinal de giordano",
+            "loja renal"
+          ]
+        },
+        {
+          "nome": "Marcha",
+          "termos": [
+            "marcha",
+            "andar",
+            "caminhar",
+            "ver ele andar"
+          ]
         }
       ],
       "peso": 1.5

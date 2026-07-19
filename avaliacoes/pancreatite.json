@@ -269,17 +269,6 @@
           ]
         },
         {
-          "nome": "Estado geral e hidratação",
-          "termos": [
-            "estado geral",
-            "aparência",
-            "aparencia",
-            "inspeção",
-            "hidratação",
-            "hidratacao"
-          ]
-        },
-        {
           "nome": "Palpação abdominal",
           "termos": [
             "palpação abdominal",
@@ -288,17 +277,6 @@
             "apertar a barriga",
             "abdome",
             "abdomen"
-          ]
-        },
-        {
-          "nome": "Ausculta abdominal (ruídos hidroaéreos)",
-          "termos": [
-            "ausculta abdominal",
-            "ruídos hidroaéreos",
-            "ruidos hidroaereos",
-            "peristalse",
-            "escutar a barriga",
-            "rha"
           ]
         },
         {
@@ -319,6 +297,60 @@
             "equimose periumbilical",
             "equimose nos flancos",
             "manchas no flanco"
+          ]
+        },
+        {
+          "nome": "Sinal de Giordano (punho-percussão lombar)",
+          "termos": [
+            "giordano",
+            "punho percussão",
+            "punho-percussão",
+            "murro nas costas",
+            "percussão lombar"
+          ]
+        },
+        {
+          "nome": "Estado geral e hidratação",
+          "termos": [
+            "estado geral",
+            "aparência",
+            "aparencia",
+            "inspeção",
+            "hidratação",
+            "hidratacao"
+          ]
+        },
+        {
+          "nome": "Ausculta abdominal (ruídos hidroaéreos)",
+          "termos": [
+            "ausculta abdominal",
+            "ruídos hidroaéreos",
+            "ruidos hidroaereos",
+            "peristalse",
+            "escutar a barriga",
+            "rha"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular",
+            "respiração"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "escutar o coração",
+            "bulhas"
           ]
         }
       ],

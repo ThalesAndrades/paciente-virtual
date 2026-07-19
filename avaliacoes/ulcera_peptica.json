@@ -302,6 +302,17 @@
           ]
         },
         {
+          "nome": "Toque retal / inspeção das fezes",
+          "termos": [
+            "toque retal",
+            "exame retal",
+            "toque",
+            "reto",
+            "inspeção anal",
+            "fezes na luva"
+          ]
+        },
+        {
           "nome": "Ausculta abdominal",
           "termos": [
             "ausculta abdominal",
@@ -320,6 +331,17 @@
             "coracao",
             "escutar o coração",
             "bulhas"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular",
+            "respiração"
           ]
         }
       ],

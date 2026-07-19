@@ -269,48 +269,6 @@
           ]
         },
         {
-          "nome": "Ausculta cardíaca",
-          "termos": [
-            "ausculta cardíaca",
-            "ausculta cardiaca",
-            "coração",
-            "coracao",
-            "escutar o coração",
-            "bulhas"
-          ]
-        },
-        {
-          "nome": "Ausculta pulmonar",
-          "termos": [
-            "ausculta pulmonar",
-            "pulmão",
-            "pulmao",
-            "escutar o pulmão",
-            "murmúrio vesicular",
-            "respiração"
-          ]
-        },
-        {
-          "nome": "Inspeção do abdome",
-          "termos": [
-            "inspeção abdominal",
-            "inspecao do abdome",
-            "olhar a barriga",
-            "abdome",
-            "aspecto da barriga"
-          ]
-        },
-        {
-          "nome": "Ausculta abdominal",
-          "termos": [
-            "ausculta abdominal",
-            "ruídos hidroaéreos",
-            "ruidos hidroaereos",
-            "peristalse",
-            "escutar a barriga"
-          ]
-        },
-        {
           "nome": "Palpação abdominal",
           "termos": [
             "palpação abdominal",
@@ -319,6 +277,79 @@
             "palpar o abdome",
             "apertar a barriga",
             "dor à palpação"
+          ]
+        },
+        {
+          "nome": "Sinal de Blumberg (descompressão brusca)",
+          "termos": [
+            "blumberg",
+            "descompressão",
+            "descompressao brusca",
+            "dor de rebote",
+            "sinal de rebote"
+          ]
+        },
+        {
+          "nome": "Sinal de Rovsing",
+          "termos": [
+            "rovsing",
+            "sinal de rovsing"
+          ]
+        },
+        {
+          "nome": "Sinal do Psoas",
+          "termos": [
+            "psoas",
+            "sinal do psoas",
+            "manobra do psoas"
+          ]
+        },
+        {
+          "nome": "Sinal do Obturador",
+          "termos": [
+            "obturador",
+            "sinal do obturador",
+            "manobra do obturador"
+          ]
+        },
+        {
+          "nome": "Sinal de Murphy",
+          "termos": [
+            "murphy",
+            "sinal de murphy",
+            "vesícula",
+            "vesicula"
+          ]
+        },
+        {
+          "nome": "Sinal de Giordano (punho-percussão lombar)",
+          "termos": [
+            "giordano",
+            "punho percussão",
+            "punho-percussao lombar",
+            "sinal de giordano",
+            "loja renal"
+          ]
+        },
+        {
+          "nome": "Exame ginecológico/pélvico",
+          "termos": [
+            "exame ginecológico",
+            "exame pelvico",
+            "toque vaginal",
+            "exame ginecologico",
+            "dor à mobilização do colo"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "escutar o coração",
+            "bulhas"
           ]
         }
       ],

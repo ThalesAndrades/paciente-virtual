@@ -21,7 +21,7 @@ const SINONIMOS_SINTOMAS = {
   palpitac: ["palpitacao", "palpitacoes", "coracao acelerado", "coracao disparado", "taquicardia"],
   tontura: ["tontura", "tonta", "tonto", "vertigem"],
   trist: ["triste", "tristeza", "deprimido", "deprimida", "desanimo", "desanimado"],
-  irritab: ["irritado", "irritada", "irritabilidade", "explosivo", "paciencia"],
+  irritab: ["irritado", "irritada", "irritabilidade", "explosivo", "perde a paciencia", "sem paciencia"],
 };
 
 function frase(valor) {
@@ -245,18 +245,18 @@ function regras(caso) {
 // profissional pergunta DIRETAMENTE sobre ele. Isso garante a revelação gradual
 // e impede que a IA despeje ideação/abuso numa pergunta genérica.
 const GATILHOS_GATED = {
-  ideacao: ["morte", "morrer", "morrendo", "suicid", "se matar", "me matar", "tirar a vida", "tirar a propria vida", "se machucar", "me machucar", "fazer algo contra", "fazer alguma coisa contra", "pensar em fazer algo", "acabar com tudo", "acabar com a vida", "por um fim", "dar um fim", "melhor nao estar", "nao estar aqui", "nao estar mais", "nao querer viver", "nao vale a pena viver", "nao vale a pena", "nao valia a pena", "valia a pena", "dormir e nao acordar", "nao acordar mais", "melhor nao existir", "desistir da vida", "vontade de viver", "vontade de morrer", "pensamento de morte", "pensou em morrer", "pensa em morrer", "pensa em morte"],
+  ideacao: ["morte", "morrer", "morrendo", "suicid", "se matar", "me matar", "tirar a vida", "tirar a propria vida", "se machucar", "me machucar", "fazer algo contra", "fazer alguma coisa contra", "pensar em fazer algo", "acabar com tudo", "acabar com a vida", "por um fim", "dar um fim", "melhor nao estar", "nao estar aqui", "nao estar mais", "nao querer viver", "nao vale a pena viver", "valia a pena continuar", "nao valia a pena continuar", "nao valia a pena viver", "vale a pena continuar", "dormir e nao acordar", "nao acordar mais", "melhor nao existir", "desistir da vida", "sem vontade de viver", "perdeu a vontade de viver", "vontade de morrer", "pensamento de morte", "pensou em morrer", "pensa em morrer", "pensa em morte"],
   plano: ["plano", "planejou", "planejar", "como faria", "chegou a tentar", "tentativa", "pensou em como", "ja tentou", "tentou tirar"],
   protecao: ["o que segura", "te segura", "o que te prende", "o que te impede", "motivo para viver", "motivo pra viver", "razao de viver", "o que faz continuar", "o que te faz continuar", "o que te sustenta", "o que te da forca", "esperanca", "o que te ajuda a seguir", "ficar mais leve", "vao melhorar"],
-  culpa: ["culpa", "culpado", "culpada", "peso pros outros", "peso para os outros", "um peso", "fardo", "falhando", "falha", "incapaz", "se cobra", "cobranca", "se sente um peso", "esta falhando"],
+  culpa: ["culpado", "culpada", "se culpa", "peso pros outros", "peso para os outros", "um peso", "fardo", "falhando", "falha", "incapaz", "se cobra", "cobranca", "se sente um peso", "esta falhando"],
   choro: ["chorar", "chora", "chorou", "chorado", "lagrimas", "se emociona", "vontade de chorar", "aperta e chora"],
   abandono: ["largar tudo", "largar a profissao", "largar o trabalho", "largar o emprego", "abandonar a profissao", "desistir da profissao", "parar de trabalhar", "jogar tudo pro alto", "pensa em largar", "pensou em largar", "sair da enfermagem", "sair da profissao"],
   automedicacao: ["por conta propria", "se automedica", "automedica", "toma pra dormir", "tomar pra dormir", "remedio pra dormir", "sem receita", "se medica sozinho", "medicacao por conta", "trocou uma medicacao", "pega remedio", "tomando algo por conta"],
   medo_enlouquecer: ["enlouquecer", "ficando louca", "ficar louca", "perdendo o controle", "perder o controle", "perder a cabeca", "ficando maluca", "medo de enlouquecer", "medo de morrer na crise", "vai morrer na crise", "ficar doida"],
   termino: ["terminou", "termino", "separou", "separacao", "rompimento", "acabou o namoro", "fim do relacionamento", "levou um fora", "terminaram", "acabou o relacionamento"],
-  medo: ["medo", "receio", "com medo", "teme", "assustad", "tem medo", "da medo", "com receio", "te da medo"],
+  medo: ["medo dele", "medo da reacao", "medo da reacao dele", "medo em casa", "medo de contrariar", "medo de discutir", "com medo dele", "tem medo dele", "sente medo dele", "medo do que ele"],
   vergonha: ["vergonha", "envergonhad", "constrang", "com vergonha", "levam a serio", "acham que e frescura"],
-  controle: ["controla", "controle", "vigia", "vigiar", "olha seu celular", "ve seu celular", "proibe", "proibir", "deixa voce sair", "impede voce", "impede de sair", "da permissao", "manda em voce", "decide por voce", "sua liberdade", "te controla", "tem que dar satisfacao"],
+  controle: ["te controla", "controla voce", "controla o que", "controla o dinheiro", "vigia", "vigiar", "olha seu celular", "ve seu celular", "proibe", "proibir", "deixa voce sair", "impede voce", "impede de sair", "da permissao", "manda em voce", "decide por voce", "sua liberdade", "tem que dar satisfacao"],
   financas: ["controla o dinheiro", "voce tem dinheiro", "dinheiro seu", "dinheiro em casa", "tem liberdade", "sua propria", "acesso ao dinheiro", "ele que paga", "pedir dinheiro", "liberdade financeira", "conta bancaria", "gastar sem", "seu salario"],
   humilhacoes: ["humilha", "xinga", "ofende", "ofensa", "diminui", "desvaloriza", "machuca com palavra", "te machucaram", "chama voce de", "grita com voce", "te diminuiu", "te xingou", "te ofendeu", "fala coisas que te", "coisas que machucam", "palavras que"],
   minimizacao: ["ele nao e sempre assim", "ele e bom", "culpa minha", "foi minha culpa", "exagero", "nao e bem assim", "ele muda", "e so as vezes", "ele se arrepende"],
@@ -288,15 +288,18 @@ export function fatoSensivelDireto(caso, pergunta) {
 }
 
 export function responderDemo(caso, pergunta) {
-  const respostaSintoma = responderSintoma(caso, pergunta);
-  if (respostaSintoma) return respostaSintoma;
-
+  // Regras específicas ANTES da triagem de sintoma: uma pergunta de antecedente
+  // familiar ("sua mãe era nervosa?") deve casar a regra "família", não ser
+  // respondida como sintoma atual pelo sinônimo genérico "nervosa".
   for (const [termos, responder] of regras(caso)) {
     if (contemAlgumTermo(pergunta, termos)) {
       const resposta = responder();
       if (resposta) return resposta;
     }
   }
+
+  const respostaSintoma = responderSintoma(caso, pergunta);
+  if (respostaSintoma) return respostaSintoma;
 
   return RESPOSTA_PADRAO;
 }

@@ -269,6 +269,26 @@
           ]
         },
         {
+          "nome": "Oroscopia / exame de garganta",
+          "termos": [
+            "garganta",
+            "oroscopia",
+            "boca",
+            "orofaringe",
+            "amígdalas"
+          ]
+        },
+        {
+          "nome": "Pico de fluxo expiratório (peak flow) à beira do leito",
+          "termos": [
+            "pico de fluxo",
+            "peak flow",
+            "pfe",
+            "medidor de fluxo",
+            "soprar no aparelho"
+          ]
+        },
+        {
           "nome": "Inspeção geral e padrão respiratório",
           "termos": [
             "inspeção",
@@ -299,26 +319,6 @@
             "coracao",
             "escutar o coração",
             "bulhas"
-          ]
-        },
-        {
-          "nome": "Oroscopia / exame de garganta",
-          "termos": [
-            "garganta",
-            "oroscopia",
-            "boca",
-            "orofaringe",
-            "amígdalas"
-          ]
-        },
-        {
-          "nome": "Pico de fluxo expiratório (peak flow) à beira do leito",
-          "termos": [
-            "pico de fluxo",
-            "peak flow",
-            "pfe",
-            "medidor de fluxo",
-            "soprar no aparelho"
           ]
         }
       ],
