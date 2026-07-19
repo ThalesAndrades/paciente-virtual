@@ -19,6 +19,7 @@
     --primaria: #0f766e;
     --primaria-escura: #0b5f58;
     --primaria-suave: #d7efec;
+    --sobre-primaria: #ffffff;
     --med: #1e6fd0;
     --med-suave: #e2edfb;
     --psi: #7c5cbf;
@@ -51,6 +52,7 @@
       --primaria: #2dd4bf;
       --primaria-escura: #5eecd8;
       --primaria-suave: #123833;
+      --sobre-primaria: #04312c;
       --med: #56a2f0;
       --med-suave: #14263c;
       --psi: #b79ce8;
@@ -115,7 +117,7 @@
   .pref-audio .pref-dica { font-size: .82rem; color: var(--texto-suave); flex-basis: 100%; margin: 0; }
   .segmentos { display: inline-flex; border: 1px solid var(--borda-forte); border-radius: 999px; padding: 4px; gap: 4px; background: var(--superficie-2); }
   .seg { border: none; background: transparent; color: var(--texto-suave); padding: 8px 15px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .9rem; transition: background .15s, color .15s; }
-  .seg.ativo { background: var(--primaria); color: #fff; font-weight: 650; box-shadow: var(--sombra); }
+  .seg.ativo { background: var(--primaria); color: var(--sobre-primaria); font-weight: 650; box-shadow: var(--sombra); }
 
   /* Cards de categoria */
   .categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
@@ -159,7 +161,7 @@
   .botao {
     display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; margin-top: 22px;
     background: var(--primaria); border: none; border-radius: var(--raio-sm);
-    color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: var(--sombra);
+    color: var(--sobre-primaria); font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: var(--sombra);
     transition: filter .15s, transform .1s;
   }
   .botao:hover { filter: brightness(1.06); } .botao:active { transform: translateY(1px); }
@@ -227,10 +229,13 @@
       position: fixed; inset: auto 0 0 0; top: auto; width: 100%; z-index: 40;
       background: var(--superficie); border-top: 1px solid var(--borda); box-shadow: var(--sombra-forte);
       border-radius: 18px 18px 0 0; padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
-      transform: translateY(105%); transition: transform .25s ease; max-height: 62vh; overflow-y: auto;
+      transform: translateY(105%); visibility: hidden; transition: transform .25s ease, visibility .25s; max-height: 62vh; overflow-y: auto;
     }
-    .painel-instrumentos.aberto { transform: none; }
+    .painel-instrumentos.aberto { transform: none; visibility: visible; }
     #abrir-instrumentos { display: inline-flex; }
+    /* Alvos de toque >= 44px no fluxo de consulta (recomendação de acessibilidade). */
+    .acoes button, .voltar, .seg, .inst { min-height: 44px; }
+    .fechar-inst { min-height: 44px; min-width: 44px; align-items: center; justify-content: center; }
   }
   .fechar-inst { display: none; }
   @media (max-width: 860px) { .fechar-inst { display: inline-flex; float: right; border: none; background: transparent; color: var(--texto-suave); font-size: 1.2rem; cursor: pointer; } }
@@ -239,7 +244,7 @@
   .entrada { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; background: color-mix(in srgb, var(--superficie) 92%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--borda); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
   .entrada .interno { max-width: 940px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
   .entrada input { flex: 1; }
-  .entrada button.enviar { padding: 12px 18px; border: none; border-radius: var(--raio-sm); background: var(--primaria); color: #fff; font-size: 1rem; font-weight: 650; cursor: pointer; box-shadow: var(--sombra); }
+  .entrada button.enviar { padding: 12px 18px; border: none; border-radius: var(--raio-sm); background: var(--primaria); color: var(--sobre-primaria); font-size: 1rem; font-weight: 650; cursor: pointer; box-shadow: var(--sombra); }
   #botao-mic { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 15px; min-width: 50px; min-height: 46px; background: var(--superficie); color: var(--texto); border: 1px solid var(--borda-forte); border-radius: 999px; font-size: 1.15rem; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; }
   #botao-mic .mic-label { font-size: .8rem; font-weight: 650; }
   #botao-mic:disabled { opacity: .45; cursor: default; }
@@ -446,7 +451,7 @@
       <span id="dados-paciente"></span><span class="cab-badge" id="cab-badge"></span>
     </div>
     <div class="acoes">
-      <button id="abrir-instrumentos" title="Instrumentos clínicos">🩺 Instrumentos</button>
+      <button id="abrir-instrumentos" title="Instrumentos clínicos" aria-expanded="false" aria-controls="painel-instrumentos">🩺 Instrumentos</button>
       <button id="botao-som" class="ligado" title="Ler as respostas em voz alta">🔊 Voz</button>
       <button id="botao-encerrar" class="encerrar">Encerrar e avaliar</button>
     </div>
@@ -454,7 +459,7 @@
 
   <div class="palco">
     <div class="coluna-chat">
-      <div id="mensagens" class="fluxo-mensagens"></div>
+      <div id="mensagens" class="fluxo-mensagens" role="log" aria-live="polite" aria-relevant="additions"></div>
     </div>
     <aside class="painel-instrumentos oculto" id="painel-instrumentos" aria-label="Instrumentos clínicos">
       <div class="cabeca">🩺 Instrumentos <button class="fechar-inst" id="fechar-inst" aria-label="Fechar">✕</button></div>
@@ -478,7 +483,7 @@
     <div class="analise-topo"><div class="spinner"></div></div>
     <h1>Analisando a consulta</h1>
     <p class="subtitulo">Avaliando a sua entrevista pela rubrica do caso…</p>
-    <ul class="etapas" id="etapas-analise"></ul>
+    <ul class="etapas" id="etapas-analise" role="status" aria-live="polite" aria-atomic="true"></ul>
   </div>
 </section>
 
@@ -518,7 +523,19 @@ const estado = {
   capacidades: { stt: false, tts: {} },
 };
 const $ = (id) => document.getElementById(id);
-function mostrarTela(id) { document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa")); $(id).classList.add("ativa"); window.scrollTo(0, 0); }
+// Escapa texto ecoado do servidor antes de interpolar em innerHTML (o nome do
+// aluno é entrada livre — sem isso, vira XSS armazenado no painel do professor).
+function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
+function mostrarTela(id) {
+  document.querySelectorAll(".tela").forEach((t) => t.classList.remove("ativa"));
+  const tela = $(id);
+  tela.classList.add("ativa");
+  window.scrollTo(0, 0);
+  // Move o foco para o título da tela ativa: o leitor de tela anuncia a troca e o
+  // teclado não fica preso num elemento agora oculto (WCAG 2.4.3 / 4.1.3).
+  const h = tela.querySelector("h1, h2");
+  if (h) { h.setAttribute("tabindex", "-1"); try { h.focus({ preventScroll: true }); } catch {} }
+}
 const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)" } };
 
 /* ---------- Código de acesso + modo aleatório ---------- */
@@ -549,7 +566,8 @@ function iniciarAleatorio(categoria) {
 }
 
 /* ---------- Áudio: elemento <audio> destravado (mobile) + Web Speech fallback ---------- */
-let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null, geracaoFala = 0;
+let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null, geracaoFala = 0, vozBlobUrl = null;
+function revogarVozBlob() { if (vozBlobUrl) { try { URL.revokeObjectURL(vozBlobUrl); } catch {} vozBlobUrl = null; } }
 function silencioWav() {
   const sr = 8000, n = 800, buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf);
   const w = (o, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
@@ -578,6 +596,7 @@ function pararFala() {
   if (audioPlayer) { try { audioPlayer.pause(); } catch {} }
   if (temporizadorResume) { clearInterval(temporizadorResume); temporizadorResume = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
+  revogarVozBlob();
 }
 async function falarTexto(texto) {
   if (!estado.falarRespostas || !texto) return;
@@ -591,7 +610,9 @@ async function falarTexto(texto) {
         if (g !== geracaoFala) return; // já veio uma pergunta mais nova — descarta este áudio
         const p = audioPlayer || ($("player-voz")); audioPlayer = p;
         try { p.pause(); } catch {}
-        p.src = URL.createObjectURL(blob);
+        revogarVozBlob(); // libera o blob da fala anterior antes de criar o novo
+        vozBlobUrl = URL.createObjectURL(blob);
+        p.src = vozBlobUrl;
         const pr = p.play(); if (pr && pr.catch) pr.catch(() => { if (g === geracaoFala) falarComNavegador(texto); });
         return;
       }
@@ -646,6 +667,9 @@ function abrirCategoria(cat) {
 }
 
 async function iniciarConsulta(casoId, aleatorio) {
+  if (estado.ocupado) return; // trava anti-duplo-clique: não cria consultas duplicadas
+  estado.ocupado = true;
+  try {
   destravarAudio();
   estado.aleatorio = !!aleatorio;
   const info = estado.casos.find((c) => c.id === casoId);
@@ -676,6 +700,7 @@ async function iniciarConsulta(casoId, aleatorio) {
     : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
   mostrarTela("tela-consulta");
   $("campo-mensagem").focus();
+  } finally { estado.ocupado = false; }
 }
 
 /* ---------- Instrumentos (medicina) ---------- */
@@ -707,7 +732,7 @@ function montarInstrumentos() {
 async function solicitarExame(chave, botao) {
   if (estado.ocupado || !estado.consultaId) return;
   estado.ocupado = true; if (botao) botao.disabled = true;
-  $("painel-instrumentos").classList.remove("aberto");
+  sincronizarDrawer(false);
   try {
     const r = await fetch(`/api/consultas/${estado.consultaId}/exame`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chave }) });
     const d = await r.json();
@@ -864,7 +889,7 @@ async function abrirPainel() {
     for (const c of cs) {
       const it = document.createElement("button"); it.className = "cartao linha-consulta";
       const nota = c.nota == null ? "—" : formatarNota(c.nota); const sit = c.encerrada ? "" : " · em aberto";
-      it.innerHTML = `<div style="flex:1"><h3><span>${c.aluno || "—"}</span><span class="nota-linha">${nota}</span></h3><p>${c.caso || "?"} · ${c.inicio || "—"}${sit}</p></div>`;
+      it.innerHTML = `<div style="flex:1"><h3><span>${esc(c.aluno) || "—"}</span><span class="nota-linha">${nota}</span></h3><p>${esc(c.caso) || "?"} · ${esc(c.inicio) || "—"}${sit}</p></div>`;
       it.addEventListener("click", () => abrirDetalhe(c.arquivo)); lista.appendChild(it);
     }
   } catch { lista.innerHTML = "<p class='subtitulo'>Erro ao carregar o painel.</p>"; }
@@ -936,10 +961,24 @@ $("codigo-ok").addEventListener("click", confirmarCodigo);
 $("codigo-cancelar").addEventListener("click", fecharCodigo);
 $("campo-codigo").addEventListener("keydown", (e) => { if (e.key === "Enter") confirmarCodigo(); });
 $("modal-codigo").addEventListener("click", (e) => { if (e.target === $("modal-codigo")) fecharCodigo(); });
+// Modal: Esc fecha e Tab fica preso no diálogo (não vaza foco pra tela de fundo).
+$("modal-codigo").addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { fecharCodigo(); return; }
+  if (e.key === "Tab") {
+    const f = [$("campo-codigo"), $("codigo-cancelar"), $("codigo-ok")];
+    const i = f.indexOf(document.activeElement);
+    e.preventDefault();
+    f[e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1)].focus();
+  }
+});
 $("aleatorio-geral").addEventListener("click", () => iniciarAleatorio(null));
 $("aleatorio-cat").addEventListener("click", () => iniciarAleatorio(estado.categoriaAtual));
-$("abrir-instrumentos").addEventListener("click", () => $("painel-instrumentos").classList.toggle("aberto"));
-$("fechar-inst").addEventListener("click", () => $("painel-instrumentos").classList.remove("aberto"));
+function sincronizarDrawer(aberto) {
+  $("painel-instrumentos").classList.toggle("aberto", aberto);
+  $("abrir-instrumentos").setAttribute("aria-expanded", aberto ? "true" : "false");
+}
+$("abrir-instrumentos").addEventListener("click", () => sincronizarDrawer(!$("painel-instrumentos").classList.contains("aberto")));
+$("fechar-inst").addEventListener("click", () => sincronizarDrawer(false));
 
 if (window.speechSynthesis) { carregarVozesTTS(); speechSynthesis.onvoiceschanged = carregarVozesTTS; }
 ["pointerdown", "touchend", "click", "keydown"].forEach((ev) => window.addEventListener(ev, destravarAudio, { once: true, passive: true }));
