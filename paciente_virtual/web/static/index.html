@@ -549,7 +549,7 @@ function iniciarAleatorio(categoria) {
 }
 
 /* ---------- Áudio: elemento <audio> destravado (mobile) + Web Speech fallback ---------- */
-let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null;
+let audioPlayer = null, ttsDestravado = false, vozesTTS = [], temporizadorResume = null, geracaoFala = 0;
 function silencioWav() {
   const sr = 8000, n = 800, buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf);
   const w = (o, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(o + i, s.charCodeAt(i)); };
@@ -574,27 +574,30 @@ function escolherVozTTS() {
   return pts.find((v) => fem ? /maria|francisca|luciana|helena|vit[óo]ria|female|feminin/i.test(v.name) : /ant[óo]nio|antonio|daniel|felipe|jo[ãa]o|ricardo|male|masculin/i.test(v.name)) || pts[0];
 }
 function pararFala() {
+  geracaoFala++; // invalida áudios ainda em busca (evita fala obsoleta sobrepor a atual)
   if (audioPlayer) { try { audioPlayer.pause(); } catch {} }
   if (temporizadorResume) { clearInterval(temporizadorResume); temporizadorResume = null; }
   if (window.speechSynthesis) speechSynthesis.cancel();
 }
 async function falarTexto(texto) {
   if (!estado.falarRespostas || !texto) return;
+  const g = ++geracaoFala;
   // Voz do servidor (Kokoro/ElevenLabs) tocada por elemento <audio> destravado — confiável no celular.
   if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
     try {
       const r = await fetch("/api/falar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto, voz: estado.voz }) });
       if (r.ok) {
         const blob = await r.blob();
+        if (g !== geracaoFala) return; // já veio uma pergunta mais nova — descarta este áudio
         const p = audioPlayer || ($("player-voz")); audioPlayer = p;
         try { p.pause(); } catch {}
         p.src = URL.createObjectURL(blob);
-        const pr = p.play(); if (pr && pr.catch) pr.catch(() => falarComNavegador(texto));
+        const pr = p.play(); if (pr && pr.catch) pr.catch(() => { if (g === geracaoFala) falarComNavegador(texto); });
         return;
       }
     } catch { /* cai para o navegador */ }
   }
-  falarComNavegador(texto);
+  if (g === geracaoFala) falarComNavegador(texto);
 }
 function falarComNavegador(texto) {
   if (!window.speechSynthesis || !texto) return;
