@@ -278,5 +278,69 @@
       "resultado": "Sem alterações agudas"
     }
   },
-  "categoria": "medicina"
+  "categoria": "medicina",
+  "informacoes_iniciais": {
+    "vim_empurrado": "Foi a Terezinha, minha muié, que num me largou até eu vim. Eu queria era esperar passar em casa.",
+    "onde_estava": "Tava na obra, carregando saco de cimento, quando deu esse aperto no peito de manhã.",
+    "como_esta_agora": "Continua o aperto no meio do peito, doutor, e o braço esquerdo meio dormente."
+  },
+  "informacoes_intermediarias": {
+    "cuidado_com_a_saude": "Faz tempo que num passo no médico. O postinho falou da pressão e da gordura no sangue anos atrás, mas eu tomo o remédio só quando lembro.",
+    "por_que_nao_para": "Trabalho num deixa a gente parar, doutor. Sou pedreiro, o serviço é por dia — se num trabalho, num entra dinheiro.",
+    "o_cigarro": "Fumo desde novo, um maço por dia faz uns 35 anos. Sei que faz mal, mas nunca consegui largar.",
+    "em_casa": "Em casa é eu, a Terezinha e de vez em quando os fio aparecem. Vida simples, graças a Deus."
+  },
+  "informacoes_sensiveis": {
+    "medo_de_morrer": "Pra falar a verdade, doutor... tô com medo. Um medo que eu num sentia desde criança. Acho que dessa vez é sério.",
+    "lembranca_do_pai": "Meu pai morreu assim, do coração, com 62. Deu um aperto no peito e num teve tempo de nada. Eu vi tudo. Fico pensando se vai ser igual comigo.",
+    "medo_de_faltar": "Meu medo maior num é nem morrer... é deixar a Terezinha sozinha, a casa desamparada. Quem vai cuidar deles se eu faltar?",
+    "vergonha_de_chorar": "Desculpa, doutor... home num chora, me ensinaram assim. Mas hoje tá difícil segurar."
+  },
+  "gatilhos_sensiveis": {
+    "medo_de_morrer": [
+      "esta com medo",
+      "sente medo",
+      "tem medo",
+      "esta assustado",
+      "medo de morrer",
+      "com medo de que",
+      "o que te assusta",
+      "medo de que aconteca"
+    ],
+    "lembranca_do_pai": [
+      "seu pai",
+      "lembra do seu pai",
+      "por causa do seu pai",
+      "a morte do seu pai",
+      "isso te lembra alguem",
+      "viu isso acontecer",
+      "perdeu alguem assim",
+      "alguem proximo passou por isso"
+    ],
+    "medo_de_faltar": [
+      "sua familia",
+      "com o que se preocupa",
+      "o que mais te preocupa",
+      "medo de deixar",
+      "pensa na sua familia",
+      "quem depende de voce",
+      "preocupacao maior",
+      "medo de faltar"
+    ],
+    "vergonha_de_chorar": [
+      "pode chorar",
+      "esta emocionado",
+      "tudo bem sentir",
+      "pode desabafar",
+      "esta se segurando",
+      "quer desabafar",
+      "nao precisa segurar"
+    ]
+  },
+  "rede_apoio": {
+    "esposa": "A Terezinha, minha muié há mais de 30 anos. Foi ela que me trouxe quase na marra — se num fosse ela eu tinha ficado em casa.",
+    "filhos": "Tenho dois fio já criado. Ajudo com o que posso ainda.",
+    "fe": "Sou de igreja, doutor. Hoje eu vim rezando o caminho todo.",
+    "trabalho": "O pessoal da obra é gente boa, mas ninguém lá sabe que eu passo mal — num gosto de mostrar fraqueza."
+  }
 }
