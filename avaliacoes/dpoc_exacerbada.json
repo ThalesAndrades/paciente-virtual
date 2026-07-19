@@ -144,16 +144,36 @@
       "objetivo": "Investigar antecedentes pessoais e familiares.",
       "itens": [
         {
-          "nome": "antecedentes pessoais",
+          "nome": "hipertensao",
           "termos": [
-            "problema de saude",
-            "doenca",
             "pressao alta",
+            "hipertensao",
+            "pressao"
+          ]
+        },
+        {
+          "nome": "diabetes",
+          "termos": [
             "diabetes",
-            "faz tratamento",
-            "toma remedio",
+            "acucar no sangue",
+            "glicose alta"
+          ]
+        },
+        {
+          "nome": "internacoes",
+          "termos": [
+            "internado",
+            "internacao",
+            "ja foi internado"
+          ]
+        },
+        {
+          "nome": "cirurgias",
+          "termos": [
             "cirurgia",
-            "alergia"
+            "operacao",
+            "ja operou",
+            "ja fez cirurgia"
           ]
         },
         {

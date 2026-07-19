@@ -134,16 +134,36 @@
       "objetivo": "Investigar antecedentes pessoais e familiares.",
       "itens": [
         {
-          "nome": "antecedentes pessoais",
+          "nome": "hipertensao",
           "termos": [
-            "problema de saude",
-            "doenca",
             "pressao alta",
+            "hipertensao",
+            "pressao"
+          ]
+        },
+        {
+          "nome": "diabetes",
+          "termos": [
             "diabetes",
-            "faz tratamento",
-            "toma remedio",
-            "cirurgia",
-            "alergia"
+            "acucar no sangue",
+            "glicose alta"
+          ]
+        },
+        {
+          "nome": "tratamento psicologico",
+          "termos": [
+            "psicologo",
+            "terapia",
+            "acompanhamento psicologico",
+            "ja fez terapia"
+          ]
+        },
+        {
+          "nome": "tratamento psiquiatrico",
+          "termos": [
+            "psiquiatra",
+            "acompanhamento psiquiatrico",
+            "ja tomou remedio para"
           ]
         },
         {
@@ -256,7 +276,9 @@
           "nome": "sono",
           "termos": [
             "sono",
-            "sono"
+            "dorme",
+            "dormir",
+            "insonia"
           ]
         },
         {
@@ -270,7 +292,8 @@
           "nome": "humor",
           "termos": [
             "humor",
-            "humor"
+            "animo",
+            "como se sente"
           ]
         },
         {

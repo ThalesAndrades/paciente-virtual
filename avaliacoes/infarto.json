@@ -3,14 +3,14 @@
   "criterios": [
     {
       "nome": "Identificação do paciente",
-      "peso": 1,
       "objetivo": "Obter dados básicos de identificação.",
       "itens": [
         {
           "nome": "nome",
           "termos": [
             "nome",
-            "se chama"
+            "se chama",
+            "como se chama"
           ]
         },
         {
@@ -21,37 +21,59 @@
           ]
         },
         {
-          "nome": "sexo",
+          "nome": "profissao/ocupacao",
           "termos": [
-            "sexo"
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
           ]
         }
-      ]
+      ],
+      "peso": 1
     },
     {
-      "nome": "Caracterização da dor",
-      "peso": 3,
-      "objetivo": "Caracterizar adequadamente a dor torácica.",
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
       "itens": [
         {
-          "nome": "início",
+          "nome": "queixa/motivo da consulta",
           "termos": [
-            "início",
-            "começou",
-            "desde quando",
-            "há quanto tempo",
-            "que horas",
-            "começa"
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
           ]
         },
         {
-          "nome": "localização",
+          "nome": "inicio/tempo de evolucao",
           "termos": [
-            "localização",
-            "onde",
-            "local da dor",
-            "região",
-            "lugar"
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para",
+            "corre para",
+            "espalha",
+            "vai pro braco"
           ]
         },
         {
@@ -59,138 +81,232 @@
           "termos": [
             "intensidade",
             "forte",
-            "nota",
-            "0 a 10",
-            "zero a dez",
-            "escala"
+            "de zero a dez",
+            "escala",
+            "quanto doi"
           ]
         },
         {
-          "nome": "irradiação",
+          "nome": "frequencia/duracao",
           "termos": [
-            "irradiação",
-            "irradia",
-            "espalha",
-            "vai para algum lugar",
-            "outro lugar",
-            "irradiando",
-            "irradiar"
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
           ]
         },
         {
-          "nome": "duração",
+          "nome": "fatores de melhora/piora",
           "termos": [
-            "duração",
-            "dura",
-            "constante",
-            "contínua",
-            "o tempo todo",
-            "para de doer"
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
           ]
         }
-      ]
+      ],
+      "peso": 3
     },
     {
-      "nome": "Sintomas associados",
-      "peso": 2,
-      "objetivo": "Investigar sinais e sintomas relacionados ao quadro.",
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
       "itens": [
         {
-          "nome": "sudorese",
+          "nome": "hipertensao",
           "termos": [
-            "sudorese",
-            "suor",
-            "suando",
-            "suou",
-            "suava"
+            "pressao alta",
+            "hipertensao",
+            "pressao"
           ]
         },
         {
-          "nome": "náusea",
+          "nome": "diabetes",
           "termos": [
-            "náusea",
-            "enjoo",
-            "enjoado",
-            "vontade de vomitar",
-            "vômito"
-          ]
-        },
-        {
-          "nome": "falta de ar",
-          "termos": [
-            "falta de ar",
-            "dispneia",
-            "dificuldade para respirar",
-            "respirar"
-          ]
-        }
-      ]
-    },
-    {
-      "nome": "Fatores de risco cardiovasculares",
-      "peso": 2,
-      "objetivo": "Investigar fatores de risco para doença cardiovascular.",
-      "itens": [
-        {
-          "nome": "hipertensão",
-          "termos": [
-            "hipertensão",
-            "pressão alta",
-            "hipertenso"
-          ]
-        },
-        {
-          "nome": "tabagismo",
-          "termos": [
-            "tabagismo",
-            "fuma",
-            "fumante",
-            "cigarro",
-            "tabaco",
-            "fumava",
-            "fumou"
+            "diabetes",
+            "acucar no sangue",
+            "glicose alta"
           ]
         },
         {
           "nome": "dislipidemia",
           "termos": [
-            "dislipidemia",
-            "colesterol"
+            "colesterol",
+            "gordura no sangue",
+            "dislipidemia"
           ]
         },
         {
-          "nome": "história familiar",
+          "nome": "cirurgias",
           "termos": [
-            "família",
-            "familiar",
+            "cirurgia",
+            "operacao",
+            "ja operou",
+            "ja fez cirurgia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
             "pai",
-            "mãe",
-            "parente"
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
           ]
         }
-      ]
+      ],
+      "peso": 1.5
     },
     {
-      "nome": "Solicitação de exames",
-      "peso": 2,
-      "objetivo": "Solicitar exames adequados para o caso.",
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
       "itens": [
         {
-          "nome": "ecg",
+          "nome": "tabagismo",
           "termos": [
-            "ecg",
-            "eletrocardiograma",
-            "eletro"
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
           ]
         },
         {
-          "nome": "troponina",
+          "nome": "alcool",
           "termos": [
-            "troponina",
-            "troponinas"
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
           ]
         }
-      ]
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "pressao",
+            "aferir",
+            "frequencia cardiaca",
+            "pulso",
+            "saturacao",
+            "temperatura",
+            "sinais vitais",
+            "medir"
+          ]
+        },
+        {
+          "nome": "Ausculta cardíaca",
+          "termos": [
+            "ausculta cardíaca",
+            "ausculta cardiaca",
+            "coração",
+            "coracao",
+            "escutar o coração",
+            "bulhas"
+          ]
+        },
+        {
+          "nome": "Ausculta pulmonar",
+          "termos": [
+            "ausculta pulmonar",
+            "pulmão",
+            "pulmao",
+            "escutar o pulmão",
+            "murmúrio vesicular",
+            "respiração"
+          ]
+        },
+        {
+          "nome": "Palpação torácica",
+          "termos": [
+            "palpação torácica",
+            "palpacao toracica",
+            "apertar o peito",
+            "palpar o tórax",
+            "dor à palpação"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes ao caso.",
+      "itens": [
+        {
+          "nome": "Eletrocardiograma",
+          "termos": [
+            "ecg",
+            "eletro",
+            "eletrocardiograma"
+          ]
+        },
+        {
+          "nome": "Troponina",
+          "termos": [
+            "troponina",
+            "troponinas",
+            "marcadores cardíacos",
+            "enzimas cardíacas"
+          ]
+        },
+        {
+          "nome": "Raio X",
+          "termos": [
+            "raio x",
+            "raiox",
+            "raio-x",
+            "rx",
+            "radiografia"
+          ]
+        }
+      ],
+      "peso": 2
     }
   ]
 }

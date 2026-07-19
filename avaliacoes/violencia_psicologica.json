@@ -2,126 +2,341 @@
   "nome_caso": "Violência Psicológica",
   "criterios": [
     {
-      "nome": "Acolhimento Inicial",
-      "peso": 1,
-      "objetivo": "Estabelecer vínculo e acolher a paciente.",
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
       "itens": [
         {
-          "nome": "acolhimento",
+          "nome": "nome",
           "termos": [
-            "como posso ajudar",
-            "o que a traz",
-            "o que trouxe",
-            "fique à vontade",
-            "estou aqui para",
-            "pode confiar"
+            "nome",
+            "se chama",
+            "como se chama"
           ]
         },
         {
-          "nome": "escuta",
-          "termos": ["entendo", "compreendo", "sinto muito", "imagino", "deve ser difícil"]
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
         },
         {
-          "nome": "queixa principal",
-          "termos": ["o que está sentindo", "o que sente", "como se sente", "queixa"]
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
         }
-      ]
+      ],
+      "peso": 0.7
     },
     {
-      "nome": "Investigação da Relação Conjugal",
-      "peso": 2,
-      "objetivo": "Compreender características do relacionamento atual.",
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
       "itens": [
-        { "nome": "relacionamento", "termos": ["relacionamento", "casamento", "relação"] },
         {
-          "nome": "companheiro",
-          "termos": ["marido", "esposo", "companheiro", "parceiro"]
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
         },
-        { "nome": "conflitos", "termos": ["conflito", "briga", "problema em casa"] },
-        { "nome": "discussões", "termos": ["discussão", "discussões", "discutem", "discute"] }
-      ]
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 2.2
     },
     {
-      "nome": "Investigação de Violência Psicológica",
-      "peso": 3,
-      "objetivo": "Explorar comportamentos de humilhação, manipulação, ameaça ou controle.",
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
       "itens": [
         {
-          "nome": "humilhação",
-          "termos": ["humilha", "humilhação", "xinga", "ofende", "diminui", "desvaloriza"]
+          "nome": "hipertensao",
+          "termos": [
+            "pressao alta",
+            "hipertensao",
+            "pressao"
+          ]
         },
+        {
+          "nome": "diabetes",
+          "termos": [
+            "diabetes",
+            "acucar no sangue",
+            "glicose alta"
+          ]
+        },
+        {
+          "nome": "cirurgias",
+          "termos": [
+            "cirurgia",
+            "operacao",
+            "ja operou",
+            "ja fez cirurgia"
+          ]
+        },
+        {
+          "nome": "tratamento psicologico",
+          "termos": [
+            "psicologo",
+            "terapia",
+            "acompanhamento psicologico",
+            "ja fez terapia"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.1
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Acolhimento e vinculo",
+      "objetivo": "Estabelecer vinculo e escuta empatica.",
+      "itens": [
+        {
+          "nome": "escuta aberta/acolhimento",
+          "termos": [
+            "me conta",
+            "como voce esta",
+            "como tem sido",
+            "fale um pouco",
+            "quer falar",
+            "estou aqui",
+            "pode confiar"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Investigacao dos sintomas",
+      "objetivo": "Investigar os sintomas e o contexto do quadro.",
+      "itens": [
+        {
+          "nome": "sono",
+          "termos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "cefaleia",
+          "termos": [
+            "cefaleia",
+            "cefaleia"
+          ]
+        },
+        {
+          "nome": "cansaco",
+          "termos": [
+            "cansaco",
+            "cansaco"
+          ]
+        },
+        {
+          "nome": "ansiedade",
+          "termos": [
+            "ansiedade",
+            "ansiedade"
+          ]
+        },
+        {
+          "nome": "apetite",
+          "termos": [
+            "apetite",
+            "fome",
+            "esta comendo"
+          ]
+        },
+        {
+          "nome": "relacionamento",
+          "termos": [
+            "relacionamento",
+            "relacionamento"
+          ]
+        }
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Avaliacao de risco e temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
+      "itens": [
         {
           "nome": "controle",
           "termos": [
-            "controla",
-            "controle",
-            "vigia",
-            "celular",
-            "com quem você fala",
-            "deixa você sair"
+            "controle"
           ]
         },
-        { "nome": "ameaças", "termos": ["ameaça", "ameaças", "ameaçou", "ameaçador"] },
         {
-          "nome": "manipulação",
-          "termos": ["manipula", "manipulação", "culpa você", "distorce"]
-        },
-        { "nome": "ciúmes excessivos", "termos": ["ciúme", "ciúmes", "ciumento"] }
-      ]
-    },
-    {
-      "nome": "Impacto Emocional",
-      "peso": 2,
-      "objetivo": "Investigar sofrimento psicológico decorrente da situação.",
-      "itens": [
-        { "nome": "medo", "termos": ["medo", "receio", "amedrontada", "insegura"] },
-        { "nome": "ansiedade", "termos": ["ansiedade", "ansiosa", "nervosa", "nervosismo"] },
-        { "nome": "tristeza", "termos": ["tristeza", "triste", "chora", "choro", "chorado"] },
-        {
-          "nome": "autoestima",
-          "termos": ["autoestima", "auto estima", "se sente consigo", "seu valor"]
-        }
-      ]
-    },
-    {
-      "nome": "Rede de Apoio",
-      "peso": 1,
-      "objetivo": "Investigar pessoas ou instituições que possam oferecer suporte.",
-      "itens": [
-        { "nome": "família", "termos": ["família", "familiares", "pais", "irmã", "irmão"] },
-        { "nome": "amigos", "termos": ["amigos", "amigas", "amizades"] },
-        {
-          "nome": "apoio",
-          "termos": ["apoio", "suporte", "com quem conversar", "com quem contar"]
-        },
-        { "nome": "rede de suporte", "termos": ["rede de apoio", "rede de suporte"] }
-      ]
-    },
-    {
-      "nome": "Orientação e Encaminhamento",
-      "peso": 1,
-      "objetivo": "Oferecer orientação adequada e avaliar necessidade de encaminhamento.",
-      "itens": [
-        {
-          "nome": "encaminhamento",
-          "termos": ["encaminhar", "encaminhamento", "psicólogo", "psicologia", "acompanhamento"]
-        },
-        {
-          "nome": "proteção",
-          "termos": ["proteção", "medida protetiva", "delegacia", "180", "denúncia"]
-        },
-        { "nome": "segurança", "termos": ["segurança", "segura em casa", "risco"] },
-        {
-          "nome": "serviços especializados",
+          "nome": "financas",
           "termos": [
-            "caps",
-            "creas",
-            "centro de referência",
-            "serviço especializado",
-            "rede de atendimento"
+            "financas"
+          ]
+        },
+        {
+          "nome": "humilhacoes",
+          "termos": [
+            "humilhacoes"
+          ]
+        },
+        {
+          "nome": "isolamento",
+          "termos": [
+            "isolamento"
+          ]
+        },
+        {
+          "nome": "medo",
+          "termos": [
+            "medo"
+          ]
+        },
+        {
+          "nome": "culpa",
+          "termos": [
+            "culpa"
+          ]
+        },
+        {
+          "nome": "minimizacao",
+          "termos": [
+            "minimizacao"
+          ]
+        },
+        {
+          "nome": "relacionamento",
+          "termos": [
+            "relacionamento"
           ]
         }
-      ]
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Rede de apoio e fatores de protecao",
+      "objetivo": "Mapear apoio e fatores de protecao.",
+      "itens": [
+        {
+          "nome": "rede de apoio",
+          "termos": [
+            "apoio",
+            "com quem conta",
+            "familia",
+            "amigos",
+            "quem te ajuda",
+            "conversar com alguem",
+            "suporte"
+          ]
+        }
+      ],
+      "peso": 0.8
     }
   ]
 }

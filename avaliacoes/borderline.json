@@ -114,16 +114,37 @@
       "objetivo": "Investigar antecedentes pessoais e familiares.",
       "itens": [
         {
-          "nome": "antecedentes pessoais",
+          "nome": "tratamento psicologico",
           "termos": [
-            "problema de saude",
-            "doenca",
-            "pressao alta",
-            "diabetes",
-            "faz tratamento",
-            "toma remedio",
+            "psicologo",
+            "terapia",
+            "acompanhamento psicologico",
+            "ja fez terapia"
+          ]
+        },
+        {
+          "nome": "tratamento psiquiatrico",
+          "termos": [
+            "psiquiatra",
+            "acompanhamento psiquiatrico",
+            "ja tomou remedio para"
+          ]
+        },
+        {
+          "nome": "internacoes",
+          "termos": [
+            "internado",
+            "internacao",
+            "ja foi internado"
+          ]
+        },
+        {
+          "nome": "cirurgias",
+          "termos": [
             "cirurgia",
-            "alergia"
+            "operacao",
+            "ja operou",
+            "ja fez cirurgia"
           ]
         },
         {
@@ -250,7 +271,9 @@
           "nome": "sono",
           "termos": [
             "sono",
-            "sono"
+            "dorme",
+            "dormir",
+            "insonia"
           ]
         },
         {

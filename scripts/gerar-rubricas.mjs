@@ -10,6 +10,35 @@ const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ids = process.argv.slice(2);
 if (!ids.length) { console.error("uso: node scripts/gerar-rubricas.mjs <id> ..."); process.exit(1); }
 
+// Termos curados por chave conhecida (o profissional pergunta de várias formas).
+const TERMOS_ANTEC = {
+  hipertensao: ["pressao alta", "hipertensao", "pressao"],
+  diabetes: ["diabetes", "acucar no sangue", "glicose alta"],
+  dislipidemia: ["colesterol", "gordura no sangue", "dislipidemia"],
+  cardiopatia: ["problema no coracao", "cardiaco", "doenca do coracao"],
+  cirurgias: ["cirurgia", "operacao", "ja operou", "ja fez cirurgia"],
+  alergias: ["alergia", "alergico", "alergia a remedio"],
+  medicacoes: ["remedio", "medicacao", "toma algum remedio", "uso continuo"],
+  medicamentos: ["remedio", "medicacao", "toma algum remedio", "uso continuo"],
+  tratamento_psicologico: ["psicologo", "terapia", "acompanhamento psicologico", "ja fez terapia"],
+  tratamento_psiquiatrico: ["psiquiatra", "acompanhamento psiquiatrico", "ja tomou remedio para"],
+  internacoes: ["internado", "internacao", "ja foi internado"],
+  episodios_depressivos_previos: ["ja teve depressao", "episodio anterior", "ja passou por isso antes"],
+  gestacoes: ["gravidez", "engravidou", "filhos", "gestacao"],
+  tabagismo: ["fuma", "cigarro", "fumante"],
+};
+const TERMOS_SINTOMA = {
+  desanimo: ["desanimo", "sem animo", "sem vontade"], animo: ["animo", "sem vontade", "desanimo"],
+  sono: ["sono", "dorme", "dormir", "insonia"], insonia: ["insonia", "dorme", "acorda de madrugada"],
+  apetite: ["apetite", "fome", "esta comendo"], energia: ["energia", "cansaco", "cansado"],
+  humor: ["humor", "animo", "como se sente"], concentracao: ["concentracao", "concentrar", "foco"],
+  choro: ["chora", "chorar", "vontade de chorar"], irritabilidade: ["irritado", "irritabilidade", "impaciente"],
+  peso: ["peso", "emagreceu", "engordou"], anedonia: ["prazer", "perdeu o gosto", "coisas que gostava"],
+  preocupacao: ["preocupacao", "preocupado", "ansioso"], evitacao: ["evita", "deixou de fazer", "deixa de sair"],
+  compulsao: ["compulsao", "repete", "checar", "lavar", "ritual"], obsessao: ["pensamento", "obsessao", "intrusivo"],
+  flashbacks: ["revive", "flashback", "pesadelo", "lembrancas"], panico: ["crise", "ataque", "coracao acelerado"],
+};
+
 function chavesComValor(obj) {
   return Object.entries(obj || {})
     .filter(([, v]) => v !== null && v !== undefined && v !== "" && !(Array.isArray(v) && !v.length))
@@ -42,9 +71,12 @@ function rubrica(caso) {
   if (hda.evolucao || hda.curso) itHda.push({ nome: "evolucao", termos: ["melhorou ou piorou", "esta pior", "evoluiu", "desde que comecou"] });
   crit.push({ base: 3, nome: "Caracterizacao da queixa (HDA)", objetivo: "Caracterizar a queixa principal em detalhe.", itens: itHda });
 
-  // 3. Antecedentes
+  // 3. Antecedentes — item por condição reconhecida (termos curados), com fallback agregado.
   const itAnt = [];
-  if (chavesComValor(caso.antecedentes_pessoais).length) itAnt.push({ nome: "antecedentes pessoais", termos: ["problema de saude", "doenca", "pressao alta", "diabetes", "faz tratamento", "toma remedio", "cirurgia", "alergia"] });
+  const antPess = chavesComValor(caso.antecedentes_pessoais);
+  const antConhecidos = antPess.filter((k) => TERMOS_ANTEC[k]);
+  for (const k of antConhecidos.slice(0, 4)) itAnt.push({ nome: humano(k), termos: TERMOS_ANTEC[k] });
+  if (antPess.length && !antConhecidos.length) itAnt.push({ nome: "antecedentes pessoais", termos: ["problema de saude", "doenca", "pressao alta", "diabetes", "faz tratamento", "toma remedio", "cirurgia", "alergia"] });
   if (chavesComValor(caso.antecedentes_familiares).length) itAnt.push({ nome: "antecedentes familiares", termos: ["na familia", "pai", "mae", "familiar", "hereditario", "historico familiar"] });
   if (itAnt.length) crit.push({ base: 1.5, nome: "Antecedentes", objetivo: "Investigar antecedentes pessoais e familiares.", itens: itAnt });
 
@@ -84,7 +116,7 @@ function rubrica(caso) {
     ] });
     const inter = { ...(caso.informacoes_iniciais || {}), ...(caso.informacoes_intermediarias || {}) };
     if (chavesComValor(inter).length) {
-      const itSint = chavesComValor(inter).slice(0, 6).map((k) => ({ nome: humano(k), termos: [humano(k), ...humano(k).split(" ")].filter((t) => t.length > 3).slice(0, 4) }));
+      const itSint = chavesComValor(inter).slice(0, 6).map((k) => ({ nome: humano(k), termos: TERMOS_SINTOMA[k] || [humano(k), ...humano(k).split(" ")].filter((t) => t.length > 3).slice(0, 4) }));
       crit.push({ base: 2.5, nome: "Investigacao dos sintomas", objetivo: "Investigar os sintomas e o contexto do quadro.", itens: itSint });
     }
     // Risco / temas sensiveis: termos = gatilhos do proprio caso

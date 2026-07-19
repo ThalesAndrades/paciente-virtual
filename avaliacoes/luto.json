@@ -2,95 +2,345 @@
   "nome_caso": "Processo de Luto",
   "criterios": [
     {
-      "nome": "Acolhimento e empatia",
-      "peso": 2,
-      "objetivo": "Acolher a perda com escuta empática e sem pressa.",
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
       "itens": [
         {
-          "nome": "acolhimento",
-          "termos": ["como posso ajudar", "o que a traz", "o que trouxe", "fique à vontade"]
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
         },
         {
-          "nome": "empatia com a perda",
-          "termos": ["sinto muito", "meus sentimentos", "deve ser muito difícil", "imagino", "compreendo", "entendo"]
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
         },
         {
-          "nome": "espaço para falar do marido",
-          "termos": ["me fale sobre ele", "como ele era", "quantos anos ficaram", "casamento", "me conte sobre"]
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "faz o que"
+          ]
         }
-      ]
+      ],
+      "peso": 0.7
     },
     {
-      "nome": "Exploração do luto",
-      "peso": 3,
-      "objetivo": "Compreender as circunstâncias da perda e as manifestações do luto.",
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a queixa principal em detalhe.",
       "itens": [
         {
-          "nome": "circunstâncias da perda",
-          "termos": ["como ele faleceu", "o que aconteceu", "doença", "câncer", "quando ele faleceu"]
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
         },
         {
-          "nome": "sono e rotina",
-          "termos": ["sono", "dorme", "dormir", "rotina", "dia a dia", "atividades"]
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
         },
         {
-          "nome": "choro e saudade",
-          "termos": ["chora", "choro", "saudade", "lembranças", "lembra dele"]
+          "nome": "frequencia/duracao",
+          "termos": [
+            "com que frequencia",
+            "quanto tempo dura",
+            "vem e vai",
+            "continua",
+            "quantas vezes"
+          ]
         },
         {
-          "nome": "fenômenos do luto",
-          "termos": ["ouve a voz", "sente a presença", "conversa com ele", "retrato", "sonha com ele", "impressão de vê-lo"]
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "sente mais",
+            "junto com",
+            "alem disso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
         }
-      ]
+      ],
+      "peso": 2.2
     },
     {
-      "nome": "Diferencial com depressão",
-      "peso": 2,
-      "objetivo": "Distinguir luto esperado de quadro depressivo instalado.",
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares.",
       "itens": [
         {
-          "nome": "prazer e reatividade preservados",
-          "termos": ["prazer", "consegue se alegrar", "momentos bons", "gosta de fazer", "interesse", "igreja", "vizinha"]
+          "nome": "hipertensao",
+          "termos": [
+            "pressao alta",
+            "hipertensao",
+            "pressao"
+          ]
         },
+        {
+          "nome": "diabetes",
+          "termos": [
+            "diabetes",
+            "acucar no sangue",
+            "glicose alta"
+          ]
+        },
+        {
+          "nome": "tratamento psicologico",
+          "termos": [
+            "psicologo",
+            "terapia",
+            "acompanhamento psicologico",
+            "ja fez terapia"
+          ]
+        },
+        {
+          "nome": "medicacoes",
+          "termos": [
+            "remedio",
+            "medicacao",
+            "toma algum remedio",
+            "uso continuo"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "pai",
+            "mae",
+            "familiar",
+            "hereditario",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.1
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "dorme",
+            "sono",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz esporte"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "come",
+            "come o que",
+            "dieta"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Acolhimento e vinculo",
+      "objetivo": "Estabelecer vinculo e escuta empatica.",
+      "itens": [
+        {
+          "nome": "escuta aberta/acolhimento",
+          "termos": [
+            "me conta",
+            "como voce esta",
+            "como tem sido",
+            "fale um pouco",
+            "quer falar",
+            "estou aqui",
+            "pode confiar"
+          ]
+        }
+      ],
+      "peso": 0.7
+    },
+    {
+      "nome": "Investigacao dos sintomas",
+      "objetivo": "Investigar os sintomas e o contexto do quadro.",
+      "itens": [
+        {
+          "nome": "perda",
+          "termos": [
+            "perda",
+            "perda"
+          ]
+        },
+        {
+          "nome": "sono",
+          "termos": [
+            "sono",
+            "dorme",
+            "dormir",
+            "insonia"
+          ]
+        },
+        {
+          "nome": "choro",
+          "termos": [
+            "chora",
+            "chorar",
+            "vontade de chorar"
+          ]
+        },
+        {
+          "nome": "casa",
+          "termos": [
+            "casa",
+            "casa"
+          ]
+        },
+        {
+          "nome": "doenca marido",
+          "termos": [
+            "doenca marido",
+            "doenca",
+            "marido"
+          ]
+        },
+        {
+          "nome": "filhos",
+          "termos": [
+            "filhos",
+            "filhos"
+          ]
+        }
+      ],
+      "peso": 1.9
+    },
+    {
+      "nome": "Avaliacao de risco e temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, os temas delicados do caso (inclui risco quando aplicavel).",
+      "itens": [
         {
           "nome": "culpa",
-          "termos": ["culpa", "culpada", "se culpa", "responsável pela"]
+          "termos": [
+            "culpa"
+          ]
         },
         {
-          "nome": "ideação de morte",
-          "termos": ["morrer", "morte", "vontade de viver", "se juntar a ele", "não acordar", "suicídio"]
+          "nome": "retrato",
+          "termos": [
+            "retrato"
+          ]
+        },
+        {
+          "nome": "presenca",
+          "termos": [
+            "presenca"
+          ]
+        },
+        {
+          "nome": "medo",
+          "termos": [
+            "medo"
+          ]
+        },
+        {
+          "nome": "ideacao",
+          "termos": [
+            "ideacao"
+          ]
+        },
+        {
+          "nome": "isolamento",
+          "termos": [
+            "isolamento"
+          ]
+        },
+        {
+          "nome": "solidao",
+          "termos": [
+            "solidao"
+          ]
         }
-      ]
+      ],
+      "peso": 1.9
     },
     {
-      "nome": "Rede de apoio",
-      "peso": 2,
-      "objetivo": "Mapear vínculos e recursos comunitários disponíveis.",
+      "nome": "Rede de apoio e fatores de protecao",
+      "objetivo": "Mapear apoio e fatores de protecao.",
       "itens": [
         {
-          "nome": "família",
-          "termos": ["filhos", "família", "familiares", "netos"]
-        },
-        {
-          "nome": "comunidade e amizades",
-          "termos": ["vizinha", "amigos", "amigas", "igreja", "grupo", "comunidade"]
+          "nome": "rede de apoio",
+          "termos": [
+            "apoio",
+            "com quem conta",
+            "familia",
+            "amigos",
+            "quem te ajuda",
+            "conversar com alguem",
+            "suporte"
+          ]
         }
-      ]
-    },
-    {
-      "nome": "Orientação e seguimento",
-      "peso": 1,
-      "objetivo": "Normalizar o luto, orientar e garantir acompanhamento.",
-      "itens": [
-        {
-          "nome": "normalização do luto",
-          "termos": ["é esperado", "é normal", "faz parte do luto", "não está enlouquecendo", "luto"]
-        },
-        {
-          "nome": "encaminhamento e retorno",
-          "termos": ["grupo de apoio", "psicoterapia", "psicólogo", "psicóloga", "retorno", "acompanhamento", "retomar a hidroginástica"]
-        }
-      ]
+      ],
+      "peso": 0.8
     }
   ]
 }
