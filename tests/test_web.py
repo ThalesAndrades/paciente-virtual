@@ -140,7 +140,7 @@ def test_encerrar_gera_avaliacao(app, cliente, monkeypatch):
     assert resultado["parecer"] == "Parecer pedagógico."
     assert resultado["checklist"]["nota_total"] > 0
     nomes = {criterio["nome"] for criterio in resultado["checklist"]["criterios"]}
-    assert "Solicitação de exames" in nomes
+    assert "Exames complementares" in nomes
     assert "ENCERRADA:" in _transcript(app, consulta["id"])
 
 
