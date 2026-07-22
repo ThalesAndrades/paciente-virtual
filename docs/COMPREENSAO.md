@@ -157,10 +157,14 @@ TEPT, Anorexia, Borderline, Depressão pós-parto, Autolesão na adolescência�
 ## 7. Qualidade, testes e pontos de atenção
 
 ### Testes e CI
-- **Python** (`tests/test_demo.py`): cobre o modo demonstração (identificação,
-  HDA, sintomas/antecedentes, revelação gradual em casos de psicologia).
-- **Node** (`deploy/hostinger/testes/*.test.js`): testes do motor e servidor
-  portados.
+- **Python** (`tests/`, 12 arquivos `pytest`): cobre o pacote de ponta a ponta —
+  motor de demonstração (`test_demo.py`), API web/servidor (`test_web.py`),
+  avaliador e rubricas (`test_avaliador.py`, `test_dados.py`), exames
+  (`test_exames.py`), prompt (`test_prompt.py`), registro/relatório
+  (`test_registro.py`, `test_relatorio.py`), texto (`test_texto.py`), IA
+  (`test_ia.py`) e voz (`test_voz.py`, `test_falar.py`).
+- **Node** (`deploy/hostinger/testes/*.test.js`): testes de paridade do motor e
+  do servidor portados.
 - **CI** (`.github/workflows/ci.yml`): dois jobs — `ruff check` + `pytest`
   (Python 3.12) e `npm test` (Node 20). Roda em push para `main` e em PRs.
 
