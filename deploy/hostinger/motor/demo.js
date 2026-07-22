@@ -288,18 +288,19 @@ export function fatoSensivelDireto(caso, pergunta) {
 }
 
 export function responderDemo(caso, pergunta) {
-  // Regras específicas ANTES da triagem de sintoma: uma pergunta de antecedente
-  // familiar ("sua mãe era nervosa?") deve casar a regra "família", não ser
-  // respondida como sintoma atual pelo sinônimo genérico "nervosa".
+  // Triagem de sintoma ANTES das regras genéricas — espelha o motor de
+  // referência `demo.py` (`responder_demo`): "sente suor?" não deve cair na
+  // regra da queixa pelo verbo genérico "sente". A ordem inversa divergia do
+  // Python e fazia o paciente devolver a queixa principal a perguntas de sintoma.
+  const respostaSintoma = responderSintoma(caso, pergunta);
+  if (respostaSintoma) return respostaSintoma;
+
   for (const [termos, responder] of regras(caso)) {
     if (contemAlgumTermo(pergunta, termos)) {
       const resposta = responder();
       if (resposta) return resposta;
     }
   }
-
-  const respostaSintoma = responderSintoma(caso, pergunta);
-  if (respostaSintoma) return respostaSintoma;
 
   return RESPOSTA_PADRAO;
 }

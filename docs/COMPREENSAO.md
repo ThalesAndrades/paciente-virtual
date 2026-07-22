@@ -164,38 +164,28 @@ TEPT, Anorexia, Borderline, Depressão pós-parto, Autolesão na adolescência�
 - **CI** (`.github/workflows/ci.yml`): dois jobs — `ruff check` + `pytest`
   (Python 3.12) e `npm test` (Node 20). Roda em push para `main` e em PRs.
 
-### ⚠️ Pontos de atenção — CI vermelha (falhas pré-existentes)
-Observado em **2026-07-22**, sobre a base deste documento (commit `1b0162e`).
-Ambas as falhas já existiam antes deste documento (que só adiciona Markdown) e
-**não** são causadas por ele; ficam registradas aqui como achado da análise.
+### Achado da análise — 2 falhas de CI (diagnosticadas e corrigidas neste PR)
+Sobre a base deste documento (commit `1b0162e`, **2026-07-22**), a CI tinha duas
+falhas **pré-existentes** — não introduzidas por este documento (que só adiciona
+Markdown). Foram diagnosticadas na análise e corrigidas neste mesmo PR:
 
-**1. `npm test` — 1 teste Node falhando** (`deploy/hostinger/testes/motor.test.js:53`):
+**1. `npm test` — teste Node** (`deploy/hostinger/testes/motor.test.js:53`):
+o `responderDemo` (Node, `demo.js`) rodava as **regras antes da triagem de
+sintoma**, então "sente suor frio?" casava a regra da queixa por "sente" e
+devolvia a queixa principal em vez de "Sim, …". O `demo.py` (Python, motor de
+referência) faz o **inverso** — sintomas primeiro (`demo.py:279`). Era a
+**divergência entre as duas implementações** descrita na §2. **Correção:**
+`demo.js` passou a triar sintoma antes das regras, espelhando `demo.py`.
 
-```text
-not ok 5 - paciente demo responde identificação e sintomas
-  esperava /^Sim/, recebeu 'Estou com dor no peito.'
-```
+**2. `pytest` — teste Python** (`tests/test_web.py:143`,
+`test_encerrar_gera_avaliacao`): o teste esperava um critério `"Solicitação de
+exames"`, mas a rubrica atual do infarto (`avaliacoes/infarto.json`) nomeia esse
+critério de `"Exames complementares"` (renomeado em `4b11557`). O teste estava
+**desatualizado**. **Correção:** a asserção passou a esperar `"Exames
+complementares"`.
 
-O `responderDemo` (Node, `demo.js`) roda as **regras antes da triagem de
-sintoma**, então "sente suor frio?" casa a regra da queixa por "sente" e devolve
-a queixa principal. O `demo.py` (Python) faz o **inverso** — sintomas primeiro
-(`demo.py:279`, com comentário explícito) — e o teste equivalente passa. É a
-**divergência entre as duas implementações** descrita na §2. Alinhar a ordem em
-`demo.js` ao `demo.py` resolve, respeitando a ressalva do comentário em `demo.js`
-sobre perguntas de antecedente ("sua mãe era nervosa?").
-
-**2. `pytest` — 1 teste Python falhando** (`tests/test_web.py:143`,
-`test_encerrar_gera_avaliacao`):
-
-```text
-AssertionError: 'Solicitação de exames' in {..., 'Exames complementares', ...}
-```
-
-O teste espera um critério chamado `"Solicitação de exames"`, mas a rubrica atual
-do infarto (`avaliacoes/infarto.json`) nomeia esse critério de `"Exames
-complementares"`. O teste está **desatualizado** em relação à rubrica (renomeada
-em `4b11557`, "rubricas mais ricas"). Corrige-se alinhando o teste ao nome atual
-do critério.
+Esse episódio ilustra na prática o risco de manter **duas fontes de verdade** para
+o motor (§2) e de testes acoplados a nomes de rubrica.
 
 ### Outros pontos
 - **Sessões em memória**: sem persistência entre reinícios, sem autenticação —
