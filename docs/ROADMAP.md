@@ -73,7 +73,7 @@ estado a cada reinício e não escala horizontalmente.
 ## Fase 1 — Qualidade (realismo)
 
 - **1.1 Camada de modelo plugável** (IA · M · alto) — local para privacidade/offline; nuvem (Claude/GPT) opcional para qualidade máxima, escolha do professor.
-- **1.2 RAG de fidelidade clínica** (IA · L · alto) — ancorar respostas em diretrizes reais; blindar a coerência médica hoje dependente só do prompt. Ver [`spec-voz-e-ia.md`](#) quando existir.
+- **1.2 RAG de fidelidade clínica** (IA · L · alto) — ancorar respostas em diretrizes reais; blindar a coerência médica hoje dependente só do prompt.
 - **1.3 Guardrails de segurança** (IA · M · alto) — detectores de quebra de personagem, vazamento de diagnóstico e manejo de conteúdo sensível (ideação suicida exige cuidado extra).
 - **1.4 Voz full-duplex + barge-in** (Voz · L · alto) — WebRTC + STT/TTS em streaming + interrupção; alvo < 800 ms. Base já iniciada nos commits `perf(fluidez)`.
 - **1.5 Avaliação com LLM-judge calibrado** (IA · M · alto) — manter o checklist determinístico como baseline e somar julgamento semântico por rubrica, calibrado contra notas humanas (κ ≥ 0,8).
