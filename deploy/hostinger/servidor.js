@@ -450,9 +450,15 @@ export function criarServidor() {
     try {
       // Verificação de saúde para o painel da Hostinger / monitoramento de uptime.
       if (req.method === "GET" && (pathname === "/healthz" || pathname === "/api/health")) {
+        const backend = (process.env.OPENAI_API_KEY || "").trim()
+          ? "openai"
+          : process.env.OLLAMA_URL
+            ? "ollama"
+            : null;
         return json(res, 200, {
           status: "ok",
-          modo: process.env.OLLAMA_URL ? "ia" : "demonstracao",
+          modo: backend ? "ia" : "demonstracao",
+          backend: backend || "demonstracao",
         });
       }
 

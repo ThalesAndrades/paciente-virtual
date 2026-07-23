@@ -216,7 +216,9 @@ pressão em casa?" ainda disparam a medição.
 
 O repositório inclui um servidor Node **sem dependências** que roda o protótipo em
 hospedagens Node.js (como a da Hostinger), reutilizando os mesmos casos, rubricas
-e página web. Sem Ollama, funciona em modo demonstração com avaliação objetiva.
+e página web. Para IA de máxima performance, defina `OPENAI_API_KEY` (usa a API da
+OpenAI); há também suporte a Ollama local (`OLLAMA_URL`). Sem nenhum dos dois,
+funciona em modo demonstração com avaliação objetiva.
 
 ```bash
 npm start   # http://127.0.0.1:3000

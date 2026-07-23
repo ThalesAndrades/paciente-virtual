@@ -10,8 +10,12 @@ do repositório: nada é duplicado além do motor, portado para JavaScript.
 
 | Cenário | Paciente | Avaliação | Voz |
 | ------- | -------- | --------- | --- |
-| Hospedagem Node (hPanel), sem Ollama | Modo demonstração (respostas do caso) | Nota objetiva completa; sem parecer de IA | Web Speech API do navegador (Chrome/Edge) |
-| VPS com [Ollama](https://ollama.com) (`OLLAMA_URL`) | IA completa | Nota objetiva + parecer pedagógico | Web Speech API do navegador |
+| Sem modelo (nenhuma chave/Ollama) | Modo demonstração (respostas do caso) | Nota objetiva completa; sem parecer de IA | Web Speech API do navegador (Chrome/Edge) |
+| **OpenAI** (`OPENAI_API_KEY`) — máxima performance | IA completa (nuvem) | Nota objetiva + parecer pedagógico | Web Speech API do navegador |
+| VPS com [Ollama](https://ollama.com) (`OLLAMA_URL`) | IA completa (local) | Nota objetiva + parecer pedagógico | Web Speech API do navegador |
+
+Quando `OPENAI_API_KEY` está definida, o servidor usa a API da OpenAI; caso
+contrário, cai no Ollama; sem nenhum dos dois, roda em modo demonstração.
 
 Para voz neural local (Whisper/Piper/Kokoro) é preciso do servidor Python
 (`paciente-virtual-web`) — recomendado em VPS. O servidor Node é a opção leve.
@@ -30,8 +34,10 @@ Para voz neural local (Whisper/Piper/Kokoro) é preciso do servidor Python
      ou apontar direto para `deploy/hostinger/servidor.js`.
    - **Porta**: a Hostinger injeta a variável `PORT` automaticamente — o servidor
      a usa, seja um número ou um socket Unix (Phusion Passenger).
-4. (Opcional, VPS/Cloud) exporte `OLLAMA_URL=http://127.0.0.1:11434` e rode
-   `ollama pull qwen3:8b` para o paciente responder com IA.
+4. (IA por nuvem — recomendado) defina `OPENAI_API_KEY` no painel de variáveis de
+   ambiente da hospedagem (no Coolify: aba **Environment Variables**). Opcional:
+   `OPENAI_MODEL` (padrão `gpt-4o`). Alternativa local: exporte
+   `OLLAMA_URL=http://127.0.0.1:11434` e rode `ollama pull qwen3:8b`.
 5. Reinicie a aplicação. Pronto: a página do simulador estará no seu domínio.
 
 Não há `npm install`: o servidor usa apenas módulos nativos do Node.
@@ -83,8 +89,12 @@ npm test           # testes do motor portado e do servidor (node --test)
 | -------- | ------ | --------- |
 | `PORT` | `3000` | Porta (a Hostinger define automaticamente) |
 | `HOST` | `0.0.0.0` | Endereço de escuta |
-| `OLLAMA_URL` | `http://127.0.0.1:11434` | Endpoint do Ollama (opcional) |
-| `PACIENTE_VIRTUAL_MODELO` | `qwen3:8b` | Modelo usado no Ollama |
+| `OPENAI_API_KEY` | — | Chave da OpenAI. **Definida** → ativa a IA por nuvem (máxima performance). Nunca versione a chave. |
+| `OPENAI_MODEL` | `gpt-4o` | Modelo da OpenAI (ex.: `gpt-4o`, `gpt-4o-mini`). |
+| `OPENAI_BASE_URL` | `https://api.openai.com/v1` | Endpoint compatível (Azure OpenAI, OpenRouter etc.). |
+| `OLLAMA_URL` | `http://127.0.0.1:11434` | Endpoint do Ollama (usado se não houver `OPENAI_API_KEY`). |
+| `PACIENTE_VIRTUAL_MODELO` | `qwen3:8b` | Modelo usado no Ollama. |
+| `LLM_TIMEOUT_MS` | `120000` | Tempo-limite das chamadas ao modelo. |
 
 ## Observações
 
