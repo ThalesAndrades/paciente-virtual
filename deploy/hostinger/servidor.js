@@ -431,9 +431,10 @@ async function encerrarConsulta(res, id) {
   resultado.checklist = pontuarChecklist(rubrica, extrairTextoProfissional(consulta.transcript));
 
   try {
-    resultado.parecer = await conversar([
-      { role: "user", content: montarPromptAvaliacao(rubrica, consulta.transcript) },
-    ]);
+    resultado.parecer = await conversar(
+      [{ role: "user", content: montarPromptAvaliacao(rubrica, consulta.transcript) }],
+      { avaliacao: true },
+    );
   } catch {
     resultado.parecer = null;
     resultado.aviso = AVISO_SEM_PARECER;

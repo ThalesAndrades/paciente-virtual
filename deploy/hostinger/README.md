@@ -89,12 +89,33 @@ npm test           # testes do motor portado e do servidor (node --test)
 | -------- | ------ | --------- |
 | `PORT` | `3000` | Porta (a Hostinger define automaticamente) |
 | `HOST` | `0.0.0.0` | Endereço de escuta |
-| `OPENAI_API_KEY` | — | Chave da OpenAI. **Definida** → ativa a IA por nuvem (máxima performance). Nunca versione a chave. |
-| `OPENAI_MODEL` | `gpt-4o` | Modelo da OpenAI (ex.: `gpt-4o`, `gpt-4o-mini`). |
-| `OPENAI_BASE_URL` | `https://api.openai.com/v1` | Endpoint compatível (Azure OpenAI, OpenRouter etc.). |
+| `OPENAI_API_KEY` | — | Chave da API compatível (OpenAI ou OpenRouter). **Definida** → ativa a IA por nuvem. Nunca versione a chave. |
+| `OPENAI_MODEL` | lista OSS (ver abaixo) | Modelo(s) da fala do paciente. Aceita **lista** (vírgula/espaço) = cadeia de fallback: tenta o 1º, cai para o próximo em erro/rate-limit. |
+| `OPENAI_MODEL_AVALIACAO` | lista OSS c/ reasoning | Modelo(s) do parecer pedagógico. Sem ela, herda `OPENAI_MODEL` (ou o default de avaliação). |
+| `OPENAI_BASE_URL` | `https://api.openai.com/v1` | Endpoint compatível. Para OpenRouter: `https://openrouter.ai/api/v1`. |
 | `OLLAMA_URL` | `http://127.0.0.1:11434` | Endpoint do Ollama (usado se não houver `OPENAI_API_KEY`). |
 | `PACIENTE_VIRTUAL_MODELO` | `qwen3:8b` | Modelo usado no Ollama. |
 | `LLM_TIMEOUT_MS` | `120000` | Tempo-limite das chamadas ao modelo. |
+
+### Modelos open source recomendados (via OpenRouter)
+
+Os defaults priorizam modelos **open weight** de alta performance em pt-BR, best-first
+e com fallback automático. Para o paciente (fala, instruct rápido):
+
+```
+deepseek/deepseek-chat, meta-llama/llama-3.3-70b-instruct, qwen/qwen-2.5-72b-instruct
+```
+
+Para o parecer pedagógico (`OPENAI_MODEL_AVALIACAO`, com raciocínio):
+
+```
+deepseek/deepseek-r1, deepseek/deepseek-chat, meta-llama/llama-3.3-70b-instruct
+```
+
+Basta `OPENAI_BASE_URL=https://openrouter.ai/api/v1` + `OPENAI_API_KEY` do OpenRouter.
+Como é uma cadeia de fallback, um slug indisponível é simplesmente pulado. Modelos
+"médicos" OSS (focados em QA em inglês) tendem a piorar o role-play em pt-BR — um bom
+instruct multilíngue geral rende falas de paciente mais naturais.
 
 ## Observações
 
