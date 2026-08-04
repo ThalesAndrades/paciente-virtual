@@ -29,7 +29,7 @@ import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } fro
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
-import { responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
+import { podarHistorico, responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
 import { dentroDoLimite, ipDe, segundosAteLiberar } from "./motor/limite.js";
 import { ttsInfo, sintetizar, instrucaoDeVoz } from "./motor/tts.js";
 import { transcrever } from "./motor/transcricao.js";
@@ -378,6 +378,9 @@ async function iniciarConsulta(req, res) {
     iniciadaEm: Date.now(),
     perguntas: 0,
     exames: 0,
+    // Memória da conversa: sem ela o paciente repetia a fala anterior e não tinha
+    // como "contar mais" sobre nada.
+    historico: [],
   });
 
   json(res, 200, {
@@ -467,7 +470,8 @@ async function enviarMensagem(req, res, id) {
           acc += t;
           emitir({ tipo: "delta", t });
         },
-        examesEntregues
+        examesEntregues,
+        consulta.historico
       );
     } catch (erro) {
       registrarFalhaIA("fala do paciente (stream)", erro);
@@ -490,6 +494,7 @@ async function enviarMensagem(req, res, id) {
       return res.end();
     }
     consulta.transcript += `\nPACIENTE: ${resposta}\n`;
+    lembrarTurno(consulta, texto, resposta);
     emitir({ tipo: "fim", origem });
     return res.end();
   }
@@ -501,7 +506,13 @@ async function enviarMensagem(req, res, id) {
   let resposta;
   let origem;
   try {
-    resposta = await responderComoPaciente(consulta.caso, texto, fatoLiberado, examesEntregues);
+    resposta = await responderComoPaciente(
+      consulta.caso,
+      texto,
+      fatoLiberado,
+      examesEntregues,
+      consulta.historico
+    );
     origem = "ia";
   } catch (erro) {
     registrarFalhaIA("fala do paciente", erro);
@@ -516,6 +527,7 @@ async function enviarMensagem(req, res, id) {
   }
 
   consulta.transcript += `\nPACIENTE: ${resposta}\n`;
+  lembrarTurno(consulta, texto, resposta);
   eventos.push({ tipo: "paciente", texto: resposta, origem });
   json(res, 200, { eventos });
 }
@@ -526,6 +538,26 @@ function umaLinha(valor, limite) {
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, limite);
+}
+
+// Guarda o turno na memória da conversa. Só o texto limpo: as instruções entre
+// colchetes (revelar tema sensível, exame recém-feito) valem para AQUELE turno e
+// se acumulariam como ruído nos próximos.
+function lembrarTurno(consulta, pergunta, resposta) {
+  consulta.historico.push({ role: "user", content: pergunta });
+  consulta.historico.push({ role: "assistant", content: resposta });
+  consulta.historico = podarHistorico(consulta.historico);
+}
+
+// Exame acionado por clique não passa pelo modelo — mas o paciente sentiu o
+// procedimento acontecer, e sem este registro ele não teria como comentá-lo depois
+// ("quando o senhor apertou minha barriga...").
+function lembrarExame(consulta, titulo, nome) {
+  consulta.historico.push({
+    role: "user",
+    content: `[O profissional realizou em você: ${titulo.toLowerCase()} — ${nome}. Você sentiu, mas não sabe o resultado.]`,
+  });
+  consulta.historico = podarHistorico(consulta.historico);
 }
 
 async function encerrarConsulta(req, res, id) {
@@ -776,6 +808,8 @@ export function criarServidor() {
         }
         const titulo = noFisico ? "EXAME FÍSICO" : "EXAME SOLICITADO";
         consulta.transcript += `\n${titulo}: ${item.nome}\nRESULTADO: ${item.resultado}\n`;
+        consulta.exames += 1;
+        lembrarExame(consulta, titulo, item.nome);
         return json(res, 200, {
           eventos: [{ tipo: "exame", titulo, nome: item.nome, resultado: item.resultado }],
         });

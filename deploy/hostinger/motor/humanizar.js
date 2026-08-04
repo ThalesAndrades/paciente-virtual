@@ -223,7 +223,25 @@ export function sistemaPaciente(caso) {
 // - `examesEntregues`: exames/aferições que ACABARAM de ser feitos neste turno. O
 //   paciente sabe que aconteceram (sentiu o aparelho, viu a agulha) e pode comentar,
 //   mas continua sem saber ler o resultado nem nomear o diagnóstico.
-function montarMensagens(caso, pergunta, fatoLiberado, examesEntregues) {
+// Quantas mensagens da conversa acompanham cada turno (12 idas e voltas).
+//
+// Sem histórico o paciente não lembrava do que ACABOU de dizer: repetia a mesma
+// frase em perguntas seguidas, chamava de "doutora" e depois "doutor", e
+// "me conta mais" não tinha do que falar mais. Pior, a dinâmica de revelação do
+// caso — que manda abrir mais quando o profissional acolhe e não apressa — era
+// impossível de avaliar, porque não havia conversa para julgar.
+//
+// O teto existe para o custo não crescer sem limite numa consulta longa: o prompt
+// do caso já tem ~4 mil tokens e é cacheado pelo provedor; o histórico é o pedaço
+// que cresce a cada turno.
+export const MAX_HISTORICO = 24;
+
+export function podarHistorico(historico) {
+  const lista = Array.isArray(historico) ? historico : [];
+  return lista.slice(-MAX_HISTORICO);
+}
+
+function montarMensagens(caso, pergunta, fatoLiberado, examesEntregues, historico) {
   const partes = [`O profissional perguntou: "${pergunta}"`];
 
   if (examesEntregues && examesEntregues.length) {
@@ -244,13 +262,14 @@ function montarMensagens(caso, pergunta, fatoLiberado, examesEntregues) {
 
   return [
     { role: "system", content: sistemaPaciente(caso) },
+    ...podarHistorico(historico),
     { role: "user", content: partes.join("\n") },
   ];
 }
 
 // Responde como o paciente (não-streaming — usado como fallback e nos testes).
-export async function responderComoPaciente(caso, pergunta, fatoLiberado, examesEntregues) {
-  return await conversar(montarMensagens(caso, pergunta, fatoLiberado, examesEntregues));
+export async function responderComoPaciente(caso, pergunta, fatoLiberado, examesEntregues, historico) {
+  return await conversar(montarMensagens(caso, pergunta, fatoLiberado, examesEntregues, historico));
 }
 
 // Versão em STREAMING: onDelta(t) recebe cada pedaço da fala; resolve com o texto completo.
@@ -259,10 +278,11 @@ export async function responderComoPacienteStream(
   pergunta,
   fatoLiberado,
   onDelta,
-  examesEntregues
+  examesEntregues,
+  historico
 ) {
   return await conversarStream(
-    montarMensagens(caso, pergunta, fatoLiberado, examesEntregues),
+    montarMensagens(caso, pergunta, fatoLiberado, examesEntregues, historico),
     onDelta
   );
 }
