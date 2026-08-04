@@ -1,4 +1,4 @@
-// Porta fiel de paciente_virtual/avaliador.py — avaliação objetiva e prompt do parecer.
+// Avaliação objetiva pela rubrica e prompt do parecer pedagógico.
 
 import { contemAlgumTermo } from "./texto.js";
 

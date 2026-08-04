@@ -1,4 +1,4 @@
-// Porta fiel de paciente_virtual/demo.py — paciente de demonstração sem LLM.
+// Paciente de demonstração: responde sem modelo de linguagem, a partir do caso.
 
 import { contemAlgumTermo, ehChaveMeta, normalizar } from "./texto.js";
 

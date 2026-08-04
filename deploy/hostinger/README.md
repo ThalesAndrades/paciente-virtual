@@ -3,7 +3,7 @@
 Este diretório contém um servidor **Node.js sem dependências externas** que roda o
 protótipo interativo do Paciente Virtual em hospedagens que suportam Node — como a
 hospedagem web da Hostinger (hPanel) ou um VPS. Ele reutiliza os mesmos casos
-(`casos/`), rubricas (`avaliacoes/`) e a mesma página web (`paciente_virtual/web/static/`)
+(`casos/`), rubricas (`avaliacoes/`) e a página web (`web/index.html`)
 do repositório: nada é duplicado além do motor, portado para JavaScript.
 
 ## O que funciona em cada cenário
