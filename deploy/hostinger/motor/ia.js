@@ -85,14 +85,25 @@ export function limparRaciocinio(texto) {
 
 // --- Backend OpenAI-compatível (com cadeia de fallback entre modelos) ---
 
-async function chamarOpenAI(mensagens, modeloId) {
+// Teto de geração da FALA do paciente.
+//
+// Pedir brevidade no prompt não bastou: o modelo respondia em 5 a 9 frases a
+// perguntas simples. Numa consulta falada, o profissional OUVE a resposta — um
+// parágrafo leva meio minuto e trava a conversa. O teto é o que de fato segura.
+// Calibrado para caber 2 a 3 frases em português (que gasta mais tokens que
+// inglês), então uma resposta bem-comportada termina sozinha antes do limite.
+const MAX_TOKENS_PACIENTE = Number(process.env.PV_MAX_TOKENS_PACIENTE || 130);
+
+async function chamarOpenAI(mensagens, modeloId, maxTokens) {
+  const corpo = { model: modeloId, messages: mensagens, stream: false };
+  if (maxTokens) corpo.max_completion_tokens = maxTokens;
   const resposta = await fetch(`${baseOpenAI()}/chat/completions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${chaveOpenAI()}`,
     },
-    body: JSON.stringify({ model: modeloId, messages: mensagens, stream: false }),
+    body: JSON.stringify(corpo),
     signal: AbortSignal.timeout(TIMEOUT_MS),
   });
   if (!resposta.ok) {
@@ -118,10 +129,12 @@ export function registrarModelo(tarefa, modelo) {
 }
 
 async function conversarOpenAI(mensagens, modelos, tarefa) {
+  // O parecer pedagógico precisa ser longo; só a fala do paciente tem teto.
+  const maxTokens = tarefa === "paciente" ? MAX_TOKENS_PACIENTE : 0;
   let ultimoErro;
   for (const m of modelos) {
     try {
-      const saida = await chamarOpenAI(mensagens, m);
+      const saida = await chamarOpenAI(mensagens, m, maxTokens);
       registrarModelo(tarefa, m);
       return saida;
     } catch (erro) {
@@ -140,7 +153,12 @@ async function streamOpenAIUm(mensagens, onDelta, modeloId) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${chaveOpenAI()}`,
     },
-    body: JSON.stringify({ model: modeloId, messages: mensagens, stream: true }),
+    body: JSON.stringify({
+      model: modeloId,
+      messages: mensagens,
+      stream: true,
+      max_completion_tokens: MAX_TOKENS_PACIENTE, // streaming é sempre a fala do paciente
+    }),
     signal: AbortSignal.timeout(TIMEOUT_MS),
   });
   if (!resposta.ok || !resposta.body) {
