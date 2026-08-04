@@ -16,24 +16,53 @@ export function termosDoItem(item) {
   return [item.nome, item.termos && item.termos.length ? item.termos : [item.nome]];
 }
 
+// Teto de itens que UM turno do profissional pode marcar.
+//
+// Sem teto, a nota é gamificável numa mensagem só: despejar todos os termos da
+// rubrica numa frase dava 10/10. Uma pergunta real cobre um ou dois pontos ("o
+// senhor fuma? bebe?"), então o teto não atrapalha quem entrevista de verdade —
+// só impede o despejo. Continua sendo pontuação por palavra-chave: quem confere
+// o SENTIDO das perguntas é o parecer pedagógico da IA.
+export const MAX_ITENS_POR_TURNO = 3;
+
+// Cada linha do texto do profissional é um turno (uma fala enviada, um exame
+// realizado). extrairTextoProfissional já entrega uma linha por turno.
+function turnosDe(textoProfissional) {
+  return String(textoProfissional || "")
+    .split("\n")
+    .map((linha) => linha.trim())
+    .filter(Boolean);
+}
+
 export function pontuarChecklist(rubrica, textoProfissional) {
+  // Achata a rubrica em alvos e resolve turno a turno, respeitando o teto.
+  const alvos = [];
+  for (const [ci, criterio] of (rubrica.criterios || []).entries()) {
+    for (const item of criterio.itens || []) {
+      const [nome, termos] = termosDoItem(item);
+      alvos.push({ ci, nome, termos, atendido: false });
+    }
+  }
+
+  for (const turno of turnosDe(textoProfissional)) {
+    let restante = MAX_ITENS_POR_TURNO;
+    for (const alvo of alvos) {
+      if (restante <= 0) break;
+      if (alvo.atendido) continue;
+      if (contemAlgumTermo(turno, alvo.termos)) {
+        alvo.atendido = true;
+        restante -= 1;
+      }
+    }
+  }
+
   const criterios = [];
   let notaTotal = 0;
 
-  for (const criterio of rubrica.criterios) {
-    const itens = criterio.itens || [];
-    const itensAvaliados = [];
-    let notaBloco = 0;
-
-    if (itens.length) {
-      const valorItem = criterio.peso / itens.length;
-      for (const item of itens) {
-        const [nome, termos] = termosDoItem(item);
-        const atendido = contemAlgumTermo(textoProfissional, termos);
-        if (atendido) notaBloco += valorItem;
-        itensAvaliados.push({ nome, atendido });
-      }
-    }
+  for (const [ci, criterio] of (rubrica.criterios || []).entries()) {
+    const doCriterio = alvos.filter((alvo) => alvo.ci === ci);
+    const valorItem = doCriterio.length ? criterio.peso / doCriterio.length : 0;
+    const notaBloco = doCriterio.reduce((soma, alvo) => soma + (alvo.atendido ? valorItem : 0), 0);
 
     notaTotal += notaBloco;
     criterios.push({
@@ -41,7 +70,7 @@ export function pontuarChecklist(rubrica, textoProfissional) {
       objetivo: criterio.objetivo,
       peso: criterio.peso,
       nota: notaBloco,
-      itens: itensAvaliados,
+      itens: doCriterio.map((alvo) => ({ nome: alvo.nome, atendido: alvo.atendido })),
     });
   }
 

@@ -24,6 +24,15 @@ export function contemTermo(texto, termo) {
   return padrao.test(normalizar(texto));
 }
 
+// Chaves que descrevem o BLOCO para quem escreve o caso ("o que ela conta fácil,
+// logo de cara") — são roteiro, não coisa que o paciente viveu. Sem este filtro o
+// modelo lê a instrução como fato e o paciente acaba narrando o próprio roteiro.
+const CHAVES_META = new Set(["descricao", "descrição", "observacao", "observação", "obs", "nota"]);
+
+export function ehChaveMeta(chave) {
+  return CHAVES_META.has(String(chave).toLowerCase());
+}
+
 export function contemAlgumTermo(texto, termos) {
   const textoNormalizado = normalizar(texto);
   return termos.some((termo) => {

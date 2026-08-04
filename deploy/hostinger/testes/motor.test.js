@@ -6,11 +6,16 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { extrairTextoProfissional, pontuarChecklist, termosDoItem } from "../motor/avaliador.js";
+import {
+  MAX_ITENS_POR_TURNO,
+  extrairTextoProfissional,
+  pontuarChecklist,
+  termosDoItem,
+} from "../motor/avaliador.js";
 import { RESPOSTA_PADRAO, responderDemo } from "../motor/demo.js";
 import { detectarExames } from "../motor/exames.js";
+import { sistemaPaciente } from "../motor/humanizar.js";
 import { limparRaciocinio } from "../motor/ia.js";
-import { criarPrompt } from "../motor/prompt.js";
 import { contemTermo, normalizar } from "../motor/texto.js";
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
@@ -120,12 +125,97 @@ test("termosDoItem aceita string e objeto", () => {
   assert.deepEqual(termosDoItem({ nome: "início", termos: ["começou"] }), ["início", ["começou"]]);
 });
 
-test("prompt inclui dados do caso sem repr estranho", () => {
+test("prompt do paciente leva a vida inteira do caso, sem repr estranho", () => {
   const caso = lerCaso("infarto");
-  const prompt = criarPrompt(caso);
+  const prompt = sistemaPaciente(caso);
+
   assert.ok(prompt.includes("João Carlos Ferreira"));
-  assert.ok(prompt.includes("Hipertensao: Sim"));
-  assert.ok(!prompt.includes("true"));
+  // Booleano do JSON vira palavra de gente ("hipertensao: true" confundia o modelo).
+  assert.ok(prompt.includes("hipertensao: Sim"));
+  assert.ok(!/\btrue\b|\bfalse\b|\[object Object\]|undefined/.test(prompt));
+
+  // A matriz: sem estes blocos o paciente vira um genérico com sintomas.
+  for (const bloco of ["A SUA VIDA", "QUEM VOCÊ É", "COMO VOCÊ FALA", "COMO VOCÊ ESTÁ AGORA", "COMO VOCÊ SE ABRE"]) {
+    assert.ok(prompt.includes(bloco), `faltou o bloco ${bloco}`);
+  }
+  const ctx = caso.contexto_de_vida;
+  assert.ok(prompt.includes(ctx.biografia), "biografia deve entrar inteira");
+  assert.ok(prompt.includes(ctx.rotina));
+  assert.ok(prompt.includes(caso.persona.postura_na_consulta));
+  assert.ok(prompt.includes(caso.dinamica_de_revelacao.trava_do_sensivel));
+  assert.ok(caso.estilo_de_fala.bordoes_e_expressoes.every((b) => prompt.includes(b)));
+});
+
+test("prompt do paciente nunca carrega o sensível nem o exame físico", () => {
+  // Quem libera tema sensível é o portão determinístico, turno a turno; quem entrega
+  // achado é o detector de exames. Se vazarem para o contexto estável, o paciente
+  // despeja tudo numa pergunta genérica e a estação perde o sentido.
+  const caso = lerCaso("violencia_psicologica");
+  const prompt = sistemaPaciente(caso);
+  for (const valor of Object.values(caso.informacoes_sensiveis)) {
+    assert.ok(!prompt.includes(String(valor)), "informação sensível vazou no prompt estável");
+  }
+  for (const exame of Object.values(lerCaso("infarto").exame_fisico)) {
+    assert.ok(!sistemaPaciente(lerCaso("infarto")).includes(String(exame.resultado)));
+  }
+});
+
+test("todos os 40 casos geram um prompt íntegro", () => {
+  const casos = fs.readdirSync(path.join(RAIZ, "casos")).filter((n) => n.endsWith(".json"));
+  assert.equal(casos.length, 40);
+  for (const arquivo of casos) {
+    const prompt = sistemaPaciente(lerCaso(arquivo.replace(/\.json$/, "")));
+    assert.ok(prompt.length > 3000, `${arquivo}: prompt curto demais (${prompt.length})`);
+    assert.ok(
+      !/\btrue\b|\bfalse\b|\[object Object\]|undefined/.test(prompt),
+      `${arquivo}: representação bruta vazou`
+    );
+  }
+});
+
+test("anamnese sobre o passado não entrega o valor aferido", () => {
+  const caso = lerCaso("infarto");
+  // Perguntar da história não é aferir: entregava o valor medido e ainda contava
+  // ponto de exame físico na rubrica.
+  assert.equal(detectarExames("qual a sua pressão normalmente em casa?", caso).length, 0);
+  assert.equal(detectarExames("sua pressão sempre foi alta?", caso).length, 0);
+  assert.equal(detectarExames("já fez um eletro alguma vez?", caso).length, 0);
+
+  // Pedir os sinais vitais em bloco entrega o bloco inteiro, sem repetir achado.
+  const vitais = detectarExames("vou verificar os sinais vitais", caso);
+  const nomes = vitais.map(([, dados]) => dados.nome);
+  assert.ok(nomes.includes("Pressão arterial"));
+  assert.ok(nomes.includes("Saturação de oxigênio"));
+  assert.equal(new Set(nomes).size, nomes.length, "achado repetido");
+});
+
+test("um único turno não fecha a rubrica inteira", () => {
+  const rubrica = JSON.parse(
+    fs.readFileSync(path.join(RAIZ, "avaliacoes", "infarto.json"), "utf-8")
+  );
+  const termos = rubrica.criterios.flatMap((criterio) =>
+    (criterio.itens || []).map((item) => termosDoItem(item)[1][0])
+  );
+
+  // Despejar todos os termos numa mensagem só dava 10/10 — a nota era decorativa.
+  const despejo = `PROFISSIONAL: ${termos.join(" ")}`;
+  const nota = pontuarChecklist(rubrica, extrairTextoProfissional(despejo)).nota_total;
+  assert.ok(nota > 0, "o turno ainda deve pontuar o que cabe no teto");
+  assert.ok(nota < 2, `um turno não pode valer ${nota}`);
+
+  const atendidos = pontuarChecklist(rubrica, extrairTextoProfissional(despejo))
+    .criterios.flatMap((c) => c.itens)
+    .filter((i) => i.atendido).length;
+  assert.equal(atendidos, MAX_ITENS_POR_TURNO);
+
+  // Entrevista de verdade — um tema por turno — continua pontuando normalmente.
+  const entrevista = [
+    "PROFISSIONAL: quando começou a dor?",
+    "PROFISSIONAL: a dor irradia para algum lugar?",
+    "PROFISSIONAL: o senhor fuma?",
+  ].join("\n");
+  const porTurno = pontuarChecklist(rubrica, extrairTextoProfissional(entrevista));
+  assert.equal(porTurno.criterios.flatMap((c) => c.itens).filter((i) => i.atendido).length, 3);
 });
 
 test("limparRaciocinio remove blocos think", () => {
