@@ -69,6 +69,16 @@ const MAX_BYTES_AUDIO = 12 * 1024 * 1024;
 
 const consultas = new Map();
 
+// Quando o modelo falha, o aluno só vê "modo demonstração" — e quem administra não
+// tem como saber se foi chave errada, cota estourada ou modelo sem acesso. Sem este
+// registro o diagnóstico depende de adivinhação.
+let ultimaFalhaIA = null;
+function registrarFalhaIA(onde, erro) {
+  const mensagem = (erro && erro.message) || String(erro);
+  ultimaFalhaIA = { onde, mensagem: mensagem.slice(0, 300), quando: new Date().toISOString() };
+  console.error(`[ia] falha em ${onde}: ${mensagem.slice(0, 300)}`);
+}
+
 function lerJson(caminho) {
   return JSON.parse(fs.readFileSync(caminho, "utf-8"));
 }
@@ -459,7 +469,8 @@ async function enviarMensagem(req, res, id) {
         },
         examesEntregues
       );
-    } catch {
+    } catch (erro) {
+      registrarFalhaIA("fala do paciente (stream)", erro);
       if (acc) {
         // IA caiu depois do primeiro token: não dá para refazer a fala sem duplicar o
         // que já apareceu na tela. Mantém o trecho e AVISA — antes o aluno recebia
@@ -492,7 +503,8 @@ async function enviarMensagem(req, res, id) {
   try {
     resposta = await responderComoPaciente(consulta.caso, texto, fatoLiberado, examesEntregues);
     origem = "ia";
-  } catch {
+  } catch (erro) {
+    registrarFalhaIA("fala do paciente", erro);
     resposta = responderDemo(consulta.caso, texto);
     origem = "demo";
     eventos.push({ tipo: "aviso", texto: AVISO_DEMO });
@@ -582,7 +594,8 @@ async function encerrarConsulta(req, res, id) {
       ],
       { avaliacao: true },
     );
-  } catch {
+  } catch (erro) {
+    registrarFalhaIA("parecer pedagógico", erro);
     resultado.parecer = null;
     resultado.aviso = AVISO_SEM_PARECER;
   }
@@ -608,6 +621,24 @@ export function criarServidor() {
           modo: backend ? "ia" : "demonstracao",
           backend: backend || "demonstracao",
           painel_professor: painelDisponivel() ? "ativo" : "desativado",
+        });
+      }
+
+      // Diagnóstico para quem administra. Restrito ao professor: a mensagem de erro
+      // do provedor pode citar detalhes de conta e não é assunto de aluno.
+      if (req.method === "GET" && pathname === "/api/diagnostico") {
+        if (!ehProfessor(req)) return json(res, 403, { erro: "Restrito ao professor." });
+        return json(res, 200, {
+          backend: (process.env.OPENAI_API_KEY || "").trim()
+            ? "openai"
+            : process.env.OLLAMA_URL
+              ? "ollama"
+              : "demonstracao",
+          modelo_paciente: process.env.OPENAI_MODEL || "(padrão)",
+          modelo_avaliacao: process.env.OPENAI_MODEL_AVALIACAO || "(padrão)",
+          voz: ttsInfo(),
+          ultima_falha_ia: ultimaFalhaIA,
+          consultas_ativas: consultas.size,
         });
       }
 
