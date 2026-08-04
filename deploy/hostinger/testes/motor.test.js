@@ -250,6 +250,45 @@ test("voz: OpenAI entra sozinha quando já há chave; explícito continua vencen
   }
 });
 
+test("gateway que só serve chat não anuncia voz nem microfone", async () => {
+  // Com o OpenRouter (chat barato, sem endpoints de áudio) a página anunciava um
+  // microfone que falhava a cada uso. Chave existir não é o mesmo que ter áudio.
+  const { ttsInfo } = await import("../motor/tts.js");
+  const original = { ...process.env };
+  const limpar = () => {
+    for (const k of ["OPENAI_API_KEY", "OPENAI_BASE_URL", "OPENAI_AUDIO_API_KEY", "OPENAI_AUDIO_BASE_URL", "KOKORO_URL", "PV_AUDIO_FORCAR"]) delete process.env[k];
+  };
+  try {
+    limpar();
+    process.env.OPENAI_API_KEY = "sk-or-teste";
+    process.env.OPENAI_BASE_URL = "https://openrouter.ai/api/v1";
+    let info = ttsInfo();
+    assert.equal(info.provedor, "nenhum");
+    assert.equal(info.stt, false);
+    assert.deepEqual(info.tts, { feminino: false, masculino: false });
+
+    // Mas dá para usar chat barato e pagar áudio à parte, com credencial própria.
+    process.env.OPENAI_AUDIO_API_KEY = "sk-teste";
+    process.env.OPENAI_AUDIO_BASE_URL = "https://api.openai.com/v1";
+    info = ttsInfo();
+    assert.equal(info.provedor, "openai");
+    assert.equal(info.stt, true);
+
+    // Kokoro self-hosted resolve a voz sem custo — mas não a transcrição.
+    limpar();
+    process.env.OPENAI_API_KEY = "sk-or-teste";
+    process.env.OPENAI_BASE_URL = "https://openrouter.ai/api/v1";
+    process.env.KOKORO_URL = "http://kokoro:8880";
+    info = ttsInfo();
+    assert.equal(info.provedor, "kokoro");
+    assert.equal(info.tts.feminino, true);
+    assert.equal(info.stt, false);
+  } finally {
+    limpar();
+    Object.assign(process.env, original);
+  }
+});
+
 test("transcrição só se anuncia disponível quando há chave", async () => {
   const { transcrever, transcricaoDisponivel } = await import("../motor/transcricao.js");
   const original = process.env.OPENAI_API_KEY;

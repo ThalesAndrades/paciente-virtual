@@ -132,6 +132,24 @@ volta a depender do `webkitSpeechRecognition`, que só existe em Chrome/Edge.
 | `OPENAI_VOZ_F` / `OPENAI_VOZ_M` | `nova` / `onyx` | Voz feminina e masculina (o caso escolhe por `identificacao.voz`). |
 | `OPENAI_STT_MODEL` | `gpt-4o-mini-transcribe,whisper-1` | Modelo(s) da transcrição do áudio do aluno. |
 | `PV_TTS_PROVEDOR` | — | Força `elevenlabs`, `kokoro`, `openai` ou `nenhum`. Sem isto, vale a ordem abaixo. |
+| `OPENAI_AUDIO_API_KEY` | herda `OPENAI_API_KEY` | Credencial só do áudio — permite chat num gateway e voz na OpenAI. |
+| `OPENAI_AUDIO_BASE_URL` | herda `OPENAI_BASE_URL` | Endpoint só do áudio. |
+| `PV_AUDIO_FORCAR` | — | `1` assume que o endpoint serve `/audio/*` mesmo não sendo a OpenAI. |
+
+**Ter chave não é ter áudio.** Gateways como o OpenRouter servem `/chat/completions` e
+não têm `/audio/speech` nem `/audio/transcriptions`. Por isso a voz e o microfone de
+servidor só são anunciados quando o endpoint de áudio é de fato o da OpenAI (ou com
+`PV_AUDIO_FORCAR=1`); caso contrário a página cai na voz e no reconhecimento do
+navegador em vez de oferecer um botão que sempre falha.
+
+Combinações típicas:
+
+| Configuração | Fala do paciente | Microfone |
+| --- | --- | --- |
+| OpenAI direto | voz da OpenAI | servidor (todo navegador) |
+| OpenRouter (chat gratuito) | voz do navegador | Web Speech (só Chrome/Edge) |
+| OpenRouter + `KOKORO_URL` | Kokoro self-hosted | Web Speech |
+| OpenRouter + `OPENAI_AUDIO_*` | voz da OpenAI | servidor |
 
 Ordem de escolha do provedor: **ElevenLabs** (se `ELEVEN_API_KEY` + voz) → **Kokoro**
 (se `KOKORO_URL`) → **OpenAI** (se `OPENAI_API_KEY`) → nenhum. Quem foi configurado de

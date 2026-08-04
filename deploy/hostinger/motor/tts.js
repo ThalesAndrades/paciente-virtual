@@ -15,6 +15,9 @@
 // tom acompanha o estado emocional do caso. Uma paciente em pânico e uma senhora
 // enlutada deixam de ser lidas com a mesma locução neutra.
 
+import { baseAudio, baseServeAudio, chaveAudio } from "./audio.js";
+import { transcricaoDisponivel } from "./transcricao.js";
+
 const KOKORO_VOZ = {
   feminino: process.env.KOKORO_VOZ_F || "pf_dora",
   masculino: process.env.KOKORO_VOZ_M || "pm_alex",
@@ -35,9 +38,8 @@ const OPENAI_VOZ = {
 // Lidos a cada chamada: o env pode mudar sem rebuild da imagem.
 const kokoroUrl = () => (process.env.KOKORO_URL || "").replace(/\/$/, "");
 const elevenKey = () => process.env.ELEVEN_API_KEY || "";
-const openaiKey = () => (process.env.OPENAI_API_KEY || "").trim();
-const openaiBase = () =>
-  (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+const openaiKey = chaveAudio;
+const openaiBase = baseAudio;
 
 // Cadeia de fallback, igual à do modelo de linguagem: tenta o primeiro e cai para
 // o próximo se a conta não tiver acesso àquele modelo.
@@ -51,7 +53,7 @@ function provedor() {
   if (forcado) return forcado;
   if (elevenKey() && (ELEVEN_VOZ.feminino || ELEVEN_VOZ.masculino)) return "elevenlabs";
   if (kokoroUrl()) return "kokoro";
-  if (openaiKey()) return "openai";
+  if (openaiKey() && baseServeAudio()) return "openai";
   return "nenhum";
 }
 
@@ -60,14 +62,10 @@ function provedor() {
 function vozDisponivel(chave) {
   const p = provedor();
   if (p === "elevenlabs" && ELEVEN_VOZ[chave]) return true;
-  if (p === "elevenlabs" && (kokoroUrl() || openaiKey())) return true;
+  if (p === "elevenlabs" && (kokoroUrl() || (openaiKey() && baseServeAudio()))) return true;
   if (p === "kokoro") return Boolean(kokoroUrl());
-  if (p === "openai") return Boolean(openaiKey());
+  if (p === "openai") return Boolean(openaiKey() && baseServeAudio());
   return false;
-}
-
-export function transcricaoDisponivel() {
-  return Boolean(openaiKey());
 }
 
 export function ttsInfo() {

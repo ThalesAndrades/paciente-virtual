@@ -8,9 +8,10 @@
 // Reusa a mesma OPENAI_API_KEY do modelo de linguagem; sem ela, a página volta ao
 // reconhecimento do navegador.
 
-const chave = () => (process.env.OPENAI_API_KEY || "").trim();
-const base = () =>
-  (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+import { audioDisponivel, baseAudio, chaveAudio } from "./audio.js";
+
+const chave = chaveAudio;
+const base = baseAudio;
 
 // Cadeia de fallback: o `gpt-4o-mini-transcribe` é mais rápido e barato; o
 // `whisper-1` é o mais disponível e serve de rede de segurança.
@@ -30,14 +31,15 @@ function nomeDoArquivo(mime) {
   return "audio.webm";
 }
 
+// Chave sozinha não basta: o endpoint precisa mesmo servir /audio/transcriptions.
 export function transcricaoDisponivel() {
-  return Boolean(chave());
+  return audioDisponivel();
 }
 
 // Recebe o áudio bruto e devolve o texto falado. Lança se não houver chave, se o
 // áudio for inaproveitável ou se todos os modelos falharem.
 export async function transcrever(audio, mime) {
-  if (!chave()) throw new Error("Transcrição não configurada");
+  if (!audioDisponivel()) throw new Error("Transcrição não configurada");
   if (!audio || !audio.length) throw new Error("Áudio vazio");
 
   let ultimoErro;
