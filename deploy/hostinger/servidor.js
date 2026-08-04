@@ -23,6 +23,7 @@ import {
   ehProfessor,
   estadoAcesso,
   painelDisponivel,
+  sessaoDe,
 } from "./motor/acesso.js";
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
@@ -30,7 +31,8 @@ import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
 import { responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
 import { dentroDoLimite, ipDe, segundosAteLiberar } from "./motor/limite.js";
-import { ttsInfo, sintetizar } from "./motor/tts.js";
+import { ttsInfo, sintetizar, instrucaoDeVoz } from "./motor/tts.js";
+import { transcrever } from "./motor/transcricao.js";
 import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
 const DIR_APP = path.dirname(fileURLToPath(import.meta.url));
@@ -57,8 +59,13 @@ const MAX_CARACTERES_PERGUNTA = 2000;
 const JANELA_MS = 5 * 60 * 1000;
 const LIMITE_MENSAGENS = 60;
 const LIMITE_CONSULTAS = 20;
-const LIMITE_VOZ = 200;
+const LIMITE_VOZ = 400; // uma frase = uma síntese; uma consulta falada gasta dezenas
+const LIMITE_AUDIO = 120;
 const LIMITE_LOGIN = 20;
+
+// Áudio de uma fala do profissional. ~1 MB por minuto em webm/opus; o teto cobre
+// uma pergunta longa com folga e barra upload abusivo.
+const MAX_BYTES_AUDIO = 12 * 1024 * 1024;
 
 const consultas = new Map();
 
@@ -228,8 +235,12 @@ function json(res, status, corpo, cabecalhos = {}) {
 }
 
 // true = já respondeu 429 e o chamador deve parar.
+//
+// Conta por SESSÃO quando existe uma: numa escola a turma toda sai por um único IP
+// público, e contar por IP faria um aluno usando voz derrubar a voz dos colegas.
+// Sem sessão (login, rotas abertas) cai no IP, que é o que sobra.
 function estourouLimite(req, res, balde, max) {
-  const chave = `${balde}:${ipDe(req)}`;
+  const chave = `${balde}:${sessaoDe(req) || ipDe(req)}`;
   if (dentroDoLimite(chave, max, JANELA_MS)) return false;
   json(
     res,
@@ -246,6 +257,25 @@ function conexaoSegura(req) {
   const proto = req.headers["x-forwarded-proto"];
   if (proto) return String(proto).split(",")[0].trim() === "https";
   return Boolean(req.socket && req.socket.encrypted);
+}
+
+// Corpo binário (upload de áudio). Separado de lerCorpo, que é JSON e tem teto de 1 MB.
+function lerCorpoBinario(req, maxBytes) {
+  return new Promise((resolver, rejeitar) => {
+    const pedacos = [];
+    let tamanho = 0;
+    req.on("data", (pedaco) => {
+      tamanho += pedaco.length;
+      if (tamanho > maxBytes) {
+        rejeitar(new Error("Áudio grande demais."));
+        req.destroy();
+        return;
+      }
+      pedacos.push(pedaco);
+    });
+    req.on("end", () => resolver(Buffer.concat(pedacos)));
+    req.on("error", rejeitar);
+  });
 }
 
 async function responderLogin(req, res, papelPedido, campo) {
@@ -582,12 +612,41 @@ export function criarServidor() {
         const texto = String(dados.texto || "").trim();
         const voz = dados.voz === "masculino" ? "masculino" : "feminino";
         if (!texto) return json(res, 400, { erro: "Texto vazio." });
+        // A consulta dá o caso, e o caso dá a direção de atuação: a mesma frase é
+        // lida de um jeito por quem está em pânico e de outro por quem está enlutada.
+        const consulta = consultas.get(String(dados.consulta || ""));
         try {
-          const { buffer, mime } = await sintetizar(texto.slice(0, 1200), voz);
+          const { buffer, mime } = await sintetizar(
+            texto.slice(0, 1200),
+            voz,
+            consulta ? instrucaoDeVoz(consulta.caso) : ""
+          );
           res.writeHead(200, { "Content-Type": mime, "Content-Length": buffer.length, "Cache-Control": "no-store" });
           return res.end(buffer);
         } catch (erro) {
           return json(res, 502, { erro: `Falha na síntese de voz: ${erro.message}` });
+        }
+      }
+
+      // O aluno fala, a página manda o áudio, o servidor devolve o texto. Existe para
+      // o microfone funcionar fora do Chrome/Edge (Safari e iOS não têm Web Speech).
+      if (req.method === "POST" && pathname === "/api/transcrever") {
+        if (!ehAluno(req)) return json(res, 401, { erro: "Sessão necessária." });
+        if (estourouLimite(req, res, "audio", LIMITE_AUDIO)) return;
+        let audio;
+        try {
+          audio = await lerCorpoBinario(req, MAX_BYTES_AUDIO);
+        } catch {
+          return json(res, 413, { erro: "Áudio grande demais. Grave um trecho mais curto." });
+        }
+        if (!audio.length) return json(res, 400, { erro: "Áudio vazio." });
+        try {
+          const texto = await transcrever(audio, req.headers["content-type"]);
+          return json(res, 200, { texto });
+        } catch (erro) {
+          // 422: houve áudio, mas nada aproveitável — a página pede para repetir em
+          // vez de enviar uma pergunta em branco ao paciente.
+          return json(res, 422, { erro: `Não consegui entender o áudio: ${erro.message}` });
         }
       }
 

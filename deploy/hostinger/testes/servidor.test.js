@@ -104,6 +104,74 @@ test("aluno autenticado não alcança o painel do professor", async () => {
   }
 });
 
+test("rota de áudio exige sessão e recusa áudio inaproveitável", async () => {
+  const { servidor } = await subir();
+  const base = `http://127.0.0.1:${servidor.address().port}`;
+  let cookie = "";
+  const enviarAudio = (corpo, tipo) =>
+    fetch(`${base}/api/transcrever`, {
+      method: "POST",
+      headers: { "Content-Type": tipo || "audio/webm", ...(cookie ? { Cookie: cookie } : {}) },
+      body: corpo,
+    });
+
+  try {
+    assert.equal((await enviarAudio(Buffer.from("abc"))).status, 401);
+
+    const login = await fetch(`${base}/api/acesso`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ codigo: "9271" }),
+    });
+    cookie = login.headers.get("set-cookie").split(";")[0];
+
+    assert.equal((await enviarAudio(Buffer.alloc(0))).status, 400);
+
+    // Sem OPENAI_API_KEY a transcrição não existe: 422 (não 500) para a página
+    // pedir que o aluno repita, em vez de mandar pergunta em branco ao paciente.
+    const semChave = await enviarAudio(Buffer.from("audio-falso"));
+    assert.equal(semChave.status, 422);
+    assert.match((await semChave.json()).erro, /áudio/i);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("limite de uso conta por sessão, não pelo IP compartilhado da turma", async () => {
+  // Dois alunos no mesmo laboratório saem pelo mesmo IP público. O contador de um
+  // não pode consumir a cota do outro.
+  const { servidor } = await subir();
+  const base = `http://127.0.0.1:${servidor.address().port}`;
+  try {
+    const entrar = async () => {
+      const r = await fetch(`${base}/api/acesso`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ codigo: "9271" }),
+      });
+      return r.headers.get("set-cookie").split(";")[0];
+    };
+    const a = await entrar();
+    const b = await entrar();
+    assert.notEqual(a, b, "cada login deve abrir uma sessão própria");
+
+    const consultar = (cookie) =>
+      fetch(`${base}/api/consultas`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Cookie: cookie },
+        body: JSON.stringify({ caso: "infarto", aluno: "limite" }),
+      });
+
+    // Esgota a cota do aluno A (LIMITE_CONSULTAS = 20).
+    for (let i = 0; i < 20; i++) await consultar(a);
+    assert.equal((await consultar(a)).status, 429);
+    // O aluno B, no mesmo IP, segue livre.
+    assert.equal((await consultar(b)).status, 200);
+  } finally {
+    servidor.close();
+  }
+});
+
 test("sem senha configurada, o painel fica desligado e não aberto", async () => {
   const original = process.env.PV_SENHA_PROFESSOR;
   delete process.env.PV_SENHA_PROFESSOR;

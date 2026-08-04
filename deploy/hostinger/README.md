@@ -120,11 +120,44 @@ padrão, e uma instância recém-subida continua utilizável.
 O código do aluno é uma porta simples (é digitado em sala, e o rate limit segura força
 bruta). A senha do professor é que protege dado pessoal — use uma senha forte.
 
-### Limites por IP (janela de 5 min)
+### Voz (fala do paciente e envio de áudio)
+
+Com `OPENAI_API_KEY` definida, voz e transcrição ligam sozinhas — não há mais nada a
+configurar. Sem ela, a página cai na voz do navegador (pt-BR sofrível) e o microfone
+volta a depender do `webkitSpeechRecognition`, que só existe em Chrome/Edge.
+
+| Variável | Padrão | Descrição |
+| -------- | ------ | --------- |
+| `OPENAI_TTS_MODEL` | `gpt-4o-mini-tts,tts-1` | Modelo(s) da síntese. Cadeia de fallback, como nos modelos de texto. |
+| `OPENAI_VOZ_F` / `OPENAI_VOZ_M` | `nova` / `onyx` | Voz feminina e masculina (o caso escolhe por `identificacao.voz`). |
+| `OPENAI_STT_MODEL` | `gpt-4o-mini-transcribe,whisper-1` | Modelo(s) da transcrição do áudio do aluno. |
+| `PV_TTS_PROVEDOR` | — | Força `elevenlabs`, `kokoro`, `openai` ou `nenhum`. Sem isto, vale a ordem abaixo. |
+
+Ordem de escolha do provedor: **ElevenLabs** (se `ELEVEN_API_KEY` + voz) → **Kokoro**
+(se `KOKORO_URL`) → **OpenAI** (se `OPENAI_API_KEY`) → nenhum. Quem foi configurado de
+propósito vence; a OpenAI é o padrão que aparece de graça ao ligar a IA.
+
+Com `gpt-4o-mini-tts` a locução é **dirigida pelo caso**: o servidor monta uma
+instrução de atuação a partir de `estilo_de_fala.registro` e `estado_emocional.agora`,
+então a mesma frase é lida de um jeito por uma paciente em crise de pânico e de outro
+por uma senhora enlutada. Modelos que não aceitam `instructions` (como o `tts-1`)
+ignoram isso sem quebrar.
+
+`POST /api/transcrever` recebe o áudio **bruto** no corpo, com o `Content-Type` que o
+`MediaRecorder` produziu (webm/opus no Chrome, mp4/aac no Safari), e devolve
+`{ texto }`. Não há parsing de multipart do nosso lado. Áudio inaproveitável responde
+**422**, para a página pedir que o aluno repita em vez de mandar uma pergunta em
+branco ao paciente.
+
+### Limites por sessão (janela de 5 min)
 
 Existem para a chave da API não ser drenada por um script: 60 mensagens, 20 consultas
-novas, 200 sínteses de voz e 20 tentativas de código. Cada pergunta enviada ao modelo
-é cortada em 2000 caracteres.
+novas, 400 sínteses de voz, 120 transcrições e 20 tentativas de código. Cada pergunta
+enviada ao modelo é cortada em 2000 caracteres e cada áudio em 12 MB.
+
+A contagem é **por sessão**, não por IP: numa escola a turma inteira sai por um único
+IP público, e contar por IP faria um aluno usando voz derrubar a voz dos colegas. As
+rotas sem sessão (login) continuam contando por IP, que é o que sobra.
 
 ### Modelos open source recomendados (via OpenRouter)
 

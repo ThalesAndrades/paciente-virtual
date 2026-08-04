@@ -51,9 +51,11 @@ function assinar(carga) {
 }
 
 function criarToken(papel) {
-  const carga = Buffer.from(JSON.stringify({ papel, exp: Date.now() + DURACAO_MS }), "utf-8").toString(
-    "base64url"
-  );
+  // `sid` identifica a sessão para o rate limit. Sem ele, o limite só pode ser por
+  // IP — e uma turma inteira num laboratório sai por um único IP público, então um
+  // aluno usando voz derrubaria a voz de todos os outros.
+  const dados = { papel, sid: crypto.randomUUID(), exp: Date.now() + DURACAO_MS };
+  const carga = Buffer.from(JSON.stringify(dados), "utf-8").toString("base64url");
   return `${carga}.${assinar(carga)}`;
 }
 
@@ -93,6 +95,12 @@ export function papelDe(req) {
 
 export function ehAluno(req) {
   return papelDe(req) !== null; // professor também é aluno
+}
+
+// Identificador da sessão, para contar uso por aluno em vez de por IP.
+export function sessaoDe(req) {
+  const dados = lerToken(cookiesDe(req)[COOKIE]);
+  return (dados && dados.sid) || null;
 }
 
 export function ehProfessor(req) {

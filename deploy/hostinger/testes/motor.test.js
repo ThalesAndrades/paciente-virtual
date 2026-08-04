@@ -218,6 +218,56 @@ test("um único turno não fecha a rubrica inteira", () => {
   assert.equal(porTurno.criterios.flatMap((c) => c.itens).filter((i) => i.atendido).length, 3);
 });
 
+test("voz: OpenAI entra sozinha quando já há chave; explícito continua vencendo", async () => {
+  const { ttsInfo, instrucaoDeVoz } = await import("../motor/tts.js");
+  const original = { ...process.env };
+  try {
+    for (const k of ["OPENAI_API_KEY", "KOKORO_URL", "ELEVEN_API_KEY", "PV_TTS_PROVEDOR"]) delete process.env[k];
+    assert.equal(ttsInfo().provedor, "nenhum");
+    assert.equal(ttsInfo().stt, false);
+    assert.deepEqual(ttsInfo().tts, { feminino: false, masculino: false });
+
+    // Ligar a IA liga a voz boa e a transcrição, sem mais configuração.
+    process.env.OPENAI_API_KEY = "sk-teste";
+    const comIa = ttsInfo();
+    assert.equal(comIa.provedor, "openai");
+    assert.equal(comIa.stt, true);
+    assert.deepEqual(comIa.tts, { feminino: true, masculino: true });
+
+    // Um provedor configurado de propósito não é atropelado pela OpenAI.
+    process.env.KOKORO_URL = "http://127.0.0.1:8880";
+    assert.equal(ttsInfo().provedor, "kokoro");
+
+    // A direção de atuação sai do caso, não de um texto fixo.
+    const caso = lerCaso("transtorno_de_panico");
+    const instrucao = instrucaoDeVoz(caso);
+    assert.ok(instrucao.includes(caso.estado_emocional.agora.slice(0, 60)));
+    assert.ok(instrucao.toLowerCase().includes("português do brasil"));
+    assert.equal(instrucaoDeVoz(null), "");
+  } finally {
+    for (const k of ["OPENAI_API_KEY", "KOKORO_URL", "ELEVEN_API_KEY", "PV_TTS_PROVEDOR"]) delete process.env[k];
+    Object.assign(process.env, original);
+  }
+});
+
+test("transcrição só se anuncia disponível quando há chave", async () => {
+  const { transcrever, transcricaoDisponivel } = await import("../motor/transcricao.js");
+  const original = process.env.OPENAI_API_KEY;
+  try {
+    delete process.env.OPENAI_API_KEY;
+    assert.equal(transcricaoDisponivel(), false);
+    await assert.rejects(() => transcrever(Buffer.from("x"), "audio/webm"), /não configurada/i);
+
+    process.env.OPENAI_API_KEY = "sk-teste";
+    assert.equal(transcricaoDisponivel(), true);
+    // Áudio vazio não pode virar uma pergunta em branco ao paciente.
+    await assert.rejects(() => transcrever(Buffer.alloc(0), "audio/webm"), /vazio/i);
+  } finally {
+    if (original === undefined) delete process.env.OPENAI_API_KEY;
+    else process.env.OPENAI_API_KEY = original;
+  }
+});
+
 test("limparRaciocinio remove blocos think", () => {
   assert.equal(limparRaciocinio("<think>hum...</think>Dói no peito."), "Dói no peito.");
 });

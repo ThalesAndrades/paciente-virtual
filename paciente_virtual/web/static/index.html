@@ -669,7 +669,9 @@ function falarTexto(texto) {
 function falarFrase(texto, g) {
   if (!estado.falarRespostas || !texto || g !== geracaoFala) return;
   if (estado.capacidades.tts && estado.capacidades.tts[estado.voz]) {
-    const urlPromise = fetch("/api/falar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto, voz: estado.voz }) })
+    // Manda a consulta junto: o servidor usa o caso para dirigir o tom da locução
+    // (a mesma frase soa diferente em quem está em pânico e em quem está enlutada).
+    const urlPromise = fetch("/api/falar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ texto, voz: estado.voz, consulta: estado.consultaId }) })
       .then((r) => (r.ok ? r.blob() : null))
       .then((b) => (b ? URL.createObjectURL(b) : null))
       .catch(() => null);
@@ -679,6 +681,12 @@ function falarFrase(texto, g) {
     falarComNavegador(texto);
   }
 }
+// Falhas seguidas da síntese no servidor (chave inválida, cota estourada) derrubam
+// o modo servidor pelo resto da sessão: em vez de tentar — e falhar — a cada frase,
+// a página passa a usar a voz do navegador. Sem isto o paciente ficava mudo.
+let falhasVozServidor = 0;
+const MAX_FALHAS_VOZ = 3;
+
 async function drenarFila() {
   if (tocandoFila) return;
   tocandoFila = true;
@@ -686,7 +694,16 @@ async function drenarFila() {
     const item = filaFala.shift();
     if (item.g !== geracaoFala) continue;
     let url = null; try { url = await item.urlPromise; } catch {}
-    if (!url) continue;
+    if (!url) {
+      // A síntese falhou: não dá para deixar o turno mudo — lê pelo navegador.
+      falhasVozServidor += 1;
+      if (falhasVozServidor >= MAX_FALHAS_VOZ && estado.capacidades.tts) {
+        estado.capacidades.tts = { feminino: false, masculino: false };
+      }
+      if (item.g === geracaoFala) falarComNavegador(item.texto);
+      continue;
+    }
+    falhasVozServidor = 0;
     if (item.g !== geracaoFala) { try { URL.revokeObjectURL(url); } catch {} continue; }
     await tocarClipe(url, item);
   }
@@ -911,29 +928,153 @@ async function enviarMensagem() {
   finally { estado.ocupado = false; campo.focus(); }
 }
 
-/* ---------- Microfone push-to-talk ---------- */
+/* ---------- Microfone push-to-talk ----------
+   Dois modos. Com transcrição no servidor (capacidades.stt), a página GRAVA com
+   MediaRecorder e envia o áudio — funciona em qualquer navegador, inclusive Safari
+   e iOS. Sem ela, cai no reconhecimento do próprio navegador, que só existe no
+   Chrome/Edge. Sem nenhum dos dois, resta digitar. */
 const ReconhecimentoFala = window.SpeechRecognition || window.webkitSpeechRecognition;
 let reconhecedor = null, segurandoMic = false, pararSolicitado = false, transcricaoFinal = "";
+let gravador = null, fluxoMic = null, pedacosAudio = [], inicioGravacao = 0, modoMic = "indisponivel";
+const DURACAO_MINIMA_MS = 350; // toque acidental não vira pergunta
+
 function definirDicaMic(t, g) { $("dica-mic-texto").textContent = t; $("dica-mic").classList.toggle("gravando", !!g); }
-function configurarMicrofone() {
-  const botao = $("botao-mic");
-  if (!ReconhecimentoFala) { botao.disabled = true; botao.querySelector(".mic-label").textContent = "Voz indisp."; definirDicaMic("Reconhecimento de voz indisponível neste navegador — digite sua pergunta (Chrome/Edge têm o recurso).", false); return; }
+function rotuloMic(t) { const l = $("botao-mic").querySelector(".mic-label"); if (l) l.textContent = t; }
+const DICA_PADRAO = "🎤 Segure o microfone e fale; solte para enviar.";
+
+// Escolhe um formato que o navegador saiba gravar. O Chrome/Firefox dão webm/opus;
+// o Safari só entrega mp4/aac.
+function formatoDeGravacao() {
+  const preferidos = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+  if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return "";
+  return preferidos.find((t) => MediaRecorder.isTypeSupported(t)) || "";
+}
+
+// Mantém o fluxo aberto durante a consulta: pedir permissão a cada pergunta
+// custaria meio segundo por turno e o navegador reexibiria o aviso.
+async function obterFluxo() {
+  if (fluxoMic && fluxoMic.active) return fluxoMic;
+  fluxoMic = await navigator.mediaDevices.getUserMedia({
+    audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+  });
+  return fluxoMic;
+}
+function liberarMicrofone() {
+  try { if (gravador && gravador.state !== "inactive") gravador.stop(); } catch {}
+  gravador = null;
+  if (fluxoMic) { try { fluxoMic.getTracks().forEach((t) => t.stop()); } catch {} fluxoMic = null; }
+}
+
+async function iniciarGravacao() {
+  if (segurandoMic || estado.ocupado || !estado.consultaId) return;
+  segurandoMic = true;
+  // Barge-in: se o paciente ainda está falando, ele se cala quando o profissional
+  // toma a palavra — como numa conversa de verdade.
+  pararFala();
+  $("botao-mic").classList.add("gravando");
+  definirDicaMic("Ouvindo… solte para enviar", true);
+  try {
+    const fluxo = await obterFluxo();
+    if (!segurandoMic) return; // soltou antes da permissão sair
+    const tipo = formatoDeGravacao();
+    pedacosAudio = [];
+    gravador = new MediaRecorder(fluxo, tipo ? { mimeType: tipo } : undefined);
+    gravador.ondataavailable = (ev) => { if (ev.data && ev.data.size) pedacosAudio.push(ev.data); };
+    gravador.onstop = enviarAudioGravado;
+    gravador.start();
+    inicioGravacao = Date.now();
+  } catch {
+    segurandoMic = false;
+    $("botao-mic").classList.remove("gravando");
+    definirDicaMic("Permita o microfone no navegador para falar.", false);
+  }
+}
+
+function pararGravacao() {
+  if (!segurandoMic) return;
+  segurandoMic = false;
+  $("botao-mic").classList.remove("gravando");
+  if (!gravador || gravador.state === "inactive") { definirDicaMic(DICA_PADRAO, false); return; }
+  try { gravador.stop(); } catch { definirDicaMic(DICA_PADRAO, false); }
+}
+
+async function enviarAudioGravado() {
+  const curto = Date.now() - inicioGravacao < DURACAO_MINIMA_MS;
+  const audio = new Blob(pedacosAudio, { type: (gravador && gravador.mimeType) || "audio/webm" });
+  pedacosAudio = [];
+  if (curto || !audio.size) { definirDicaMic(DICA_PADRAO, false); return; }
+
+  definirDicaMic("Transcrevendo…", false);
+  rotuloMic("Transcrevendo");
+  $("botao-mic").disabled = true;
+  try {
+    const r = await fetch("/api/transcrever", {
+      method: "POST", headers: { "Content-Type": audio.type }, body: audio,
+    });
+    let d = {}; try { d = await r.json(); } catch {}
+    if (!r.ok || !d.texto) {
+      definirDicaMic(r.status === 422 ? "Não entendi o áudio. Tente falar de novo, mais perto do microfone." : (d.erro || "Falha ao transcrever."), false);
+      return;
+    }
+    $("campo-mensagem").value = d.texto;
+    definirDicaMic(DICA_PADRAO, false);
+    enviarMensagem();
+  } catch {
+    definirDicaMic("Falha de conexão ao enviar o áudio.", false);
+  } finally {
+    $("botao-mic").disabled = false;
+    rotuloMic("Segurar p/ falar");
+  }
+}
+
+/* Reconhecimento do próprio navegador — reserva para quando não há STT no servidor. */
+function configurarWebSpeech(botao) {
   reconhecedor = new ReconhecimentoFala(); reconhecedor.lang = "pt-BR"; reconhecedor.continuous = true; reconhecedor.interimResults = true;
   reconhecedor.onresult = (ev) => { let inter = ""; for (let i = ev.resultIndex; i < ev.results.length; i++) { const t = ev.results[i][0].transcript; if (ev.results[i].isFinal) transcricaoFinal += t + " "; else inter += t; } $("campo-mensagem").value = (transcricaoFinal + inter).trim(); };
   reconhecedor.onend = () => {
     if (segurandoMic && !pararSolicitado) { try { reconhecedor.start(); return; } catch { segurandoMic = false; } }
-    botao.classList.remove("gravando"); definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
+    botao.classList.remove("gravando"); definirDicaMic(DICA_PADRAO, false);
     const texto = ($("campo-mensagem").value || transcricaoFinal).trim(); $("campo-mensagem").placeholder = "Pergunte ao paciente…";
     if (texto) { $("campo-mensagem").value = texto; enviarMensagem(); }
   };
   reconhecedor.onerror = (ev) => { if (ev.error === "not-allowed" || ev.error === "service-not-allowed") { segurandoMic = false; botao.classList.remove("gravando"); definirDicaMic("Permita o microfone no navegador para falar.", false); } };
-  definirDicaMic("🎤 Segure o microfone e fale; solte para enviar.", false);
-  const iniciar = (ev) => { if (ev) ev.preventDefault(); if (segurandoMic || estado.ocupado || !estado.consultaId) return; segurandoMic = true; pararSolicitado = false; transcricaoFinal = ""; $("campo-mensagem").value = ""; $("campo-mensagem").placeholder = "Ouvindo…"; botao.classList.add("gravando"); definirDicaMic("Ouvindo… solte para enviar", true); try { reconhecedor.start(); } catch {} if (ev && ev.pointerId != null) { try { botao.setPointerCapture(ev.pointerId); } catch {} } };
-  const parar = () => { if (!segurandoMic) return; segurandoMic = false; pararSolicitado = true; try { reconhecedor.stop(); } catch {} };
+}
+
+function configurarMicrofone() {
+  const botao = $("botao-mic");
+  const temGravacao = Boolean(window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  modoMic = estado.capacidades.stt && temGravacao ? "servidor" : (ReconhecimentoFala ? "navegador" : "indisponivel");
+
+  if (modoMic === "indisponivel") {
+    botao.disabled = true; rotuloMic("Voz indisp.");
+    definirDicaMic("Reconhecimento de voz indisponível neste navegador — digite a sua pergunta.", false);
+    return;
+  }
+  if (modoMic === "navegador") configurarWebSpeech(botao);
+  definirDicaMic(DICA_PADRAO, false);
+
+  const iniciar = (ev) => {
+    if (ev) ev.preventDefault();
+    if (ev && ev.pointerId != null) { try { botao.setPointerCapture(ev.pointerId); } catch {} }
+    if (modoMic === "servidor") return iniciarGravacao();
+    if (segurandoMic || estado.ocupado || !estado.consultaId) return;
+    segurandoMic = true; pararSolicitado = false; transcricaoFinal = "";
+    pararFala(); // barge-in
+    $("campo-mensagem").value = ""; $("campo-mensagem").placeholder = "Ouvindo…";
+    botao.classList.add("gravando"); definirDicaMic("Ouvindo… solte para enviar", true);
+    try { reconhecedor.start(); } catch {}
+  };
+  const parar = () => {
+    if (modoMic === "servidor") return pararGravacao();
+    if (!segurandoMic) return;
+    segurandoMic = false; pararSolicitado = true;
+    try { reconhecedor.stop(); } catch {}
+  };
+
   botao.addEventListener("pointerdown", iniciar); botao.addEventListener("pointerup", parar); botao.addEventListener("pointercancel", parar); botao.addEventListener("lostpointercapture", parar);
   botao.addEventListener("contextmenu", (e) => e.preventDefault());
   window.addEventListener("pointerup", parar); window.addEventListener("pointercancel", parar);
-  botao.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") iniciar(e); });
+  botao.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && !e.repeat) iniciar(e); });
   botao.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") parar(); });
 }
 async function carregarCapacidades() { try { estado.capacidades = await (await fetch("/api/voz")).json(); } catch { estado.capacidades = { stt: false, tts: {} }; } configurarMicrofone(); }
@@ -1057,6 +1198,7 @@ async function encerrarConsulta() {
 }
 function mostrarAvaliacao(d) {
   estado.consultaId = null; pararFala(); pararDigitacao();
+  liberarMicrofone(); // consulta acabou: apaga o indicador de microfone aberto do navegador
   mostrarTela("tela-avaliacao");
   $("resumo-avaliacao").textContent = (estado.casoTitulo ? "Caso: " + estado.casoTitulo + " · " : "") + `transcrição salva em historico/${d.transcript}`;
   const av = $("aviso-avaliacao"); av.classList.toggle("oculto", !d.aviso); if (d.aviso) av.textContent = d.aviso;
