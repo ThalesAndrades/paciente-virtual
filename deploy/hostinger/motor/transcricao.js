@@ -9,6 +9,7 @@
 // reconhecimento do navegador.
 
 import { audioDisponivel, baseAudio, chaveAudio } from "./audio.js";
+import { registrarModelo } from "./ia.js";
 
 const chave = chaveAudio;
 const base = baseAudio;
@@ -66,6 +67,7 @@ export async function transcrever(audio, mime) {
       const texto = String((dados && dados.text) || "").trim();
       // Silêncio ou ruído: o chamador trata como "não entendi", sem virar turno.
       if (!texto) throw new Error(`STT/${model} não reconheceu fala`);
+      registrarModelo("transcricao", model);
       return texto;
     } catch (erro) {
       ultimoErro = erro;

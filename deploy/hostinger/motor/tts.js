@@ -16,6 +16,7 @@
 // enlutada deixam de ser lidas com a mesma locução neutra.
 
 import { baseAudio, baseServeAudio, chaveAudio } from "./audio.js";
+import { registrarModelo } from "./ia.js";
 import { transcricaoDisponivel } from "./transcricao.js";
 
 const KOKORO_VOZ = {
@@ -137,6 +138,7 @@ async function viaOpenAI(texto, voice, instrucao) {
       }
       const buffer = Buffer.from(await resposta.arrayBuffer());
       if (!buffer.length) throw new Error(`OpenAI TTS/${model} devolveu áudio vazio`);
+      registrarModelo("voz", model);
       return { buffer, mime: "audio/mpeg" };
     } catch (erro) {
       ultimoErro = erro; // cai para o próximo modelo da cadeia

@@ -106,11 +106,24 @@ async function chamarOpenAI(mensagens, modeloId) {
   return saida;
 }
 
-async function conversarOpenAI(mensagens, modelos) {
+// Qual modelo DE FATO atendeu. Sem isto não dá para saber se a cadeia de fallback
+// silenciosamente rebaixou a qualidade — o primeiro da lista pode não estar
+// liberado na conta e o servidor cair num modelo bem mais fraco sem avisar.
+const servidoPor = { paciente: null, avaliacao: null, voz: null, transcricao: null };
+export function modelosEmUso() {
+  return { ...servidoPor };
+}
+export function registrarModelo(tarefa, modelo) {
+  servidoPor[tarefa] = modelo;
+}
+
+async function conversarOpenAI(mensagens, modelos, tarefa) {
   let ultimoErro;
   for (const m of modelos) {
     try {
-      return await chamarOpenAI(mensagens, m);
+      const saida = await chamarOpenAI(mensagens, m);
+      registrarModelo(tarefa, m);
+      return saida;
     } catch (erro) {
       ultimoErro = erro; // cai para o próximo modelo da cadeia
     }
@@ -173,10 +186,12 @@ async function conversarStreamOpenAI(mensagens, onDelta, modelos) {
   for (const m of modelos) {
     let emitido = false;
     try {
-      return await streamOpenAIUm(mensagens, (t) => {
+      const saida = await streamOpenAIUm(mensagens, (t) => {
         emitido = true;
         onDelta(t);
       }, m);
+      registrarModelo("paciente", m);
+      return saida;
     } catch (erro) {
       ultimoErro = erro;
       // Se este modelo já mostrou texto na tela, não dá para trocar no meio:
@@ -282,7 +297,7 @@ async function conversarStreamOllama(mensagens, onDelta) {
 export async function conversar(mensagens, opts = {}) {
   if (!chaveOpenAI()) return conversarOllama(mensagens);
   const modelos = opts.modelos || (opts.avaliacao ? modelosAvaliacao() : modelosPaciente());
-  return conversarOpenAI(mensagens, modelos);
+  return conversarOpenAI(mensagens, modelos, opts.avaliacao ? "avaliacao" : "paciente");
 }
 
 // Igual a conversar, mas em STREAMING (a fala do paciente aparece conforme é

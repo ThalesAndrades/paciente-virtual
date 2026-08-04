@@ -26,7 +26,7 @@ import {
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
-import { conversar } from "./motor/ia.js";
+import { conversar, modelosEmUso, registrarModelo } from "./motor/ia.js";
 import { podarHistorico, responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
 import { dentroDoLimite, ipDe, segundosAteLiberar } from "./motor/limite.js";
 import { ttsInfo, sintetizar, instrucaoDeVoz } from "./motor/tts.js";
@@ -666,6 +666,9 @@ export function criarServidor() {
               : "demonstracao",
           modelo_paciente: process.env.OPENAI_MODEL || "(padrão)",
           modelo_avaliacao: process.env.OPENAI_MODEL_AVALIACAO || "(padrão)",
+          // O que a cadeia de fallback REALMENTE usou — o primeiro da lista pode
+          // não estar liberado na conta e o servidor rebaixar sem avisar.
+          servido_por: modelosEmUso(),
           voz: ttsInfo(),
           ultima_falha_ia: ultimaFalhaIA,
           consultas_ativas: consultas.size,
