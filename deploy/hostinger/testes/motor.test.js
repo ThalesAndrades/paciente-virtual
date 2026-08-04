@@ -12,7 +12,7 @@ import {
   pontuarChecklist,
   termosDoItem,
 } from "../motor/avaliador.js";
-import { RESPOSTA_PADRAO, responderDemo } from "../motor/demo.js";
+import { RESPOSTA_PADRAO, fatoSensivelDireto, responderDemo } from "../motor/demo.js";
 import { detectarExames } from "../motor/exames.js";
 import { sistemaPaciente } from "../motor/humanizar.js";
 import { limparRaciocinio } from "../motor/ia.js";
@@ -70,6 +70,62 @@ test("demo só revela ideação com pergunta direta", () => {
 
   const direta = responderDemo(depressao, "Você tem pensado em morrer ou se machucar?");
   assert.match(direta.toLowerCase(), /dormir e não acordar/);
+});
+
+test("nenhum caso abre tema sensível numa pergunta genérica", () => {
+  // A revelação gradual é a promessa central da estação — e ela não pode depender
+  // de quem escreveu o caso ter sido cuidadoso. Três casos declaravam aberturas de
+  // consulta ("como a senhora esta") como gatilho, e o portão vale também para o
+  // caminho da IA: o paciente entregava o assunto mais delicado no "bom dia".
+  const genericas = [
+    "Como a senhora está?",
+    "Como o senhor está?",
+    "Como você está?",
+    "Bom dia",
+    "Boa tarde",
+    "Como tem passado?",
+    "Como se sente?",
+    "Me fala um pouco de você",
+    "O que trouxe você aqui?",
+    "Como estão as coisas?",
+    "Está tudo bem?",
+    "No geral, como vai?",
+  ];
+  const arquivos = fs.readdirSync(path.join(RAIZ, "casos")).filter((n) => n.endsWith(".json"));
+  for (const arquivo of arquivos) {
+    const caso = lerCaso(arquivo.replace(/\.json$/, ""));
+    for (const pergunta of genericas) {
+      assert.equal(
+        fatoSensivelDireto(caso, pergunta),
+        null,
+        `${arquivo} abriu tema sensível em "${pergunta}"`
+      );
+    }
+  }
+});
+
+test("sem modelo de linguagem, a pergunta direta ainda revela o tema", () => {
+  // O modo demonstração é o que o usuário vê quando a IA cai (cota, rate limit,
+  // provedor fora do ar). Ele procurava chaves fixas (`sensiveis.ideacao`) que só
+  // 8 dos 39 casos usam — então a pergunta mais importante da estação respondia
+  // "não entendi bem a pergunta" na maioria dos casos.
+  const casos = [
+    ["ideacao_suicida", "Chegou a pensar em morrer?"],
+    ["depressao", "Você tem pensado em morrer ou se machucar?"],
+    ["luto", "A senhora conversa com o retrato dele?"],
+    ["anorexia", "Sente culpa depois de comer?"],
+    ["pielonefrite", "Tomou algum remédio por conta própria?"],
+  ];
+  for (const [nome, pergunta] of casos) {
+    const resposta = responderDemo(lerCaso(nome), pergunta);
+    assert.notEqual(resposta, RESPOSTA_PADRAO, `${nome} não respondeu a "${pergunta}"`);
+  }
+
+  // E a fala de abertura não pode sair quebrada: a queixa dos casos já é uma frase
+  // em primeira pessoa, então prefixá-la com "Estou com" produzia "Estou com não tô
+  // conseguindo dar conta de nada".
+  const abertura = responderDemo(lerCaso("ideacao_suicida"), "Como a senhora está?");
+  assert.ok(!/Estou com n[ãa]o/i.test(abertura), `fala quebrada: ${abertura}`);
 });
 
 test("checklist pontua só as falas do profissional", () => {

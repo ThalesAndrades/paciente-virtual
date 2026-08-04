@@ -29,6 +29,17 @@ function frase(valor) {
   return String(valor);
 }
 
+// A queixa principal dos casos já é uma fala inteira em primeira pessoa ("Não tô
+// conseguindo mais dar conta de nada"). Prefixar com "Estou com" produzia frases
+// quebradas — "Estou com não tô conseguindo dar conta". Devolve como fala, com
+// ponto final só se ainda não houver pontuação.
+function comoFala(valor) {
+  const texto = frase(valor).trim();
+  if (!texto) return "";
+  const inicial = texto.charAt(0).toUpperCase() + texto.slice(1);
+  return /[.!?…]$/.test(inicial) ? inicial : `${inicial}.`;
+}
+
 function simOuNao(valor, tema) {
   if (valor === true) return `Sim, tenho ${tema}.`;
   if (valor === false) return `Não, não tenho ${tema}.`;
@@ -104,8 +115,7 @@ function regras(caso) {
     ],
     [
       ["sentindo", "sente", "aconteceu", "trouxe", "traz", "queixa", "incomoda"],
-      () =>
-        caso.queixa_principal ? `Estou com ${frase(caso.queixa_principal).toLowerCase()}.` : null,
+      () => (caso.queixa_principal ? comoFala(caso.queixa_principal) : null),
     ],
     [
       ["quando", "comecou", "desde", "quanto tempo"],
@@ -230,8 +240,8 @@ function regras(caso) {
         "me fala um pouco",
       ],
       () => {
-        const queixa = caso.queixa_principal ? frase(caso.queixa_principal).toLowerCase() : null;
-        return queixa ? `Não estou bem não, doutor. É esse(a) ${queixa} que não passa.` : "Não estou muito bem, doutor.";
+        const queixa = comoFala(caso.queixa_principal);
+        return queixa ? `Não estou bem não, doutor. ${queixa}` : "Não estou muito bem, doutor.";
       },
     ],
     // Saudações por último: "bom dia, qual é o seu nome?" responde o nome.
@@ -274,20 +284,82 @@ const GATILHOS_GATED = {
 // devolve o conteúdo (para a IA revelar com cuidado). Senão, null. Só olha
 // `informacoes_sensiveis` — o intermediário fica no contexto da IA. Sem fallback por
 // nome de chave (evita falsos positivos com palavras comuns).
+// Aberturas de consulta que NUNCA podem destravar um tema sensível, por mais que um
+// caso as declare como gatilho.
+//
+// Três casos declaravam coisas como "como a senhora esta" — e como este portão também
+// alimenta o caminho da IA, o paciente entregava o assunto mais delicado no "bom dia".
+// A revelação gradual é a promessa central da estação: ela não pode depender de quem
+// escreveu o caso ter sido cuidadoso. Filtrar o gatilho (e não a pergunta) é cirúrgico:
+// os outros gatilhos do mesmo tema continuam valendo.
+const ABERTURAS_GENERICAS = new Set([
+  "como esta",
+  "como voce esta",
+  "como o senhor esta",
+  "como a senhora esta",
+  "como se sente",
+  "como esta se sentindo",
+  "como vai",
+  "como tem passado",
+  "como tem sido",
+  "como estao as coisas",
+  "como estao os dias",
+  "tudo bem",
+  "esta tudo bem",
+  "bom dia",
+  "boa tarde",
+  "boa noite",
+  "me fala um pouco",
+  "conte um pouco",
+  "o que trouxe",
+  "no geral",
+  "de modo geral",
+  "de forma geral",
+]);
+
+// Reúne os gatilhos que abrem um tema.
+//
+// SOMA os do caso com os do dicionário curado, em vez de escolher um: com `||`, um
+// caso que declarasse os próprios perdia o dicionário inteiro, e uma pergunta
+// natural que ele não previu não abria o tema.
+//
+// Também casa pelas RAÍZES da chave — os casos nomeiam os temas de formas
+// diferentes (`ideacao_ativa`, `vergonha_culpa`, `medo_de_morrer`) e o dicionário
+// é indexado por termo simples (`ideacao`, `vergonha`, `culpa`, `medo`). Sem isso,
+// o caso de ideação suicida não respondia a "pensar em morrer" — a forma estava no
+// dicionário, mas sob uma chave que a busca exata nunca alcançava.
+function gatilhosDe(chave, gatilhosDoCaso) {
+  const partes = [chave, ...String(chave).split("_").filter((p) => p.length > 2)];
+  const reunidos = [...(gatilhosDoCaso[chave] || [])];
+  for (const parte of partes) {
+    if (GATILHOS_GATED[parte]) reunidos.push(...GATILHOS_GATED[parte]);
+  }
+  return reunidos.filter((g) => !ABERTURAS_GENERICAS.has(normalizar(g)));
+}
+
 export function fatoSensivelDireto(caso, pergunta) {
   const fontes = caso.informacoes_sensiveis || {};
   const gatilhosDoCaso = caso.gatilhos_sensiveis || {};
   for (const [chave, valor] of Object.entries(fontes)) {
     if (!valor || ehChaveMeta(chave)) continue;
-    // Gatilhos declarados no próprio caso têm prioridade (escala p/ temas novos);
-    // senão, cai no dicionário curado por chave conhecida.
-    const gatilhos = gatilhosDoCaso[chave] || GATILHOS_GATED[chave];
+    const gatilhos = gatilhosDe(chave, gatilhosDoCaso);
     if (gatilhos && gatilhos.length && contemAlgumTermo(pergunta, gatilhos)) return frase(valor);
   }
   return null;
 }
 
 export function responderDemo(caso, pergunta) {
+  // Tema sensível PRIMEIRO, pelos gatilhos declarados no próprio caso.
+  //
+  // As regras abaixo procuram chaves fixas (`sensiveis.ideacao`), mas só 8 dos 39
+  // casos usam esse nome — o caso de ideação suicida, por exemplo, chama de
+  // `ideacao_ativa`. Resultado: sem o modelo de linguagem, a pergunta mais
+  // importante da estação ("chegou a pensar em morrer?") caía na resposta padrão
+  // "não entendi bem a pergunta". Reusar `fatoSensivelDireto` resolve para todos
+  // os casos e todos os temas, porque ele lê os gatilhos do próprio caso.
+  const sensivel = fatoSensivelDireto(caso, pergunta);
+  if (sensivel) return sensivel;
+
   // Triagem de sintoma ANTES das regras genéricas — espelha o motor de
   // referência `demo.py` (`responder_demo`): "sente suor?" não deve cair na
   // regra da queixa pelo verbo genérico "sente". A ordem inversa divergia do
