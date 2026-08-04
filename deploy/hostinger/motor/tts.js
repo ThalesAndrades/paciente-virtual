@@ -79,19 +79,27 @@ export function ttsInfo() {
 
 // Monta a direção de atuação a partir do caso — curta, porque é instrução de
 // locução, não roteiro. Sem caso (ex.: teste de voz), devolve vazio.
+// Direção de locução — CURTA de propósito.
+//
+// Antes isto despejava o registro e o estado emocional inteiros do caso (centenas
+// de caracteres). O modelo de voz tratava aquilo como roteiro de atuação e o
+// resultado saía teatral, declamado, com emoção exagerada — nada parecido com
+// alguém respondendo a um médico. Instrução de locução precisa dizer COMO falar,
+// não recontar quem é a pessoa: isso já está no texto que ela diz.
 export function instrucaoDeVoz(caso) {
   if (!caso) return "";
-  const estilo = caso.estilo_de_fala || {};
   const emo = caso.estado_emocional || {};
   const id = caso.identificacao || {};
-  const partes = [
-    "Você é o paciente numa consulta clínica, falando português do Brasil.",
-    id.idade && `Idade: ${id.idade} anos.`,
-    estilo.registro && `Jeito de falar: ${String(estilo.registro).slice(0, 240)}`,
-    emo.agora && `Como está agora: ${String(emo.agora).slice(0, 240)}`,
-    "Fale com essa emoção, no ritmo de uma pessoa real conversando — não locute, não narre.",
-  ];
-  return partes.filter(Boolean).join(" ");
+  const tom = String(emo.agora || "").split(/[.;]/)[0].trim().slice(0, 90);
+
+  return [
+    "Fale em português do Brasil natural e coloquial, como uma pessoa comum",
+    `de ${id.idade || "meia"} anos conversando com um médico no consultório.`,
+    tom && `Tom: ${tom}.`,
+    "Ritmo de conversa, volume normal, sem locutar e sem dramatizar.",
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
 
 // Retorna { buffer, mime } com o áudio, ou lança se indisponível/erro.

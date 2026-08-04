@@ -811,11 +811,15 @@ function extrairFrases(buf) {
   while ((m = re.exec(buf))) { const f = m[0].trim(); if (f) frases.push(f); last = re.lastIndex; }
   return { frases, resto: buf.slice(last) };
 }
-// Fala a mensagem INTEIRA (fallback/JSON): quebra em frases e enfileira cada uma.
+// Fala a mensagem INTEIRA numa única síntese.
+//
+// Antes isto quebrava em frases e sintetizava uma por uma. Cada chamada é
+// independente: a prosódia reinicia, a entonação não acompanha a frase seguinte e
+// sobra uma emenda audível entre os clipes — a fala saía picotada, de robô. Uma
+// chamada só custa um pouco mais de espera e soa como uma pessoa falando.
 function falarTexto(texto) {
   if (!estado.falarRespostas || !texto) return;
-  const g = geracaoFala;
-  for (const f of dividirFrases(texto)) falarFrase(f, g);
+  falarFrase(texto, geracaoFala);
 }
 // Fala UMA frase. Servidor: sintetiza já (pipeline) e enfileira p/ tocar em ordem.
 // Navegador (fallback): o speechSynthesis já enfileira sozinho, mantendo a ordem.
@@ -1080,7 +1084,7 @@ async function enviarMensagem() {
     if (!r.ok) { tirarDig(); let d = {}; try { d = await r.json(); } catch {} adicionarBalao("aviso", d.erro || "Erro ao enviar a mensagem."); return; }
     const reader = r.body.getReader();
     const dec = new TextDecoder();
-    let buffer = "", balao = null, textoPac = "", origem = "ia", bufFala = "", gFala = geracaoFala;
+    let buffer = "", balao = null, textoPac = "", origem = "ia", bufFala = "", gFala = geracaoFala, primeiraFalada = false;
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -1105,14 +1109,23 @@ async function enviarMensagem() {
           tirarDig();
           if (!balao) { balao = adicionarBalao("paciente", ""); balao.classList.add("digitando-vivo"); }
           textoPac += ev.t; balao.textContent = textoPac; balao.scrollIntoView({ behavior: "smooth", block: "end" });
-          // Áudio por frase: fala cada frase assim que ela fecha (voz junto do texto).
-          if (estado.falarRespostas) { bufFala += ev.t; const fr = extrairFrases(bufFala); bufFala = fr.resto; for (const f of fr.frases) falarFrase(f, gFala); }
+          // Só a PRIMEIRA frase sai adiantada, para a voz começar junto do texto.
+          // O resto vai numa síntese única no fim: sintetizar frase a frase fazia a
+          // prosódia reiniciar a cada uma e deixava emenda audível entre os clipes.
+          if (estado.falarRespostas) {
+            bufFala += ev.t;
+            if (!primeiraFalada) {
+              const fr = extrairFrases(bufFala);
+              if (fr.frases.length) { falarFrase(fr.frases[0], gFala); primeiraFalada = true; bufFala = fr.frases.slice(1).join(" ") + fr.resto; }
+            }
+          }
         }
         else if (ev.tipo === "fim") { origem = ev.origem || "ia"; }
       }
     }
     tirarDig();
-    if (estado.falarRespostas && bufFala.trim()) falarFrase(bufFala.trim(), gFala); // última frase (sem pontuação final)
+    // Todo o restante da fala numa síntese só — natural, sem emenda entre clipes.
+    if (estado.falarRespostas && bufFala.trim()) falarFrase(bufFala.trim(), gFala);
     if (balao) {
       balao.classList.remove("digitando-vivo");
       if (origem === "demo") { const rr = document.createElement("span"); rr.className = "rotulo-demo"; rr.textContent = "modo demonstração"; balao.appendChild(rr); }
