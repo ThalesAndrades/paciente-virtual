@@ -15,11 +15,21 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  autenticar,
+  cabecalhoSaida,
+  cabecalhoSessao,
+  ehAluno,
+  ehProfessor,
+  estadoAcesso,
+  painelDisponivel,
+} from "./motor/acesso.js";
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
-import { detectarExames } from "./motor/exames.js";
+import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
 import { conversar } from "./motor/ia.js";
 import { responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
+import { dentroDoLimite, ipDe, segundosAteLiberar } from "./motor/limite.js";
 import { ttsInfo, sintetizar } from "./motor/tts.js";
 import { estruturarTranscript, extrairMetadados } from "./motor/relatorio.js";
 
@@ -34,6 +44,21 @@ const AVISO_SEM_PARECER =
   "Parecer pedagógico indisponível (modelo de linguagem fora do ar). " +
   "A nota objetiva acima não depende do modelo.";
 const AVISO_SEM_RUBRICA = "Este caso não tem rubrica de avaliação cadastrada.";
+const AVISO_IA_INTERROMPIDA =
+  "A resposta do paciente foi interrompida no meio (falha no modelo de linguagem). " +
+  "Pergunte de novo para ouvir a resposta completa.";
+
+// Teto do que é enviado ao modelo por turno. Uma pergunta de consulta tem dezenas
+// de caracteres; o teto existe só para um corpo abusivo não virar conta de API.
+const MAX_CARACTERES_PERGUNTA = 2000;
+
+// Tetos por IP numa janela de 5 minutos. Folgados para uma turma inteira usando ao
+// mesmo tempo, apertados o bastante para um script não esvaziar o crédito.
+const JANELA_MS = 5 * 60 * 1000;
+const LIMITE_MENSAGENS = 60;
+const LIMITE_CONSULTAS = 20;
+const LIMITE_VOZ = 200;
+const LIMITE_LOGIN = 20;
 
 const consultas = new Map();
 
@@ -65,20 +90,6 @@ function listarCasos() {
       };
     });
 }
-
-// Sinais vitais / medidas rápidas (à parte dos demais achados do exame físico).
-const CHAVES_VITAIS = new Set([
-  "pressao_arterial",
-  "frequencia_cardiaca",
-  "frequencia_respiratoria",
-  "temperatura",
-  "saturacao",
-  "glicemia_capilar",
-  "glicemia",
-  "escala_dor",
-  "dor",
-  "peso",
-]);
 
 // Instrumentos que o profissional pode acionar por clique (só faz sentido pleno na
 // medicina): sinais vitais, manobras de exame físico e exames complementares.
@@ -203,7 +214,7 @@ function salvarTranscript(consulta) {
   }
 }
 
-function json(res, status, corpo) {
+function json(res, status, corpo, cabecalhos = {}) {
   // Se os cabeçalhos já foram enviados (ex.: erro no meio de uma resposta),
   // um segundo writeHead lançaria ERR_HTTP_HEADERS_ALREADY_SENT e derrubaria o
   // processo. Aborta a conexão em vez de tentar reescrever o cabeçalho.
@@ -212,8 +223,43 @@ function json(res, status, corpo) {
     return;
   }
   const dados = JSON.stringify(corpo);
-  res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
+  res.writeHead(status, { "Content-Type": "application/json; charset=utf-8", ...cabecalhos });
   res.end(dados);
+}
+
+// true = já respondeu 429 e o chamador deve parar.
+function estourouLimite(req, res, balde, max) {
+  const chave = `${balde}:${ipDe(req)}`;
+  if (dentroDoLimite(chave, max, JANELA_MS)) return false;
+  json(
+    res,
+    429,
+    { erro: "Muitas requisições em pouco tempo. Aguarde um instante e tente de novo." },
+    { "Retry-After": String(segundosAteLiberar(chave)) }
+  );
+  return true;
+}
+
+// A conexão chega ao Traefik por https e é repassada em http — o cookie precisa
+// olhar o cabeçalho encaminhado para saber se pode ser Secure.
+function conexaoSegura(req) {
+  const proto = req.headers["x-forwarded-proto"];
+  if (proto) return String(proto).split(",")[0].trim() === "https";
+  return Boolean(req.socket && req.socket.encrypted);
+}
+
+async function responderLogin(req, res, papelPedido, campo) {
+  if (estourouLimite(req, res, "login", LIMITE_LOGIN)) return;
+  const dados = await lerCorpo(req);
+  const papel = autenticar(papelPedido, dados[campo]);
+  if (!papel) {
+    const erro =
+      papelPedido === "professor" && !painelDisponivel()
+        ? "Painel do professor desativado neste servidor."
+        : "Código incorreto.";
+    return json(res, 401, { erro });
+  }
+  json(res, 200, { ok: true, papel }, { "Set-Cookie": cabecalhoSessao(papel, conexaoSegura(req)) });
 }
 
 function lerCorpo(req) {
@@ -317,15 +363,28 @@ async function enviarMensagem(req, res, id) {
   if (!consulta) return;
 
   const dados = await lerCorpo(req);
-  const texto = String(dados.texto || "").trim();
-  if (!texto) {
+  const bruto = String(dados.texto || "").trim();
+  if (!bruto) {
     return json(res, 400, { erro: "Mensagem vazia." });
   }
+  const texto = bruto.slice(0, MAX_CARACTERES_PERGUNTA);
 
   consulta.transcript += `\nPROFISSIONAL: ${texto}\n`;
 
   const streaming = new URL(req.url, "http://localhost").searchParams.get("stream") === "1";
   const exames = detectarExames(texto, consulta.caso);
+  // O paciente sente o procedimento acontecer e reage a ele — antes o turno do exame
+  // era mudo, e perguntar "posso ver sua pressão? como a senhora está?" devolvia só
+  // o número, sem ninguém do outro lado.
+  const examesEntregues = exames.map(([, dadosExame]) => dadosExame);
+  const fatoLiberado = fatoSensivelDireto(consulta.caso, texto);
+
+  const registrarExames = (emitirEvento) => {
+    for (const [titulo, dadosExame] of exames) {
+      consulta.transcript += `\n${titulo}: ${dadosExame.nome}\nRESULTADO: ${dadosExame.resultado}\n`;
+      emitirEvento({ tipo: "exame", titulo, nome: dadosExame.nome, resultado: dadosExame.resultado });
+    }
+  };
 
   // ---------- Caminho STREAMING (fala do paciente aparece conforme é gerada) ----------
   if (streaming) {
@@ -340,28 +399,29 @@ async function enviarMensagem(req, res, id) {
       } catch {}
     };
 
-    if (exames.length) {
-      for (const [titulo, dadosExame] of exames) {
-        consulta.transcript += `\n${titulo}: ${dadosExame.nome}\nRESULTADO: ${dadosExame.resultado}\n`;
-        emitir({ tipo: "exame", titulo, nome: dadosExame.nome, resultado: dadosExame.resultado });
-      }
-      emitir({ tipo: "fim", origem: "exame" });
-      return res.end();
-    }
+    registrarExames(emitir);
 
-    const fatoLiberado = fatoSensivelDireto(consulta.caso, texto);
     let acc = "";
     let resposta = "";
     let origem = "ia";
     try {
-      resposta = await responderComoPacienteStream(consulta.caso, texto, fatoLiberado, (t) => {
-        acc += t;
-        emitir({ tipo: "delta", t });
-      });
+      resposta = await responderComoPacienteStream(
+        consulta.caso,
+        texto,
+        fatoLiberado,
+        (t) => {
+          acc += t;
+          emitir({ tipo: "delta", t });
+        },
+        examesEntregues
+      );
     } catch {
       if (acc) {
-        // IA falhou no meio: mantém o que já apareceu (não dá pra reconstruir o total).
+        // IA caiu depois do primeiro token: não dá para refazer a fala sem duplicar o
+        // que já apareceu na tela. Mantém o trecho e AVISA — antes o aluno recebia
+        // uma frase cortada achando que era o jeito do paciente.
         resposta = acc;
+        emitir({ tipo: "aviso", texto: AVISO_IA_INTERROMPIDA });
       } else {
         resposta = responderDemo(consulta.caso, texto);
         origem = "demo";
@@ -381,19 +441,12 @@ async function enviarMensagem(req, res, id) {
 
   // ---------- Caminho JSON (fallback + testes) ----------
   const eventos = [];
-  if (exames.length) {
-    for (const [titulo, dadosExame] of exames) {
-      consulta.transcript += `\n${titulo}: ${dadosExame.nome}\nRESULTADO: ${dadosExame.resultado}\n`;
-      eventos.push({ tipo: "exame", titulo, nome: dadosExame.nome, resultado: dadosExame.resultado });
-    }
-    return json(res, 200, { eventos });
-  }
+  registrarExames((evento) => eventos.push(evento));
 
-  const fatoLiberado = fatoSensivelDireto(consulta.caso, texto);
   let resposta;
   let origem;
   try {
-    resposta = await responderComoPaciente(consulta.caso, texto, fatoLiberado);
+    resposta = await responderComoPaciente(consulta.caso, texto, fatoLiberado, examesEntregues);
     origem = "ia";
   } catch {
     resposta = responderDemo(consulta.caso, texto);
@@ -460,6 +513,7 @@ export function criarServidor() {
           status: "ok",
           modo: backend ? "ia" : "demonstracao",
           backend: backend || "demonstracao",
+          painel_professor: painelDisponivel() ? "ativo" : "desativado",
         });
       }
 
@@ -477,16 +531,41 @@ export function criarServidor() {
         return res.end(html);
       }
 
+      // ---- Acesso: a página pergunta o que já pode fazer, e troca credencial por sessão.
+      if (req.method === "GET" && pathname === "/api/acesso") {
+        return json(res, 200, estadoAcesso(req));
+      }
+      if (req.method === "POST" && pathname === "/api/acesso") {
+        return await responderLogin(req, res, "aluno", "codigo");
+      }
+      if (req.method === "POST" && pathname === "/api/acesso/professor") {
+        return await responderLogin(req, res, "professor", "senha");
+      }
+      if (req.method === "POST" && pathname === "/api/sair") {
+        return json(res, 200, { ok: true }, { "Set-Cookie": cabecalhoSaida() });
+      }
+
+      // A vitrine (título, queixa, contagem por área) fica aberta: é o que a página
+      // inicial mostra antes de pedir o código. O que custa dinheiro ou contém dado
+      // pessoal — consulta, voz e transcrições — exige sessão.
       if (req.method === "GET" && pathname === "/api/casos") {
         return json(res, 200, listarCasos());
       }
 
       if (req.method === "GET" && pathname === "/api/relatorio") {
+        if (!ehProfessor(req)) {
+          return json(res, 403, {
+            erro: painelDisponivel()
+              ? "Painel restrito ao professor."
+              : "Painel do professor desativado neste servidor.",
+          });
+        }
         return json(res, 200, listarRelatorio());
       }
 
       const relatorio = pathname.match(/^\/api\/relatorio\/([^/]+)$/);
       if (req.method === "GET" && relatorio) {
+        if (!ehProfessor(req)) return json(res, 403, { erro: "Painel restrito ao professor." });
         const detalhe = detalharRelatorio(decodeURIComponent(relatorio[1]));
         if (!detalhe) return json(res, 404, { erro: "Consulta não encontrada." });
         return json(res, 200, detalhe);
@@ -497,6 +576,8 @@ export function criarServidor() {
       }
 
       if (req.method === "POST" && pathname === "/api/falar") {
+        if (!ehAluno(req)) return json(res, 401, { erro: "Sessão necessária." });
+        if (estourouLimite(req, res, "voz", LIMITE_VOZ)) return;
         const dados = await lerCorpo(req);
         const texto = String(dados.texto || "").trim();
         const voz = dados.voz === "masculino" ? "masculino" : "feminino";
@@ -510,12 +591,19 @@ export function criarServidor() {
         }
       }
 
+      // Daqui para baixo, tudo mexe numa consulta: exige sessão de aluno.
+      if (pathname.startsWith("/api/consultas") && !ehAluno(req)) {
+        return json(res, 401, { erro: "Sessão expirada. Informe o código de acesso de novo." });
+      }
+
       if (req.method === "POST" && pathname === "/api/consultas") {
+        if (estourouLimite(req, res, "consultas", LIMITE_CONSULTAS)) return;
         return await iniciarConsulta(req, res);
       }
 
       const mensagem = pathname.match(/^\/api\/consultas\/([\w-]+)\/mensagem$/);
       if (req.method === "POST" && mensagem) {
+        if (estourouLimite(req, res, "mensagens", LIMITE_MENSAGENS)) return;
         return await enviarMensagem(req, res, mensagem[1]);
       }
 

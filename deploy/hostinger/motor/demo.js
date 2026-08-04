@@ -1,6 +1,6 @@
 // Porta fiel de paciente_virtual/demo.py — paciente de demonstração sem LLM.
 
-import { contemAlgumTermo, normalizar } from "./texto.js";
+import { contemAlgumTermo, ehChaveMeta, normalizar } from "./texto.js";
 
 export const AVISO_DEMO =
   "Modelo de linguagem indisponível — o paciente está em modo demonstração, " +
@@ -278,7 +278,7 @@ export function fatoSensivelDireto(caso, pergunta) {
   const fontes = caso.informacoes_sensiveis || {};
   const gatilhosDoCaso = caso.gatilhos_sensiveis || {};
   for (const [chave, valor] of Object.entries(fontes)) {
-    if (!valor) continue;
+    if (!valor || ehChaveMeta(chave)) continue;
     // Gatilhos declarados no próprio caso têm prioridade (escala p/ temas novos);
     // senão, cai no dicionário curado por chave conhecida.
     const gatilhos = gatilhosDoCaso[chave] || GATILHOS_GATED[chave];

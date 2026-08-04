@@ -7,31 +7,47 @@ import { criarServidor } from "../servidor.js";
 
 // Sem Ollama acessível, o paciente deve responder em modo demo.
 process.env.OLLAMA_URL = "http://127.0.0.1:9";
+process.env.PV_CODIGO_ACESSO = "9271";
+process.env.PV_SENHA_PROFESSOR = "senha-de-teste";
 
-async function api(base, caminho, corpo) {
-  const resposta = await fetch(`${base}${caminho}`, {
-    method: corpo === undefined ? "GET" : "POST",
-    headers: { "Content-Type": "application/json" },
-    body: corpo === undefined ? undefined : JSON.stringify(corpo),
-  });
-  return { status: resposta.status, dados: await resposta.json() };
+// Cliente que guarda o cookie de sessão, como o navegador faz.
+function criarCliente(base) {
+  let cookie = "";
+  return async function api(caminho, corpo, metodo) {
+    const resposta = await fetch(`${base}${caminho}`, {
+      method: metodo || (corpo === undefined ? "GET" : "POST"),
+      headers: { "Content-Type": "application/json", ...(cookie ? { Cookie: cookie } : {}) },
+      body: corpo === undefined ? undefined : JSON.stringify(corpo),
+    });
+    const definido = resposta.headers.get("set-cookie");
+    if (definido) cookie = definido.split(";")[0];
+    const tipo = resposta.headers.get("content-type") || "";
+    return {
+      status: resposta.status,
+      dados: tipo.includes("json") ? await resposta.json() : await resposta.text(),
+    };
+  };
+}
+
+async function subir() {
+  const servidor = criarServidor();
+  await new Promise((resolver) => servidor.listen(0, "127.0.0.1", resolver));
+  return { servidor, api: criarCliente(`http://127.0.0.1:${servidor.address().port}`) };
 }
 
 test("health check reflete o modo conforme OLLAMA_URL", async () => {
-  const servidor = criarServidor();
-  await new Promise((resolver) => servidor.listen(0, "127.0.0.1", resolver));
-  const base = `http://127.0.0.1:${servidor.address().port}`;
+  const { servidor, api } = await subir();
   const original = process.env.OLLAMA_URL;
 
   try {
     process.env.OLLAMA_URL = "http://127.0.0.1:11434";
-    const comIa = await api(base, "/healthz");
+    const comIa = await api("/healthz");
     assert.equal(comIa.status, 200);
     assert.equal(comIa.dados.status, "ok");
     assert.equal(comIa.dados.modo, "ia");
 
     delete process.env.OLLAMA_URL;
-    const semIa = await api(base, "/api/health");
+    const semIa = await api("/api/health");
     assert.equal(semIa.status, 200);
     assert.equal(semIa.dados.modo, "demonstracao");
   } finally {
@@ -40,79 +56,142 @@ test("health check reflete o modo conforme OLLAMA_URL", async () => {
   }
 });
 
+test("sem sessão, consulta e painel ficam fechados", async () => {
+  const { servidor, api } = await subir();
+  try {
+    // A vitrine é aberta — é o que a página inicial mostra antes do código.
+    assert.equal((await api("/api/casos")).status, 200);
+    assert.equal((await api("/api/voz")).status, 200);
+
+    // O que gasta API ou expõe dado de aluno, não.
+    assert.equal((await api("/api/consultas", { caso: "infarto" })).status, 401);
+    assert.equal((await api("/api/consultas/abc123/mensagem", { texto: "oi" })).status, 401);
+    assert.equal((await api("/api/falar", { texto: "oi" })).status, 401);
+    assert.equal((await api("/api/relatorio")).status, 403);
+
+    const errado = await api("/api/acesso", { codigo: "0000" });
+    assert.equal(errado.status, 401);
+    // Código errado não pode abrir porta nenhuma.
+    assert.equal((await api("/api/consultas", { caso: "infarto" })).status, 401);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("aluno autenticado não alcança o painel do professor", async () => {
+  const { servidor, api } = await subir();
+  try {
+    assert.equal((await api("/api/acesso", { codigo: "9271" })).status, 200);
+    assert.equal((await api("/api/consultas", { caso: "infarto" })).status, 200);
+
+    // Sessão de aluno não vira sessão de professor.
+    assert.equal((await api("/api/relatorio")).status, 403);
+
+    assert.equal((await api("/api/acesso/professor", { senha: "errada" })).status, 401);
+    assert.equal((await api("/api/relatorio")).status, 403);
+
+    assert.equal((await api("/api/acesso/professor", { senha: "senha-de-teste" })).status, 200);
+    assert.equal((await api("/api/relatorio")).status, 200);
+
+    const estado = await api("/api/acesso");
+    assert.equal(estado.dados.professor, true);
+    assert.equal(estado.dados.painel_disponivel, true);
+
+    await api("/api/sair", {});
+    assert.equal((await api("/api/relatorio")).status, 403);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("sem senha configurada, o painel fica desligado e não aberto", async () => {
+  const original = process.env.PV_SENHA_PROFESSOR;
+  delete process.env.PV_SENHA_PROFESSOR;
+  const { servidor, api } = await subir();
+  try {
+    const saude = await api("/healthz");
+    assert.equal(saude.dados.painel_professor, "desativado");
+
+    const estado = await api("/api/acesso");
+    assert.equal(estado.dados.painel_disponivel, false);
+
+    // Nem com a senha vazia, nem por engano: fechado é fechado.
+    assert.equal((await api("/api/acesso/professor", { senha: "" })).status, 401);
+    assert.equal((await api("/api/acesso/professor", { senha: "qualquer" })).status, 401);
+    assert.equal((await api("/api/relatorio")).status, 403);
+  } finally {
+    process.env.PV_SENHA_PROFESSOR = original;
+    servidor.close();
+  }
+});
+
 test("fluxo completo de consulta em modo demonstração", async () => {
-  const servidor = criarServidor();
-  await new Promise((resolver) => servidor.listen(0, "127.0.0.1", resolver));
-  const base = `http://127.0.0.1:${servidor.address().port}`;
+  const { servidor, api } = await subir();
 
   try {
-    const casos = await api(base, "/api/casos");
+    const casos = await api("/api/casos");
     assert.equal(casos.status, 200);
     assert.ok(casos.dados.some((caso) => caso.id === "infarto"));
     assert.ok(casos.dados.some((caso) => caso.id === "depressao"));
 
-    const voz = await api(base, "/api/voz");
+    const voz = await api("/api/voz");
     assert.equal(voz.dados.stt, false);
     assert.deepEqual(voz.dados.tts, { feminino: false, masculino: false });
     assert.equal(voz.dados.provedor, "nenhum");
 
-    const invalido = await api(base, "/api/consultas", { caso: "../etc/passwd" });
+    await api("/api/acesso", { codigo: "9271" });
+
+    const invalido = await api("/api/consultas", { caso: "../etc/passwd" });
     assert.equal(invalido.status, 404);
 
-    const consulta = await api(base, "/api/consultas", { caso: "infarto", aluno: "Node E2E" });
+    const consulta = await api("/api/consultas", { caso: "infarto", aluno: "Node E2E" });
     assert.equal(consulta.status, 200);
     assert.equal(consulta.dados.paciente.nome, "João Carlos Ferreira");
     const id = consulta.dados.id;
 
-    const exame = await api(base, `/api/consultas/${id}/mensagem`, {
-      texto: "vou aferir sua pressão",
-    });
+    const exame = await api(`/api/consultas/${id}/mensagem`, { texto: "vou aferir sua pressão" });
     assert.equal(exame.dados.eventos[0].tipo, "exame");
     assert.match(exame.dados.eventos[0].resultado, /170\/100/);
+    // O paciente reage ao procedimento no mesmo turno — antes o exame era mudo.
+    assert.ok(exame.dados.eventos.some((evento) => evento.tipo === "paciente"));
 
-    const anamnese = await api(base, `/api/consultas/${id}/mensagem`, {
-      texto: "quando começou a dor?",
-    });
+    const anamnese = await api(`/api/consultas/${id}/mensagem`, { texto: "quando começou a dor?" });
     const eventoPaciente = anamnese.dados.eventos.find((evento) => evento.tipo === "paciente");
     assert.equal(eventoPaciente.origem, "demo");
     assert.match(eventoPaciente.texto, /2 horas/);
 
-    const fim = await api(base, `/api/consultas/${id}/encerrar`, {});
+    const fim = await api(`/api/consultas/${id}/encerrar`, {});
     assert.equal(fim.status, 200);
     assert.ok(fim.dados.checklist.nota_total > 0);
     assert.equal(fim.dados.parecer, null);
 
     // Após encerrar, a consulta é removida da memória (transcrição já em disco).
-    const depois = await api(base, `/api/consultas/${id}/mensagem`, { texto: "oi" });
+    const depois = await api(`/api/consultas/${id}/mensagem`, { texto: "oi" });
     assert.equal(depois.status, 404);
 
     // Painel do professor: a consulta recém-gravada aparece e é detalhável.
     const arquivo = fim.dados.transcript;
     if (arquivo && arquivo.endsWith(".txt")) {
       try {
-        const painel = await api(base, "/api/relatorio");
+        await api("/api/acesso/professor", { senha: "senha-de-teste" });
+        const painel = await api("/api/relatorio");
         assert.equal(painel.status, 200);
         const item = painel.dados.find((consulta) => consulta.arquivo === arquivo);
         assert.ok(item, "consulta gravada deveria aparecer no painel");
         assert.equal(item.aluno, "Node E2E");
         assert.ok(item.nota > 0);
 
-        const detalhe = await api(base, `/api/relatorio/${encodeURIComponent(arquivo)}`);
+        const detalhe = await api(`/api/relatorio/${encodeURIComponent(arquivo)}`);
         assert.equal(detalhe.status, 200);
         assert.ok(detalhe.dados.eventos.some((evento) => evento.tipo === "exame"));
 
-        const invalido = await api(base, "/api/relatorio/..%2Fpyproject.toml");
+        const invalido = await api("/api/relatorio/..%2Fpyproject.toml");
         assert.equal(invalido.status, 404);
       } finally {
         const fs = await import("node:fs");
         const path = await import("node:path");
         const { fileURLToPath } = await import("node:url");
-        const raiz = path.resolve(
-          path.dirname(fileURLToPath(import.meta.url)),
-          "..",
-          "..",
-          ".."
-        );
+        const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
         fs.rmSync(path.join(raiz, "historico", arquivo), { force: true });
       }
     }

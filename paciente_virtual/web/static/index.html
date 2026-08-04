@@ -364,9 +364,9 @@
 
 <div id="modal-codigo" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modal-codigo-tit">
   <div class="modal-box">
-    <div class="modal-selo">🔒</div>
+    <div class="modal-selo" id="modal-selo">🔒</div>
     <h2 id="modal-codigo-tit">Código de acesso</h2>
-    <p class="subtitulo" style="margin-bottom:16px">Digite o código para iniciar a simulação.</p>
+    <p class="subtitulo" id="modal-codigo-sub" style="margin-bottom:16px">Digite o código para iniciar a simulação.</p>
     <input id="campo-codigo" type="password" inputmode="numeric" placeholder="••••" maxlength="12" autocomplete="off" aria-label="Código de acesso">
     <div class="modal-erro oculto" id="codigo-erro">Código incorreto. Tente novamente.</div>
     <div class="modal-acoes">
@@ -414,7 +414,7 @@
   </div>
 
   <div class="aleatorio-linha aleatorio-home"><button class="btn-aleatorio" id="aleatorio-geral" type="button">🎲 Caso clínico aleatório</button></div>
-  <button id="botao-painel" class="botao secundario">📊 Painel do professor</button>
+  <button id="botao-painel" class="botao secundario oculto">📊 Painel do professor</button>
 </section>
 
 <section id="tela-categoria" class="tela">
@@ -538,23 +538,72 @@ function mostrarTela(id) {
 }
 const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)" } };
 
-/* ---------- Código de acesso + modo aleatório ---------- */
-const CODIGO_ACESSO = "1010";
-function liberado() { try { return localStorage.getItem("pv_liberado") === "1"; } catch { return false; } }
-let acaoLiberacao = null;
-function exigirCodigo(fn) {
-  if (liberado()) { fn(); return; }
-  acaoLiberacao = fn;
-  $("campo-codigo").value = ""; $("codigo-erro").classList.add("oculto");
-  $("modal-codigo").classList.remove("oculto");
-  setTimeout(() => { try { $("campo-codigo").focus(); } catch {} }, 60);
+/* ---------- Código de acesso + modo aleatório ----------
+   O código NÃO mora mais aqui: quem confere é o servidor, que devolve um cookie de
+   sessão. Antes a checagem era neste script — dava para ler o código no ver-fonte e,
+   pior, chamar a API direto sem passar por ela. */
+const acesso = { autenticado: false, professor: false, painelDisponivel: false };
+let acaoLiberacao = null, papelPedido = "aluno";
+
+async function carregarAcesso() {
+  try {
+    const d = await (await fetch("/api/acesso")).json();
+    acesso.autenticado = !!d.autenticado; acesso.professor = !!d.professor;
+    acesso.painelDisponivel = !!d.painel_disponivel;
+  } catch { /* sem rede: o modal aparece e o servidor decide */ }
+  // Painel desligado no servidor (sem senha de professor configurada): não anuncia
+  // um botão que só levaria a um erro.
+  $("botao-painel").classList.toggle("oculto", !acesso.painelDisponivel);
 }
-function confirmarCodigo() {
-  if ($("campo-codigo").value.trim() === CODIGO_ACESSO) {
-    try { localStorage.setItem("pv_liberado", "1"); } catch {}
+
+function abrirModal(papel, fn) {
+  papelPedido = papel; acaoLiberacao = fn || null;
+  const professor = papel === "professor";
+  $("modal-codigo-tit").textContent = professor ? "Senha do professor" : "Código de acesso";
+  $("modal-codigo-sub").textContent = professor
+    ? "O painel mostra transcrições de alunos. Informe a senha para abrir."
+    : "Digite o código para iniciar a simulação.";
+  $("modal-selo").textContent = professor ? "🔑" : "🔒";
+  const campo = $("campo-codigo");
+  campo.value = ""; campo.maxLength = professor ? 64 : 12;
+  campo.style.letterSpacing = professor ? "normal" : ".5em";
+  campo.inputMode = professor ? "text" : "numeric";
+  campo.placeholder = professor ? "senha" : "••••";
+  campo.setAttribute("aria-label", professor ? "Senha do professor" : "Código de acesso");
+  $("codigo-erro").classList.add("oculto");
+  $("modal-codigo").classList.remove("oculto");
+  setTimeout(() => { try { campo.focus(); } catch {} }, 60);
+}
+
+function exigirCodigo(fn) {
+  if (acesso.autenticado) { fn(); return; }
+  abrirModal("aluno", fn);
+}
+
+async function confirmarCodigo() {
+  const valor = $("campo-codigo").value.trim();
+  if (!valor) return;
+  const professor = papelPedido === "professor";
+  const botao = $("codigo-ok"); botao.disabled = true;
+  try {
+    const r = await fetch(professor ? "/api/acesso/professor" : "/api/acesso", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(professor ? { senha: valor } : { codigo: valor }),
+    });
+    if (!r.ok) {
+      let d = {}; try { d = await r.json(); } catch {}
+      $("codigo-erro").textContent = d.erro || "Código incorreto. Tente novamente.";
+      $("codigo-erro").classList.remove("oculto");
+      try { $("campo-codigo").select(); } catch {}
+      return;
+    }
+    acesso.autenticado = true; if (professor) acesso.professor = true;
     $("modal-codigo").classList.add("oculto");
     const fn = acaoLiberacao; acaoLiberacao = null; if (fn) fn();
-  } else { $("codigo-erro").classList.remove("oculto"); try { $("campo-codigo").select(); } catch {} }
+  } catch {
+    $("codigo-erro").textContent = "Falha de conexão. Tente de novo.";
+    $("codigo-erro").classList.remove("oculto");
+  } finally { botao.disabled = false; }
 }
 function fecharCodigo() { $("modal-codigo").classList.add("oculto"); acaoLiberacao = null; }
 // Modo aleatório: sorteia um caso (da categoria ou de todos) sem revelar qual.
@@ -959,7 +1008,14 @@ function balaoDeEvento(e) {
 async function abrirPainel() {
   mostrarTela("tela-painel"); const lista = $("lista-consultas"); lista.innerHTML = "<p class='subtitulo'>Carregando…</p>";
   try {
-    const cs = await (await fetch("/api/relatorio")).json();
+    const r = await fetch("/api/relatorio");
+    if (!r.ok) {
+      let d = {}; try { d = await r.json(); } catch {}
+      if (r.status === 403) acesso.professor = false; // sessão de professor caiu
+      lista.innerHTML = `<p class='subtitulo'>${esc(d.erro || "Painel indisponível.")}</p>`;
+      return;
+    }
+    const cs = await r.json();
     lista.innerHTML = cs.length ? "" : "<p class='subtitulo'>Nenhuma consulta gravada ainda.</p>";
     for (const c of cs) {
       const it = document.createElement("button"); it.className = "cartao linha-consulta";
@@ -1029,7 +1085,10 @@ $("botao-som").addEventListener("click", () => aplicarPreferenciaAudio(!estado.f
 document.querySelectorAll(".cat-card").forEach((c) => c.addEventListener("click", () => abrirCategoria(c.dataset.cat)));
 $("cat-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abrirCategoria(estado.categoriaAtual); else mostrarTela("tela-inicio"); });
-$("botao-painel").addEventListener("click", abrirPainel);
+$("botao-painel").addEventListener("click", () => {
+  if (acesso.professor) { abrirPainel(); return; }
+  abrirModal("professor", abrirPainel);
+});
 $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
 $("codigo-ok").addEventListener("click", confirmarCodigo);
@@ -1063,6 +1122,7 @@ function esconderSplash() { const s = $("splash"); if (s && !s.classList.contain
 aplicarPreferenciaAudio(estado.falarRespostas);
 carregarCasos().finally(() => setTimeout(esconderSplash, 350));
 carregarCapacidades();
+carregarAcesso();
 setTimeout(esconderSplash, 2200); // rede de segurança
 </script>
 </body>

@@ -96,6 +96,35 @@ npm test           # testes do motor portado e do servidor (node --test)
 | `OLLAMA_URL` | `http://127.0.0.1:11434` | Endpoint do Ollama (usado se não houver `OPENAI_API_KEY`). |
 | `PACIENTE_VIRTUAL_MODELO` | `qwen3:8b` | Modelo usado no Ollama. |
 | `LLM_TIMEOUT_MS` | `120000` | Tempo-limite das chamadas ao modelo. |
+| `PV_CODIGO_ACESSO` | `1010` | Código que o aluno digita para iniciar uma consulta. Conferido **no servidor**. |
+| `PV_SENHA_PROFESSOR` | — | Senha do painel de transcrições. **Sem ela o painel fica desligado.** |
+| `PV_SEGREDO` | sorteado a cada start | Segredo que assina o cookie de sessão. Sem ele, as sessões caem quando o servidor reinicia. |
+
+### Acesso
+
+O código de acesso é verificado **no servidor** (`POST /api/acesso`), que devolve um
+cookie de sessão assinado, válido por 12 horas. Antes a checagem existia só no
+JavaScript da página: dava para ler o código no ver-fonte e, pior, chamar a API direto
+sem passar por ela.
+
+Dois papéis:
+
+- **aluno** (`PV_CODIGO_ACESSO`) — pode fazer consulta e usar a síntese de voz.
+- **professor** (`PV_SENHA_PROFESSOR`) — além disso, abre o painel com as transcrições.
+
+O painel guarda **dados pessoais de alunos**, então ele é *fail-closed*: sem
+`PV_SENHA_PROFESSOR` definida, `/api/relatorio` responde 403 e o botão nem aparece na
+página. O fluxo do aluno nunca depende de configuração — `PV_CODIGO_ACESSO` tem
+padrão, e uma instância recém-subida continua utilizável.
+
+O código do aluno é uma porta simples (é digitado em sala, e o rate limit segura força
+bruta). A senha do professor é que protege dado pessoal — use uma senha forte.
+
+### Limites por IP (janela de 5 min)
+
+Existem para a chave da API não ser drenada por um script: 60 mensagens, 20 consultas
+novas, 200 sínteses de voz e 20 tentativas de código. Cada pergunta enviada ao modelo
+é cortada em 2000 caracteres.
 
 ### Modelos open source recomendados (via OpenRouter)
 
