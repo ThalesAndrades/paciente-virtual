@@ -347,11 +347,94 @@
   .criterio .barra-crit { height: 8px; border-radius: 999px; background: var(--borda); overflow: hidden; margin: 9px 0 11px; }
   .criterio .barra-crit i { display: block; height: 100%; border-radius: 999px; background: var(--cor-crit, var(--primaria)); width: 0; transition: width .9s cubic-bezier(.22,1,.36,1); }
 
+  /* ---- Severidade: rampa ordenada de 3 faixas (boa → atenção → crítica).
+     Validada para separação em daltonismo e para visão normal contra as duas
+     superfícies do app. O amarelo fica abaixo de 3:1 no claro, então TODO medidor
+     carrega o valor numérico visível — a cor nunca é o único canal. ---- */
+  :root { --sev-boa: #0ca30c; --sev-atencao: #fab219; --sev-critica: #d03b3b; }
+
+  /* ---- Cronômetro e contadores da estação ---- */
+  .medidores-estacao { display: flex; align-items: center; gap: 12px; font-size: .8rem; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+  .medidores-estacao b { font-weight: 700; color: var(--texto); }
+  .medidores-estacao .sep { width: 1px; height: 14px; background: var(--borda-forte); }
+  @media (max-width: 620px) { .medidores-estacao .sep, .medidores-estacao .rotulo-longo { display: none; } }
+
+  /* ---- Anotações do estudante ---- */
+  .bloco-notas { margin-top: 14px; }
+  .bloco-notas .cabeca { font-size: .78rem; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin: 0 0 8px; }
+  .bloco-notas textarea {
+    width: 100%; min-height: 120px; resize: vertical; padding: 11px 13px; font: inherit; font-size: .9rem;
+    border: 1px solid var(--borda-forte); border-radius: var(--raio-sm); background: var(--superficie); color: var(--texto);
+  }
+  .bloco-notas textarea:focus { outline: none; border-color: var(--primaria); box-shadow: 0 0 0 4px var(--primaria-suave); }
+  .bloco-notas .dica { font-size: .76rem; color: var(--texto-fraco); margin: 6px 0 0; }
+
+  /* ---- Fechamento diagnóstico ---- */
+  .modal-box.largo { max-width: 560px; text-align: left; }
+  .modal-box.largo h2 { text-align: left; }
+  .campo-fecha { margin-bottom: 14px; }
+  .campo-fecha label { margin: 0 0 6px; font-size: .88rem; }
+  .campo-fecha textarea {
+    width: 100%; min-height: 62px; resize: vertical; padding: 10px 12px; font: inherit; font-size: .93rem;
+    border: 1px solid var(--borda-forte); border-radius: var(--raio-sm); background: var(--superficie-2); color: var(--texto);
+  }
+  .campo-fecha textarea:focus { outline: none; border-color: var(--primaria); box-shadow: 0 0 0 4px var(--primaria-suave); }
+  .campo-fecha .ajuda { font-size: .78rem; color: var(--texto-fraco); margin: 5px 0 0; }
+  .aviso-compromisso { background: var(--aviso-fundo); color: var(--aviso-texto); border: 1px solid var(--borda); border-radius: 10px; padding: 10px 13px; font-size: .84rem; margin-bottom: 16px; }
+
+  /* ---- Resultado: faixa de indicadores (sem gráfico — são números soltos) ---- */
+  .indicadores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .indicador { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px 16px; box-shadow: var(--sombra); }
+  .indicador .rotulo { font-size: .78rem; color: var(--texto-suave); margin-bottom: 3px; }
+  .indicador .valor { font-size: 1.5rem; font-weight: 750; line-height: 1.1; }
+  .indicador .valor small { font-size: .8rem; font-weight: 600; color: var(--texto-suave); margin-left: 2px; }
+  @media (max-width: 520px) { .indicadores { grid-template-columns: 1fr 1fr; } }
+
+  /* ---- Confronto da hipótese com o gabarito ---- */
+  .fecha-card { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 18px; box-shadow: var(--sombra); margin-bottom: 18px; }
+  .fecha-card h3 { margin: 0 0 12px; font-size: 1rem; }
+  .fecha-linha { padding: 12px 0; border-top: 1px solid var(--borda); }
+  .fecha-linha:first-of-type { border-top: none; padding-top: 0; }
+  .fecha-rotulo { font-size: .76rem; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 4px; }
+  .fecha-texto { font-size: .95rem; white-space: pre-wrap; }
+  .fecha-texto.vazio { color: var(--texto-fraco); font-style: italic; }
+  .fecha-dif { margin: 6px 0 0; padding-left: 18px; font-size: .9rem; color: var(--texto-suave); }
+  .fecha-dif li { margin-bottom: 5px; }
+  /* Estado sempre com ícone + palavra: a cor é reforço, nunca o único sinal. */
+  .selo-estado { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: .84rem; padding: 5px 12px; border-radius: 999px; border: 1px solid currentColor; }
+
+  /* ---- Medidor por critério ----
+     Trilho = passo claro da MESMA cor do preenchimento (estado legível na barra
+     inteira); ponta arredondada em 4px e quadrada na base; valor sempre visível. */
+  .criterio .barra-crit { height: 10px; border-radius: 0 4px 4px 0; background: color-mix(in srgb, var(--cor-crit, var(--primaria)) 16%, transparent); overflow: hidden; margin: 9px 0 11px; }
+  .criterio .barra-crit i { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--cor-crit, var(--primaria)); width: 0; transition: width .9s cubic-bezier(.22,1,.36,1); }
+  .criterio .pts { font-weight: 700; color: var(--texto); font-size: .92rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .criterio .pts .de { color: var(--texto-suave); font-weight: 600; }
+
+  /* ---- Revisão da consulta pelo próprio aluno ---- */
+  .revisao-toggle { display: flex; align-items: center; gap: 8px; }
+  #revisao-consulta { border: 1px solid var(--borda); border-radius: var(--raio); padding: 16px; background: var(--superficie-2); max-height: 460px; overflow-y: auto; }
+
+  /* ---- Avisos passageiros (substituem alert(), que trava a página) ---- */
+  #torradas { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 120; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; width: min(92vw, 460px); }
+  .torrada { background: var(--texto); color: var(--superficie); padding: 11px 16px; border-radius: 12px; font-size: .9rem; box-shadow: var(--sombra-forte); animation: entra .22s ease; text-align: center; }
+  .torrada.erro { background: var(--falha); color: #fff; }
+
   .oculto { display: none !important; }
+
+  /* Respeita quem pediu menos movimento no sistema: a interface tem splash,
+     digitação, anéis e barras animadas — tudo isso vira transição instantânea. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important; scroll-behavior: auto !important;
+    }
+  }
 </style>
 </head>
 <body>
 <audio id="player-voz" preload="auto" playsinline></audio>
+<div id="torradas" role="status" aria-live="polite"></div>
 
 <div id="splash">
   <div class="splash-in">
@@ -450,8 +533,15 @@
       <strong id="nome-paciente"></strong>
       <span id="dados-paciente"></span><span class="cab-badge" id="cab-badge"></span>
     </div>
+    <div class="medidores-estacao" id="medidores-estacao">
+      <span title="Tempo de consulta">⏱ <b id="med-tempo">00:00</b></span>
+      <span class="sep"></span>
+      <span><b id="med-perguntas">0</b> <span class="rotulo-longo">perguntas</span></span>
+      <span class="sep"></span>
+      <span><b id="med-exames">0</b> <span class="rotulo-longo">exames</span></span>
+    </div>
     <div class="acoes">
-      <button id="abrir-instrumentos" title="Instrumentos clínicos" aria-expanded="false" aria-controls="painel-instrumentos">🩺 Instrumentos</button>
+      <button id="abrir-instrumentos" title="Instrumentos e anotações" aria-expanded="false" aria-controls="painel-instrumentos">🩺 Instrumentos</button>
       <button id="botao-som" class="ligado" title="Ler as respostas em voz alta">🔊 Voz</button>
       <button id="botao-encerrar" class="encerrar">Encerrar e avaliar</button>
     </div>
@@ -461,9 +551,16 @@
     <div class="coluna-chat">
       <div id="mensagens" class="fluxo-mensagens" role="log" aria-live="polite" aria-relevant="additions"></div>
     </div>
-    <aside class="painel-instrumentos oculto" id="painel-instrumentos" aria-label="Instrumentos clínicos">
-      <div class="cabeca">🩺 Instrumentos <button class="fechar-inst" id="fechar-inst" aria-label="Fechar">✕</button></div>
+    <aside class="painel-instrumentos oculto" id="painel-instrumentos" aria-label="Instrumentos e anotações">
+      <div class="cabeca"><span id="titulo-painel-lateral">🩺 Instrumentos</span> <button class="fechar-inst" id="fechar-inst" aria-label="Fechar">✕</button></div>
       <div id="instrumentos-corpo"></div>
+      <!-- Anotar durante a consulta é o que o profissional faz de verdade; as notas
+           entram no relatório e o professor as lê junto da transcrição. -->
+      <div class="bloco-notas">
+        <div class="cabeca">📝 Suas anotações</div>
+        <textarea id="campo-anotacoes" placeholder="Achados, hipóteses que passaram pela cabeça, o que ainda falta perguntar…" aria-label="Anotações da consulta"></textarea>
+        <p class="dica">Só você vê durante a consulta. Entram no seu relatório ao encerrar.</p>
+      </div>
     </aside>
   </div>
 
@@ -477,6 +574,30 @@
     <div id="dica-mic" class="dica-mic" aria-live="polite"><span class="ponto"></span><span id="dica-mic-texto"></span></div>
   </div>
 </section>
+
+<div id="modal-fechamento" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="fecha-tit">
+  <div class="modal-box largo">
+    <h2 id="fecha-tit">Antes de encerrar: qual a sua conclusão?</h2>
+    <p class="aviso-compromisso">Escreva o que você concluiu <strong>antes</strong> de ver a resposta do caso. É esse compromisso que vai ser comparado com o diagnóstico real — e o parecer vai olhar se você investigou o que sustenta a sua hipótese.</p>
+    <div class="campo-fecha">
+      <label for="fecha-hipotese">Hipótese diagnóstica principal</label>
+      <textarea id="fecha-hipotese" placeholder="O que você acha que essa pessoa tem?"></textarea>
+    </div>
+    <div class="campo-fecha">
+      <label for="fecha-diferenciais">Diagnósticos diferenciais</label>
+      <textarea id="fecha-diferenciais" placeholder="O que mais poderia ser, e por que você não descartou?"></textarea>
+    </div>
+    <div class="campo-fecha">
+      <label for="fecha-conduta">Conduta / próximos passos</label>
+      <textarea id="fecha-conduta" placeholder="O que você faria agora com esse paciente?"></textarea>
+      <p class="ajuda">Pode deixar em branco e encerrar mesmo assim — mas aí o parecer avalia só a sua coleta de dados, não o seu raciocínio.</p>
+    </div>
+    <div class="modal-acoes">
+      <button class="botao secundario" id="fecha-pular" type="button">Encerrar sem concluir</button>
+      <button class="botao" id="fecha-enviar" type="button">Concluir e ver resultado</button>
+    </div>
+  </div>
+</div>
 
 <section id="tela-analise" class="tela">
   <div class="analise-wrap">
@@ -503,10 +624,26 @@
     </div>
   </div>
   <div id="aviso-avaliacao" class="faixa-aviso oculto"></div>
+
+  <div class="indicadores" id="indicadores">
+    <div class="indicador"><div class="rotulo">Duração</div><div class="valor" id="ind-tempo">—</div></div>
+    <div class="indicador"><div class="rotulo">Perguntas</div><div class="valor" id="ind-perguntas">—</div></div>
+    <div class="indicador"><div class="rotulo">Exames</div><div class="valor" id="ind-exames">—</div></div>
+  </div>
+
+  <h2 id="titulo-fechamento" class="oculto">O seu raciocínio × o caso</h2>
+  <div class="fecha-card oculto" id="fecha-card"></div>
+
   <h2 id="titulo-criterios" class="oculto">Por que essa nota — critérios avaliados</h2>
   <div id="criterios"></div>
   <h2 id="titulo-parecer" class="oculto">Parecer pedagógico (IA)</h2>
   <div id="parecer" class="parecer oculto"></div>
+
+  <h2 class="revisao-toggle">Revisão da consulta
+    <button class="botao secundario" id="botao-revisao" type="button" style="margin:0;padding:7px 14px;font-size:.85rem" aria-expanded="false" aria-controls="revisao-consulta">Mostrar</button>
+  </h2>
+  <div id="revisao-consulta" class="fluxo-mensagens oculto"></div>
+
   <button id="botao-nova" class="botao">Nova consulta</button>
 </section>
 
@@ -521,8 +658,20 @@ const estado = {
   voz: "feminino", categoriaCaso: "psicologia", pacienteNome: "", instrumentos: null,
   falarRespostas: lerPreferenciaAudio(), avisoDemoExibido: false, ocupado: false,
   capacidades: { stt: false, tts: {} },
+  inicioConsulta: null, perguntas: 0, exames: 0, timerEstacao: null,
 };
 const $ = (id) => document.getElementById(id);
+const semMovimento = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// alert() trava a página inteira e, no meio de uma consulta, corta a fala do
+// paciente e o foco do teclado. Um aviso passageiro comunica sem interromper.
+function torrada(msg, erro) {
+  const t = document.createElement("div");
+  t.className = "torrada" + (erro ? " erro" : "");
+  t.textContent = msg;
+  $("torradas").appendChild(t);
+  setTimeout(() => { t.style.opacity = "0"; t.style.transition = "opacity .3s"; setTimeout(() => t.remove(), 320); }, erro ? 5200 : 3400);
+}
 // Escapa texto ecoado do servidor antes de interpolar em innerHTML (o nome do
 // aluno é entrada livre — sem isso, vira XSS armazenado no painel do professor).
 function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
@@ -783,9 +932,16 @@ async function iniciarConsulta(casoId, aleatorio) {
   let dados;
   try {
     const r = await fetch("/api/consultas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caso: casoId, aluno }) });
-    if (!r.ok) { alert("Não foi possível iniciar a consulta."); return; }
+    if (!r.ok) {
+      let d = {}; try { d = await r.json(); } catch {}
+      // Sessão caiu (cookie expirado, servidor reiniciado): em vez de um erro seco,
+      // reabre o modal do código e retoma exatamente o que o aluno tentou fazer.
+      if (r.status === 401) { acesso.autenticado = false; abrirModal("aluno", () => iniciarConsulta(casoId, aleatorio)); return; }
+      torrada(d.erro || "Não foi possível iniciar a consulta.", true);
+      return;
+    }
     dados = await r.json();
-  } catch { alert("Falha de conexão."); return; }
+  } catch { torrada("Falha de conexão ao iniciar a consulta.", true); return; }
 
   estado.consultaId = dados.id; estado.voz = dados.voz; estado.avisoDemoExibido = false;
   estado.categoriaCaso = dados.categoria; estado.instrumentos = dados.instrumentos || null;
@@ -800,6 +956,8 @@ async function iniciarConsulta(casoId, aleatorio) {
   const badge = $("cab-badge"); badge.textContent = CAT[dados.categoria].nome; badge.className = "cab-badge " + CAT[dados.categoria].chip;
 
   montarInstrumentos();
+  $("campo-anotacoes").value = "";
+  iniciarCronometro();
   adicionarBalao("aviso", dados.categoria === "medicina"
     ? "Consulta iniciada. Faça a anamnese, use os instrumentos (🩺) para sinais vitais e exames, e clique em “Encerrar e avaliar” ao final."
     : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
@@ -808,15 +966,43 @@ async function iniciarConsulta(casoId, aleatorio) {
   } finally { estado.ocupado = false; }
 }
 
-/* ---------- Instrumentos (medicina) ---------- */
+/* ---------- Cronômetro da estação ----------
+   Estação de OSCE é cronometrada; ver o tempo correr muda o jeito de conduzir.
+   Os contadores também dão ao aluno noção do próprio ritmo (20 perguntas em 4
+   minutos é atropelo; 3 em 15 é travamento). */
+function formatarDuracao(s) {
+  const m = Math.floor(s / 60), r = s % 60;
+  return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
+}
+function atualizarMedidores() {
+  if (!estado.inicioConsulta) return;
+  $("med-tempo").textContent = formatarDuracao(Math.floor((Date.now() - estado.inicioConsulta) / 1000));
+  $("med-perguntas").textContent = estado.perguntas;
+  $("med-exames").textContent = estado.exames;
+}
+function iniciarCronometro() {
+  pararCronometro();
+  estado.inicioConsulta = Date.now(); estado.perguntas = 0; estado.exames = 0;
+  atualizarMedidores();
+  estado.timerEstacao = setInterval(atualizarMedidores, 1000);
+}
+function pararCronometro() {
+  if (estado.timerEstacao) { clearInterval(estado.timerEstacao); estado.timerEstacao = null; }
+}
+
+/* ---------- Painel lateral: instrumentos (medicina) + anotações (todos) ---------- */
 function montarInstrumentos() {
   const painel = $("painel-instrumentos"), corpo = $("instrumentos-corpo"), wrap = $("inst-toggle-wrap");
   corpo.innerHTML = ""; wrap.innerHTML = "";
   const inst = estado.instrumentos;
   const total = inst ? (inst.vitais.length + inst.fisico.length + inst.exames.length) : 0;
   const ehMed = estado.categoriaCaso === "medicina" && total > 0;
-  painel.classList.toggle("oculto", !ehMed);
-  $("abrir-instrumentos").style.display = ehMed ? "" : "none";
+  // O painel agora existe SEMPRE: em psicologia ele carrega as anotações, que
+  // antes não tinham lugar nenhum na tela.
+  painel.classList.remove("oculto");
+  $("abrir-instrumentos").style.display = "";
+  $("abrir-instrumentos").textContent = ehMed ? "🩺 Instrumentos" : "📝 Anotações";
+  $("titulo-painel-lateral").textContent = ehMed ? "🩺 Instrumentos" : "📝 Consulta";
   if (!ehMed) return;
   const grupo = (titulo, itens) => {
     if (!itens.length) return;
@@ -841,7 +1027,7 @@ async function solicitarExame(chave, botao) {
   try {
     const r = await fetch(`/api/consultas/${estado.consultaId}/exame`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chave }) });
     const d = await r.json();
-    if (r.ok && d.eventos) for (const e of d.eventos) adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome });
+    if (r.ok && d.eventos) for (const e of d.eventos) { adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome }); estado.exames++; atualizarMedidores(); }
     else adicionarBalao("aviso", d.erro || "Não foi possível realizar o exame.");
   } catch { adicionarBalao("aviso", "Falha ao solicitar o exame."); }
   finally { estado.ocupado = false; if (botao) botao.disabled = false; }
@@ -865,6 +1051,8 @@ function finalizarDigitacao() {
 function pararDigitacao() { finalizarDigitacao(); }
 function digitarResposta(balao, texto, ehDemo) {
   finalizarDigitacao(); balaoDigitando = balao; textoDigitando = texto; demoDigitando = ehDemo;
+  // Movimento reduzido: a fala aparece inteira, sem efeito de digitação.
+  if (semMovimento()) { finalizarDigitacao(); return; }
   balao.textContent = ""; balao.classList.add("digitando-vivo"); let i = 0;
   temporizadorDigitacao = setInterval(() => { i = Math.min(i + 2, texto.length); balao.textContent = texto.slice(0, i); balao.scrollIntoView({ behavior: "smooth", block: "end" }); if (i >= texto.length) finalizarDigitacao(); }, 22);
 }
@@ -875,6 +1063,7 @@ async function enviarMensagem() {
   if (!texto || estado.ocupado || !estado.consultaId) return;
   pararFala(); pararDigitacao();
   campo.value = ""; adicionarBalao("aluno", texto);
+  estado.perguntas++; atualizarMedidores();
   const dig = adicionarBalao("digitando", "");
   dig.innerHTML = `<span class="quem">${estado.pacienteNome || "O paciente"} está pensando</span><span class="pontos-digita"><i></i><i></i><i></i></span>`;
   dig.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -900,13 +1089,13 @@ async function enviarMensagem() {
         if (ev.eventos) { // servidor sem streaming (transição de deploy) — renderiza o JSON
           tirarDig();
           for (const e of ev.eventos) {
-            if (e.tipo === "exame") adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome });
+            if (e.tipo === "exame") { adicionarBalao("exame", e.resultado, { titulo: e.titulo, nome: e.nome }); estado.exames++; atualizarMedidores(); }
             else if (e.tipo === "paciente") responderPaciente(e.texto, e.origem === "demo");
             else if (e.tipo === "aviso" && !estado.avisoDemoExibido) { adicionarBalao("aviso", e.texto); estado.avisoDemoExibido = true; }
           }
           return;
         }
-        if (ev.tipo === "exame") { tirarDig(); adicionarBalao("exame", ev.resultado, { titulo: ev.titulo, nome: ev.nome }); }
+        if (ev.tipo === "exame") { tirarDig(); adicionarBalao("exame", ev.resultado, { titulo: ev.titulo, nome: ev.nome }); estado.exames++; atualizarMedidores(); }
         else if (ev.tipo === "aviso") { if (!estado.avisoDemoExibido) { tirarDig(); adicionarBalao("aviso", ev.texto); estado.avisoDemoExibido = true; } }
         else if (ev.tipo === "delta") {
           tirarDig();
@@ -1081,17 +1270,33 @@ async function carregarCapacidades() { try { estado.capacidades = await (await f
 
 /* ---------- Renderizadores ---------- */
 function formatarNota(n) { return n.toFixed(1).replace(".", ","); }
+// Medidor por critério. A cor é uma rampa ORDENADA de 3 faixas (a severidade é
+// magnitude, não identidade), o trilho é um passo claro da mesma cor — para o
+// estado ser legível na barra inteira — e o valor aparece SEMPRE em texto, porque
+// a faixa de atenção não alcança 3:1 de contraste no tema claro.
+function corDaFaixa(pct) {
+  return pct >= 80 ? "var(--sev-boa)" : pct >= 40 ? "var(--sev-atencao)" : "var(--sev-critica)";
+}
 function renderizarChecklist(cont, cl) {
   cont.innerHTML = "";
   for (const c of cl.criterios) {
     const pct = c.peso > 0 ? Math.round((c.nota / c.peso) * 100) : 0;
-    const cor = pct >= 80 ? "var(--ok)" : pct >= 40 ? "#c98a1e" : "var(--falha)";
+    const cor = corDaFaixa(pct);
     const b = document.createElement("div"); b.className = "criterio";
-    const itens = c.itens.map((i) => `<span class="item ${i.atendido ? "ok" : "falha"}">${i.atendido ? "✓" : "✗"} ${i.nome}</span>`).join("");
-    b.innerHTML = `<div class="topo-crit"><h3 style="margin:0;font-size:1rem">${c.nome}</h3><span class="pts">${c.nota.toFixed(1)}/${c.peso.toFixed(1)} pts</span></div><div class="barra-crit"><i style="--cor-crit:${cor}"></i></div><p class="objetivo">${c.objetivo}</p><div class="itens">${itens}</div>`;
+    b.style.setProperty("--cor-crit", cor);
+    const itens = c.itens.map((i) => `<span class="item ${i.atendido ? "ok" : "falha"}">${i.atendido ? "✓" : "✗"} ${esc(i.nome)}</span>`).join("");
+    b.innerHTML = `<div class="topo-crit"><h3 style="margin:0;font-size:1rem">${esc(c.nome)}</h3>`
+      + `<span class="pts">${c.nota.toFixed(1)}<span class="de">/${c.peso.toFixed(1)} pts</span></span></div>`
+      + `<div class="barra-crit" role="img" aria-label="${esc(c.nome)}: ${c.nota.toFixed(1)} de ${c.peso.toFixed(1)} pontos"><i></i></div>`
+      + `<p class="objetivo">${esc(c.objetivo)}</p><div class="itens">${itens}</div>`;
     cont.appendChild(b);
     const barra = b.querySelector(".barra-crit i");
-    requestAnimationFrame(() => setTimeout(() => { barra.style.width = pct + "%"; }, 60));
+    // setTimeout e não requestAnimationFrame: rAF não dispara em aba de segundo
+    // plano nem sem compositing, e a barra ficava em zero ao lado de um número que
+    // dizia outra coisa. Com timeout a transição continua animando e o valor sempre
+    // chega.
+    if (semMovimento()) barra.style.width = pct + "%";
+    else setTimeout(() => { barra.style.width = pct + "%"; }, 60);
   }
 }
 
@@ -1128,16 +1333,57 @@ function anelNota(nota) {
   const anel = $("anel-progresso");
   anel.style.strokeDasharray = String(circ);
   anel.style.strokeDashoffset = String(circ);
-  const cor = nota >= 8 ? "var(--ok)" : nota >= 6 ? "var(--primaria)" : nota >= 4 ? "#c98a1e" : "var(--falha)";
+  // Mesma rampa de severidade dos medidores: a nota e os critérios contam a mesma
+  // história em cores coerentes.
+  const cor = corDaFaixa(nota * 10);
   document.querySelector(".resultado-topo").style.setProperty("--cor-nota", cor);
   const frac = Math.max(0, Math.min(1, nota / 10));
-  requestAnimationFrame(() => setTimeout(() => { anel.style.strokeDashoffset = String(circ * (1 - frac)); }, 90));
+  const aplicar = () => { anel.style.strokeDashoffset = String(circ * (1 - frac)); };
+  if (semMovimento()) aplicar();
+  else setTimeout(aplicar, 90); // ver a nota sobre rAF em renderizarChecklist
 }
 function contarNota(nota) {
-  const el = $("nota-final"); const dur = 950; let t0 = null;
-  function passo(t) { if (t0 === null) t0 = t; const p = Math.min(1, (t - t0) / dur); const v = nota * (1 - Math.pow(1 - p, 3)); el.textContent = v.toFixed(1).replace(".", ","); if (p < 1) requestAnimationFrame(passo); }
+  const el = $("nota-final");
+  const final = nota.toFixed(1).replace(".", ",");
+  // Escreve o valor final de saída: se a animação não rodar (aba em segundo plano,
+  // movimento reduzido, rAF suspenso), a nota não pode ficar travada em "0,0".
+  el.textContent = final;
+  if (semMovimento()) return;
+  const dur = 950; let t0 = null;
+  function passo(t) {
+    if (t0 === null) t0 = t;
+    const p = Math.min(1, (t - t0) / dur);
+    el.textContent = (nota * (1 - Math.pow(1 - p, 3))).toFixed(1).replace(".", ",");
+    if (p < 1) requestAnimationFrame(passo); else el.textContent = final;
+  }
   requestAnimationFrame(passo);
 }
+// Reconstrói a linha do tempo a partir do que está na tela da consulta — evita uma
+// segunda ida ao servidor (que exigiria o papel de professor para ler o relatório).
+function montarEventosLocais() {
+  const eventos = [];
+  for (const b of $("mensagens").querySelectorAll(".balao")) {
+    if (b.classList.contains("aviso") || b.classList.contains("digitando")) continue;
+    if (b.classList.contains("aluno")) eventos.push({ tipo: "profissional", texto: b.textContent.trim() });
+    else if (b.classList.contains("exame")) {
+      const forte = b.querySelector("strong");
+      const cabecalho = forte ? forte.textContent.split("—") : [];
+      eventos.push({
+        tipo: "exame",
+        titulo: (cabecalho[0] || "EXAME").trim(),
+        nome: (cabecalho[1] || "").trim(),
+        texto: b.textContent.replace(forte ? forte.textContent : "", "").trim(),
+      });
+    } else if (b.classList.contains("paciente")) {
+      // Remove o rótulo "modo demonstração", que é da interface e não do paciente.
+      const copia = b.cloneNode(true);
+      copia.querySelectorAll(".rotulo-demo").forEach((r) => r.remove());
+      eventos.push({ tipo: "paciente", texto: copia.textContent.trim() });
+    }
+  }
+  return eventos;
+}
+
 function balaoDeEvento(e) {
   const b = document.createElement("div");
   if (e.tipo === "exame") { b.className = "balao exame"; const t = document.createElement("strong"); t.textContent = `${e.titulo} — ${e.nome}`; b.appendChild(t); b.append(e.texto); }
@@ -1172,22 +1418,57 @@ async function abrirDetalhe(arq) {
     $("detalhe-titulo").textContent = d.aluno || "Consulta"; $("detalhe-resumo").textContent = `${d.caso || "?"} · ${d.inicio || "—"} · ${d.arquivo}`;
     const tem = Boolean(d.checklist); $("detalhe-bloco-nota").classList.toggle("oculto", !tem); $("detalhe-criterios").innerHTML = "";
     if (tem) { $("detalhe-nota").textContent = formatarNota(d.checklist.nota_total); renderizarChecklist($("detalhe-criterios"), d.checklist); }
+
+    // O raciocínio que o aluno assumiu e as anotações que tomou — é o que o
+    // professor mais quer ler, e antes nem era gravado.
+    const blocos = [
+      ["Hipótese diagnóstica", d.hipotese],
+      ["Diferenciais", d.diferenciais],
+      ["Conduta", d.conduta],
+      ["Anotações durante a consulta", d.anotacoes],
+    ].filter(([, v]) => v);
+    const cont = $("detalhe-criterios");
+    if (blocos.length) {
+      const card = document.createElement("div");
+      card.className = "fecha-card";
+      card.innerHTML = "<h3>Raciocínio do aluno</h3>" + blocos
+        .map(([r, v]) => `<div class="fecha-linha"><div class="fecha-rotulo">${r}</div><div class="fecha-texto">${esc(v)}</div></div>`)
+        .join("");
+      cont.appendChild(card);
+    }
+
     const m = $("detalhe-mensagens"); m.innerHTML = ""; for (const e of d.eventos) m.appendChild(balaoDeEvento(e));
     mostrarTela("tela-detalhe");
   } catch { /* */ }
 }
 
-/* ---------- Avaliação ---------- */
-async function encerrarConsulta() {
+/* ---------- Encerramento: primeiro o compromisso, depois a resposta ----------
+   O confirm() de antes só perguntava "tem certeza?". Agora o aluno assume uma
+   hipótese ANTES de ver o gabarito — é o que separa treinar entrevista de treinar
+   raciocínio clínico. Pode pular, e aí a avaliação julga só a coleta. */
+function abrirFechamento() {
   if (!estado.consultaId || estado.ocupado) return;
-  if (!confirm("Encerrar a consulta e gerar a avaliação?")) return;
-  pararFala(); pararDigitacao(); estado.ocupado = true; $("botao-encerrar").disabled = true;
+  for (const id of ["fecha-hipotese", "fecha-diferenciais", "fecha-conduta"]) $(id).value = "";
+  $("modal-fechamento").classList.remove("oculto");
+  setTimeout(() => { try { $("fecha-hipotese").focus(); } catch {} }, 60);
+}
+function fecharFechamento() { $("modal-fechamento").classList.add("oculto"); }
+
+async function encerrarConsulta(fechamento) {
+  if (!estado.consultaId || estado.ocupado) return;
+  fecharFechamento();
+  pararFala(); pararDigitacao(); pararCronometro(); liberarMicrofone();
+  estado.ocupado = true; $("botao-encerrar").disabled = true;
   const t0 = Date.now();
   iniciarAnalise();
+  const corpo = Object.assign({ anotacoes: $("campo-anotacoes").value || "" }, fechamento || {});
   try {
-    const r = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, { method: "POST" });
+    const r = await fetch(`/api/consultas/${estado.consultaId}/encerrar`, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo),
+    });
     const d = await r.json();
-    const espera = Math.max(0, 2600 - (Date.now() - t0)); // garante que as etapas apareçam
+    // Sem movimento, não faz sentido segurar a tela só para a animação aparecer.
+    const espera = semMovimento() ? 0 : Math.max(0, 2600 - (Date.now() - t0));
     setTimeout(() => concluirAnalise(() => {
       if (!r.ok) { mostrarTela("tela-consulta"); adicionarBalao("aviso", d.erro || "Erro ao encerrar a consulta."); }
       else mostrarAvaliacao(d);
@@ -1196,11 +1477,68 @@ async function encerrarConsulta() {
     concluirAnalise(() => { mostrarTela("tela-consulta"); adicionarBalao("aviso", "Falha de conexão ao encerrar a consulta."); });
   } finally { estado.ocupado = false; $("botao-encerrar").disabled = false; }
 }
+
+// Compara o que o aluno escreveu com o diagnóstico do caso. É uma leitura por
+// palavras — deliberadamente generosa e SEM nota: quem julga o raciocínio é o
+// parecer da IA. Aqui só se mostra os dois lado a lado, sem fingir precisão.
+function compararHipotese(hipotese, diagnostico) {
+  if (!hipotese) return null;
+  const limpar = (s) => normalizarTexto(s).split(/[^a-z0-9]+/).filter((p) => p.length > 3);
+  const doAluno = new Set(limpar(hipotese));
+  const doCaso = limpar(diagnostico);
+  if (!doCaso.length || !doAluno.size) return null;
+  const batem = doCaso.filter((p) => doAluno.has(p));
+  return batem.length >= 2 ? "forte" : batem.length === 1 ? "parcial" : "divergente";
+}
+function normalizarTexto(s) {
+  return String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
+}
+
+function renderizarFechamento(d) {
+  const card = $("fecha-card"), titulo = $("titulo-fechamento");
+  const gab = d.gabarito || {}, fech = d.fechamento;
+  if (!gab.diagnostico) { card.classList.add("oculto"); titulo.classList.add("oculto"); return; }
+  card.classList.remove("oculto"); titulo.classList.remove("oculto");
+
+  const veredito = fech ? compararHipotese(fech.hipotese, gab.diagnostico) : null;
+  const selo = {
+    forte: { txt: "Alinhada com o caso", ic: "✓", cor: "var(--sev-boa)" },
+    parcial: { txt: "Parcialmente alinhada", ic: "◐", cor: "var(--sev-atencao)" },
+    divergente: { txt: "Divergente do caso", ic: "✕", cor: "var(--sev-critica)" },
+  }[veredito];
+
+  const dif = Array.isArray(gab.diferenciais) ? gab.diferenciais : [];
+  const linhas = [];
+  linhas.push(`<div class="fecha-linha"><div class="fecha-rotulo">A sua hipótese</div>
+    <div class="fecha-texto${fech && fech.hipotese ? "" : " vazio"}">${esc(fech && fech.hipotese ? fech.hipotese : "Você encerrou sem registrar uma hipótese.")}</div>
+    ${selo ? `<div style="margin-top:9px"><span class="selo-estado" style="color:${selo.cor}">${selo.ic} ${selo.txt}</span></div>` : ""}</div>`);
+  linhas.push(`<div class="fecha-linha"><div class="fecha-rotulo">O caso era</div><div class="fecha-texto">${esc(gab.diagnostico)}</div></div>`);
+  if (fech && fech.diferenciais) linhas.push(`<div class="fecha-linha"><div class="fecha-rotulo">Os seus diferenciais</div><div class="fecha-texto">${esc(fech.diferenciais)}</div></div>`);
+  if (dif.length) linhas.push(`<div class="fecha-linha"><div class="fecha-rotulo">Diferenciais que o caso esperava</div><ul class="fecha-dif">${dif.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`);
+  if (fech && fech.conduta) linhas.push(`<div class="fecha-linha"><div class="fecha-rotulo">A sua conduta</div><div class="fecha-texto">${esc(fech.conduta)}</div></div>`);
+  card.innerHTML = linhas.join("");
+}
 function mostrarAvaliacao(d) {
-  estado.consultaId = null; pararFala(); pararDigitacao();
+  estado.consultaId = null; pararFala(); pararDigitacao(); pararCronometro();
   liberarMicrofone(); // consulta acabou: apaga o indicador de microfone aberto do navegador
   mostrarTela("tela-avaliacao");
   $("resumo-avaliacao").textContent = (estado.casoTitulo ? "Caso: " + estado.casoTitulo + " · " : "") + `transcrição salva em historico/${d.transcript}`;
+
+  const est = d.estatisticas || {};
+  $("ind-tempo").innerHTML = est.duracao_s != null ? formatarDuracao(est.duracao_s) : "—";
+  $("ind-perguntas").textContent = est.perguntas != null ? est.perguntas : "—";
+  $("ind-exames").textContent = est.exames != null ? est.exames : "—";
+
+  renderizarFechamento(d);
+
+  // Revisão: o aluno revê a própria consulta. Antes só o professor tinha acesso
+  // à transcrição, então quem mais precisava aprender com ela nunca a via.
+  const rev = $("revisao-consulta");
+  rev.innerHTML = "";
+  for (const e of montarEventosLocais()) rev.appendChild(balaoDeEvento(e));
+  rev.classList.add("oculto");
+  $("botao-revisao").textContent = "Mostrar";
+  $("botao-revisao").setAttribute("aria-expanded", "false");
   const av = $("aviso-avaliacao"); av.classList.toggle("oculto", !d.aviso); if (d.aviso) av.textContent = d.aviso;
   const badge = $("veredito-badge");
   const tem = Boolean(d.checklist);
@@ -1221,7 +1559,22 @@ function mostrarAvaliacao(d) {
 audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
-$("botao-encerrar").addEventListener("click", encerrarConsulta);
+$("botao-encerrar").addEventListener("click", abrirFechamento);
+$("fecha-enviar").addEventListener("click", () => encerrarConsulta({
+  hipotese: $("fecha-hipotese").value.trim(),
+  diferenciais: $("fecha-diferenciais").value.trim(),
+  conduta: $("fecha-conduta").value.trim(),
+}));
+$("fecha-pular").addEventListener("click", () => encerrarConsulta(null));
+$("modal-fechamento").addEventListener("keydown", (e) => { if (e.key === "Escape") fecharFechamento(); });
+$("modal-fechamento").addEventListener("click", (e) => { if (e.target === $("modal-fechamento")) fecharFechamento(); });
+$("botao-revisao").addEventListener("click", () => {
+  const rev = $("revisao-consulta");
+  const abrir = rev.classList.contains("oculto");
+  rev.classList.toggle("oculto", !abrir);
+  $("botao-revisao").textContent = abrir ? "Ocultar" : "Mostrar";
+  $("botao-revisao").setAttribute("aria-expanded", abrir ? "true" : "false");
+});
 document.querySelectorAll("#pref-audio .seg").forEach((s) => s.addEventListener("click", () => aplicarPreferenciaAudio(s.dataset.audio === "1")));
 $("botao-som").addEventListener("click", () => aplicarPreferenciaAudio(!estado.falarRespostas));
 document.querySelectorAll(".cat-card").forEach((c) => c.addEventListener("click", () => abrirCategoria(c.dataset.cat)));
@@ -1255,6 +1608,19 @@ function sincronizarDrawer(aberto) {
 }
 $("abrir-instrumentos").addEventListener("click", () => sincronizarDrawer(!$("painel-instrumentos").classList.contains("aberto")));
 $("fechar-inst").addEventListener("click", () => sincronizarDrawer(false));
+
+/* Atalhos de teclado — quem conduz várias estações seguidas não quer tirar a mão
+   do teclado. Nunca disparam enquanto se digita num campo. */
+document.addEventListener("keydown", (e) => {
+  const alvo = e.target;
+  const digitando = alvo && (alvo.tagName === "INPUT" || alvo.tagName === "TEXTAREA");
+  const emConsulta = $("tela-consulta").classList.contains("ativa");
+  if (e.key === "/" && !digitando && emConsulta) { e.preventDefault(); $("campo-mensagem").focus(); return; }
+  if (digitando || !emConsulta || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key.toLowerCase() === "v") { e.preventDefault(); aplicarPreferenciaAudio(!estado.falarRespostas); }
+  else if (e.key.toLowerCase() === "i") { e.preventDefault(); sincronizarDrawer(!$("painel-instrumentos").classList.contains("aberto")); }
+  else if (e.key.toLowerCase() === "n") { e.preventDefault(); sincronizarDrawer(true); try { $("campo-anotacoes").focus(); } catch {} }
+});
 
 if (window.speechSynthesis) { carregarVozesTTS(); speechSynthesis.onvoiceschanged = carregarVozesTTS; }
 ["pointerdown", "touchend", "click", "keydown"].forEach((ev) => window.addEventListener(ev, destravarAudio, { once: true, passive: true }));

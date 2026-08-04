@@ -181,6 +181,13 @@ function detalharRelatorio(nomeArquivo) {
   const detalhe = resumirTranscript(nomeArquivo, texto);
   detalhe.eventos = estruturarTranscript(texto);
 
+  // Só no detalhe: a listagem não precisa carregar o texto do raciocínio de todos.
+  const metadados = extrairMetadados(texto);
+  detalhe.hipotese = metadados.hipotese;
+  detalhe.diferenciais = metadados.diferenciais;
+  detalhe.conduta = metadados.conduta;
+  detalhe.anotacoes = metadados.anotacoes;
+
   const rubrica = detalhe.caso ? carregarRubrica(detalhe.caso) : null;
   detalhe.checklist = rubrica
     ? pontuarChecklist(rubrica, extrairTextoProfissional(texto))
@@ -356,6 +363,11 @@ async function iniciarConsulta(req, res) {
     voz: ident.voz || "feminino",
     transcript: iniciarTranscript(casoId, aluno),
     encerrada: false,
+    // Métricas da estação: quanto durou e quanto o aluno de fato fez. Aparecem no
+    // resultado para ele comparar consultas entre si.
+    iniciadaEm: Date.now(),
+    perguntas: 0,
+    exames: 0,
   });
 
   json(res, 200, {
@@ -400,6 +412,7 @@ async function enviarMensagem(req, res, id) {
   const texto = bruto.slice(0, MAX_CARACTERES_PERGUNTA);
 
   consulta.transcript += `\nPROFISSIONAL: ${texto}\n`;
+  consulta.perguntas += 1;
 
   const streaming = new URL(req.url, "http://localhost").searchParams.get("stream") === "1";
   const exames = detectarExames(texto, consulta.caso);
@@ -412,6 +425,7 @@ async function enviarMensagem(req, res, id) {
   const registrarExames = (emitirEvento) => {
     for (const [titulo, dadosExame] of exames) {
       consulta.transcript += `\n${titulo}: ${dadosExame.nome}\nRESULTADO: ${dadosExame.resultado}\n`;
+      consulta.exames += 1;
       emitirEvento({ tipo: "exame", titulo, nome: dadosExame.nome, resultado: dadosExame.resultado });
     }
   };
@@ -494,15 +508,55 @@ async function enviarMensagem(req, res, id) {
   json(res, 200, { eventos });
 }
 
-async function encerrarConsulta(res, id) {
+// Uma linha por campo: mantém o transcript legível e o parser trivial.
+function umaLinha(valor, limite) {
+  return String(valor || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, limite);
+}
+
+async function encerrarConsulta(req, res, id) {
   const consulta = consultaAtiva(res, id);
   if (!consulta) return;
 
+  const corpo = await lerCorpo(req);
+  // O fechamento é o raciocínio que o aluno assume ANTES de ver o gabarito. É o que
+  // transforma a estação de "coletar dados" em "concluir alguma coisa".
+  const fechamento = {
+    hipotese: umaLinha(corpo.hipotese, 400),
+    diferenciais: umaLinha(corpo.diferenciais, 600),
+    conduta: umaLinha(corpo.conduta, 600),
+  };
+  const anotacoes = umaLinha(corpo.anotacoes, 2000);
+  const temFechamento = Boolean(fechamento.hipotese || fechamento.diferenciais || fechamento.conduta);
+
   consulta.transcript += `\nENCERRADA: ${agora()}\n`;
+  if (temFechamento) {
+    if (fechamento.hipotese) consulta.transcript += `HIPOTESE: ${fechamento.hipotese}\n`;
+    if (fechamento.diferenciais) consulta.transcript += `DIFERENCIAIS: ${fechamento.diferenciais}\n`;
+    if (fechamento.conduta) consulta.transcript += `CONDUTA: ${fechamento.conduta}\n`;
+  }
+  if (anotacoes) consulta.transcript += `ANOTACOES: ${anotacoes}\n`;
   consulta.encerrada = true;
 
   const arquivo = salvarTranscript(consulta);
-  const resultado = { transcript: arquivo || "(não gravado neste servidor)" };
+  const fidelidade = consulta.caso.fidelidade_clinica || {};
+  const resultado = {
+    transcript: arquivo || "(não gravado neste servidor)",
+    estatisticas: {
+      duracao_s: Math.round((Date.now() - consulta.iniciadaEm) / 1000),
+      perguntas: consulta.perguntas,
+      exames: consulta.exames,
+    },
+    // O gabarito só existe DEPOIS de encerrar — durante a consulta ele nunca sai do
+    // servidor, senão bastaria abrir a aba de rede para ver o diagnóstico.
+    gabarito: {
+      diagnostico: fidelidade.diagnostico_subjacente || "",
+      diferenciais: fidelidade.diferenciais_a_respeitar || [],
+    },
+    fechamento: temFechamento ? fechamento : null,
+  };
 
   const rubrica = carregarRubrica(consulta.casoId);
   if (!rubrica) {
@@ -515,7 +569,17 @@ async function encerrarConsulta(res, id) {
 
   try {
     resultado.parecer = await conversar(
-      [{ role: "user", content: montarPromptAvaliacao(rubrica, consulta.transcript) }],
+      [
+        {
+          role: "user",
+          content: montarPromptAvaliacao(
+            rubrica,
+            consulta.transcript,
+            temFechamento ? fechamento : null,
+            resultado.gabarito
+          ),
+        },
+      ],
       { avaliacao: true },
     );
   } catch {
@@ -688,7 +752,7 @@ export function criarServidor() {
 
       const encerrar = pathname.match(/^\/api\/consultas\/([\w-]+)\/encerrar$/);
       if (req.method === "POST" && encerrar) {
-        return await encerrarConsulta(res, encerrar[1]);
+        return await encerrarConsulta(req, res, encerrar[1]);
       }
 
       if (pathname.startsWith("/api/")) {

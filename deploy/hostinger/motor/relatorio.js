@@ -17,6 +17,12 @@ export function extrairMetadados(texto) {
     aluno: campo("ALUNO"),
     inicio: campo("INICIO"),
     encerrada: campo("ENCERRADA") !== null,
+    // Raciocínio que o aluno assumiu antes de ver o gabarito, e as anotações que
+    // tomou durante a consulta. O professor lê os dois junto com a transcrição.
+    hipotese: campo("HIPOTESE"),
+    diferenciais: campo("DIFERENCIAIS"),
+    conduta: campo("CONDUTA"),
+    anotacoes: campo("ANOTACOES"),
   };
 }
 
@@ -36,7 +42,12 @@ export function estruturarTranscript(texto) {
     const conteudo = linha.trim();
 
     if (!conteudo || /^=+$/.test(conteudo)) continue;
-    if (/^(CASO|ALUNO|INICIO|ENCERRADA):/.test(conteudo)) continue;
+    // Metadados e fechamento não são falas: saem da linha do tempo (e, sem este
+    // filtro, seriam grudados como continuação do último balão).
+    if (/^(CASO|ALUNO|INICIO|ENCERRADA|HIPOTESE|DIFERENCIAIS|CONDUTA|ANOTACOES):/.test(conteudo)) {
+      fechar();
+      continue;
+    }
 
     if (conteudo.startsWith(PREFIXO_PROFISSIONAL)) {
       fechar();

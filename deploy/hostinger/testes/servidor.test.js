@@ -193,6 +193,57 @@ test("sem senha configurada, o painel fica desligado e não aberto", async () =>
   }
 });
 
+test("gabarito do caso só sai depois de encerrar, com o fechamento do aluno", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await api("/api/acesso", { codigo: "9271" });
+    const c = await api("/api/consultas", { caso: "infarto", aluno: "Fechamento" });
+    const id = c.dados.id;
+
+    // Durante a consulta o diagnóstico não pode vazar por nenhuma resposta: bastaria
+    // abrir a aba de rede para gabaritar a estação.
+    const inicio = JSON.stringify(c.dados);
+    assert.ok(!/infarto agudo|fidelidade|diagnostico_subjacente/i.test(inicio));
+    const turno = await api(`/api/consultas/${id}/mensagem`, { texto: "o que o senhor sente?" });
+    assert.ok(!/diagnostico_subjacente/i.test(JSON.stringify(turno.dados)));
+
+    const fim = await api(`/api/consultas/${id}/encerrar`, {
+      hipotese: "Infarto agudo do miocárdio",
+      diferenciais: "Dissecção de aorta, TEP",
+      conduta: "MONABCH, ECG seriado, encaminhar para hemodinâmica",
+      anotacoes: "dor retroesternal\nirradia para o braço",
+    });
+    assert.equal(fim.status, 200);
+    assert.match(fim.dados.gabarito.diagnostico, /infarto/i);
+    assert.ok(fim.dados.gabarito.diferenciais.length > 0);
+    assert.equal(fim.dados.fechamento.hipotese, "Infarto agudo do miocárdio");
+    assert.ok(fim.dados.estatisticas.duracao_s >= 0);
+    assert.equal(fim.dados.estatisticas.perguntas, 1);
+
+    const arquivo = fim.dados.transcript;
+    if (arquivo && arquivo.endsWith(".txt")) {
+      try {
+        await api("/api/acesso/professor", { senha: "senha-de-teste" });
+        const d = await api(`/api/relatorio/${encodeURIComponent(arquivo)}`);
+        assert.equal(d.dados.hipotese, "Infarto agudo do miocárdio");
+        assert.match(d.dados.conduta, /hemodin/i);
+        // Anotação multilinha vira uma linha só — não pode quebrar o parser nem
+        // aparecer como fala solta na transcrição.
+        assert.equal(d.dados.anotacoes, "dor retroesternal irradia para o braço");
+        assert.ok(!d.dados.eventos.some((e) => /retroesternal/.test(e.texto || "")));
+      } finally {
+        const fs = await import("node:fs");
+        const path = await import("node:path");
+        const { fileURLToPath } = await import("node:url");
+        const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+        fs.rmSync(path.join(raiz, "historico", arquivo), { force: true });
+      }
+    }
+  } finally {
+    servidor.close();
+  }
+});
+
 test("fluxo completo de consulta em modo demonstração", async () => {
   const { servidor, api } = await subir();
 
