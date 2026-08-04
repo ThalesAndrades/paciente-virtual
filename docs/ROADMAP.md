@@ -31,16 +31,23 @@ projeto é hoje*; aqui está *para onde ele vai*.
 
 Nada novo antes de resolver a base. Estes quatro itens são o desbloqueio.
 
-### 0.1 — Motor único + containerização · Arquitetura · esforço alto · impacto alto
-**Problema:** o motor existe duplicado (Python `paciente_virtual/` + porta Node
-`deploy/hostinger/`). A divergência já causou bug real (`demo.js` ≠ `demo.py`,
-corrigido no PR #8) e obriga a replicar toda mudança à mão.
-**Meta:** uma única fonte de verdade, servida por container.
-- [ ] Adotar Python como motor único (mais completo/testado)
-- [ ] Dockerfile + compose para dev; hospedagem vira detalhe de deploy
-- [ ] Aposentar `deploy/hostinger/motor/*.js` (ou reduzir a proxy fino)
-- [ ] Atualizar CI (o job `testes-node` perde o sentido) e `COMPREENSAO.md` §2
-- **Aceite:** nenhuma lógica de negócio duplicada entre linguagens; deploy reproduzível.
+### 0.1 — Motor único · Arquitetura · ✅ CONCLUÍDO (ago/2026)
+**Problema:** o motor existia duplicado (Python `paciente_virtual/` + porta Node
+`deploy/hostinger/`). A divergência já causara bug real (`demo.js` ≠ `demo.py`,
+PR #8) e obrigava a replicar toda mudança à mão.
+
+**Resolvido ao contrário do previsto aqui:** o único a rodar em produção era o
+Node, e foi nele que a evolução aconteceu (autenticação, matriz de contexto de
+vida, voz, fechamento diagnóstico, memória de conversa). O Python ficou para trás
+a ponto de **não conseguir mais servir a página compartilhada** — sem
+`/api/acesso`, `/api/sair` nem `/api/consultas/:id/exame`, e sem autenticação
+alguma. Adotar Python como motor único significaria reimplementar tudo.
+
+- [x] Node como motor único; stack Python removida
+- [x] Página movida para `web/index.html` (estava dentro do pacote Python)
+- [x] CI reduzido ao job Node
+- [x] `COMPREENSAO.md` §2 atualizado
+- **Aceite:** nenhuma lógica duplicada entre linguagens. ✅
 
 ### 0.2 — Persistência real (Postgres) · Produto · esforço médio · impacto alto
 **Problema:** consultas vivem em memória (`app.config["CONSULTAS"]`); perde-se
@@ -48,20 +55,25 @@ estado a cada reinício e não escala horizontalmente.
 **Meta:** persistir consultas, transcrições e notas em banco relacional.
 - [ ] Modelar `aluno`, `consulta`, `mensagem`, `exame_entregue`, `avaliacao`
 - [ ] Camada de dados (SQLAlchemy) + migrations (Alembic)
-- [ ] Migrar `web/servidor.py` do dict em memória para o banco
-- [ ] Manter o contrato do transcript (`registro.py`) como export
+- [ ] Migrar o Map de consultas em `servidor.js` para o banco
+- [ ] Manter o contrato do transcript (`relatorio.js`) como export
 - **Aceite:** consultas sobrevivem a reinício; nota e parecer recuperáveis.
 
-### 0.3 — Autenticação + multi-tenant · Produto/Infra · esforço médio · impacto alto
-**Problema:** protótipo sem auth nem isolamento — inviável fora de sala de aula local.
-**Meta:** contas de aluno/professor, turmas e isolamento por instituição.
-- [ ] Autenticação (sessão/JWT) e papéis (aluno, professor, admin)
+### 0.3 — Autenticação + multi-tenant · Produto/Infra · 🟡 PARCIAL
+**Feito (ago/2026):** há sessão assinada por cookie e dois papéis (aluno por
+código, professor por senha), com autorização por endpoint — o painel de
+transcrições é *fail-closed* e o aluno não o alcança. Antes o "código de acesso"
+existia só no JavaScript da página: dava para lê-lo no ver-fonte e chamar a API
+direto sem passar por ele.
+- [x] Sessão + papéis (aluno, professor)
+- [x] Autorização nos endpoints (quem vê o quê)
+- [ ] **Contas individuais** — hoje o código é compartilhado pela turma; o nome do
+      aluno é digitado por ele mesmo, sem verificação
 - [ ] Modelo multi-tenant (instituição → turmas → alunos)
-- [ ] Autorização nos endpoints (quem vê o quê)
 - **Aceite:** dados de uma instituição nunca vazam para outra. Compartilha modelagem com 0.2.
 
 ### 0.4 — CI E2E + testes de contrato · Infra · esforço médio · impacto médio
-**Problema:** um rename de rubrica quebrou `test_web.py` — teste acoplado a nome.
+**Problema:** um rename de rubrica quebrou um teste acoplado a nome.
 **Meta:** rede de segurança que pega regressões de integração.
 - [ ] Testes E2E com Playwright (já disponível no ambiente)
 - [ ] Testes de contrato front ↔ API

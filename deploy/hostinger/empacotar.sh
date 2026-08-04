@@ -25,7 +25,7 @@ INCLUIR=(
   .nvmrc
   casos
   avaliacoes
-  paciente_virtual/web/static/index.html
+  web/index.html
   deploy/hostinger/servidor.js
   deploy/hostinger/README.md
   deploy/hostinger/motor

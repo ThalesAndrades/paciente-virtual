@@ -1,13 +1,11 @@
 // Servidor Node do Paciente Virtual — pronto para a hospedagem Node.js da
 // Hostinger (hPanel) ou qualquer host com Node >= 18. Zero dependências.
 //
-// Serve a mesma página única do protótipo (paciente_virtual/web/static/) e a
-// mesma API JSON do servidor Flask, reutilizando os casos e rubricas do
-// repositório. Sem um Ollama acessível (OLLAMA_URL), o paciente responde em
-// modo demonstração — e a avaliação objetiva funciona normalmente.
+// Serve a página única (web/index.html) e a API JSON, lendo os casos e as
+// rubricas do repositório. Sem modelo de linguagem acessível, o paciente responde
+// em modo demonstração — e a avaliação objetiva funciona normalmente.
 //
-// Variáveis de ambiente: PORT (a Hostinger define), HOST, OLLAMA_URL,
-// PACIENTE_VIRTUAL_MODELO.
+// Variáveis de ambiente: ver deploy/hostinger/README.md.
 
 import crypto from "node:crypto";
 import fs from "node:fs";
@@ -40,7 +38,7 @@ const RAIZ = path.resolve(DIR_APP, "..", "..");
 const DIR_CASOS = path.join(RAIZ, "casos");
 const DIR_AVALIACOES = path.join(RAIZ, "avaliacoes");
 const DIR_HISTORICO = path.join(RAIZ, "historico");
-const PAGINA = path.join(RAIZ, "paciente_virtual", "web", "static", "index.html");
+const PAGINA = path.join(RAIZ, "web", "index.html");
 
 const AVISO_SEM_PARECER =
   "Parecer pedagógico indisponível (modelo de linguagem fora do ar). " +

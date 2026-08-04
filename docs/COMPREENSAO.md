@@ -10,7 +10,7 @@ atenção. Serve como mapa de entrada para quem for manter ou estender o código
 
 **Paciente Virtual** é um simulador de **anamnese e entrevista clínica** para
 treinamento de estudantes de saúde. O aluno conversa (por texto ou voz) com um
-paciente interpretado por um modelo de linguagem local (Ollama), pode solicitar
+paciente interpretado por um modelo de linguagem, pode solicitar
 exame físico e exames complementares e, ao encerrar, recebe:
 
 1. **Nota objetiva** — checklist determinístico contra uma rubrica do caso.
@@ -20,27 +20,32 @@ O princípio pedagógico central é a **revelação gradual**: o paciente só en
 informações sensíveis diante de perguntas específicas, acolhedoras e bem
 direcionadas. A qualidade das respostas depende da qualidade da entrevista.
 
-Versão atual: **1.1.0** (declarada em `pyproject.toml` e `package.json`).
+Versão atual: **1.1.0** (declarada em `package.json`).
 
 ---
 
 ## 2. Arquitetura em uma frase
 
-O repositório contém **duas implementações do mesmo motor**, compartilhando os
-mesmos dados (`casos/`, `avaliacoes/`, `paciente_virtual/web/static/`):
+**Uma única implementação**, em Node.js sem dependências externas:
 
-| Implementação | Linguagem | Uso | Entrada |
-| ------------- | --------- | --- | ------- |
-| **Pacote `paciente_virtual/`** | Python (Flask) | Desenvolvimento local, CLI + web, voz local (Whisper/Piper/Kokoro) | `paciente-virtual*` scripts |
-| **`deploy/hostinger/`** | Node.js (sem dependências) | Hospedagem Node.js (ex.: Hostinger), só web | `npm start` / `app.js` |
+| Parte | Onde | Papel |
+| ----- | ---- | ----- |
+| Servidor e API | `deploy/hostinger/servidor.js` | HTTP, rotas, sessão, limites |
+| Regras | `deploy/hostinger/motor/` | acesso, prompt do paciente, exames, avaliação, voz, transcrição |
+| Interface | `web/index.html` | página única, sem build |
+| Dados | `casos/`, `avaliacoes/` | 40 casos e 40 rubricas em JSON |
 
-O Node é uma **reimplementação portada** do motor Python — não compartilha
-código, apenas os dados JSON e a página `index.html`. Isso mantém o deploy sem
-dependências, mas cria o risco de as duas versões divergirem (ver §7).
+> **Histórico:** até agosto de 2026 o repositório mantinha **duas** implementações
+> do mesmo motor — um pacote Python (Flask) e esta porta Node. A duplicação foi a
+> causa raiz de defeitos reais: o motor de demonstração divergiu entre as duas, um
+> prompt de personagem inteiro virou código morto, e o servidor Python parou de
+> conseguir servir a página compartilhada por não acompanhar as rotas novas
+> (`/api/acesso`, `/api/sair`, `/api/consultas/:id/exame`) — deixando-o quebrado e
+> sem autenticação nenhuma. A stack Python foi removida; o Node é a fonte única.
 
 ---
 
-## 3. Fluxo de uma consulta (Python / web)
+## 3. Fluxo de uma consulta
 
 ```text
 [Navegador]  →  POST /api/consultas          → cria sessão em memória + histórico em disco
@@ -48,29 +53,32 @@ dependências, mas cria o risco de as duas versões divergirem (ver §7).
 [aluno fala/digita]
    ↓
 POST /api/consultas/<id>/mensagem
-   ├─ detectar_exames(texto, caso)  ── SIM ─→ entrega resultado do exame, registra, NÃO chama a IA
-   └─ senão → conversar(mensagens) ─ Ollama ─→ resposta do paciente
-                 └─ falha? → responder_demo() (modo demonstração, respostas fixas do caso)
+   ├─ detectarExames(texto, caso)  ── SIM ─→ entrega resultado do exame, registra, NÃO chama a IA
+   └─ senão → conversar(mensagens) ── modelo ─→ resposta do paciente
+                 └─ falha? → responderDemo() (modo demonstração, respostas fixas do caso)
    ↓
 POST /api/consultas/<id>/encerrar
-   ├─ pontuar_checklist(rubrica, falas do profissional)  → nota objetiva (determinística)
-   └─ avaliar_com_ia(rubrica, transcript)                → parecer pedagógico (opcional)
+   ├─ pontuarChecklist(rubrica, falas do profissional)  → nota objetiva (determinística)
+   └─ montarPromptAvaliacao(rubrica, transcript, fechamento)                → parecer pedagógico (opcional)
 ```
 
 Os módulos-chave e suas responsabilidades:
 
+Todos em `deploy/hostinger/motor/`, exceto o servidor:
+
 | Módulo | Responsabilidade |
 | ------ | ---------------- |
-| `prompt.py` | Monta o prompt de sistema que "programa" o comportamento do paciente (regras de não sair do personagem + revelação gradual + dados do caso). |
-| `exames.py` | Detecta **solicitação ativa** de exame por palavras-chave (radicais de verbos + termos exatos). Pura, sem efeitos colaterais em `detectar_exames`. |
-| `avaliador.py` | Checklist objetivo (`pontuar_checklist`) + parecer da IA (`avaliar_com_ia`). |
-| `registro.py` | **Dono único do formato do transcript** — escrita e leitura das constantes de prefixo. |
-| `ia.py` | Acesso ao Ollama; remove blocos de raciocínio `<think>...</think>`. |
-| `demo.py` | Paciente determinístico (fallback sem Ollama), respostas extraídas só do caso. |
-| `texto.py` | Normalização (ignora acentos/maiúsculas) e casamento de termos com limite de palavra. |
-| `web/servidor.py` | API JSON Flask + serve a página única. Sessões em memória. |
-| `voz/` | `ouvir.py` (captura + Whisper/Google), `falar.py` (Piper/Kokoro/edge-tts/pyttsx3), `transcricao.py`. |
-| `relatorio.py` | Painel do professor: lista e detalha consultas gravadas. |
+| `servidor.js` | HTTP, rotas, sessões em memória, gravação do transcript, limites por sessão. |
+| `humanizar.js` | Monta o prompt do paciente a partir da **matriz de contexto de vida** do caso, e a memória da conversa (últimas 12 idas e voltas). |
+| `acesso.js` | Código do aluno e senha do professor, cookie de sessão assinado. Painel *fail-closed*. |
+| `exames.js` | Detecta **solicitação ativa** de exame; separa aferição de anamnese sobre o passado. |
+| `avaliador.js` | Checklist objetivo (com teto de itens por turno) + prompt do parecer, incluindo o fechamento diagnóstico do aluno. |
+| `demo.js` | Paciente determinístico quando não há modelo, e o **portão** dos temas sensíveis (`fatoSensivelDireto`), usado também no caminho da IA. |
+| `ia.js` | Chamada ao modelo (OpenAI-compatível ou Ollama), cadeia de fallback entre modelos, streaming, limpeza de `<think>`. |
+| `tts.js` / `transcricao.js` / `audio.js` | Voz do paciente, transcrição do áudio do aluno e as credenciais de áudio (que podem ser separadas das do texto). |
+| `relatorio.js` | Leitura e estruturação do transcript para o painel do professor. |
+| `texto.js` | Normalização (ignora acentos/maiúsculas) e casamento de termos com limite de palavra. |
+| `limite.js` | Janela deslizante de uso, por sessão (e por IP quando não há sessão). |
 
 ---
 
@@ -85,32 +93,32 @@ como `afer`, `solicit`, `auscult` + termos exatos), **não** interpretação de
 intenção pelo LLM. É uma escolha explícita: manter o resultado **determinístico
 e avaliável**, aceitando que frases ambíguas ("costuma verificar sua pressão em
 casa?") disparem a medição — custo baixo, casos raros. Documentado no docstring
-de `exames.py`.
+de `exames.js`.
 
 ### 4.2 A avaliação objetiva não depende do modelo
-`pontuar_checklist` considera **apenas as falas do profissional e os títulos dos
+`pontuarChecklist` considera **apenas as falas do profissional e os títulos dos
 exames solicitados** — respostas do paciente, conteúdo dos resultados e cabeçalho
-do histórico **não pontuam** (ver `PREFIXOS_PROFISSIONAL` em `registro.py`).
+do histórico **não pontuam** (ver `PREFIXOS_PROFISSIONAL` em `avaliador.js`).
 Cada item da rubrica pode ser uma string ou `{"nome", "termos"}`; a comparação
-ignora acentos e maiúsculas. Assim, a nota objetiva funciona mesmo sem Ollama.
+ignora acentos e maiúsculas. Assim, a nota objetiva funciona mesmo sem modelo de linguagem.
 
 ### 4.3 Modo demonstração sem alucinação
-Sem Ollama, `responder_demo` responde a partir **exclusivamente** dos dados do
+Sem modelo, `responderDemo` responde a partir **exclusivamente** dos dados do
 caso, respeitando a revelação gradual de forma aproximada (sensível só sai com
 pergunta que toca o tema). Nada é inventado; o restante recebe uma resposta
 neutra pedindo reformulação. O transcript marca a origem (`ia` vs `demo`).
 
 ### 4.4 Revelação gradual como contrato pedagógico
-O prompt de sistema (`prompt.py`) instrui camadas: informações iniciais →
+O prompt de sistema (`humanizar.js`) instrui camadas: informações iniciais →
 intermediárias → sensíveis, cada uma exigindo perguntas progressivamente mais
 específicas e acolhedoras. Os casos JSON carregam esses blocos separados
 (`informacoes_iniciais`, `informacoes_intermediarias`, `informacoes_sensiveis`,
 `dinamica_de_revelacao`).
 
 ### 4.5 Segurança consciente no servidor
-`servidor.py` compara o `caso_id` contra a lista real de arquivos em vez de
+`servidor.js` compara o `caso_id` contra a lista real de arquivos em vez de
 montar caminho com entrada do usuário (evita *path traversal* — verificado em
-`servidor.py`). Além disso, os commits `9309c57` e `81f5381` registram
+`servidor.js`). Além disso, os commits `9309c57` e `81f5381` registram
 correções pontuais de revisão adversarial em escopos específicos (XSS no
 frontend/acessibilidade; achados de backend e rubrica) — são correções
 localizadas, não uma auditoria de segurança do projeto como um todo.
@@ -129,7 +137,7 @@ localizadas, não uma auditoria de segurança do projeto como um todo.
 - **`avaliacoes/*.json`** (40 arquivos, um por caso) — rubricas com `criterios`,
   cada um com `nome`, `objetivo`, `peso` e `itens` (com `termos` sinônimos).
   Os pesos somam exatamente 10 (nota objetiva sobre 10) — contrato validado por
-  `tests/test_dados.py:70` (`sum(pesos) == 10`).
+  teste (`pesos somam 10`).
 - Casos de saúde mental incluem escalas como "exames" (PHQ-9, GAD-7, MBI) e
   itens de exame do estado mental.
 - `scripts/gerar-rubricas.mjs` — utilitário de geração de rubricas.
@@ -143,7 +151,7 @@ TEPT, Anorexia, Borderline, Depressão pós-parto, Autolesão na adolescência�
 
 ## 6. Voz e IA (stack)
 
-- **LLM**: Ollama local, modelo padrão `qwen3:8b` (config. por
+- **LLM**: API OpenAI-compatível (padrão) ou Ollama (config. por
   `PACIENTE_VIRTUAL_MODELO`). Blocos `<think>` são removidos.
 - **Transcrição (STT)**: `faster-whisper` (local, recomendado) → Google (online).
 - **Síntese (TTS)**: Piper (voz masculina `pt_BR-faber-medium`) + Kokoro (voz
@@ -157,16 +165,15 @@ TEPT, Anorexia, Borderline, Depressão pós-parto, Autolesão na adolescência�
 ## 7. Qualidade, testes e pontos de atenção
 
 ### Testes e CI
-- **Python** (`tests/`, 12 arquivos `pytest`): cobre o pacote de ponta a ponta —
-  motor de demonstração (`test_demo.py`), API web/servidor (`test_web.py`),
-  avaliador e rubricas (`test_avaliador.py`, `test_dados.py`), exames
-  (`test_exames.py`), prompt (`test_prompt.py`), registro/relatório
-  (`test_registro.py`, `test_relatorio.py`), texto (`test_texto.py`), IA
-  (`test_ia.py`) e voz (`test_voz.py`, `test_falar.py`).
-- **Node** (`deploy/hostinger/testes/*.test.js`): testes de paridade do motor e
-  do servidor portados.
-- **CI** (`.github/workflows/ci.yml`): dois jobs — `ruff check` + `pytest`
-  (Python 3.12) e `npm test` (Node 20). Roda em push para `main` e em PRs.
+- **28 testes** em `deploy/hostinger/testes/` (`node --test`, sem dependências):
+  motor (normalização, exames, rubrica, prompt do paciente, portão dos temas
+  sensíveis, modo demonstração, voz) e servidor ponta a ponta (sessão, papéis,
+  fluxo completo da consulta, fechamento diagnóstico, limites por sessão).
+- Entre os contratos travados por teste: **nenhum dos 40 casos abre um tema
+  sensível diante de 12 formas de cumprimento**, e um único turno do profissional
+  não fecha a rubrica inteira.
+- **CI** (`.github/workflows/ci.yml`): um job — `npm test` (Node 20), em push
+  para `main` e em PRs.
 
 ### Achado da análise — 2 falhas de CI (diagnosticadas e corrigidas neste PR)
 Sobre a base deste documento (commit `1b0162e`, **2026-07-22**), a CI tinha duas
@@ -218,7 +225,7 @@ paciente-virtual-relatorio         # painel do professor
 npm start                          # http://127.0.0.1:3000
 
 # Qualidade
-ruff check . && pytest             # Python
+node app.js                       # sobe em http://127.0.0.1:3000
 npm test                           # Node
 ```
 
@@ -230,20 +237,25 @@ parecer da IA fica indisponível; a nota objetiva não depende do modelo).
 ## 9. Mapa rápido de arquivos
 
 ```text
-paciente_virtual/          Pacote Python (motor de referência)
-├── consulta.py            Loop da consulta (CLI)
-├── avaliador.py           Checklist objetivo + parecer da IA
-├── prompt.py              Prompt de sistema do paciente
-├── exames.py              Detecção determinística de exames
-├── registro.py            Formato do transcript (dono único)
-├── ia.py / demo.py        Ollama / fallback determinístico
-├── texto.py               Normalização e casamento de termos
-├── web/servidor.py        API Flask + página única
-└── voz/                   ouvir (STT) + falar (TTS) + transcricao
+app.js                     Ponto de entrada
+web/index.html             Interface (página única, sem build)
+deploy/hostinger/
+├── servidor.js            HTTP, rotas, sessões, transcript
+├── motor/
+│   ├── acesso.js          Código do aluno, senha do professor, cookie assinado
+│   ├── humanizar.js       Prompt do paciente (matriz de vida) + memória
+│   ├── demo.js            Paciente sem IA + portão dos temas sensíveis
+│   ├── exames.js          Detecção determinística de exames
+│   ├── avaliador.js       Checklist objetivo + prompt do parecer
+│   ├── ia.js              Modelo de linguagem (cadeia de fallback, streaming)
+│   ├── tts.js / transcricao.js / audio.js   Voz e transcrição
+│   ├── relatorio.js       Leitura do transcript
+│   ├── texto.js           Normalização e casamento de termos
+│   └── limite.js          Limite de uso por sessão
+└── testes/                28 testes (node --test)
 casos/         (40)        Casos clínicos — 20 medicina + 20 psicologia
 avaliacoes/    (40)        Rubricas de avaliação (uma por caso)
-deploy/hostinger/          Reimplementação Node sem dependências (só web)
+historico/                 Transcrições gravadas (não versionadas)
 scripts/                   gerar-rubricas.mjs
-tests/                     pytest (modo demo)
-.github/workflows/ci.yml   CI: ruff + pytest + npm test
+.github/workflows/ci.yml   CI: npm test
 ```

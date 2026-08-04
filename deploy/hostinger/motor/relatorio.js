@@ -1,4 +1,4 @@
-// Porta fiel de paciente_virtual/registro.py (leitura) + relatorio.py (resumo).
+// Leitura e estruturação do transcript gravado.
 
 import { TITULO_EXAME_FISICO, TITULO_EXAME_SOLICITADO } from "./exames.js";
 

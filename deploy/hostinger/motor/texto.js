@@ -1,4 +1,4 @@
-// Porta fiel de paciente_virtual/texto.py — normalização e busca de termos.
+// Normalização e busca de termos, tolerante a acento e hífen.
 
 // Faixa dos diacríticos combinantes (U+0300–U+036F), removidos após NFKD.
 const DIACRITICOS = /[̀-ͯ]/g;
