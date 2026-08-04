@@ -161,6 +161,39 @@ então a mesma frase é lida de um jeito por uma paciente em crise de pânico e 
 por uma senhora enlutada. Modelos que não aceitam `instructions` (como o `tts-1`)
 ignoram isso sem quebrar.
 
+#### Voz sem custo por chamada: Kokoro ao lado da aplicação
+
+Quando o chat roda num gateway sem endpoints de áudio (OpenRouter e afins), a voz do
+paciente cairia para a do navegador — sofrível em pt-BR. O **Kokoro-82M** resolve isso
+sem custo por chamada: são 82 milhões de parâmetros, roda em CPU a ~6× tempo real sem
+GPU, tem vozes de português brasileiro e expõe `/v1/audio/speech` compatível com OpenAI.
+
+Sobe como um contêiner ao lado, na mesma rede interna, **sem porta pública** — só a
+aplicação fala com ele:
+
+```yaml
+name: kokoro
+networks:
+  coolify:
+    external: true
+services:
+  kokoro:
+    image: ghcr.io/remsky/kokoro-fastapi-cpu:latest
+    container_name: kokoro
+    restart: unless-stopped
+    networks: [coolify]
+    mem_limit: 2g
+    cpus: 1.5
+```
+
+Depois basta `KOKORO_URL=http://kokoro:8880` na aplicação — a ordem de provedores já
+faz o Kokoro ganhar da OpenAI automaticamente. Os limites de memória e CPU não são
+decoração: num VPS pequeno e compartilhado, a síntese pode sufocar os outros serviços
+ou provocar OOM.
+
+Isso cobre a **fala**, não a transcrição — o áudio do aluno continua precisando de um
+endpoint compatível (`OPENAI_AUDIO_*`) ou cai no reconhecimento do navegador.
+
 `POST /api/transcrever` recebe o áudio **bruto** no corpo, com o `Content-Type` que o
 `MediaRecorder` produziu (webm/opus no Chrome, mp4/aac no Safari), e devolve
 `{ texto }`. Não há parsing de multipart do nosso lado. Áudio inaproveitável responde
