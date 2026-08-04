@@ -512,7 +512,11 @@
 </section>
 
 <section id="tela-painel" class="tela">
-  <div class="topo-secao"><button class="voltar" id="botao-painel-voltar">← Início</button><h1 style="margin:0;font-size:1.3rem;">📊 Painel do professor</h1></div>
+  <div class="topo-secao">
+    <button class="voltar" id="botao-painel-voltar">← Início</button>
+    <h1 style="margin:0;font-size:1.3rem;flex:1">📊 Painel do professor</h1>
+    <button class="voltar" id="botao-sair" title="Encerrar a sessão de professor neste computador">🔒 Sair</button>
+  </div>
   <p class="subtitulo">Consultas gravadas, com a nota objetiva recalculada pela rubrica atual.</p>
   <div id="lista-consultas"></div>
 </section>
@@ -1585,6 +1589,14 @@ $("botao-painel").addEventListener("click", () => {
   abrirModal("professor", abrirPainel);
 });
 $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
+// Sem isto a sessão de professor — que dá acesso a transcrições com nome de aluno —
+// ficava aberta por 12h no computador do laboratório, sem jeito de encerrar.
+$("botao-sair").addEventListener("click", async () => {
+  try { await fetch("/api/sair", { method: "POST" }); } catch {}
+  acesso.autenticado = false; acesso.professor = false;
+  torrada("Sessão encerrada neste computador.");
+  mostrarTela("tela-inicio");
+});
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
 $("codigo-ok").addEventListener("click", confirmarCodigo);
 $("codigo-cancelar").addEventListener("click", fecharCodigo);

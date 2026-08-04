@@ -48,7 +48,3 @@ export function segundosAteLiberar(chave) {
   if (!janela) return 0;
   return Math.max(1, Math.ceil((janela.reinicio - Date.now()) / 1000));
 }
-
-export function limparLimites() {
-  janelas.clear();
-}
