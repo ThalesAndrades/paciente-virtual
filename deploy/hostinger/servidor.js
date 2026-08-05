@@ -65,19 +65,10 @@ const JS = "text/javascript; charset=utf-8";
 const ESTATICOS = new Map([
   ["/estilo.css", { arquivo: path.join(RAIZ, "web", "estilo.css"), tipo: "text/css; charset=utf-8" }],
   ["/tempo-real.js", { arquivo: path.join(RAIZ, "web", "tempo-real.js"), tipo: JS }],
-  ["/sala3d.js", { arquivo: path.join(RAIZ, "web", "sala3d.js"), tipo: JS }],
-  // A biblioteca 3D sai de `node_modules` porque é dependência versionada no
-  // package-lock, não um blob copiado para dentro do repositório. Os dois arquivos
-  // são servidos lado a lado: o `module` importa o `core` por caminho relativo.
-  // A página só os baixa quando o aluno abre a sala — no celular, dado é dinheiro.
-  [
-    "/vendor/three.module.min.js",
-    { arquivo: path.join(RAIZ, "node_modules", "three", "build", "three.module.min.js"), tipo: JS, cache: true },
-  ],
-  [
-    "/vendor/three.core.min.js",
-    { arquivo: path.join(RAIZ, "node_modules", "three", "build", "three.core.min.js"), tipo: JS, cache: true },
-  ],
+  // A presença do paciente. Já foi uma sala em 3D com boneco humano e 750 kB de
+  // biblioteca; o boneco caiu no vale da estranheza e a biblioteca cobrava a
+  // franquia de dados do aluno. Hoje é um canvas 2D e nenhuma dependência.
+  ["/presenca.js", { arquivo: path.join(RAIZ, "web", "presenca.js"), tipo: JS }],
 ]);
 
 const AVISO_SEM_PARECER =

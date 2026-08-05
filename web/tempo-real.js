@@ -147,6 +147,115 @@
     if (dc && dc.readyState === "open") dc.send(JSON.stringify(obj));
   }
 
+  /* ---- Portão de ruído -----------------------------------------------------
+   *
+   * A supressão de ruído do navegador e a do provedor trabalham no CONTEÚDO do
+   * áudio; nenhuma das duas resolve o problema real de uma sala de aula, que é o
+   * microfone ficar aberto o tempo todo mandando fundo — ventilador, cadeira,
+   * a conversa da mesa ao lado. O paciente então responde a barulho.
+   *
+   * Aqui o áudio do microfone passa por um grafo antes de virar a trilha enviada:
+   *
+   *   microfone → passa-alta 100 Hz → compressor → ganho (portão) → trilha enviada
+   *                     ↘ analisador (mede o nível e decide o portão)
+   *
+   * Abaixo do limiar, o ganho vai a zero: o que sai é silêncio digital, que nem o
+   * detector de fala do provedor nem o modelo chegam a ver. Com histerese e uma
+   * cauda de ~600 ms, para não cortar o fim das frases nem picotar quem fala baixo.
+   */
+  const PORTAO = { abre: 0.055, fecha: 0.03, caudaMs: 600 };
+  let grafo = null;
+
+  function nivelDoMicrofone() {
+    if (!grafo) return 0;
+    grafo.analisador.getByteTimeDomainData(grafo.buffer);
+    let soma = 0;
+    for (let i = 0; i < grafo.buffer.length; i++) {
+      const v = (grafo.buffer[i] - 128) / 128;
+      soma += v * v;
+    }
+    return Math.sqrt(soma / grafo.buffer.length);
+  }
+
+  function pulsarPortao() {
+    if (!grafo) return;
+    const nivel = nivelDoMicrofone();
+    const agora = performance.now();
+
+    if (nivel > PORTAO.abre) grafo.faladoAte = agora + PORTAO.caudaMs;
+    const deveAbrir = nivel > PORTAO.fecha && agora < grafo.faladoAte;
+
+    if (deveAbrir !== grafo.aberto) {
+      grafo.aberto = deveAbrir;
+      const t = grafo.ctx.currentTime;
+      grafo.ganho.gain.cancelScheduledValues(t);
+      grafo.ganho.gain.setTargetAtTime(deveAbrir ? 1 : 0, t, deveAbrir ? 0.01 : 0.08);
+    }
+    // O nível vai para a página desenhar o indicador de voz: sem retorno visual,
+    // o aluno não sabe se está sendo ouvido e fala mais alto do que precisa.
+    emitir({ tipo: "nivel", valor: nivel, aberto: grafo.aberto });
+    grafo.relogio = requestAnimationFrame(pulsarPortao);
+  }
+
+  // Devolve a trilha JÁ filtrada. Se o navegador não tiver WebAudio, devolve a
+  // original: melhor com ruído do que sem conversa.
+  function trilhaFiltrada(entrada) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return entrada.getAudioTracks();
+    try {
+      const ctx = new Ctx();
+      const origem = ctx.createMediaStreamSource(entrada);
+
+      const passaAlta = ctx.createBiquadFilter();
+      passaAlta.type = "highpass";
+      passaAlta.frequency.value = 100; // ronco de ar-condicionado e mesa vive abaixo disso
+
+      const compressor = ctx.createDynamicsCompressor();
+      compressor.threshold.value = -30;
+      compressor.ratio.value = 3;
+
+      const ganho = ctx.createGain();
+      ganho.gain.value = 0; // nasce fechado: nada sai antes de alguém falar
+
+      const analisador = ctx.createAnalyser();
+      analisador.fftSize = 1024;
+      analisador.smoothingTimeConstant = 0.25;
+
+      const saida = ctx.createMediaStreamDestination();
+      origem.connect(passaAlta);
+      passaAlta.connect(compressor);
+      passaAlta.connect(analisador);
+      compressor.connect(ganho);
+      ganho.connect(saida);
+
+      grafo = {
+        ctx,
+        ganho,
+        analisador,
+        buffer: new Uint8Array(analisador.fftSize),
+        aberto: false,
+        faladoAte: 0,
+        relogio: null,
+        saida,
+      };
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      grafo.relogio = requestAnimationFrame(pulsarPortao);
+      return saida.stream.getAudioTracks();
+    } catch {
+      grafo = null;
+      return entrada.getAudioTracks();
+    }
+  }
+
+  function desligarGrafo() {
+    if (!grafo) return;
+    if (grafo.relogio) cancelAnimationFrame(grafo.relogio);
+    try {
+      grafo.ctx.close();
+    } catch {}
+    grafo = null;
+  }
+
   function tratarEvento(bruto) {
     let ev;
     try {
@@ -207,7 +316,14 @@
 
     try {
       fluxo = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+          // Voz é mono. Pedir estéreo dobra o áudio enviado sem ganhar nada, e em
+          // alguns celulares ativa o segundo microfone, que capta a sala inteira.
+          channelCount: 1,
+        },
       });
     } catch {
       parar();
@@ -234,7 +350,8 @@
         emitir({ tipo: "audio", stream: ev.streams[0] });
       };
 
-      for (const trilha of fluxo.getTracks()) pc.addTrack(trilha, fluxo);
+      // Envia a trilha FILTRADA pelo portão, não a crua do microfone.
+      for (const trilha of trilhaFiltrada(fluxo)) pc.addTrack(trilha, fluxo);
 
       dc = pc.createDataChannel(EVENTOS);
       dc.onmessage = (ev) => tratarEvento(ev.data);
@@ -285,6 +402,7 @@
 
   function parar() {
     limparRelogios();
+    desligarGrafo();
     enviarTurno();
     if (dc) {
       try {

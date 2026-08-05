@@ -110,10 +110,24 @@ function corpoDaSessao(caso, voz, modelo, minutos) {
           // ele, a rubrica. É declarada pelo cliente por construção (o áudio não
           // passa por aqui) — o que o servidor carimba são as tool calls.
           transcription: { model: "gpt-4o-mini-transcribe", language: "pt" },
-          // `semantic_vad` corta pelo SENTIDO da frase, não pelo silêncio: quem
-          // hesita no meio de uma pergunta difícil ("a senhora chegou a... pensar
-          // em morrer?") não é interrompido no meio.
-          turn_detection: { type: "semantic_vad", interrupt_response: true },
+          // O aluno usa o microfone do celular ou do notebook, numa sala com outras
+          // pessoas: `far_field` é exatamente esse cenário. A filtragem acontece
+          // ANTES do detector de fala, então corta junto os falsos positivos —
+          // ventilador, cadeira arrastando, conversa ao fundo.
+          noise_reduction: { type: "far_field" },
+          // `server_vad` e NÃO `semantic_vad`: o semântico decide pelo sentido da
+          // frase e, combinado com a redução de ruído, é conhecido por disparar
+          // latência alta. Aqui vale mais um corte previsível, com limiar alto e
+          // silêncio longo — o paciente só responde quando o aluno de fato parou
+          // de falar, em vez de reagir a qualquer barulho da sala.
+          turn_detection: {
+            type: "server_vad",
+            threshold: 0.62,
+            prefix_padding_ms: 300,
+            silence_duration_ms: 700,
+            create_response: true,
+            interrupt_response: true,
+          },
         },
         output: { voice: VOZ[voz] || VOZ.feminino },
       },

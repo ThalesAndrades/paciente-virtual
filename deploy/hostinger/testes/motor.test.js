@@ -605,35 +605,43 @@ test("todo caso gera uma expressão dentro da faixa, e nenhuma domina o acervo",
   assert.ok(maior < casos.length * 0.75, "uma única postura domina o acervo");
 });
 
-test("a animação da sala: respiração, boca e olhar", async () => {
-  // O módulo da sala importa a biblioteca 3D só dentro de `abrir()`, então a
-  // matemática do movimento pode ser testada aqui, sem navegador nem WebGL.
-  const sala = await import("../../../web/sala3d.js");
+test("a presença: respiração, resposta à voz e cor do sofrimento", async () => {
+  // O módulo da presença só toca no DOM dentro de `abrir()`, então a matemática do
+  // movimento pode ser testada aqui, sem navegador.
+  const presenca = await import("../../../web/presenca.js");
 
   // Respiração: oscila em torno de 1 e a amplitude cresce com a dor.
   const semDor = [];
   const comDor = [];
   for (let t = 0; t < 6; t += 0.05) {
-    semDor.push(sala.respiracaoEm(t, 14, 0, 0));
-    comDor.push(sala.respiracaoEm(t, 26, 1, 1));
+    semDor.push(presenca.respiracaoEm(t, 14, 0, 0));
+    comDor.push(presenca.respiracaoEm(t, 26, 1, 1));
   }
   const faixa = (v) => Math.max(...v) - Math.min(...v);
   assert.ok(faixa(comDor) > faixa(semDor), "dor deveria alargar a respiração");
-  assert.ok(Math.max(...semDor) < 1.05 && Math.min(...semDor) > 0.95, "respiração não pode inflar o tronco");
+  assert.ok(Math.max(...semDor) < 1.05 && Math.min(...semDor) > 0.95, "respiração não pode estourar o campo");
 
-  // A boca abre depressa e fecha devagar — o contrário parece dublagem ruim.
-  const abrindo = sala.proximaAbertura(0, 1, 1 / 60);
-  const fechando = 1 - sala.proximaAbertura(1, 0, 1 / 60);
-  assert.ok(abrindo > fechando, "a boca deveria abrir mais rápido do que fecha");
-  assert.ok(sala.proximaAbertura(0.5, 0.5, 1 / 60) === 0.5, "sem energia nova, sem movimento");
+  // A resposta à voz sobe depressa e desce devagar — o contrário treme.
+  const subindo = presenca.proximaAbertura(0, 1, 1 / 60);
+  const descendo = 1 - presenca.proximaAbertura(1, 0, 1 / 60);
+  assert.ok(subindo > descendo, "deveria subir mais rápido do que desce");
+  assert.equal(presenca.proximaAbertura(0.5, 0.5, 1 / 60), 0.5, "sem energia nova, sem movimento");
 
-  // Olhar: quem está retraído olha para baixo; quem encara, olha para a frente.
-  const meio = () => 0.5;
-  assert.ok(sala.alvoDeOlhar({ olhar: "baixo" }, meio).y < -0.3);
-  assert.equal(sala.alvoDeOlhar({ olhar: "direto" }, meio).y, 0);
-  assert.equal(sala.alvoDeOlhar({ olhar: "direto" }, meio).x, 0);
+  // A cor é leitura clínica, não enfeite: sofrimento esfria e apaga; a dor esquenta.
+  const neutra = presenca.tomDaExpressao({});
+  const enlutada = presenca.tomDaExpressao({ tristeza: 1, retraimento: 1 });
+  const comDorForte = presenca.tomDaExpressao({ dor: 1 });
+  assert.ok(enlutada.luz < neutra.luz, "sofrimento deveria apagar");
+  assert.ok(enlutada.saturacao < neutra.saturacao, "sofrimento deveria dessaturar");
+  assert.ok(comDorForte.matiz < neutra.matiz, "dor deveria descer a roda de cor para o âmbar");
+  assert.ok(enlutada.matiz > neutra.matiz, "sofrimento deveria subir para o azul frio");
 
-  // Tensão pisca mais, mas nunca a ponto de virar tique.
-  assert.ok(sala.intervaloDePiscar(1, meio) < sala.intervaloDePiscar(0, meio));
-  assert.ok(sala.intervaloDePiscar(1, () => 0) >= 0.6);
+  // Nenhuma combinação pode produzir cor fora da faixa (branco estourado ou preto).
+  for (const dim of ["tensao", "tristeza", "dor", "medo", "agitacao", "retraimento"]) {
+    for (const v of [0, 0.5, 1]) {
+      const tom = presenca.tomDaExpressao({ [dim]: v });
+      assert.ok(tom.luz >= 28 && tom.luz <= 66, `${dim}=${v}: luz fora da faixa`);
+      assert.ok(tom.saturacao >= 12 && tom.saturacao <= 85, `${dim}=${v}: saturação fora da faixa`);
+    }
+  }
 });

@@ -154,20 +154,20 @@
     </div>
     <div class="acoes">
       <button id="abrir-instrumentos" title="Instrumentos e anotações" aria-label="Instrumentos e anotações" aria-expanded="false" aria-controls="painel-instrumentos">🩺<span class="rotulo-btn">Instrumentos</span></button>
-      <button id="botao-sala" class="oculto" title="Ver o paciente na sala de atendimento" aria-label="Ver o paciente na sala de atendimento" aria-pressed="false" aria-controls="sala">🎥<span class="rotulo-btn">Sala</span></button>
+      <button id="botao-sala" class="oculto" title="Mostrar a presença do paciente" aria-label="Mostrar a presença do paciente" aria-pressed="false" aria-controls="sala">◉<span class="rotulo-btn">Presença</span></button>
       <button id="botao-som" class="ligado" title="Ler as respostas em voz alta" aria-label="Ler as respostas em voz alta">🔊<span class="rotulo-btn">Voz</span></button>
       <button id="botao-encerrar" class="encerrar">Encerrar e avaliar</button>
     </div>
   </div>
 
   <div class="palco">
-    <!-- A sala em 3D. Fica ao lado da conversa (e acima dela, no celular) porque a
-         transcrição continua sendo a prova do que foi dito: a sala acrescenta
-         presença, não substitui o registro. -->
+    <!-- A presença do paciente. Fica ao lado da conversa (e acima dela, no celular)
+         porque a transcrição continua sendo a prova do que foi dito: a presença
+         acrescenta alguém do outro lado, não substitui o registro. -->
     <div id="sala" class="sala oculto">
       <div id="sala-tela" class="sala-tela"></div>
       <p class="sala-legenda">
-        <span id="sala-postura">Sala de atendimento</span>
+        <span id="sala-postura">Presença do paciente</span>
         <button type="button" id="fechar-sala" class="sala-fechar" aria-label="Fechar a sala">✕</button>
       </p>
     </div>
@@ -190,7 +190,7 @@
   <div class="entrada">
     <div id="inst-toggle-wrap"></div>
     <div class="interno">
-      <button id="botao-vivo" class="vivo oculto" aria-pressed="false" aria-label="Conversar ao vivo com o paciente">🔴<span class="mic-label">Ao vivo</span></button>
+      <button id="botao-vivo" class="vivo oculto" aria-pressed="false" aria-label="Conversar ao vivo com o paciente"><span class="ponto-vivo" aria-hidden="true"></span><span class="mic-label">Ao vivo</span></button>
       <button id="botao-mic" aria-label="Segurar para falar">🎤<span class="mic-label">Segurar p/ falar</span></button>
       <input id="campo-mensagem" type="text" placeholder="Pergunte ao paciente…" autocomplete="off">
       <button id="botao-enviar" class="enviar" aria-label="Enviar a pergunta">Enviar</button>
@@ -750,7 +750,17 @@ function digitarResposta(balao, texto, ehDemo) {
   // Movimento reduzido: a fala aparece inteira, sem efeito de digitação.
   if (semMovimento()) { finalizarDigitacao(); return; }
   balao.textContent = ""; balao.classList.add("digitando-vivo"); let i = 0;
-  temporizadorDigitacao = setInterval(() => { i = Math.min(i + 2, texto.length); balao.textContent = texto.slice(0, i); balao.scrollIntoView({ behavior: "smooth", block: "end" }); if (i >= texto.length) finalizarDigitacao(); }, 22);
+  // Passo proporcional ao tamanho: a fala inteira aparece em ~0,9 s, seja ela de
+  // uma linha ou de um parágrafo. Antes eram 2 caracteres a cada 22 ms — uma
+  // resposta longa levava mais de três segundos se desenhando, e o que era para
+  // parecer fala virava sensação de travamento.
+  const passo = Math.max(2, Math.ceil(texto.length / 40));
+  temporizadorDigitacao = setInterval(() => {
+    i = Math.min(i + passo, texto.length);
+    balao.textContent = texto.slice(0, i);
+    balao.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (i >= texto.length) finalizarDigitacao();
+  }, 22);
 }
 function responderPaciente(texto, ehDemo) { const b = adicionarBalao("paciente", ""); falarTexto(texto); digitarResposta(b, texto, ehDemo); }
 
@@ -1003,6 +1013,8 @@ function aoEventoVivo(ev) {
   if (ev.tipo === "profissional") { adicionarBalao("aluno", ev.texto); estado.perguntas++; atualizarMedidores(); naSala((s) => s.marcarInteracao()); }
   else if (ev.tipo === "paciente") { adicionarBalao("paciente", ev.texto); }
   else if (ev.tipo === "audio") { naSala((s) => s.ouvirStream(ev.stream)); }
+  // Nível do microfone depois do portão de ruído: vira o arco de "estou te ouvindo".
+  else if (ev.tipo === "nivel") { naSala((s) => { s.definirNivelEntrada(ev.valor); if (ev.aberto) s.ouvindo(true); else s.ouvindo(false); }); }
   else if (ev.tipo === "exame") { adicionarBalao("exame", ev.resultado, { titulo: ev.titulo, nome: ev.nome }); estado.exames++; atualizarMedidores(); }
   else if (ev.tipo === "aviso") { definirDicaMic(ev.texto, false); }
   else if (ev.tipo === "estado") {
@@ -1029,10 +1041,9 @@ async function alternarVivo() {
 
 function pararVivo() { if (window.TempoReal && TempoReal.ativo()) TempoReal.parar(); travarEntradaTexto(false); }
 
-/* ---------- Sala de atendimento em 3D ----------
-   Carregada sob demanda: a biblioteca 3D pesa, e quem não abrir a sala não paga
-   por ela. Falhar aqui nunca pode travar a consulta — se o 3D não subir, o botão
-   avisa e a conversa segue exatamente como antes. */
+/* ---------- Presença do paciente ----------
+   Carregada sob demanda e sem dependência nenhuma. Falhar aqui nunca pode travar
+   a consulta: se não subir, o botão avisa e a conversa segue como antes. */
 let Sala = null;
 const POSTURA_LEGENDA = {
   tensa: "Chega tensa, no limite",
@@ -1041,12 +1052,12 @@ const POSTURA_LEGENDA = {
   defensiva: "Chega assustada, na defensiva",
   inquieta: "Chega inquieta, sem parar quieta",
   encolhida: "Chega encolhida, fechada",
-  neutra: "Sentada, esperando você começar",
+  neutra: "Esperando você começar",
 };
 
 async function carregarSala() {
   if (Sala) return Sala;
-  Sala = await import("/sala3d.js");
+  Sala = await import("/presenca.js");
   return Sala;
 }
 
@@ -1058,27 +1069,19 @@ async function alternarSala() {
   try {
     const mod = await carregarSala();
     if (!mod.suportada()) {
-      // Navegador sem WebGL: avisa uma vez e apaga a preferência, senão o aluno
-      // levaria o mesmo aviso na abertura de toda consulta.
+      // Avisa uma vez e apaga a preferência, senão o aluno levaria o mesmo aviso
+      // na abertura de toda consulta.
       salvarPreferenciaSala(false);
-      torrada("Este navegador não abre a sala em 3D. A consulta segue normalmente.", true);
+      torrada("Este navegador não mostra a presença do paciente. A consulta segue normalmente.", true);
       return;
     }
-    const lista = [...(estado.instrumentos?.vitais || []), ...(estado.instrumentos?.fisico || []), ...(estado.instrumentos?.exames || [])];
     $("sala").classList.remove("oculto");
     document.querySelector(".palco").classList.add("com-sala");
-    // Com a sala aberta a tela precisa de mais largura: sem isto, no desktop, a
-    // conversa era espremida a ~200 px entre a sala e os instrumentos.
+    // Com o painel aberto a tela precisa de mais largura: sem isto, no desktop, a
+    // conversa era espremida a ~200 px entre a presença e os instrumentos.
     $("tela-consulta").classList.add("largo");
-    const ok = await mod.abrir({
-      container: $("sala-tela"),
-      categoria: estado.categoriaCaso,
-      paciente: estado.pacienteInfo || {},
-      expressao: estado.expressao,
-      instrumentos: lista,
-      aoInstrumento: (chave) => solicitarExame(chave, null),
-    });
-    if (!ok) { fecharSala(); torrada("Não consegui abrir a sala em 3D. A consulta segue normalmente.", true); return; }
+    const ok = await mod.abrir({ container: $("sala-tela"), expressao: estado.expressao });
+    if (!ok) { fecharSala(); torrada("Não consegui mostrar a presença do paciente. A consulta segue normalmente.", true); return; }
     // O áudio já tocado antes da sala abrir continua saindo pelo mesmo elemento:
     // basta apresentá-lo ao analisador para a boca acompanhar a fala.
     try { mod.ouvirElemento($("player-voz")); } catch {}
@@ -1086,9 +1089,9 @@ async function alternarSala() {
     botao.classList.add("ligado"); botao.setAttribute("aria-pressed", "true");
     salvarPreferenciaSala(true);
   } catch (erro) {
-    console.error("[sala3d]", erro);
+    console.error("[presenca]", erro);
     fecharSala();
-    torrada("Não consegui abrir a sala em 3D. A consulta segue normalmente.", true);
+    torrada("Não consegui mostrar a presença do paciente. A consulta segue normalmente.", true);
   } finally { botao.disabled = false; }
 }
 

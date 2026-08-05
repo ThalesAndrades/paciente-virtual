@@ -157,21 +157,23 @@ então a mesma frase é lida de um jeito por uma paciente em crise de pânico e 
 por uma senhora enlutada. Modelos que não aceitam `instructions` (como o `tts-1`)
 ignoram isso sem quebrar.
 
-### Sala de atendimento em 3D
+### Presença do paciente
 
-O aluno pode ver o paciente sentado à frente dele, em vez de uma lista de balões: a
-pessoa respira na frequência que o caso indica, pisca, desvia o olhar conforme a
-dinâmica de revelação e mexe a boca acompanhando a fala. Clicar nos instrumentos
-sobre a mesa chama o mesmo endpoint de exame do painel lateral.
+Ao lado da conversa há um campo que respira na frequência do caso, se acende quando
+o paciente fala, se retrai conforme a dinâmica de revelação e diz em uma palavra o
+que está acontecendo (esperando · ouvindo · pensando · falando). A cor é leitura
+clínica: dor puxa para o âmbar, sofrimento para o azul frio e apagado.
 
-Não há nada para configurar. O que vale saber ao operar:
+Isto substituiu uma primeira tentativa de sala em 3D com boneco humano. O boneco caía
+no vale da estranheza — num caso de ideação suicida ou violência, um rosto quase-certo
+produz desconforto, não presença — e a biblioteca 3D cobrava 750 kB da franquia de
+dados do aluno. Aqui é um canvas 2D e nenhuma dependência.
 
-- A biblioteca 3D (~750 kB, servida de `/vendor/`) **só é baixada quando o aluno
-  abre a sala** — no celular, dado é dinheiro. Ela é servida com cache de 7 dias.
-- Em telas pequenas e máquinas modestas a sala desliga sombras e reduz a resolução
-  sozinha; com `prefers-reduced-motion` ela abre parada.
-- Navegador sem WebGL: o botão avisa e a consulta segue como antes.
-- A expressão do paciente é calculada no servidor (`motor/expressao.js`) a partir do
+Não há nada para configurar:
+
+- `prefers-reduced-motion` abre a presença parada.
+- Navegador sem canvas: o botão avisa e a consulta segue como antes.
+- A expressão é calculada no servidor (`motor/expressao.js`) a partir do
   `estado_emocional` do caso. A página recebe seis números e duas palavras — nenhum
   texto do caso viaja para o navegador por causa da animação.
 
@@ -226,6 +228,19 @@ da frase. O áudio vai **direto do navegador ao provedor** (WebRTC): o VPS fica 
 caminho, o que corta a latência e impede que o áudio de uma turma inteira sufoque o
 host. Liga sozinha quando o áudio da OpenAI está configurado; o modo de segurar o
 microfone continua existindo como fallback e como caminho barato.
+
+**Contra o ruído da sala de aula**, três camadas, porque nenhuma resolve sozinha:
+
+1. o navegador aplica cancelamento de eco e supressão de ruído no microfone;
+2. um **portão de ruído** na página só deixa passar o que estiver acima do limiar —
+   com cauda de 600 ms para não cortar o fim das frases. Abaixo disso o que sai é
+   silêncio digital, e nem o detector de fala do provedor chega a ver;
+3. o provedor recebe `noise_reduction: far_field` (microfone de celular ou notebook
+   numa sala) e detecção de fala por `server_vad` com limiar alto e 700 ms de
+   silêncio — o paciente só responde quando o aluno de fato parou de falar.
+
+O `semantic_vad` foi abandonado de propósito: combinado com redução de ruído, ele é
+conhecido por disparar latência alta, e aqui previsibilidade vale mais que sutileza.
 
 | Variável | Padrão | Descrição |
 | -------- | ------ | --------- |
