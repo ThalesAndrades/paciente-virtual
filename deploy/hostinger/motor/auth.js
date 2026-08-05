@@ -130,6 +130,58 @@ export async function migrar() {
   return pendentes;
 }
 
+// ── Gestão de contas (só o administrador chega aqui) ──────────────────────
+//
+// Rotas próprias em vez de expor a API do plugin ao navegador: aqui a unidade é
+// MATRÍCULA, não e-mail, e a mensagem de erro sai em português. O plugin continua
+// sendo quem guarda e confere a senha.
+
+export async function listarUsuarios() {
+  const ctx = await auth().$context;
+  const bruto = await ctx.internalAdapter.listUsers(1000, 0);
+  const lista = Array.isArray(bruto) ? bruto : (bruto && bruto.users) || [];
+  return lista.map((u) => ({
+    id: u.id,
+    matricula: u.displayUsername || u.username || "",
+    nome: u.name || "",
+    papel: u.role || "aluno",
+    ativo: !u.banned,
+    criado_em: u.createdAt || null,
+  }));
+}
+
+// Troca a senha e DERRUBA as sessões abertas daquela pessoa. Sem derrubar, quem
+// já estava logado continuaria dentro com a senha antiga válida na prática — que é
+// o oposto do que "resetar a senha" significa para quem clica no botão.
+export async function definirSenha(id, senha) {
+  const ctx = await auth().$context;
+  const contas = await ctx.internalAdapter.findAccounts(id);
+  const credencial = (contas || []).find((c) => c.providerId === "credential");
+  if (!credencial) throw new Error("Esta conta não tem senha para trocar.");
+  await ctx.internalAdapter.updateAccount(credencial.id, {
+    password: await ctx.password.hash(senha),
+  });
+  await ctx.internalAdapter.deleteUserSessions(id);
+}
+
+// Desativar é melhor que apagar: a pessoa perde o acesso na hora, mas as consultas
+// dela continuam no painel do professor. Apagar levaria a nota junto.
+export async function definirAtivo(id, ativo) {
+  const ctx = await auth().$context;
+  await ctx.internalAdapter.updateUser(id, {
+    banned: !ativo,
+    banReason: ativo ? null : "desativado pelo administrador",
+    banExpires: null,
+  });
+  if (!ativo) await ctx.internalAdapter.deleteUserSessions(id);
+}
+
+export async function definirPapel(id, papel) {
+  const ctx = await auth().$context;
+  const valido = papel === "admin" || papel === "professor" ? papel : "aluno";
+  await ctx.internalAdapter.updateUser(id, { role: valido });
+}
+
 export async function contarUsuarios() {
   const ctx = await auth().$context;
   return ctx.internalAdapter.countTotalUsers();

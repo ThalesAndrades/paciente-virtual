@@ -15,9 +15,20 @@ import { fileURLToPath } from "node:url";
 
 import { toNodeHandler } from "better-auth/node";
 
-import { auth, contarUsuarios, migrar, semearAdmin } from "./motor/auth.js";
+import {
+  auth,
+  contarUsuarios,
+  criarUsuario,
+  definirAtivo,
+  definirPapel,
+  definirSenha,
+  listarUsuarios,
+  migrar,
+  semearAdmin,
+} from "./motor/auth.js";
 import {
   carregarSessao,
+  ehAdmin,
   ehAluno,
   ehProfessor,
   estadoAcesso,
@@ -719,6 +730,81 @@ export function criarServidor() {
       // (código compartilhado e senha de professor) deixaram de existir de
       // propósito: enquanto respondessem, seriam uma segunda porta para a mesma
       // casa — e a porta fraca é a que vale.
+
+      // ---- Gestão de contas. Só o ADMIN entra aqui; professor não abre conta.
+      if (pathname === "/api/alunos" || pathname.startsWith("/api/alunos/")) {
+        if (!ehAdmin(req)) {
+          return json(res, 403, { erro: "Restrito ao administrador." });
+        }
+
+        if (req.method === "GET" && pathname === "/api/alunos") {
+          return json(res, 200, { alunos: await listarUsuarios() });
+        }
+
+        if (req.method === "POST" && pathname === "/api/alunos") {
+          const dados = await lerCorpo(req);
+          const matricula = String(dados.matricula || "").trim();
+          const nome = String(dados.nome || "").trim();
+          const senha = String(dados.senha || "");
+          const papel = String(dados.papel || "aluno");
+
+          if (!/^[A-Za-z0-9._-]{3,40}$/.test(matricula)) {
+            return json(res, 400, {
+              erro: "Matrícula inválida: use de 3 a 40 caracteres, com letras, números, ponto, hífen ou sublinhado.",
+            });
+          }
+          if (senha.length < 8) {
+            return json(res, 400, { erro: "A senha precisa ter pelo menos 8 caracteres." });
+          }
+          try {
+            const criado = await criarUsuario({ matricula, senha, nome, papel });
+            return json(res, 200, { ok: true, id: criado.id, matricula });
+          } catch (erro) {
+            // Matrícula repetida é o erro comum aqui, e merece nome próprio em vez
+            // de virar 500 genérico.
+            const texto = String((erro && erro.message) || erro);
+            const repetida = /unique|constraint|exист|already/i.test(texto);
+            return json(res, repetida ? 409 : 400, {
+              erro: repetida ? "Já existe uma conta com essa matrícula." : "Não foi possível criar a conta.",
+            });
+          }
+        }
+
+        const senhaDe = pathname.match(/^\/api\/alunos\/([\w-]+)\/senha$/);
+        if (req.method === "POST" && senhaDe) {
+          const dados = await lerCorpo(req);
+          const senha = String(dados.senha || "");
+          if (senha.length < 8) {
+            return json(res, 400, { erro: "A senha precisa ter pelo menos 8 caracteres." });
+          }
+          await definirSenha(senhaDe[1], senha);
+          return json(res, 200, { ok: true });
+        }
+
+        const ativoDe = pathname.match(/^\/api\/alunos\/([\w-]+)\/ativo$/);
+        if (req.method === "POST" && ativoDe) {
+          const dados = await lerCorpo(req);
+          // O admin não pode desativar a própria conta: seria trancar a chave
+          // dentro de casa, e ninguém mais poderia reabrir.
+          if (ativoDe[1] === sessaoDe(req) && dados.ativo === false) {
+            return json(res, 400, { erro: "Você não pode desativar a sua própria conta." });
+          }
+          await definirAtivo(ativoDe[1], dados.ativo !== false);
+          return json(res, 200, { ok: true });
+        }
+
+        const papelDeAlguem = pathname.match(/^\/api\/alunos\/([\w-]+)\/papel$/);
+        if (req.method === "POST" && papelDeAlguem) {
+          const dados = await lerCorpo(req);
+          if (papelDeAlguem[1] === sessaoDe(req)) {
+            return json(res, 400, { erro: "Você não pode mudar o seu próprio papel." });
+          }
+          await definirPapel(papelDeAlguem[1], String(dados.papel || "aluno"));
+          return json(res, 200, { ok: true });
+        }
+
+        return json(res, 404, { erro: "Rota não encontrada." });
+      }
 
       // A vitrine (título, queixa, contagem por área) fica aberta: é o que a página
       // inicial mostra antes de pedir o código. O que custa dinheiro ou contém dado

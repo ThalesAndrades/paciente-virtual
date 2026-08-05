@@ -77,6 +77,14 @@ export function ehProfessor(req) {
   return papelDe(req) === "professor";
 }
 
+// Administrar conta é privilégio SEPARADO de ler o painel. O professor acompanha a
+// turma; só o admin abre e reseta conta — porque conta aberta é crédito de API
+// gasto, e isso é decisão de quem paga.
+export function ehAdmin(req) {
+  const sessao = sessaoBruta(req);
+  return Boolean(sessao && sessao.user && sessao.user.role === "admin");
+}
+
 // Identificador para contar uso por PESSOA em vez de por IP. Antes era um `sid`
 // anônimo sorteado por sessão; agora é o id do usuário, então o teto acompanha o
 // aluno mesmo que ele troque de máquina — e o `limite.js` não precisou mudar.
@@ -104,6 +112,7 @@ export function estadoAcesso(req) {
   return {
     autenticado: papel !== null,
     professor: papel === "professor",
+    admin: ehAdmin(req),
     painel_disponivel: painelDisponivel(),
     matricula: matriculaDe(req),
     nome: nomeDe(req),

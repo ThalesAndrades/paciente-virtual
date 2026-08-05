@@ -96,8 +96,49 @@
     <h1 style="margin:0;font-size:1.3rem;flex:1">📊 Painel do professor</h1>
     <button class="voltar" id="botao-sair" title="Encerrar a sessão de professor neste computador">🔒 Sair</button>
   </div>
-  <p class="subtitulo">Consultas gravadas, com a nota objetiva recalculada pela rubrica atual.</p>
-  <div id="lista-consultas"></div>
+  <div class="abas-painel" id="abas-painel" role="tablist">
+    <button class="aba ativa" id="aba-consultas" role="tab" aria-selected="true">Consultas</button>
+    <button class="aba oculto" id="aba-alunos" role="tab" aria-selected="false">Contas</button>
+  </div>
+
+  <div id="painel-consultas">
+    <p class="subtitulo">Consultas gravadas, com a nota objetiva recalculada pela rubrica atual.</p>
+    <div id="lista-consultas"></div>
+  </div>
+
+  <div id="painel-alunos" class="oculto">
+    <p class="subtitulo">Cada conta criada aqui pode usar o simulador — e gastar crédito da API. Crie só quem vai treinar.</p>
+
+    <form id="form-conta" class="form-conta">
+      <div class="linha-form">
+        <label>Matrícula
+          <input id="nova-matricula" type="text" placeholder="Ex.: 2026-001" maxlength="40" autocapitalize="none" spellcheck="false" required>
+        </label>
+        <label>Nome
+          <input id="novo-nome" type="text" placeholder="Nome de quem vai usar" maxlength="120">
+        </label>
+      </div>
+      <div class="linha-form">
+        <label>Senha
+          <input id="nova-senha" type="text" placeholder="mínimo 8 caracteres" minlength="8" required>
+        </label>
+        <label>Papel
+          <select id="novo-papel">
+            <option value="aluno">Aluno — faz consultas</option>
+            <option value="professor">Professor — lê o painel</option>
+            <option value="admin">Administrador — gerencia contas</option>
+          </select>
+        </label>
+      </div>
+      <div class="acoes-form">
+        <button type="button" class="botao secundario" id="sortear-senha">Sortear senha</button>
+        <button type="submit" class="botao">Criar conta</button>
+      </div>
+      <div class="modal-erro oculto" id="conta-erro"></div>
+    </form>
+
+    <div id="lista-alunos"></div>
+  </div>
 </section>
 
 <section id="tela-detalhe" class="tela">
@@ -274,7 +315,7 @@ const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, ps
    O código NÃO mora mais aqui: quem confere é o servidor, que devolve um cookie de
    sessão. Antes a checagem era neste script — dava para ler o código no ver-fonte e,
    pior, chamar a API direto sem passar por ela. */
-const acesso = { autenticado: false, professor: false, painelDisponivel: false, matricula: null, nome: null };
+const acesso = { autenticado: false, professor: false, admin: false, painelDisponivel: false, matricula: null, nome: null };
 let acaoLiberacao = null, papelPedido = "aluno";
 
 async function carregarAcesso() {
@@ -282,10 +323,11 @@ async function carregarAcesso() {
     const d = await (await fetch("/api/acesso")).json();
     acesso.autenticado = !!d.autenticado; acesso.professor = !!d.professor;
     acesso.painelDisponivel = !!d.painel_disponivel;
-    acesso.matricula = d.matricula || null; acesso.nome = d.nome || null;
+    acesso.matricula = d.matricula || null; acesso.nome = d.nome || null; acesso.admin = !!d.admin;
   } catch { /* sem rede: o modal aparece e o servidor decide */ }
   // O painel só é anunciado a quem TEM o papel: botão que leva a 403 é ruído.
   $("botao-painel").classList.toggle("oculto", !acesso.professor);
+  $("aba-alunos").classList.toggle("oculto", !acesso.admin);
   const quem = $("quem-sou");
   if (quem) quem.textContent = acesso.matricula ? `Entrou como ${acesso.nome || acesso.matricula} (${acesso.matricula}).` : "";
 }
@@ -1182,6 +1224,111 @@ $("botao-som").addEventListener("click", () => aplicarPreferenciaAudio(!estado.f
 document.querySelectorAll(".cat-card").forEach((c) => c.addEventListener("click", () => abrirCategoria(c.dataset.cat)));
 $("cat-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abrirCategoria(estado.categoriaAtual); else mostrarTela("tela-inicio"); });
+/* ── Gestão de contas (só administrador) ────────────────────────────────────
+   A aba só aparece para quem tem o papel; o servidor confere de novo em toda
+   rota. Esconder botão é conforto, não segurança. */
+function trocarAba(qual) {
+  const contas = qual === "alunos";
+  $("painel-consultas").classList.toggle("oculto", contas);
+  $("painel-alunos").classList.toggle("oculto", !contas);
+  $("aba-consultas").classList.toggle("ativa", !contas);
+  $("aba-alunos").classList.toggle("ativa", contas);
+  $("aba-consultas").setAttribute("aria-selected", String(!contas));
+  $("aba-alunos").setAttribute("aria-selected", String(contas));
+  if (contas) carregarAlunos();
+}
+
+function senhaSorteada() {
+  // Senha legível para ditar em sala, mas sorteada de verdade (crypto, não Math.random).
+  const alfabeto = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(14));
+  return [...bytes].map((b) => alfabeto[b % alfabeto.length]).join("");
+}
+
+async function carregarAlunos() {
+  const alvo = $("lista-alunos");
+  alvo.innerHTML = "<p class='subtitulo'>Carregando…</p>";
+  try {
+    const r = await fetch("/api/alunos");
+    if (!r.ok) { alvo.innerHTML = "<p class='subtitulo'>Sem permissão para ver as contas.</p>"; return; }
+    const { alunos } = await r.json();
+    if (!alunos.length) { alvo.innerHTML = "<p class='subtitulo'>Nenhuma conta ainda.</p>"; return; }
+    alvo.innerHTML = "";
+    for (const a of alunos) {
+      const cartao = document.createElement("div");
+      cartao.className = "cartao conta-linha" + (a.ativo ? "" : " inativa");
+      cartao.innerHTML =
+        `<div style="flex:1">` +
+        `<h3><span>${esc(a.matricula)}</span> <span class="chip-papel">${esc(a.papel)}</span>` +
+        (a.ativo ? "" : ` <span class="chip-papel inativo">desativada</span>`) + `</h3>` +
+        `<p>${esc(a.nome) || "—"}</p></div>`;
+      const acoes = document.createElement("div");
+      acoes.className = "acoes-conta";
+
+      const bSenha = document.createElement("button");
+      bSenha.className = "botao secundario"; bSenha.type = "button"; bSenha.textContent = "Nova senha";
+      bSenha.addEventListener("click", () => resetarSenha(a));
+      acoes.appendChild(bSenha);
+
+      const bAtivo = document.createElement("button");
+      bAtivo.className = "botao " + (a.ativo ? "perigo" : "secundario"); bAtivo.type = "button";
+      bAtivo.textContent = a.ativo ? "Desativar" : "Reativar";
+      bAtivo.addEventListener("click", () => alternarAtivo(a));
+      acoes.appendChild(bAtivo);
+
+      cartao.appendChild(acoes);
+      alvo.appendChild(cartao);
+    }
+  } catch { alvo.innerHTML = "<p class='subtitulo'>Erro ao carregar as contas.</p>"; }
+}
+
+async function resetarSenha(a) {
+  const nova = senhaSorteada();
+  if (!confirm(`Gerar nova senha para ${a.matricula}?\n\nA senha atual deixa de valer e as sessões abertas caem.`)) return;
+  const r = await fetch(`/api/alunos/${encodeURIComponent(a.id)}/senha`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha: nova }),
+  });
+  if (!r.ok) { torrada("Não foi possível trocar a senha."); return; }
+  // Mostrada UMA vez: ela não fica guardada em lugar nenhum em texto.
+  prompt(`Nova senha de ${a.matricula} — copie agora, ela não será mostrada de novo:`, nova);
+  carregarAlunos();
+}
+
+async function alternarAtivo(a) {
+  const r = await fetch(`/api/alunos/${encodeURIComponent(a.id)}/ativo`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ativo: !a.ativo }),
+  });
+  if (!r.ok) { let d = {}; try { d = await r.json(); } catch {} torrada(d.erro || "Não foi possível mudar a conta."); return; }
+  torrada(a.ativo ? "Conta desativada." : "Conta reativada.");
+  carregarAlunos();
+}
+
+$("aba-consultas").addEventListener("click", () => trocarAba("consultas"));
+$("aba-alunos").addEventListener("click", () => trocarAba("alunos"));
+$("sortear-senha").addEventListener("click", () => { $("nova-senha").value = senhaSorteada(); });
+$("form-conta").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const erro = $("conta-erro"); erro.classList.add("oculto");
+  const corpo = {
+    matricula: $("nova-matricula").value.trim(),
+    nome: $("novo-nome").value.trim(),
+    senha: $("nova-senha").value,
+    papel: $("novo-papel").value,
+  };
+  const r = await fetch("/api/alunos", {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo),
+  });
+  if (!r.ok) {
+    let d = {}; try { d = await r.json(); } catch {}
+    erro.textContent = d.erro || "Não foi possível criar a conta.";
+    erro.classList.remove("oculto");
+    return;
+  }
+  torrada(`Conta ${corpo.matricula} criada.`);
+  $("nova-matricula").value = ""; $("novo-nome").value = ""; $("nova-senha").value = "";
+  carregarAlunos();
+});
+
 $("botao-painel").addEventListener("click", () => {
   if (acesso.professor) { abrirPainel(); return; }
   abrirModal("professor", abrirPainel);

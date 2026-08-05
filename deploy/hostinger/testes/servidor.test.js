@@ -33,7 +33,10 @@ await criarUsuario({ matricula: "prof001", senha: "senha-de-teste-prof", nome: "
 await criarUsuario({ matricula: "limite001", senha: "senha-de-teste-lim1", nome: "Limite Um", papel: "aluno" });
 await criarUsuario({ matricula: "limite002", senha: "senha-de-teste-lim2", nome: "Limite Dois", papel: "aluno" });
 
+await criarUsuario({ matricula: "adm001", senha: "senha-de-teste-adm", nome: "Admin de Teste", papel: "admin" });
+
 const SENHAS = {
+  adm001: "senha-de-teste-adm",
   aluno001: "senha-de-teste-aluno",
   aluno002: "senha-de-teste-dois",
   prof001: "senha-de-teste-prof",
@@ -404,6 +407,108 @@ test("fluxo completo de consulta em modo demonstração", async () => {
         fs.rmSync(path.join(raiz, "historico", arquivo), { force: true });
       }
     }
+  } finally {
+    servidor.close();
+  }
+});
+
+test("gestão de contas é do ADMIN, não do professor", async () => {
+  // Ler o painel e abrir conta são privilégios diferentes: conta aberta é crédito
+  // de API gasto, e isso é decisão de quem paga, não de quem acompanha a turma.
+  const { servidor, api } = await subir();
+  try {
+    assert.equal((await api("/api/alunos")).status, 403);
+
+    await entrar(api, "aluno001");
+    assert.equal((await api("/api/alunos")).status, 403);
+
+    await entrar(api, "prof001");
+    assert.equal((await api("/api/relatorio")).status, 200, "professor lê o painel");
+    assert.equal((await api("/api/alunos")).status, 403, "mas não administra contas");
+
+    await entrar(api, "adm001");
+    assert.equal((await api("/api/alunos")).status, 200);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("admin cria conta, ela entra, e desativar corta o acesso", async () => {
+  const { servidor, api } = await subir();
+  const outro = criarCliente(`http://127.0.0.1:${servidor.address().port}`);
+  try {
+    await entrar(api, "adm001");
+
+    const criado = await api("/api/alunos", {
+      matricula: "2026-042", nome: "Turma Nova", senha: "senha-que-serve", papel: "aluno",
+    });
+    assert.equal(criado.status, 200);
+
+    // A conta recém-criada entra de verdade — matrícula com hífen inclusive.
+    const login = await outro("/api/auth/sign-in/username", { username: "2026-042", password: "senha-que-serve" });
+    assert.equal(login.status, 200);
+    assert.equal((await outro("/api/consultas", { caso: "infarto" })).status, 200);
+
+    // Repetida não passa duas vezes.
+    const repetida = await api("/api/alunos", {
+      matricula: "2026-042", nome: "Outra", senha: "senha-que-serve", papel: "aluno",
+    });
+    assert.equal(repetida.status, 409);
+
+    // Matrícula fora do formato e senha curta são recusadas com motivo.
+    assert.equal((await api("/api/alunos", { matricula: "a b c", senha: "senha-que-serve" })).status, 400);
+    assert.equal((await api("/api/alunos", { matricula: "2026-043", senha: "curta" })).status, 400);
+
+    // Desativar corta o acesso de quem já estava dentro.
+    const lista = (await api("/api/alunos")).dados.alunos;
+    const alvo = lista.find((a) => a.matricula === "2026-042");
+    assert.ok(alvo, "a conta criada deve aparecer na listagem");
+    assert.equal((await api(`/api/alunos/${alvo.id}/ativo`, { ativo: false })).status, 200);
+    assert.equal(
+      (await outro("/api/consultas", { caso: "infarto" })).status,
+      401,
+      "sessão aberta tem de cair quando a conta é desativada"
+    );
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o admin não consegue desativar a própria conta", async () => {
+  // Sem esta trava, um clique distraído trancaria a chave dentro de casa: ninguém
+  // mais poderia reabrir conta nenhuma.
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "adm001");
+    const eu = (await api("/api/alunos")).dados.alunos.find((a) => a.matricula === "adm001");
+    const r = await api(`/api/alunos/${eu.id}/ativo`, { ativo: false });
+    assert.equal(r.status, 400);
+    assert.equal((await api("/api/alunos")).status, 200, "continuo administrando");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("nova senha derruba a sessão antiga e só a nova vale", async () => {
+  const { servidor, api } = await subir();
+  const vitima = criarCliente(`http://127.0.0.1:${servidor.address().port}`);
+  try {
+    await entrar(api, "adm001");
+    await api("/api/alunos", { matricula: "2026-099", nome: "Troca", senha: "senha-original", papel: "aluno" });
+
+    assert.equal((await vitima("/api/auth/sign-in/username", { username: "2026-099", password: "senha-original" })).status, 200);
+    assert.equal((await vitima("/api/consultas", { caso: "infarto" })).status, 200);
+
+    const alvo = (await api("/api/alunos")).dados.alunos.find((a) => a.matricula === "2026-099");
+    assert.equal((await api(`/api/alunos/${alvo.id}/senha`, { senha: "senha-trocada" })).status, 200);
+
+    assert.equal((await vitima("/api/consultas", { caso: "infarto" })).status, 401, "a sessão antiga tem de cair");
+    assert.equal(
+      (await vitima("/api/auth/sign-in/username", { username: "2026-099", password: "senha-original" })).status,
+      401,
+      "a senha antiga não pode mais valer"
+    );
+    assert.equal((await vitima("/api/auth/sign-in/username", { username: "2026-099", password: "senha-trocada" })).status, 200);
   } finally {
     servidor.close();
   }
