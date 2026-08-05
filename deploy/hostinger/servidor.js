@@ -40,6 +40,13 @@ const DIR_AVALIACOES = path.join(RAIZ, "avaliacoes");
 const DIR_HISTORICO = path.join(RAIZ, "historico");
 const PAGINA = path.join(RAIZ, "web", "index.html");
 
+// Arquivos estáticos servidos por LISTA FIXA, não por caminho montado a partir do
+// pedido. É a diferença entre servir dois arquivos conhecidos e abrir um leitor de
+// disco para quem souber escrever `../`. O mesmo cuidado que o relatório já toma.
+const ESTATICOS = new Map([
+  ["/estilo.css", { arquivo: path.join(RAIZ, "web", "estilo.css"), tipo: "text/css; charset=utf-8" }],
+]);
+
 const AVISO_SEM_PARECER =
   "Parecer pedagógico indisponível (modelo de linguagem fora do ar). " +
   "A nota objetiva acima não depende do modelo.";
@@ -687,6 +694,15 @@ export function criarServidor() {
         const html = fs.readFileSync(PAGINA);
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
         return res.end(html);
+      }
+
+      if (req.method === "GET" && ESTATICOS.has(pathname)) {
+        // Mesma ordem da página: lê antes de responder, para que uma falha de
+        // leitura vire 500 limpo em vez de cabeçalho enviado duas vezes.
+        const { arquivo, tipo } = ESTATICOS.get(pathname);
+        const conteudo = fs.readFileSync(arquivo);
+        res.writeHead(200, { "Content-Type": tipo, "Cache-Control": "no-cache" });
+        return res.end(conteudo);
       }
 
       // ---- Acesso: a página pergunta o que já pode fazer, e troca credencial por sessão.
