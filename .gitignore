@@ -21,3 +21,9 @@ historico/*.txt
 # Áudio temporário
 *.wav
 *.mp3
+
+# Banco de contas (Better Auth). Fica no volume persistido em producao e nunca
+# no repositorio: contem hash de senha de aluno.
+historico/*.sqlite
+historico/*.sqlite-*
+*.sqlite
