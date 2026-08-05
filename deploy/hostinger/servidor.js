@@ -1288,6 +1288,17 @@ export async function iniciar() {
     // As tabelas de crédito vivem no mesmo banco e sobem junto: um servidor no ar
     // sem elas responderia 500 na primeira consulta de qualquer aluno.
     migrarCreditos();
+
+    // Quem já tinha conta antes de a ferramenta passar a cobrar não pode acordar
+    // sem poder usá-la. Cada conta existente ganha os créditos de boas-vindas uma
+    // única vez — a referência é o id do usuário, então subir de novo não repete.
+    const recebidos = [];
+    for (const u of await listarUsuarios()) {
+      if (darBoasVindas(u.id).repetido === false) recebidos.push(u.matricula);
+    }
+    if (recebidos.length) {
+      console.log(`[creditos] boas-vindas concedidas a ${recebidos.length} conta(s) já existente(s)`);
+    }
     const semeadura = await semearAdmin();
     if (semeadura.semeado) console.log(`[auth] administrador criado: ${semeadura.matricula}`);
     else if ((await contarUsuarios()) === 0) {
