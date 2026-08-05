@@ -1,0 +1,1038 @@
+{
+  "nome_caso": "Diabetes Tipo 2 com Obesidade e Hipertensão na Atenção Primária",
+  "criterios": [
+    {
+      "nome": "Apresentacao, vinculo e consentimento",
+      "objetivo": "Apresentar-se pelo nome e como nutricionista, confirmar a identificacao da paciente, explicar o objetivo da consulta e obter consentimento verbal.",
+      "itens": [
+        {
+          "nome": "apresenta-se pelo nome e como nutricionista",
+          "termos": [
+            "meu nome e",
+            "me chamo",
+            "eu sou o nutricionista",
+            "eu sou a nutricionista",
+            "sou nutricionista",
+            "sou o nutricionista da unidade"
+          ]
+        },
+        {
+          "nome": "confirma a identificacao da paciente",
+          "termos": [
+            "confirma o seu nome",
+            "qual o seu nome completo",
+            "a senhora e a dona",
+            "me diz o seu nome",
+            "quantos anos a senhora tem",
+            "qual a sua idade",
+            "com o que a senhora trabalha",
+            "qual a sua profissao"
+          ]
+        },
+        {
+          "nome": "explica o objetivo da consulta e obtem consentimento",
+          "termos": [
+            "o objetivo da consulta",
+            "hoje a gente vai",
+            "vou te explicar como funciona",
+            "essa consulta serve para",
+            "posso te fazer algumas perguntas",
+            "a senhora concorda",
+            "tudo bem pra senhora",
+            "a senhora permite"
+          ]
+        },
+        {
+          "nome": "escuta aberta e acolhimento inicial",
+          "termos": [
+            "me conta",
+            "o que trouxe a senhora aqui",
+            "como a senhora esta",
+            "fala um pouco pra mim",
+            "o que a senhora esperava dessa consulta",
+            "estou aqui pra te escutar"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Anamnese clinica dirigida e farmaconutricional",
+      "objetivo": "Investigar comorbidades, medicamentos em uso e adesao, interacoes farmaco-nutriente, suplementos, alergias e intolerancias, habito intestinal, apetite, sintomas gastrointestinais, mastigacao/degluticao, cirurgias previas e historia familiar.",
+      "itens": [
+        {
+          "nome": "comorbidades",
+          "termos": [
+            "diabetes",
+            "pressao alta",
+            "o acucar",
+            "a pressao",
+            "colesterol",
+            "alguma outra doenca",
+            "problema de saude",
+            "ha quanto tempo tem diabetes"
+          ]
+        },
+        {
+          "nome": "medicamentos em uso",
+          "termos": [
+            "que remedio a senhora toma",
+            "quais remedios",
+            "medicamento em uso",
+            "metformina",
+            "losartana",
+            "remedio da pressao",
+            "remedio do diabetes",
+            "receita do medico"
+          ]
+        },
+        {
+          "nome": "RISCO — adesao e efeito adverso da metformina",
+          "termos": [
+            "a senhora toma o remedio todo dia",
+            "esquece de tomar o remedio",
+            "como a senhora toma a metformina",
+            "toma a metformina certinho",
+            "pula alguma dose",
+            "algum remedio te faz mal",
+            "sente alguma coisa depois de tomar o remedio",
+            "da dor de barriga o remedio",
+            "tem diarreia com o remedio",
+            "em que horario a senhora toma o remedio",
+            "tem dificuldade de tomar o remedio",
+            "ja parou algum remedio por conta propria",
+            "o remedio da enjoo",
+            "sobra remedio na cartela"
+          ]
+        },
+        {
+          "nome": "RISCO — automedicacao, chas e produtos para emagrecer",
+          "termos": [
+            "tomou algum remedio pra emagrecer",
+            "toma algum cha",
+            "cha para emagrecer",
+            "toma shake",
+            "usa suplemento",
+            "usa manipulado",
+            "formula para emagrecer",
+            "comprou remedio por conta propria",
+            "alguem indicou algum remedio",
+            "usou algum produto natural",
+            "toma alguma coisa alem do que o medico passou",
+            "inibidor de apetite",
+            "usa algum produto pra secar",
+            "tomou remedio sem receita"
+          ]
+        },
+        {
+          "nome": "suplementos e interacao farmaco-nutriente",
+          "termos": [
+            "toma alguma vitamina",
+            "usa suplemento",
+            "vitamina b12",
+            "metformina e b12",
+            "interacao do remedio com o alimento",
+            "algum complemento alimentar"
+          ]
+        },
+        {
+          "nome": "alergias e intolerancias alimentares",
+          "termos": [
+            "alergia",
+            "intolerancia",
+            "algum alimento faz mal",
+            "passa mal com algum alimento",
+            "lactose",
+            "gluten",
+            "leite faz mal"
+          ]
+        },
+        {
+          "nome": "habito intestinal",
+          "termos": [
+            "intestino",
+            "evacua",
+            "quantas vezes vai ao banheiro",
+            "prisao de ventre",
+            "constipacao",
+            "as fezes",
+            "diarreia",
+            "intestino preso"
+          ]
+        },
+        {
+          "nome": "apetite e sintomas gastrointestinais",
+          "termos": [
+            "como esta o apetite",
+            "sente enjoo",
+            "azia",
+            "queimacao",
+            "empachamento",
+            "vomito",
+            "gases",
+            "sente a barriga estufada",
+            "tem sede",
+            "urina muito a noite"
+          ]
+        },
+        {
+          "nome": "mastigacao, degluticao e saude bucal",
+          "termos": [
+            "mastiga bem",
+            "mastigacao",
+            "engasga",
+            "dificuldade de engolir",
+            "como estao os dentes",
+            "usa protese",
+            "usa dentadura",
+            "consegue mastigar"
+          ]
+        },
+        {
+          "nome": "cirurgias e internacoes previas",
+          "termos": [
+            "ja fez cirurgia",
+            "ja operou",
+            "ja internou",
+            "cirurgia previa",
+            "cirurgia do estomago"
+          ]
+        },
+        {
+          "nome": "historia familiar",
+          "termos": [
+            "na familia tem",
+            "sua mae",
+            "seu pai",
+            "seus irmaos",
+            "historico familiar",
+            "alguem da familia tem diabetes",
+            "alguem da familia tem pressao alta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Historico de peso e perda ponderal involuntaria quantificada",
+      "objetivo": "Levantar peso habitual e evolucao ponderal, e investigar perda de peso involuntaria com magnitude em kg E intervalo de tempo, reconhecendo que aqui o peso esta estavel (nao ha criterio para GLIM/triagem de desnutricao).",
+      "itens": [
+        {
+          "nome": "peso habitual e evolucao do peso",
+          "termos": [
+            "peso habitual",
+            "quanto a senhora pesava",
+            "qual o seu peso de sempre",
+            "peso maximo",
+            "quando a senhora comecou a engordar",
+            "como foi o seu peso ao longo do tempo",
+            "engordou quanto"
+          ]
+        },
+        {
+          "nome": "investiga perda de peso involuntaria",
+          "termos": [
+            "perdeu peso",
+            "emagreceu sem querer",
+            "perdeu peso sem querer",
+            "perdeu peso nos ultimos meses",
+            "esta perdendo peso",
+            "o peso caiu"
+          ]
+        },
+        {
+          "nome": "quantifica magnitude em kg e intervalo de tempo",
+          "termos": [
+            "quantos quilos",
+            "quantos quilos perdeu",
+            "em quanto tempo",
+            "em quantos meses",
+            "quanto tempo faz isso",
+            "quantos kg em quanto tempo",
+            "percentual de perda de peso"
+          ]
+        },
+        {
+          "nome": "reconhece peso estavel e afasta risco de desnutricao",
+          "termos": [
+            "o peso esta estavel",
+            "o peso ficou parado",
+            "nao houve perda involuntaria",
+            "peso estavel ha dois anos",
+            "nao ha risco de desnutricao",
+            "nao preenche criterio de desnutricao"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Anamnese alimentar — R24h pelo metodo de multiplos passos",
+      "objetivo": "Aplicar as 5 passagens do recordatorio de 24 horas, cobrindo as 24h completas com bebidas, adicao de acucar e oleo, beliscos e ceia; usar medidas caseiras; identificar dia atipico; nao induzir a resposta nem julgar o relato.",
+      "itens": [
+        {
+          "nome": "passo 1 — listagem rapida do dia",
+          "termos": [
+            "recordatorio de 24 horas",
+            "o que a senhora comeu ontem",
+            "me conta tudo o que a senhora comeu ontem",
+            "desde que a senhora acordou ontem",
+            "do cafe da manha ate a hora de dormir",
+            "vamos passar pelo seu dia de ontem"
+          ]
+        },
+        {
+          "nome": "passo 2 — detalhamento refeicao por refeicao",
+          "termos": [
+            "o que a senhora tomou no cafe da manha",
+            "e no almoco o que a senhora comeu",
+            "e no jantar",
+            "e no lanche da tarde",
+            "que horas a senhora almoca",
+            "que horas foi essa refeicao",
+            "o que veio junto no prato"
+          ]
+        },
+        {
+          "nome": "passo 3 — sonda de bebidas",
+          "termos": [
+            "e o que a senhora bebeu",
+            "tomou alguma bebida",
+            "bebeu refrigerante",
+            "tomou suco",
+            "o que a senhora bebeu junto",
+            "toma cafe durante o dia",
+            "quanta agua a senhora bebe",
+            "bebeu alguma coisa no meio da manha"
+          ]
+        },
+        {
+          "nome": "passo 3 — sonda de acucar, oleo, sal e gordura de adicao",
+          "termos": [
+            "poe acucar",
+            "quantas colheres de acucar",
+            "usa adocante",
+            "quanto de oleo",
+            "frita ou refoga",
+            "usa manteiga ou margarina",
+            "quanto de sal",
+            "quantas garrafas de oleo por mes"
+          ]
+        },
+        {
+          "nome": "RISCO — beliscos, ceia e comer fora das refeicoes",
+          "termos": [
+            "come alguma coisa depois do jantar",
+            "a senhora faz ceia",
+            "come de madrugada",
+            "belisca alguma coisa durante o dia",
+            "come alguma coisa antes de dormir",
+            "acorda a noite e come",
+            "come alguma coisa fora das refeicoes",
+            "toma alguma coisa antes de deitar",
+            "come escondido",
+            "come alguma coisa de noite",
+            "mais alguma coisa naquele dia",
+            "e depois do jantar teve mais alguma coisa",
+            "entre o jantar e a hora de dormir",
+            "come algum doce a noite"
+          ]
+        },
+        {
+          "nome": "passo 4 — revisao de porcoes em medidas caseiras",
+          "termos": [
+            "quantas conchas",
+            "concha de arroz",
+            "quantas colheres de sopa",
+            "que tamanho do copo",
+            "copo americano",
+            "me mostra o tamanho",
+            "medida caseira",
+            "era um prato cheio",
+            "quantos pedacos",
+            "o pacote era grande ou pequeno"
+          ]
+        },
+        {
+          "nome": "passo 5 — revisao e confirmacao final",
+          "termos": [
+            "deixa eu repetir pra ver se entendi",
+            "vou repetir o que a senhora me falou",
+            "e isso mesmo",
+            "faltou alguma coisa",
+            "esqueci de alguma coisa",
+            "confirma pra mim",
+            "esta correto assim"
+          ]
+        },
+        {
+          "nome": "identifica dia atipico e considera instrumento complementar",
+          "termos": [
+            "ontem foi um dia comum",
+            "foi um dia normal",
+            "todo dia e assim",
+            "e no final de semana",
+            "e no domingo",
+            "registro alimentar de tres dias",
+            "questionario de frequencia alimentar",
+            "marcadores de consumo alimentar",
+            "sisvan"
+          ]
+        },
+        {
+          "nome": "nao induz a resposta nem julga o relato",
+          "termos": [
+            "nao tem certo nem errado",
+            "nao vim aqui pra julgar",
+            "pode falar tranquila",
+            "quero entender o seu dia",
+            "nao precisa ter vergonha",
+            "sem julgamento",
+            "me conta do jeito que foi"
+          ]
+        }
+      ],
+      "peso": 1.75
+    },
+    {
+      "nome": "Contexto socioalimentar e exequibilidade do plano",
+      "objetivo": "Investigar renda, quem compra e quem cozinha, numero de comensais, acesso e equipamentos, rotina de trabalho, insegurança alimentar e crencas/restricoes culturais — o que separa plano exequivel de plano de papel.",
+      "itens": [
+        {
+          "nome": "RISCO — inseguranca alimentar e renda",
+          "termos": [
+            "a comida chega ate o fim do mes",
+            "ja faltou comida em casa",
+            "quanto sobra pra comprar comida",
+            "qual e a renda da familia",
+            "ja passou vontade de comer e nao teve",
+            "recebe cesta basica",
+            "recebe algum beneficio",
+            "o dinheiro da comida da pro mes inteiro",
+            "quanto gasta no mercado",
+            "ja ficou sem dinheiro pra comida",
+            "diminuiu a comida por falta de dinheiro",
+            "tem dificuldade de comprar fruta e verdura",
+            "come menos pra sobrar pros outros",
+            "no fim do mes muda o que a senhora come"
+          ]
+        },
+        {
+          "nome": "quem compra e quem cozinha",
+          "termos": [
+            "quem cozinha",
+            "quem faz a comida",
+            "quem compra a comida",
+            "quem faz a compra do mes",
+            "a senhora que cozinha"
+          ]
+        },
+        {
+          "nome": "numero de comensais e composicao da casa",
+          "termos": [
+            "para quantas pessoas a senhora cozinha",
+            "quantas pessoas moram na casa",
+            "quantos comem em casa",
+            "quem mora com a senhora",
+            "com quem a senhora mora"
+          ]
+        },
+        {
+          "nome": "acesso, equipamentos e armazenamento",
+          "termos": [
+            "tem geladeira",
+            "tem fogao",
+            "tem liquidificador",
+            "tem microondas",
+            "tem onde guardar a comida",
+            "tem onde cozinhar",
+            "tem feira perto de casa"
+          ]
+        },
+        {
+          "nome": "rotina de trabalho e onde faz as refeicoes",
+          "termos": [
+            "que horas a senhora sai de casa",
+            "onde a senhora almoca",
+            "leva marmita",
+            "qual o horario do seu trabalho",
+            "tem tempo pra cozinhar",
+            "onde a senhora come no trabalho"
+          ]
+        },
+        {
+          "nome": "crencas, preferencias e restricoes culturais ou religiosas",
+          "termos": [
+            "tem algum alimento que a senhora nao come",
+            "por religiao",
+            "costume da familia",
+            "o que a familia gosta de comer",
+            "do que a senhora gosta",
+            "nao gosta de verdura",
+            "o que a senhora aceitaria comer"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Antropometria — solicitacao nominal, tecnica e interpretacao",
+      "objetivo": "Pedir nominalmente peso, estatura, IMC e circunferencia da cintura (e outras medidas quando indicado), verbalizar a tecnica correta e classificar o estado nutricional com o ponto de corte adequado para adulto (OMS 1995/1998).",
+      "itens": [
+        {
+          "nome": "solicita peso e estatura",
+          "termos": [
+            "vou pesar a senhora",
+            "quero aferir o peso",
+            "peso",
+            "balanca",
+            "medir a altura",
+            "estatura",
+            "estadiometro"
+          ]
+        },
+        {
+          "nome": "calcula e classifica o IMC",
+          "termos": [
+            "imc",
+            "indice de massa corporal",
+            "peso dividido pela altura ao quadrado",
+            "obesidade grau 1",
+            "obesidade grau i",
+            "classificacao do estado nutricional",
+            "classificacao da oms"
+          ]
+        },
+        {
+          "nome": "solicita circunferencia da cintura",
+          "termos": [
+            "circunferencia da cintura",
+            "medir a cintura",
+            "medida da cintura",
+            "circunferencia abdominal",
+            "perimetro abdominal"
+          ]
+        },
+        {
+          "nome": "interpreta com ponto de corte correto para mulher adulta",
+          "termos": [
+            "acima de 88",
+            "ponto de corte",
+            "risco muito elevado",
+            "risco metabolico aumentado",
+            "referencia da oms",
+            "corte para mulher",
+            "oms 1998",
+            "corte de 88 centimetros"
+          ]
+        },
+        {
+          "nome": "outras medidas quando indicadas",
+          "termos": [
+            "circunferencia do braco",
+            "dobra cutanea tricipital",
+            "circunferencia muscular do braco",
+            "circunferencia da panturrilha",
+            "relacao cintura quadril",
+            "relacao cintura estatura",
+            "dinamometria",
+            "forca de preensao",
+            "bioimpedancia"
+          ]
+        },
+        {
+          "nome": "verbaliza a tecnica correta de afericao",
+          "termos": [
+            "balanca calibrada",
+            "descalca",
+            "roupa leve",
+            "plano de frankfurt",
+            "calcanhares unidos",
+            "ponto medio entre a ultima costela e a crista iliaca",
+            "fita inelastica",
+            "no fim da expiracao"
+          ]
+        },
+        {
+          "nome": "afere a pressao arterial",
+          "termos": [
+            "aferir a pressao",
+            "medir a pressao",
+            "pressao arterial",
+            "manguito"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Solicitacao e leitura de exames bioquimicos pertinentes",
+      "objetivo": "Pedir nominalmente os exames que mudam a conduta e interpreta-los, incluindo a ressalva sobre albumina/pre-albumina em vigencia de inflamacao e a interacao metformina-vitamina B12.",
+      "itens": [
+        {
+          "nome": "hemoglobina glicada",
+          "termos": [
+            "hemoglobina glicada",
+            "hba1c",
+            "glicada",
+            "a1c",
+            "controle glicemico dos ultimos meses"
+          ]
+        },
+        {
+          "nome": "glicemia de jejum",
+          "termos": [
+            "glicemia de jejum",
+            "glicemia",
+            "acucar no sangue",
+            "glicose de jejum",
+            "glicemia capilar"
+          ]
+        },
+        {
+          "nome": "perfil lipidico",
+          "termos": [
+            "perfil lipidico",
+            "colesterol",
+            "ldl",
+            "hdl",
+            "triglicerides",
+            "triglicerideos",
+            "lipidograma"
+          ]
+        },
+        {
+          "nome": "funcao renal e albuminuria",
+          "termos": [
+            "funcao renal",
+            "creatinina",
+            "ureia",
+            "taxa de filtracao glomerular",
+            "tfg",
+            "albuminuria",
+            "microalbuminuria",
+            "relacao albumina creatinina",
+            "urina tipo 1"
+          ]
+        },
+        {
+          "nome": "vitamina B12 pela interacao com a metformina",
+          "termos": [
+            "vitamina b12",
+            "b12",
+            "cobalamina",
+            "b12 por causa da metformina",
+            "metformina reduz b12"
+          ]
+        },
+        {
+          "nome": "ressalva sobre albumina e pre-albumina com PCR",
+          "termos": [
+            "albumina",
+            "pre albumina",
+            "pcr",
+            "proteina c reativa",
+            "albumina nao e marcador nutricional",
+            "marcador de inflamacao e nao de estado nutricional",
+            "ler junto com a pcr"
+          ]
+        },
+        {
+          "nome": "TSH e demais exames de suporte",
+          "termos": [
+            "tsh",
+            "funcao tireoidiana",
+            "tireoide",
+            "hemograma",
+            "vitamina d",
+            "acido urico",
+            "enzimas hepaticas",
+            "tgo",
+            "tgp"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Diagnostico nutricional em formato PES",
+      "objetivo": "Enunciar em voz alta Problema + Etiologia ('relacionado a') + Sinais/Sintomas ('evidenciado por'), com terminologia do TPCN, sem repetir o diagnostico medico.",
+      "itens": [
+        {
+          "nome": "enuncia o PROBLEMA nutricional",
+          "termos": [
+            "o diagnostico nutricional e",
+            "o problema nutricional e",
+            "ingestao energetica excessiva",
+            "consumo excessivo de carboidrato",
+            "ingestao excessiva de acucar",
+            "consumo elevado de ultraprocessados",
+            "qualidade inadequada da dieta",
+            "excesso de peso corporal",
+            "conhecimento limitado sobre alimentacao"
+          ]
+        },
+        {
+          "nome": "declara a ETIOLOGIA com 'relacionado a'",
+          "termos": [
+            "relacionado a",
+            "relacionado ao",
+            "relacionada a",
+            "a etiologia e",
+            "tem relacao com",
+            "por causa de um habito alimentar"
+          ]
+        },
+        {
+          "nome": "declara os SINAIS E SINTOMAS com 'evidenciado por'",
+          "termos": [
+            "evidenciado por",
+            "evidenciado pelo",
+            "evidenciada por",
+            "comprovado por",
+            "demonstrado por",
+            "com base no imc e na cintura",
+            "confirmado pelo recordatorio"
+          ]
+        },
+        {
+          "nome": "usa terminologia padronizada (TPCN/ADIME/PES)",
+          "termos": [
+            "formato pes",
+            "no formato pes",
+            "diagnostico em pes",
+            "problema etiologia sinais e sintomas",
+            "tpcn",
+            "terminologia padronizada",
+            "processo de cuidado em nutricao",
+            "adime"
+          ]
+        },
+        {
+          "nome": "nao repete o diagnostico medico como diagnostico nutricional",
+          "termos": [
+            "diabetes nao e diagnostico nutricional",
+            "o diagnostico nutricional e diferente do medico",
+            "isso e o diagnostico medico",
+            "o meu diagnostico e nutricional",
+            "diagnostico proprio da nutricao"
+          ]
+        }
+      ],
+      "peso": 1.25
+    },
+    {
+      "nome": "Calculo das necessidades energeticas e proteicas",
+      "objetivo": "Estimar energia e proteina com formula explicitada e justificada, definir deficit energetico, g de proteina/kg e distribuicao de macronutrientes.",
+      "itens": [
+        {
+          "nome": "explicita a formula ou o metodo usado",
+          "termos": [
+            "mifflin",
+            "mifflin st jeor",
+            "harris benedict",
+            "fao oms unu",
+            "equacao preditiva",
+            "kcal por quilo",
+            "formula de bolso",
+            "gasto energetico total",
+            "gasto energetico basal",
+            "get"
+          ]
+        },
+        {
+          "nome": "define deficit energetico coerente",
+          "termos": [
+            "deficit calorico",
+            "deficit de 500",
+            "reducao de 500 a 750",
+            "restricao energetica",
+            "kcal a menos por dia",
+            "valor energetico total"
+          ]
+        },
+        {
+          "nome": "define a necessidade proteica em g/kg",
+          "termos": [
+            "grama de proteina por quilo",
+            "1 grama por quilo",
+            "1,2 grama por quilo",
+            "necessidade proteica",
+            "quanto de proteina por dia"
+          ]
+        },
+        {
+          "nome": "ajusta por fator atividade e por peso ajustado",
+          "termos": [
+            "fator atividade",
+            "fator de estresse",
+            "peso ajustado",
+            "peso ideal",
+            "peso corrigido",
+            "fator de correcao"
+          ]
+        },
+        {
+          "nome": "define a distribuicao de macronutrientes",
+          "termos": [
+            "distribuicao de macronutrientes",
+            "percentual de carboidrato",
+            "percentual de proteina",
+            "percentual de gordura",
+            "macronutrientes",
+            "fibra por dia"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Conduta dietetica individualizada",
+      "objetivo": "Prescrever dieta com via, consistencia, fracionamento e restricoes especificas, ancorada no Guia Alimentar para a Populacao Brasileira e na classificacao NOVA, com substituicoes viaveis para a renda, a cultura e a rotina relatadas.",
+      "itens": [
+        {
+          "nome": "define via, consistencia e fracionamento",
+          "termos": [
+            "via oral",
+            "consistencia",
+            "fracionamento",
+            "quantas refeicoes por dia",
+            "quatro a cinco refeicoes",
+            "de tres em tres horas",
+            "nao pular refeicao"
+          ]
+        },
+        {
+          "nome": "substitui bebidas acucaradas e reduz acucar de adicao",
+          "termos": [
+            "trocar o refrigerante",
+            "tirar o acucar do cafe",
+            "diminuir o acucar",
+            "substituir o suco de po",
+            "beber mais agua",
+            "agua no lugar do refrigerante",
+            "adocante"
+          ]
+        },
+        {
+          "nome": "ancora no Guia Alimentar e na classificacao NOVA",
+          "termos": [
+            "guia alimentar",
+            "guia alimentar para a populacao brasileira",
+            "classificacao nova",
+            "alimento ultraprocessado",
+            "alimento in natura",
+            "comida de verdade",
+            "minimamente processado"
+          ]
+        },
+        {
+          "nome": "propoe substituicoes viaveis para a renda e a cultura",
+          "termos": [
+            "cabe no orcamento",
+            "alimento mais barato",
+            "fruta da estacao",
+            "o que a senhora ja tem em casa",
+            "sem gastar mais",
+            "a mesma comida da familia",
+            "usar o que ja se cozinha em casa",
+            "aproveitar a compra do mes"
+          ]
+        },
+        {
+          "nome": "aumenta fibras e hortalicas de forma aceitavel para a paciente",
+          "termos": [
+            "chuchu",
+            "abobora",
+            "couve",
+            "verdura cozida",
+            "legume refogado",
+            "aumentar a fruta",
+            "manter o feijao",
+            "arroz integral",
+            "mais fibra"
+          ]
+        },
+        {
+          "nome": "reduz fritura e gordura, adequa para diabetes e hipertensao",
+          "termos": [
+            "diminuir a fritura",
+            "assar em vez de fritar",
+            "usar menos oleo",
+            "grelhar",
+            "reduzir o sal",
+            "sodio",
+            "carboidrato de absorcao rapida",
+            "indice glicemico",
+            "controlar o acucar do sangue"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Orientacao, metas negociadas e checagem de entendimento",
+      "objetivo": "Orientar em linguagem sem jargao, negociar no maximo 3 metas mensuraveis, checar ativamente o entendimento, abrir espaco para duvidas e acolher a experiencia previa de julgamento sem culpabilizar.",
+      "itens": [
+        {
+          "nome": "RISCO — experiencia previa de dieta e de julgamento",
+          "termos": [
+            "ja foi em nutricionista antes",
+            "como foi das outras vezes",
+            "o que a senhora ja tentou",
+            "por que a senhora acha que nao deu certo",
+            "como a senhora se sentiu nas outras dietas",
+            "alguem ja te tratou mal por causa do peso",
+            "como e falar do seu peso",
+            "o que te fez desistir",
+            "ja se sentiu julgada",
+            "como e pra senhora vir aqui hoje",
+            "o que a senhora espera dessa consulta",
+            "ja ouviu alguma coisa que te magoou",
+            "ja tentou de tudo como assim",
+            "o que te incomoda em fazer dieta"
+          ]
+        },
+        {
+          "nome": "usa linguagem simples, sem jargao",
+          "termos": [
+            "em palavras simples",
+            "deixa eu explicar de um jeito simples",
+            "vou explicar melhor",
+            "ficou claro",
+            "sem palavra dificil",
+            "explicando do meu jeito"
+          ]
+        },
+        {
+          "nome": "negocia no maximo 3 metas com a paciente",
+          "termos": [
+            "vamos comecar com tres coisas",
+            "so tres metas",
+            "o que a senhora acha que consegue fazer",
+            "qual delas a senhora quer comecar",
+            "escolhe uma pra comecar",
+            "a senhora topa",
+            "vamos combinar juntas",
+            "o que e possivel pra senhora"
+          ]
+        },
+        {
+          "nome": "define metas mensuraveis e com prazo",
+          "termos": [
+            "quantos dias na semana",
+            "quantas vezes por semana",
+            "uma meta pra essa semana",
+            "de hoje ate o retorno",
+            "todos os dias no cafe da manha",
+            "meta pro proximo mes"
+          ]
+        },
+        {
+          "nome": "checa ativamente o entendimento",
+          "termos": [
+            "me conta como vai ficar o seu cafe da manha",
+            "repete pra mim o que a gente combinou",
+            "como a senhora vai fazer amanha",
+            "me explica com as suas palavras",
+            "o que a senhora entendeu",
+            "me diz o que a senhora vai mudar"
+          ]
+        },
+        {
+          "nome": "abre espaco para duvidas",
+          "termos": [
+            "ficou alguma duvida",
+            "quer perguntar alguma coisa",
+            "tem alguma pergunta",
+            "alguma coisa que nao deu pra entender",
+            "quer que eu repita"
+          ]
+        },
+        {
+          "nome": "valida o esforco sem culpabilizar nem prometer meta irreal",
+          "termos": [
+            "nao e culpa sua",
+            "a senhora ja faz muita coisa",
+            "nao vim aqui pra julgar",
+            "entendo o seu esforco",
+            "isso e mais comum do que parece",
+            "a gente vai no seu ritmo",
+            "nao existe milagre",
+            "perda de peso gradual"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Monitoramento, encerramento, articulacao e limite etico",
+      "objetivo": "Definir indicadores a reavaliar, prazo de retorno e o que trazer; acionar a equipe quando indicado; nao prescrever medicamento nem invadir competencia alheia; registrar em prontuario.",
+      "itens": [
+        {
+          "nome": "define indicadores a monitorar",
+          "termos": [
+            "vou acompanhar o peso",
+            "medir a cintura de novo",
+            "repetir a glicada em tres meses",
+            "monitorar a pressao",
+            "acompanhar a adesao as metas",
+            "indicadores de acompanhamento"
+          ]
+        },
+        {
+          "nome": "define prazo de retorno",
+          "termos": [
+            "retorno em 30 dias",
+            "volta daqui a um mes",
+            "vamos marcar o retorno",
+            "te vejo daqui a",
+            "proxima consulta",
+            "agendar o retorno"
+          ]
+        },
+        {
+          "nome": "orienta o que trazer no retorno",
+          "termos": [
+            "traz os exames",
+            "traz o registro alimentar",
+            "anota o que a senhora comer",
+            "traz a caixa dos remedios",
+            "traz a receita do medico",
+            "traz o diario alimentar"
+          ]
+        },
+        {
+          "nome": "articula com a equipe e a rede",
+          "termos": [
+            "encaminhar para o educador fisico",
+            "profissional de educacao fisica",
+            "conversar com o medico da equipe",
+            "equipe de saude da familia",
+            "agente comunitaria de saude",
+            "encaminhar para o dentista",
+            "psicologo",
+            "assistente social",
+            "grupo da unidade",
+            "equipe multiprofissional",
+            "emulti",
+            "nasf"
+          ]
+        },
+        {
+          "nome": "respeita o limite etico e registra em prontuario",
+          "termos": [
+            "quem ajusta o remedio e o medico",
+            "eu nao prescrevo medicamento",
+            "isso e com o medico",
+            "vou registrar no prontuario",
+            "registro em prontuario",
+            "vou anotar no seu prontuario",
+            "nao posso mudar a dose do remedio"
+          ]
+        }
+      ],
+      "peso": 0.25
+    }
+  ]
+}

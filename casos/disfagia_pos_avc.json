@@ -1,0 +1,813 @@
+{
+  "categoria": "fonoaudiologia",
+  "titulo": "Disfagia Orofaríngea Neurogênica pós-AVC",
+  "identificacao": {
+    "nome": "Osvaldo Ferreira da Silva",
+    "idade": 68,
+    "sexo": "Masculino",
+    "voz": "masculino",
+    "estado_civil": "Viúvo",
+    "escolaridade": "Ensino Fundamental Incompleto (parou na 4ª série)",
+    "profissao": "Aposentado; foi pedreiro e mestre de obras por quase 40 anos"
+  },
+  "queixa_principal": "Tô com sede, moço... ninguém me deixa beber nem um gole de água",
+  "cenario_de_atuacao": {
+    "nivel_de_atencao": "Atenção terciária — enfermaria de hospital geral, à beira do leito.",
+    "infraestrutura_disponivel": "Leito com cabeceira elevável e coxins de posicionamento; material para prova de deglutição (água em copo e em seringa dosadora, espessante alimentar, alimento pastoso homogêneo, colher de chá, gaze, luvas); estetoscópio para ausculta cervical; oxímetro de pulso; ASPIRADOR DE SECREÇÃO montado e testado à beira do leito, com sonda de aspiração e equipe de enfermagem em retaguarda imediata; material para higiene oral (escova macia, gaze, antisséptico); prontuário eletrônico disponível para consulta; possibilidade de solicitar videofluoroscopia da deglutição e videoendoscopia da deglutição (FEES) e de acionar equipe médica, de enfermagem e de nutrição.",
+    "descricao_do_caso": "Homem de 68 anos, terceiro dia de internação por AVC isquêmico em território de artéria cerebral média esquerda, extubado há 24 horas, atualmente em jejum por via oral. A equipe médica solicita avaliação fonoaudiológica da deglutição antes de liberar dieta. A filha está à beira do leito.",
+    "avisos": [
+      "ATENÇÃO! CASO JULGUE NECESSÁRIO REALIZAR AVALIAÇÃO ESTRUTURAL, FUNCIONAL OU OFERTA DE ALIMENTO, VERBALIZE!",
+      "O PACIENTE SIMULADO NÃO DEVERÁ SER TOCADO DURANTE O ATENDIMENTO.",
+      "VOCÊ DEVERÁ REALIZAR AS TAREFAS NA SEQUÊNCIA DESCRITA.",
+      "ESTABELEÇA E COMUNIQUE O DIAGNÓSTICO FONOAUDIOLÓGICO COM CLASSIFICAÇÃO DE GRAU ANTES DE INDICAR EXAME OBJETIVO. SÓ SERÁ PONTUADO O QUE FOR VERBALIZADO ANTES DA SOLICITAÇÃO DO EXAME.",
+      "SOLICITE NO MÁXIMO TRÊS EXAMES OU PARECERES DE OUTRAS PROFISSÕES. SÓ SERÃO PONTUADOS OS TRÊS PRIMEIROS CITADOS."
+    ]
+  },
+  "tarefas_da_estacao": {
+    "tempo": "15 minutos",
+    "tarefa_1": "Apresentar-se e realizar anamnese fonoaudiológica dirigida junto ao paciente e à acompanhante.",
+    "tarefa_2": "Verificar e verbalizar os pré-requisitos de segurança para avaliação à beira do leito; solicitar e interpretar a avaliação estrutural e funcional dos órgãos fonoarticulatórios.",
+    "tarefa_3": "Realizar a avaliação clínica da deglutição, verbalizando consistências e volumes ofertados e descrevendo os achados.",
+    "tarefa_4": "Estabelecer e comunicar o diagnóstico fonoaudiológico, classificando o grau de comprometimento por escala nomeada.",
+    "tarefa_5": "Propor conduta (via de alimentação, consistência, manobras e adaptações), indicar exame objetivo se pertinente e orientar a acompanhante."
+  },
+  "historia_doenca_atual": {
+    "evento_inicial": "Há 3 dias, ao acordar de manhã, a filha o encontrou caído ao lado da cama, sem conseguir falar direito e sem mover o braço direito. Foi encontrado por volta das 7h e chegou ao pronto-socorro cerca de 2 horas depois — mas o último horário em que foi visto bem foi o jantar da noite anterior, por volta das 20h, ou seja, mais de 13 horas antes da chegada.",
+    "diagnostico_da_internacao": "AVC isquêmico em território de artéria cerebral média esquerda, confirmado na internação. Não foi trombolisado: por ter sido um AVC de início indeterminado ao despertar, já estava fora da janela terapêutica quando chegou.",
+    "intubacao": "Ficou intubado por 36 horas em UTI por rebaixamento do nível de consciência e desconforto respiratório; foi extubado há 24 horas, transferido para a enfermaria e desde então respira em ar ambiente.",
+    "via_alimentar_atual": "Jejum por via oral desde a admissão, mantido com hidratação venosa. Recebeu apenas soro e medicação endovenosa. Ainda não foi passada sonda.",
+    "queixa_atual": "Refere sede intensa e boca seca; reclama de estar 'só no soro' e de a boca estar 'grudando'. Diz que consegue engolir a própria saliva 'com jeitinho'.",
+    "fala_e_voz": "Desde o AVC a fala ficou 'enrolada' e lenta, e a voz mais fraca. Ele percebe que as pessoas pedem para repetir. Entende tudo o que falam com ele.",
+    "escape_de_saliva": "Baba pelo canto direito da boca, principalmente quando fala ou cochila; usa uma toalhinha no ombro.",
+    "evolucao": "Desde a extubação melhorou o nível de alerta e a força do lado esquerdo; a fala continua enrolada e a boca continua caindo do lado direito. Nas últimas horas ficou mais ansioso pela sede.",
+    "narrativa_da_acompanhante": "A filha Rosângela conta que o pai era independente até três dias atrás, cozinhava para si e ia à padaria todo dia. Está assustada com a rapidez da mudança, cansada de dormir na poltrona do quarto e aflita porque 'ele não come nada desde que chegou'."
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": "Hipertenso há mais de 20 anos, em uso irregular de losartana — 'esquecia bastante'",
+    "diabetes": "Diabetes tipo 2 há 8 anos, em uso de metformina; controle irregular",
+    "dislipidemia": "Colesterol alto, já orientado a usar sinvastatina, mas não tomava com regularidade",
+    "avc_previo": "Nega AVC anterior; teve um episódio de 'formigamento e fala enrolada' há 2 anos que passou sozinho em algumas horas e não foi investigado",
+    "cirurgias": "Herniorrafia inguinal há 15 anos",
+    "internacoes": "Ficou internado 6 dias por pneumonia há cerca de 8 meses",
+    "alergias": "Nega alergias medicamentosas",
+    "saude_bucal": "Perdeu todos os dentes de cima e quase todos os de baixo — restam uns quatro na arcada inferior; usa prótese total superior antiga e frouxa. Não vai ao dentista há mais de 6 anos",
+    "audicao_e_visao": "Ouve bem de perto, mas pede para repetir em ambiente barulhento; usa óculos de leitura",
+    "peso": "Perdeu cerca de 6 kg nos últimos 8 meses, segundo a filha; a roupa 'ficou folgada'"
+  },
+  "antecedentes_familiares": {
+    "pai": "Falecido de 'derrame' aos 71 anos",
+    "mae": "Falecida por complicações de diabetes",
+    "irmaos": "Um irmão vivo, também hipertenso",
+    "esposa": "Falecida há 4 anos por câncer; ele foi cuidador dela até o fim",
+    "observacoes": "Família com forte histórico cardiovascular; ninguém acompanhava a pressão dele de perto depois que a esposa morreu"
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Fumou cerca de 1 maço por dia dos 18 aos 60 anos; parou há 8 anos (aproximadamente 42 anos-maço)",
+    "alcool": "Bebia cerveja nos fins de semana com os colegas de obra; diminuiu muito depois que a esposa morreu",
+    "alimentacao": "Comia sozinho em casa; nos últimos meses passou a preferir comida mole, sopa e café com pão molhado, porque carne 'entalava'",
+    "tempo_de_refeicao": "As refeições ficaram lentas nos últimos meses — levava quase uma hora para almoçar, segundo a filha",
+    "atividade_fisica": "Caminhava até a padaria todo dia de manhã, cerca de 15 minutos",
+    "sono": "Dormia bem em casa; no hospital dorme mal por causa do barulho e da sede",
+    "moradia": "Mora sozinho numa casa de dois cômodos nos fundos do terreno da filha"
+  },
+  "informacoes_iniciais": {
+    "sede": "Fala espontaneamente que está com muita sede e pede água logo no começo da conversa.",
+    "jejum": "Reclama que está há três dias 'só no soro' e que ninguém explicou por que não pode comer.",
+    "fala_enrolada": "Comenta que a fala está 'enrolada' e pede desculpa por não conseguir falar direito.",
+    "saliva": "Mostra a toalhinha no ombro e diz que a boca está caindo e babando do lado direito.",
+    "braco": "Diz que o braço direito 'não obedece' e que precisa de ajuda para tudo.",
+    "fala_da_filha": "A filha se apresenta e diz, sem ser perguntada, que o pai não come nada desde que chegou e que ela está preocupada porque ele está emagrecendo."
+  },
+  "informacoes_intermediarias": {
+    "tempo_de_avc": "Se perguntado, confirma que foi encontrado caído há três dias, de manhã, e que jantou normalmente na noite anterior.",
+    "intubacao": "A filha informa que ele ficou 'com o tubo na garganta' por um dia e meio e que tiraram ontem de manhã.",
+    "voz_apos_extubacao": "Ele diz que desde que tiraram o tubo a garganta ficou arranhando e a voz saiu mais fraca.",
+    "salivacao_e_degluticao": "Se perguntado, diz que consegue engolir a saliva, mas que às vezes precisa engolir duas ou três vezes.",
+    "medicacoes_atuais": "A filha lê, soletrando, os nomes que copiou do papel: 'AAS', 'losartana', 'atorvastatina', 'omeprazol', 'insulina' e 'uma injeção na barriga'. Não sabe dizer para que serve cada um nem por qual via estão dando; comenta que 'os comprimidos estão lá na prescrição, mas a enfermeira disse que não pode dar porque ele não pode engolir nada'. Lembra também de 'um pra dormir' que deram na primeira noite.",
+    "alimentacao_antes_do_avc": "Se perguntado, conta que nos últimos meses só comia comida mole, sopa e pão molhado no café, porque carne e arroz seco 'entalavam'.",
+    "perda_de_peso": "A filha confirma que ele emagreceu bastante nos últimos meses e que a calça 'não para na cintura'.",
+    "tempo_de_refeicao": "A filha conta que ele demorava quase uma hora para almoçar e que ela achava que era 'coisa de velho'.",
+    "colaboracao": "Ele diz que entende tudo o que falam com ele, só não consegue responder rápido.",
+    "posicionamento": "Se perguntado, diz que consegue ficar sentado na cama por um bom tempo, desde que apoiem o braço direito.",
+    "eliminacoes_e_febre": "A filha diz que ele não teve febre desde que chegou e que urina normalmente pelo coletor."
+  },
+  "informacoes_sensiveis": {
+    "oferta_de_alimento_escondido": "A filha, com muita vergonha e voz baixa, admite que ontem à noite deu ao pai três colheres de água e um pedaço de bolacha de água e sal, porque ele implorou de sede e ela não aguentou vê-lo daquele jeito. Ele tossiu bastante, ficou roxo por uns segundos e depois a voz dele saiu 'com um chiado, parecendo que tinha água presa na garganta' — demorou um tempão pra voltar ao normal. Ela não contou a ninguém com medo de ser repreendida pela enfermagem. Ela pergunta, quase chorando, se fez mal para o pai.",
+    "engasgos_e_pneumonia_previos": "Só sob pergunta direta a família conta que ele já engasgava em casa havia uns oito meses, principalmente com água e com café, e que a voz dele mudava depois das refeições. A internação por pneumonia há 8 meses veio logo depois de um engasgo forte durante um almoço de domingo — ninguém ligou uma coisa à outra, e ele passou a comer sozinho na cozinha para não 'dar espetáculo' na frente dos netos.",
+    "protese_dentaria_e_higiene_oral": "Ele se envergonha de estar sem a dentadura e cobre a boca com a mão quando fala disso. A prótese superior está numa sacolinha na gaveta desde a internação, está frouxa e machuca a gengiva, e ele já tinha parado de usá-la para comer havia meses. Desde a extubação ninguém escovou a boca dele; a filha achava que 'não podia mexer' porque ele estava em jejum.",
+    "medo_da_sonda_e_recusa": "Ele diz, com esforço e olhos cheios d'água, que viu a esposa morrer 'cheia de sonda' e que não quer passar por isso; pede que não coloquem 'aquele fio no nariz'. A filha conta em separado que um médico já falou em sonda pela manhã e que ela ficou apavorada, dividida entre o medo de o pai morrer de fome e o medo de contrariar a vontade dele.",
+    "vergonha_e_sofrimento_emocional": "Só se perguntado com acolhimento admite que está humilhado: baba, não consegue falar direito, precisa que a filha limpe sua boca. Diz que trabalhou a vida inteira de pedreiro, sustentou a casa, e que agora 'não serve pra nada'. Pediu para os netos não virem visitá-lo assim. Chora baixinho e pede desculpas por chorar.",
+    "sobrecarga_da_cuidadora": "A filha, se perguntada sobre ela mesma, conta que dorme há três noites na poltrona do quarto, que já perdeu turnos na padaria onde trabalha e teme ser mandada embora, e que é filha única. Diz que vai levar o pai para casa 'de qualquer jeito', mas confessa que não sabe como vai cuidar dele, dar comida e trabalhar ao mesmo tempo. Pede desculpa por 'estar reclamando' quando quem está doente é o pai."
+  },
+  "gatilhos_sensiveis": {
+    "oferta_de_alimento_escondido": [
+      "alguem ofereceu agua para ele",
+      "deu alguma coisa pra ele beber",
+      "ele comeu alguma coisa nesses dias",
+      "deu comida escondido",
+      "ele tomou agua hoje",
+      "quem ofereceu alimento",
+      "ele esta em jejum mesmo",
+      "molhou a boca dele",
+      "deu bolacha",
+      "deu algo por fora da dieta",
+      "a senhora chegou a dar alguma coisa",
+      "alguem da familia deu comida",
+      "ofereceram algo por via oral",
+      "deram algo para ele comer ou beber",
+      "ele colocou alguma coisa na boca"
+    ],
+    "engasgos_e_pneumonia_previos": [
+      "ele ja engasgou antes",
+      "engasgava em casa",
+      "engasgo com agua",
+      "tossia na hora de comer",
+      "ele ja teve pneumonia",
+      "ja internou por pneumonia",
+      "ja teve infeccao no pulmao",
+      "a voz mudava depois de comer",
+      "ja se engasgou com comida",
+      "antes do avc ele comia bem",
+      "tinha dificuldade pra engolir antes",
+      "isso ja acontecia antes do avc",
+      "ja teve infeccao respiratoria antes"
+    ],
+    "protese_dentaria_e_higiene_oral": [
+      "ele usa dentadura",
+      "ele usa protese",
+      "protese dentaria",
+      "ele tem dentes",
+      "como estao os dentes dele",
+      "escovaram a boca dele",
+      "higiene da boca",
+      "limparam a boca dele",
+      "escova os dentes",
+      "estao cuidando da boca dele",
+      "onde esta a dentadura",
+      "fizeram higiene oral desde a internacao",
+      "quando foi a ultima vez que limparam a boca"
+    ],
+    "medo_da_sonda_e_recusa": [
+      "ja falaram em sonda",
+      "sonda pelo nariz",
+      "sonda nasoenteral",
+      "colocar sonda",
+      "o que o senhor acha da sonda",
+      "ele aceitaria uma sonda",
+      "ele ja disse o que quer",
+      "conversaram sobre alimentacao por sonda",
+      "tem medo de alguma coisa",
+      "o que mais preocupa voces",
+      "o que mais preocupa o senhor",
+      "qual a vontade do paciente",
+      "o que o senhor gostaria que fosse feito",
+      "ja passaram sonda antes"
+    ],
+    "vergonha_e_sofrimento_emocional": [
+      "como o senhor esta se sentindo com tudo isso",
+      "como o senhor esta lidando com isso",
+      "como esta o animo dele",
+      "o senhor esta triste",
+      "isso incomoda o senhor",
+      "se sente constrangido",
+      "tem vergonha disso",
+      "sente vergonha",
+      "esta com vergonha",
+      "esta desanimado",
+      "como e pro senhor nao conseguir falar",
+      "o que mais te incomoda agora",
+      "o que mais incomoda o senhor",
+      "os netos tem vindo visitar",
+      "prefere ficar sozinho na hora da refeicao"
+    ],
+    "sobrecarga_da_cuidadora": [
+      "quem vai cuidar dele em casa",
+      "a senhora cuida sozinha",
+      "e a senhora como esta",
+      "e a senhora como tem passado",
+      "como esta sendo para a senhora",
+      "quem mais ajuda voces",
+      "a senhora esta cansada",
+      "a senhora tem ajuda",
+      "a senhora tem conseguido descansar",
+      "a senhora tem dormido",
+      "quem cuida da senhora",
+      "tem ajuda em casa",
+      "quem fica com ele",
+      "a senhora trabalha",
+      "como vai ser a alta",
+      "voces tem apoio",
+      "rede de apoio da familia",
+      "a senhora consegue dar conta",
+      "a senhora esta dando conta"
+    ]
+  },
+  "rede_apoio": {
+    "filha": "Rosângela, 43 anos, filha única, atendente de padaria; mora na casa da frente do mesmo terreno e é a acompanhante e cuidadora principal.",
+    "genro": "Genro trabalha em turno na fábrica; ajuda pouco, mas leva e busca de carro quando precisa.",
+    "netos": "Dois netos adolescentes; o paciente pediu que não o visitassem no hospital.",
+    "vizinhos": "Vizinhos antigos do bairro que perguntam dele e levaram comida na primeira noite.",
+    "irmao": "Um irmão que mora em outra cidade, telefona mas não pode vir.",
+    "servicos": "Faz acompanhamento na UBS do bairro, mas ia pouco às consultas; não tem plano de saúde nem cuidador contratado.",
+    "observacao": "A rede é real mas estreita: praticamente tudo recai sobre a filha, que já está no limite."
+  },
+  "persona": {
+    "resumo": "Osvaldo é um homem antigo, de mão calejada e orgulho de pedreiro — daqueles que se apresentam pelo ofício antes do nome e que mediram a própria dignidade pelo tanto que conseguiam carregar. Viúvo há quatro anos, cuidou da esposa até o fim e desde então vive sozinho nos fundos do terreno da filha, fazendo questão de não dar trabalho a ninguém. Nestes três dias de hospital ele perdeu de uma vez a fala fluente, o braço direito e o controle da própria boca, e isso o humilha mais do que assusta.",
+    "temperamento": [
+      "teimoso",
+      "discreto",
+      "educado à moda antiga (chama todo mundo de 'moço', 'doutor' ou 'dona')",
+      "orgulhoso do ofício de pedreiro",
+      "avesso a dar trabalho — se desculpa quando acha que está incomodando",
+      "agradecido por qualquer gentileza",
+      "lúcido e atento: entende tudo o que falam com ele",
+      "humilhado — mais envergonhado do que assustado",
+      "minimiza o próprio sofrimento para não preocupar a filha"
+    ],
+    "postura_na_consulta": "Recebe o profissional no leito, meio sentado, com a toalhinha no ombro e o copo de água ao alcance dos olhos. Está lúcido e quer colaborar, mas fala devagar, arrastado, e cansa depois de algumas frases — aí cala e deixa a filha responder por ele. Cobre a boca com a mão esquerda quando fala, por causa da dentadura que está guardada na gaveta. Ao lado do leito está Rosângela, 43 anos, filha única, atendente de padaria, prática e falante, que dorme na poltrona há três noites, anota tudo num papel amassado e responde antes do pai quando ele demora. Ela é a informante principal dos fatos e ele, da experiência: quem só falar com um dos dois vai perder metade do caso. Rosângela oscila entre a eficiência de quem quer resolver e o medo de ter feito besteira — carrega uma culpa que só sai se alguém perguntar. Os dois se protegem: ele esconde o sofrimento para não preocupar a filha, ela esconde o que fez para não ser repreendida."
+  },
+  "estilo_de_fala": {
+    "registro": "Popular e concreto, de homem de obra que parou na quarta série: vocabulário simples, frases curtas, nenhum termo técnico. Trata o profissional de 'moço', 'doutor' ou 'dona doutora' e usa 'o senhor' e 'a senhora'. A filha Rosângela fala num registro popular urbano, rápido, cheio de 'aí', 'sabe?', 'nossa', 'meu Deus', e explica tudo com detalhe de casa ('ele só comia sopinha', 'a calça não para na cintura'); ela também não usa termo técnico nenhum.",
+    "caracteristicas": [
+      "Fala lenta, arrastada e imprecisa por causa da disartria — as palavras saem 'enroladas'",
+      "Troca sons de língua e faz pausas para respirar no meio da frase",
+      "Às vezes precisa repetir porque não foi entendido; quando isso acontece, se irrita consigo mesmo, dá de ombros e diz 'deixa'",
+      "Cansa rápido: responde bem nas duas ou três primeiras frases e depois encurta para 'é', 'não', 'mais ou menos'",
+      "Quando cansa, aponta com a mão esquerda em vez de falar",
+      "Fica ofegante e pede um tempinho se falar demais",
+      "Nomeia o que sente com palavra de leigo: 'entalar', 'travar na garganta', 'descer pelo caminho errado', 'a boca tá caindo'",
+      "Pede desculpa por não conseguir falar direito e agradece qualquer gentileza",
+      "A filha responde antes dele quando ele demora: fala rápido, dá detalhe de casa e lê o que anotou no papel amassado",
+      "A filha devolve perguntas diretas ao profissional ('mas ele vai poder comer ou não, doutora?')",
+      "Quando o assunto encosta no que ela fez escondido, a voz da filha baixa, ela olha para o corredor e enrola antes de responder",
+      "Nenhum dos dois nomeia diagnóstico, grau, escala ou exame — no máximo repetem o que ouviram do médico"
+    ],
+    "bordoes_e_expressoes": [
+      "Tô com sede, moço",
+      "Entalou",
+      "Travou na garganta",
+      "Desceu pelo caminho errado",
+      "A boca tá caindo",
+      "Com jeitinho",
+      "Mais ou menos",
+      "Deixa",
+      "Deu derrame",
+      "Entupiu uma veia da cabeça",
+      "Aquele fio no nariz (a filha, sobre a sonda)",
+      "Aquela vez que o pulmão dele encheu (a filha, sobre a pneumonia)",
+      "Desculpa, doutor"
+    ],
+    "exemplos_de_fala": [
+      "Tô com sede, moço... três dia só no soro. Ninguém me explicou nada até agora.",
+      "A comida trava aqui, ó. Aí eu tusso e demora pra descer.",
+      "A saliva eu engulo com jeitinho. Duas, três vez, aí desce.",
+      "Fala devagar comigo que eu entendo tudo. É a boca que não obedece.",
+      "Deixa... deixa pra lá, moço. Cansei de falar.",
+      "Minha mulher morreu cheia de sonda. Eu não quero aquele fio no nariz, não.",
+      "Trabalhei quase quarenta ano de pedreiro. Agora eu não sirvo pra nada... desculpa, doutor, tô chorando.",
+      "Eu vou voltar a comer, doutor?",
+      "Rosângela: Ele não come nada desde que chegou, doutora. A calça dele não para na cintura, sabe?",
+      "Rosângela: Doutora... ontem à noite eu dei uma aguinha e um pedacinho de bolacha pra ele. Ele implorou. Eu fiz mal pro meu pai?"
+    ],
+    "nunca_faz": [
+      "Não usa termo técnico: nunca diz 'disfagia', 'aspiração', 'broncoaspiração' nem 'deglutição' — diz 'entalar', 'travar', 'descer pelo caminho errado'",
+      "Não nomeia diagnóstico, grau, escala nem exame; no máximo repete o que ouviu do médico ('deu derrame', 'entupiu uma veia da cabeça')",
+      "Não faz frases longas e bem construídas — cansa depois de três ou quatro e encurta",
+      "Não conta espontaneamente que engasgava em casa nem que já internou por pneumonia; não liga uma coisa à outra sozinho",
+      "Não oferece o assunto da vergonha, do medo da sonda ou da dentadura sem ser perguntado com acolhimento",
+      "A filha nunca admite por conta própria a água e a bolacha que deu escondido",
+      "Não reclama da filha nem a expõe: protege ela mesmo quando é ele que está sofrendo"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu na roça, veio para a cidade aos 16 anos para trabalhar em obra e nunca mais parou. Aprendeu o ofício no canteiro, virou mestre de obras e levantou boa parte das casas da rua onde mora. Casou-se cedo, teve uma filha, construiu com as próprias mãos a casa da frente para ela e ficou com os dois cômodos dos fundos. Perdeu a esposa há quatro anos para um câncer e foi o cuidador dela até o último dia — memória que hoje define o que ele aceita ou não para si.",
+    "rotina": "Antes do AVC acordava cedo, tomava café com pão molhado, caminhava até a padaria onde a filha trabalha, voltava, cozinhava algo mole para o almoço e passava a tarde mexendo em ferramentas na garagem. Comia sozinho, cada vez mais devagar, e ninguém reparou que isso vinha piorando.",
+    "trabalho": "Aposentado por tempo de contribuição há 6 anos; ainda fazia 'bicos' de pedreiro para vizinhos, o que era a maior fonte do seu orgulho e da sua renda extra.",
+    "familia_e_relacoes": "Filha única, Rosângela, mora no mesmo terreno e é o eixo da vida dele; genro presente mas ocupado; dois netos adolescentes de quem ele é muito próximo e a quem, agora, não quer ser visto. Um irmão distante e uma vizinhança antiga e solidária.",
+    "estressores_atuais": [
+      "Sede intensa e três dias de jejum sem explicação que ele tenha entendido",
+      "Perda súbita da fala fluente e do uso do braço direito",
+      "Vergonha de babar, de estar sem a dentadura e de depender da filha para tudo",
+      "Medo concreto de ser alimentado por sonda, como viu acontecer com a esposa",
+      "Culpa da filha por ter oferecido água e bolacha escondido",
+      "Insegurança sobre como será a vida em casa depois da alta"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Está lúcido, cooperativo e cansado. A sede domina o primeiro plano e o deixa impaciente. Por baixo disso há humilhação e um medo específico e silencioso: o da sonda. Quer agradar e não dar trabalho, então minimiza sintomas e diz que 'engole bem' mesmo quando não engole. A filha está tensa, hipervigilante e carregando uma culpa que a faz falar demais sobre uns assuntos e desviar de outros.",
+    "manifestacoes": [
+      "Fala lenta e arrastada, com pausas para respirar e cansaço após poucas frases",
+      "Cobre a boca com a mão esquerda quando fala, por causa da dentadura ausente e da saliva",
+      "Limpa o canto direito da boca com a toalhinha do ombro repetidas vezes",
+      "Aponta para o copo de água na mesinha e volta a pedir água ao longo da conversa",
+      "Encurta as respostas e diz 'deixa' quando não é compreendido de primeira",
+      "Olhos marejados e voz embargada quando fala da esposa ou dos netos",
+      "A filha responde antes dele, se aproxima do leito e mexe no papel de anotações",
+      "A filha baixa a voz e olha para a porta do quarto quando o assunto chega perto do que ela fez"
+    ],
+    "o_que_teme": "No dito: continuar com sede e nunca mais comer normal. No não dito: acabar como a esposa, com sonda no nariz, dependente e sem dignidade — e virar um peso para a filha.",
+    "o_que_espera": "Que alguém explique com palavras que ele entenda por que não pode beber água, diga se ele vai voltar a comer e a falar direito, e o trate como gente e não como caso. A filha espera ser orientada com clareza sobre o que pode e o que não pode dar em casa — e, no fundo, ser perdoada."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional se apresenta olhando para ELE, e não só para a filha",
+      "Espera o fim das frases sem completá-las e sem apressar",
+      "Explica o que vai fazer antes de fazer",
+      "Valida o desconforto da sede e explica em palavra simples por que ele ainda não pode beber",
+      "Tem paciência com a fala arrastada e não pede pressa",
+      "A pergunta é acolhedora e endereçada ao que ele está vivendo ('como o senhor está se sentindo com tudo isso?', 'como o senhor está lidando com isso?')",
+      "Com a filha, quando ouve 'a senhora fez isso porque ele estava sofrendo, eu entendo; me conta como foi' — sem repreensão, ela abre tudo",
+      "Alguém pergunta por ELA, a filha, e não pelo pai — só assim a sobrecarga da cuidadora aparece"
+    ],
+    "fecha_se_quando": [
+      "É apressado ou interrompido",
+      "Falam dele em terceira pessoa na sua frente",
+      "Alguém termina as frases por ele",
+      "É tratado como se não entendesse",
+      "O profissional se dirige exclusivamente à filha — aí ele se cala, fecha a cara e passa a responder por monossílabos",
+      "Há qualquer sinal de repreensão ou julgamento — a filha nega o que fez, muda de assunto e a informação se perde para sempre",
+      "Perguntam da dentadura, da baba ou do choro com frieza ou pressa"
+    ],
+    "trava_do_sensivel": "Os fatos objetivos da internação (tempo de AVC, intubação, jejum, medicações) saem com facilidade, quase sempre pela boca da filha, desde que o profissional pergunte. A experiência do paciente (sede, cansaço para falar, saliva, medo) só aparece se alguém falar diretamente COM ELE, com tempo e paciência; se o profissional se dirigir apenas à filha, Osvaldo se cala e o caso perde a metade subjetiva. Os seis núcleos sensíveis NÃO saem espontaneamente e cada um tem a sua chave: (1) a oferta escondida de água e bolacha só é admitida se o profissional perguntar explicitamente se alguém ofereceu algo por via oral, e sem tom de repreensão — se houver qualquer sinal de julgamento, a filha nega e muda de assunto, e a informação se perde; (2) os engasgos prévios e a pneumonia de 8 meses atrás só aparecem se houver pergunta dirigida a engasgo, tosse durante a refeição, mudança de voz após comer ou internação por pneumonia — a família não relaciona os fatos sozinha; (3) a prótese guardada na gaveta e a ausência de higiene oral desde a extubação só surgem com pergunta sobre dentes, dentadura ou cuidado com a boca; (4) o medo da sonda e a recusa antecipada só são verbalizados se o profissional perguntar sobre sonda, sobre o que os preocupa ou sobre o que o paciente deseja — e Osvaldo precisa sentir que não vai ser contrariado na hora; (5) a vergonha e o sofrimento emocional NÃO saem num 'como o senhor está?' de abertura — só emergem quando a pergunta é acolhedora e endereçada ao que ele está vivendo, e depois de o profissional ter demonstrado paciência com a fala dele; a um cumprimento genérico ele responde apenas 'tô com sede, moço'; (6) a sobrecarga da filha só aparece se alguém perguntar por ELA, e não pelo pai.",
+    "sinais_de_confianca": "Ele começa a arriscar frases mais longas, aceita tentar as ofertas de alimento sem resistência e chega a perguntar, por conta própria, 'eu vou voltar a comer, doutor?'. A filha para de olhar para a porta do quarto, baixa o papel de anotações e conta o que fez sem se defender."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Disfagia orofaríngea neurogênica pós-AVC isquêmico de artéria cerebral média esquerda, de grau MODERADO (PARD nível 5 — disfagia orofaríngea moderada; equivalente a DOSS nível 3), sobreposta a uma disfagia PRÉ-EXISTENTE não diagnosticada com componente presbifágico, acompanhada de disartria UNILATERAL DE NEURÔNIO MOTOR SUPERIOR leve a moderada (é este o tipo esperado numa lesão hemisférica unilateral — NÃO chamar de flácido-espástica, que é disartria mista, de lesão simultânea de neurônio motor superior e inferior, típica de ELA), anomia leve, e alto risco de pneumonia aspirativa por má higiene oral, tosse ineficaz e dependência funcional. Nem o paciente nem a filha NOMEIAM o diagnóstico, o grau, a escala ou o exame — no máximo repetem o que ouviram do médico ('deu derrame') e descrevem em linguagem leiga o que viram ('a voz saiu com um chiado, como se tivesse água presa na garganta').",
+    "manter_coerente": [
+      "Cronologia fixa: AVC de início indeterminado ao despertar há 3 dias, fora da janela de trombólise porque o último horário visto bem foi o jantar da véspera; intubação de 36 horas em UTI, extubação há 24 horas, jejum por via oral desde a admissão e SEM sonda",
+      "Nível de consciência preservado e colaboração adequada — é isso que autoriza a avaliação clínica à beira do leito",
+      "Achados estruturais fixos: paresia facial central à direita, desvio de língua para a direita, desvio de úvula para a esquerda, elevação laríngea reduzida e disparo atrasado; tosse voluntária presente porém FRACA; SpO2 basal 97% em ar ambiente",
+      "Prova de deglutição escalonada e sempre com a mesma resposta: pastoso homogêneo em 3 e 5 mL sem sinais; pastoso em 10 mL com resíduo oral e necessidade de deglutições múltiplas, SEM sinais clínicos de penetração",
+      "No pastoso de 10 mL a penetração EXISTE e é SILENCIOSA: só o exame objetivo a revela. É esse descompasso entre clínica limpa e exame alterado que justifica indicar videofluoroscopia ou FEES — e ele nunca deve ser antecipado ao participante",
+      "Líquido espessado (IDDSI 3) em 5 e 10 mL sem sinais — foi a consistência de líquido mais segura da avaliação",
+      "ÁGUA em 3 mL: deglutições múltiplas e pigarro tardio. ÁGUA em 5 mL: tosse imediata, voz molhada e queda de SpO2 de 97% para 92% — este é o ponto de INTERRUPÇÃO obrigatória da prova",
+      "Não ofertar volumes maiores nem responder a insistência com qualquer desfecho favorável: se o participante insistir após o sinal franco, o paciente apresenta tosse prolongada e cianose peribucal discreta, e a estação registra conduta insegura",
+      "O quadro NÃO melhora ao longo do atendimento: não há melhora espontânea, e NENHUMA manobra postural isolada torna o líquido fino seguro",
+      "O único ganho documentado é o do queixo para baixo ASSOCIADO a deglutições múltiplas e apenas para o pastoso — achado que pertence ao laudo da videofluoroscopia, não à avaliação de beira de leito",
+      "A decisão sobre via alternativa de alimentação é recomendação fonoaudiológica levada à equipe médica e à nutrição, NUNCA prescrição isolada do fonoaudiólogo",
+      "O desejo do paciente sobre a sonda deve ser acolhido e comunicado à equipe, não decidido na cena",
+      "Condutas que descaracterizam a estação e que o caso NUNCA recompensa com desfecho favorável: liberar dieta por via oral livre ou líquido fino; oferecer água antes do pastoso; ofertar sólido ou volume livre de 100 mL; prosseguir após tosse e queda de saturação",
+      "Também descaracterizam a estação: emitir diagnóstico médico ('ele teve broncoaspiração', 'está com pneumonia'); prescrever medicamento ou dieta sem articulação com a equipe; indicar exame objetivo antes de verbalizar o diagnóstico fonoaudiológico com o grau"
+    ],
+    "diferenciais_a_respeitar": [
+      "A disfagia não é apenas aguda pós-AVC: os engasgos e a pneumonia de 8 meses atrás, o EAT-10 retrospectivo de 24 pontos e a perda de 6 kg indicam quadro prévio agravado — e isso muda o prognóstico e a orientação de alta",
+      "A odinofagia leve e a rouquidão pós-extubação contribuem, mas não explicam sozinhas os sinais de aspiração",
+      "Ausência de febre, hemograma sem leucocitose e raio-x sem consolidação afastam pneumonia aspirativa JÁ instalada — mas o raio-x foi feito poucas horas depois da aspiração da véspera e uma pneumonite pode ainda não ter se traduzido em imagem; imagem normal NÃO libera dieta nem reduz o risco",
+      "O reflexo de vômito diminuído não prediz proteção de via aérea e não serve de critério para liberar ou contraindicar dieta",
+      "A ausculta cervical é auxiliar subjetivo e de baixa acurácia isolada — não substitui a videofluoroscopia nem a FEES",
+      "A disartria é UNILATERAL DE NEURÔNIO MOTOR SUPERIOR, o tipo esperado em lesão hemisférica unilateral — não é flácido-espástica, que é mista e típica de ELA",
+      "A prótese frouxa e a ausência de higiene oral são fatores de risco modificáveis e devem entrar na conduta",
+      "Três dias sem via para AAS, losartana e atorvastatina são uma pendência real do caso, que a definição da via alimentar também resolve — mas quem prescreve é o médico"
+    ]
+  },
+  "exame_fisico": {
+    "nivel_de_consciencia": {
+      "nome": "Nível de consciência, orientação e colaboração",
+      "sinonimos": [
+        "nível de consciência",
+        "nivel de consciencia",
+        "glasgow",
+        "está alerta",
+        "esta alerta",
+        "responsivo",
+        "vigília",
+        "sonolento",
+        "orientação",
+        "colaboração",
+        "compreensão de comandos"
+      ],
+      "resultado": "Alerta, orientado no tempo e no espaço, Glasgow 15. Compreende e executa comandos simples e de duas etapas. Mantém atenção sustentada por mais de 15 minutos e colabora integralmente com a avaliação."
+    },
+    "sinais_vitais": {
+      "nome": "Sinais vitais e saturação basal",
+      "sinonimos": [
+        "sinais vitais",
+        "saturação",
+        "saturacao",
+        "spo2",
+        "oximetria basal",
+        "oxímetro",
+        "frequência respiratória",
+        "frequencia respiratoria",
+        "frequência cardíaca",
+        "pressão arterial",
+        "temperatura",
+        "febre"
+      ],
+      "resultado": "SpO2 97% em ar ambiente, sem oxigênio suplementar; FR 18 irpm, eupneico, sem uso de musculatura acessória; FC 78 bpm; PA 132/84 mmHg; Tax 36,4°C, afebril desde a admissão. Ausculta pulmonar com murmúrio vesicular presente e simétrico, sem ruídos adventícios."
+    },
+    "posicionamento": {
+      "nome": "Posicionamento e controle de tronco e cabeça",
+      "sinonimos": [
+        "posicionamento",
+        "posição",
+        "posicao",
+        "cabeceira",
+        "elevar a cabeceira",
+        "sentar o paciente",
+        "noventa graus",
+        "90 graus",
+        "controle de tronco",
+        "postura",
+        "alinhamento cervical"
+      ],
+      "resultado": "Estava a 30°. Após solicitação, a cabeceira foi elevada a 90°, com apoio de coxim no hemicorpo direito e cabeça alinhada em leve flexão anterior. Tolera a posição sentada por mais de 20 minutos, sem hipotensão postural nem fadiga."
+    },
+    "cavidade_oral_e_higiene": {
+      "nome": "Inspeção da cavidade oral, dentição e higiene oral",
+      "sinonimos": [
+        "cavidade oral",
+        "inspeção da boca",
+        "inspecao oral",
+        "higiene oral",
+        "boca",
+        "dentes",
+        "dentição",
+        "prótese",
+        "protese",
+        "dentadura",
+        "língua saburrosa",
+        "saburra",
+        "resíduo alimentar",
+        "mucosa oral",
+        "hidratação da mucosa"
+      ],
+      "resultado": "Mucosa oral seca e pegajosa, saburra lingual espessa e halitose importante. Resíduo alimentar (fragmento de bolacha) em sulco gengivojugal direito. Higiene oral não realizada desde a extubação. Desdentado total superior e parcial inferior (4 elementos remanescentes); prótese total superior antiga e frouxa, guardada em sacolinha na gaveta há 3 dias."
+    },
+    "simetria_facial": {
+      "nome": "Simetria facial e mímica",
+      "sinonimos": [
+        "simetria facial",
+        "assimetria facial",
+        "face",
+        "mímica facial",
+        "mimica",
+        "paralisia facial",
+        "sulco nasolabial",
+        "rima labial",
+        "desvio da boca",
+        "hemiface"
+      ],
+      "resultado": "Assimetria em repouso com apagamento do sulco nasolabial à direita e desvio da rima labial para a esquerda ao sorrir. Hemiface direita hipotônica. Motricidade da fronte preservada bilateralmente — padrão de paralisia facial central à direita."
+    },
+    "labios": {
+      "nome": "Lábios — tônus, mobilidade e vedamento",
+      "sinonimos": [
+        "lábios",
+        "labios",
+        "vedamento labial",
+        "tônus labial",
+        "tonus dos labios",
+        "mobilidade dos lábios",
+        "protrusão",
+        "retração",
+        "escape de saliva",
+        "sialorreia",
+        "baba"
+      ],
+      "resultado": "Vedamento labial incompleto à direita, com escape anterior de saliva pela comissura direita, contínuo e mais intenso durante a fala. Tônus reduzido à direita; mobilidade limitada para protrusão, retração e vedamento sob resistência."
+    },
+    "lingua": {
+      "nome": "Língua — tônus, mobilidade, força e simetria",
+      "sinonimos": [
+        "língua",
+        "lingua",
+        "mobilidade de língua",
+        "tônus lingual",
+        "tonus de lingua",
+        "força de língua",
+        "protrusão da língua",
+        "lateralização",
+        "elevação de ponta de língua",
+        "desvio de língua",
+        "atrofia",
+        "fasciculação"
+      ],
+      "resultado": "Desvio da língua para a direita à protrusão. Mobilidade reduzida para lateralização e elevação à direita; força reduzida contra resistência bilateralmente, com predomínio à direita. Sem atrofia e sem fasciculações. Dificuldade para varredura de sulcos após oferta."
+    },
+    "veu_palatino": {
+      "nome": "Véu palatino, reflexos e sensibilidade orofaríngea",
+      "sinonimos": [
+        "véu palatino",
+        "veu palatino",
+        "palato mole",
+        "elevação do véu",
+        "reflexo de vômito",
+        "reflexo nauseoso",
+        "gag",
+        "sensibilidade orofaríngea",
+        "sensibilidade oral",
+        "úvula"
+      ],
+      "resultado": "Elevação do véu palatino reduzida e assimétrica à emissão de /a/ sustentado, com desvio da úvula para a esquerda (lado preservado). Reflexo de vômito presente, porém diminuído — lembrando que o reflexo de vômito NÃO prediz proteção de via aérea e não deve ser usado isoladamente para liberar ou contraindicar dieta. Sensibilidade intraoral globalmente presente, com hipoestesia discreta em hemilíngua e em hemipalato à DIREITA."
+    },
+    "mandibula_e_mastigacao": {
+      "nome": "Mandíbula e função mastigatória",
+      "sinonimos": [
+        "mandíbula",
+        "mandibula",
+        "mastigação",
+        "mastigacao",
+        "abertura de boca",
+        "trismo",
+        "atm",
+        "movimento mandibular",
+        "função mastigatória"
+      ],
+      "resultado": "Abertura de boca preservada, sem trismo e sem desvio significativo de mandíbula. Função mastigatória não avaliável no momento: paciente em jejum, desdentado e sem prótese em uso — a mastigação deverá ser reavaliada após adequação da prótese."
+    },
+    "degluticao_de_saliva": {
+      "nome": "Deglutição espontânea de saliva e elevação laríngea",
+      "sinonimos": [
+        "deglutição de saliva",
+        "deglutir saliva",
+        "engolir saliva",
+        "elevação laríngea",
+        "elevacao laringea",
+        "excursão laríngea",
+        "disparo da deglutição",
+        "acúmulo de saliva",
+        "estase de saliva",
+        "deglutições múltiplas"
+      ],
+      "resultado": "Deglutição espontânea de saliva pouco frequente, com acúmulo em assoalho de boca e escape anterior discreto. À observação e palpação digital (verbalizada) da região laríngea, elevação laríngea reduzida em amplitude e disparo faríngeo atrasado (cerca de 2 segundos). Não há voz molhada em repouso, antes das ofertas."
+    },
+    "qualidade_vocal_basal": {
+      "nome": "Qualidade vocal basal e tempo máximo de fonação",
+      "sinonimos": [
+        "qualidade vocal",
+        "voz",
+        "rouquidão",
+        "voz molhada",
+        "voz basal",
+        "tempo máximo de fonação",
+        "tmf",
+        "avaliação vocal",
+        "emissão de a sustentado",
+        "coordenação pneumofonoarticulatória"
+      ],
+      "resultado": "Voz rouco-soprosa de intensidade reduzida, coerente com extubação recente; sem voz molhada antes das ofertas. TMF de /a/ sustentado de 7 segundos. Coordenação pneumofonoarticulatória reduzida, com fala em pequenos grupos de palavras."
+    },
+    "tosse_e_pigarro": {
+      "nome": "Tosse voluntária, tosse reflexa e pigarro",
+      "sinonimos": [
+        "tosse voluntária",
+        "tosse reflexa",
+        "reflexo de tosse",
+        "pedir para tossir",
+        "pigarro",
+        "clareamento de via aérea",
+        "eficácia da tosse",
+        "força da tosse"
+      ],
+      "resultado": "Tosse voluntária presente, porém FRACA, curta e não sustentada; pigarro voluntário de baixa eficácia. Reflexo de tosse presente. A eficácia reduzida do clareamento é fator de risco relevante para este paciente."
+    },
+    "fala_e_articulacao": {
+      "nome": "Fala, articulação, inteligibilidade e linguagem",
+      "sinonimos": [
+        "fala",
+        "articulação",
+        "articulacao",
+        "inteligibilidade",
+        "disartria",
+        "apraxia de fala",
+        "linguagem",
+        "afasia",
+        "nomeação",
+        "compreensão",
+        "avaliação de linguagem"
+      ],
+      "resultado": "Disartria UNILATERAL DE NEURÔNIO MOTOR SUPERIOR de grau leve a moderado — o tipo esperado em lesão hemisférica unilateral: velocidade de fala reduzida, imprecisão articulatória de consoantes linguais e labiais (por hemiparesia de língua e lábio à direita), hipofonia, discreta hipernasalidade e inteligibilidade em torno de 70% para interlocutor não familiarizado em frases longas. A rouquidão pós-extubação soma-se ao quadro. Compreensão auditiva preservada para conversação; nomeação com discreta latência (anomia leve, compatível com afasia anômica residual); sem parafasias e sem agramatismo. Fadiga de fala evidente após 3 a 4 frases."
+    },
+    "ausculta_cervical_basal": {
+      "nome": "Ausculta cervical basal (antes das ofertas)",
+      "sinonimos": [
+        "ausculta cervical",
+        "ausculta cervical basal",
+        "estetoscópio no pescoço",
+        "escutar o pescoço",
+        "ruído da deglutição",
+        "ruido cervical",
+        "ausculta da deglutição"
+      ],
+      "resultado": "Ausculta cervical basal com ruído respiratório limpo e sem ruído de umidade audível. Serve apenas de linha de base para comparação durante as ofertas — a ausculta cervical é método subjetivo e de baixa acurácia isolada, não detecta estase faríngea (isso só o exame objetivo mostra) e nunca substitui a videofluoroscopia ou a FEES."
+    },
+    "motricidade_global": {
+      "nome": "Motricidade global, hemiparesia e autonomia para alimentar-se",
+      "sinonimos": [
+        "força muscular",
+        "hemiparesia",
+        "hemiplegia",
+        "braço direito",
+        "mão dominante",
+        "autonomia",
+        "levar o alimento à boca",
+        "independência para se alimentar",
+        "motricidade global"
+      ],
+      "resultado": "Hemiparesia direita de predomínio braquial (grau 2 em membro superior direito, grau 4 em membro inferior direito). É destro — está impossibilitado de levar alimento à boca com a mão dominante, mas consegue segurar copo e colher com a mão esquerda, de forma desajeitada e apenas com supervisão. Dependência funcional para a autoalimentação é, por si só, fator de risco adicional de aspiração."
+    }
+  },
+  "exames_disponiveis": {
+    "eat10": {
+      "nome": "EAT-10 (Eating Assessment Tool) — triagem de risco para disfagia — aplicado pelo fonoaudiólogo",
+      "sinonimos": [
+        "eat-10",
+        "eat 10",
+        "eating assessment tool",
+        "questionário de triagem de disfagia",
+        "triagem de disfagia",
+        "escala de autoavaliação de deglutição"
+      ],
+      "resultado": "Aplicado com apoio da filha, item a item, e considerando o período PRÉ-internação: 24 de 40 pontos (ponto de corte ≥ 3 indica risco). Itens de maior pontuação: 'meu problema de engolir me fez perder peso' (4), 'engolir líquidos exige esforço extra' (4), 'engolir sólidos exige esforço extra' (4), 'quando engulo, a comida gruda na garganta' (3) e 'eu tusso quando como' (3). Observação: instrumento de TRIAGEM e de autorrelato — não substitui a avaliação clínica nem classifica gravidade; a pontuação retrata a condição PRÉVIA ao AVC e é, aqui, a evidência numérica de que a disfagia já existia antes."
+    },
+    "prova_pastoso": {
+      "nome": "Prova de deglutição — consistência PASTOSA homogênea (IDDSI 4), escalonada em 3, 5 e 10 mL — realizada pelo fonoaudiólogo",
+      "sinonimos": [
+        "teste com alimento pastoso",
+        "prova com pastoso",
+        "oferta de pastoso",
+        "consistência pastosa",
+        "iddsi 4",
+        "pudim",
+        "pastoso homogêneo",
+        "pard pastoso",
+        "teste de degluticao pastoso"
+      ],
+      "resultado": "3 mL: captação adequada com colher de chá, deglutição única, sem escape oral anterior, sem tosse, sem pigarro, sem alteração vocal; ausculta cervical limpa; SpO2 97%. 5 mL: deglutição única com discreto atraso de disparo; sem sinais clínicos de penetração/aspiração; SpO2 97%. 10 mL: escape oral posterior precoce, resíduo em sulcos e dorso lingual, necessidade de 2 a 3 deglutições múltiplas para clareamento; sem tosse, sem voz molhada; ausculta cervical com discreto ruído de estase, que se limpa após nova deglutição; SpO2 96%. NOTA PARA O CHEFE DE ESTAÇÃO: neste volume a avaliação clínica NÃO detecta nada de franco — e é justamente aqui que a videofluoroscopia e a FEES mostrarão penetração laríngea sem resposta de tosse. Este descompasso entre a clínica limpa e o exame objetivo alterado é o argumento que justifica indicar o exame; não deve ser antecipado ao participante."
+    },
+    "prova_liquido_espessado": {
+      "nome": "Prova de deglutição — LÍQUIDO ESPESSADO (IDDSI 3, moderadamente espesso), 5 e 10 mL — realizada pelo fonoaudiólogo",
+      "sinonimos": [
+        "líquido espessado",
+        "liquido espessado",
+        "espessante",
+        "néctar",
+        "iddsi 3",
+        "água espessada",
+        "agua com espessante",
+        "teste com liquido espessado"
+      ],
+      "resultado": "5 mL: deglutição única, sem escape anterior, sem tosse, sem pigarro, sem voz molhada; ausculta cervical limpa; SpO2 97%. 10 mL: deglutição em 2 tempos, sem sinais clínicos de penetração ou aspiração; leve resíduo faríngeo clareado com deglutição adicional; SpO2 97%. Esta foi a consistência de líquido mais segura na avaliação."
+    },
+    "prova_agua": {
+      "nome": "Prova de deglutição — ÁGUA / líquido fino (IDDSI 0), escalonada em 3 e 5 mL — realizada pelo fonoaudiólogo",
+      "sinonimos": [
+        "teste com água",
+        "prova com agua",
+        "oferta de água",
+        "líquido fino",
+        "liquido ralo",
+        "iddsi 0",
+        "pard agua",
+        "teste de agua",
+        "gole de agua"
+      ],
+      "resultado": "3 mL em seringa: escape oral posterior precoce, deglutições múltiplas (3 deglutições para o mesmo bolus) e PIGARRO TARDIO cerca de 20 segundos após a oferta; ausculta cervical com ruído de umidade; SpO2 96%. 5 mL: TOSSE IMEDIATA e prolongada durante a deglutição, VOZ MOLHADA à emissão de /a/ após a oferta, ausculta cervical francamente úmida e QUEDA DE SpO2 DE 97% PARA 92%. SINAL FRANCO DE ASPIRAÇÃO — A PROVA DEVE SER INTERROMPIDA NESTE PONTO. Nenhum volume maior será ofertado; se o participante insistir, o chefe de estação registra conduta insegura."
+    },
+    "teste_agua_100ml": {
+      "nome": "Teste de deglutição de água em volume livre (100 mL)",
+      "sinonimos": [
+        "teste de 100 ml",
+        "teste de agua 100ml",
+        "volume livre",
+        "beber o copo inteiro",
+        "water swallow test",
+        "teste de degluticao de agua livre",
+        "copo cheio de agua"
+      ],
+      "resultado": "NÃO REALIZADO. O chefe de estação informa que o teste com volume livre de água está CONTRAINDICADO neste paciente, que já apresentou sinais francos de aspiração para 5 mL de líquido fino. Solicitar ou insistir neste teste caracteriza conduta insegura e será pontuado como inadequado."
+    },
+    "teste_solido": {
+      "nome": "Prova de deglutição — consistência SÓLIDA (IDDSI 7)",
+      "sinonimos": [
+        "teste com sólido",
+        "alimento sólido",
+        "pão",
+        "bolacha",
+        "biscoito",
+        "carne",
+        "arroz",
+        "iddsi 7",
+        "dieta geral"
+      ],
+      "resultado": "NÃO REALIZADO. Contraindicado neste momento: paciente desdentado total superior, sem prótese em uso, com força e mobilidade linguais reduzidas e sinais de disfagia orofaríngea já evidenciados em consistências mais seguras."
+    },
+    "oximetria_durante_ofertas": {
+      "nome": "Monitorização de oximetria de pulso durante as ofertas",
+      "sinonimos": [
+        "oximetria durante a deglutição",
+        "monitorar saturação",
+        "spo2 durante a oferta",
+        "queda de saturação",
+        "dessaturação",
+        "oxímetro durante o teste"
+      ],
+      "resultado": "Basal 97% em ar ambiente. Pastoso: 97% a 96%, sem dessaturação significativa. Líquido espessado: 97%, estável. Água 3 mL: 96%. Água 5 mL: queda para 92% (redução de 5 pontos percentuais), com recuperação para 96% após 3 minutos e tosse espontânea."
+    },
+    "ausculta_cervical_durante_ofertas": {
+      "nome": "Ausculta cervical durante as ofertas",
+      "sinonimos": [
+        "ausculta durante a deglutição",
+        "ausculta cervical na oferta",
+        "escutar a deglutição",
+        "ruído de estase",
+        "ruido umido",
+        "som da deglutição"
+      ],
+      "resultado": "Pastoso 3 e 5 mL: som de deglutição limpo, sem estase. Pastoso 10 mL: discreto ruído de estase, clareado com deglutição adicional. Líquido espessado: limpo. Água 3 mL: ruído de umidade pós-deglutição. Água 5 mL: ausculta francamente úmida, com ruído respiratório borbulhante — compatível com penetração/aspiração."
+    },
+    "videofluoroscopia": {
+      "nome": "Videofluoroscopia da deglutição (VFSS) — exame solicitado a outra profissão, realizado com médico radiologista",
+      "sinonimos": [
+        "videofluoroscopia",
+        "vfss",
+        "videodeglutograma",
+        "estudo videofluoroscópico",
+        "deglutograma",
+        "exame contrastado da deglutição",
+        "raio-x da deglutição"
+      ],
+      "resultado": "LAUDO: fase oral com escape oral posterior precoce e resíduo em sulcos laterais; atraso do disparo da deglutição faríngea (aproximadamente 2 segundos), com bolus em valécula antes do disparo; redução da excursão hiolaríngea e do fechamento glótico. PASTOSO (IDDSI 4): resíduo em valécula e seio piriforme, clareado com 2 deglutições; PENETRAÇÃO LARÍNGEA SUPRAGLÓTICA SEM RESPOSTA DE TOSSE em volume de 10 mL — Penetration-Aspiration Scale (Rosenbek) nível 3. LÍQUIDO ESPESSADO (IDDSI 3): PAS 1 a 2, sem penetração relevante. LÍQUIDO FINO: ASPIRAÇÃO TRAQUEAL a partir de 5 mL, com resposta de tosse tardia e ineficaz — PAS nível 7. Manobra de queixo para baixo ASSOCIADA a deglutições múltiplas reduziu a penetração no PASTOSO — não testada com sucesso para líquido fino, que permaneceu com aspiração mesmo sob a manobra e segue contraindicado."
+    },
+    "fees": {
+      "nome": "Videoendoscopia da deglutição / FEES (nasofibrolaringoscopia funcional) — exame solicitado a outra profissão, realizado com médico otorrinolaringologista",
+      "sinonimos": [
+        "fees",
+        "videoendoscopia da deglutição",
+        "nasofibrolaringoscopia",
+        "nasofibroscopia da deglutição",
+        "endoscopia da deglutição",
+        "videoendoscopia",
+        "exame endoscópico da deglutição"
+      ],
+      "resultado": "LAUDO: estase salivar em recessos faríngeos, moderada. Mobilidade de prega vocal preservada bilateralmente; fechamento glótico incompleto ao teste de adução. Sensibilidade laríngea REDUZIDA à direita. Pastoso: resíduo em valécula e seio piriforme com clareamento após deglutições múltiplas; penetração supraglótica em 10 mL SEM QUALQUER RESPOSTA DE TOSSE — ou seja, evento silencioso que a avaliação clínica não detectou. Líquido espessado: sem penetração. Líquido fino: penetração e aspiração, com resposta de tosse presente porém TARDIA e ineficaz. Conclusão: disfagia orofaríngea neurogênica de grau moderado. Atenção: para o líquido fino a aspiração NÃO é silenciosa (houve tosse, ainda que tardia e insuficiente); o risco de evento SILENCIOSO está nas consistências que passaram sem sinal clínico — o pastoso em volumes maiores — e é exatamente isso que a sensibilidade laríngea reduzida à direita explica e que só o exame objetivo revelou."
+    },
+    "tomografia_cranio": {
+      "nome": "Tomografia de crânio — exame de outra profissão, disponível no prontuário",
+      "sinonimos": [
+        "tomografia de crânio",
+        "tc de cranio",
+        "tomografia",
+        "exame de imagem do cérebro",
+        "tc de encéfalo",
+        "imagem do avc",
+        "ressonância de crânio"
+      ],
+      "resultado": "Área de hipoatenuação em território de artéria cerebral média esquerda, acometendo região frontoparietal e ínsula, compatível com AVC isquêmico subagudo. Sem transformação hemorrágica e sem efeito de massa significativo."
+    },
+    "raio_x_torax": {
+      "nome": "Radiografia de tórax — exame de outra profissão, disponível no prontuário",
+      "sinonimos": [
+        "raio-x de tórax",
+        "raio x de torax",
+        "radiografia de tórax",
+        "rx de torax",
+        "imagem do pulmão",
+        "exame do pulmão",
+        "descartar pneumonia"
+      ],
+      "resultado": "Realizada hoje pela manhã: sem consolidações, sem infiltrados e sem derrame pleural. Seios costofrênicos livres. Não há sinais radiológicos de pneumonia aspirativa instalada no momento."
+    },
+    "hemograma_e_pcr": {
+      "nome": "Hemograma e proteína C reativa — exames de outra profissão, disponíveis no prontuário",
+      "sinonimos": [
+        "hemograma",
+        "pcr",
+        "proteína c reativa",
+        "exames laboratoriais",
+        "exame de sangue",
+        "leucócitos",
+        "marcador inflamatório"
+      ],
+      "resultado": "Leucócitos 8.900/mm³ sem desvio; hemoglobina 12,4 g/dL; PCR 12 mg/L (discretamente elevada, compatível com o evento agudo). Sem leucocitose ou padrão sugestivo de infecção pulmonar em curso."
+    },
+    "avaliacao_nutricional": {
+      "nome": "Parecer da equipe de Nutrição — profissional de outra área",
+      "sinonimos": [
+        "avaliação nutricional",
+        "parecer da nutrição",
+        "nutricionista",
+        "estado nutricional",
+        "risco nutricional",
+        "terapia nutricional",
+        "cálculo de necessidades"
+      ],
+      "resultado": "Paciente em risco nutricional: perda de aproximadamente 6 kg (8% do peso) nos últimos 8 meses, IMC atual 21,3 kg/m², albumina 3,2 g/dL. Nutrição informa que aguarda a definição fonoaudiológica de via e consistência para calcular aporte, e que a via oral exclusiva em consistência única provavelmente não atingirá as necessidades calóricas nas primeiras 72 horas."
+    },
+    "prontuario_e_evolucao_medica": {
+      "nome": "Prontuário e evolução médica",
+      "sinonimos": [
+        "prontuário",
+        "prontuario",
+        "evolução médica",
+        "consultar o prontuário",
+        "checar o prontuário",
+        "histórico da internação",
+        "prescrição médica",
+        "tempo de intubação"
+      ],
+      "resultado": "Terceiro dia de internação. AVC isquêmico de ACM esquerda. Intubação orotraqueal por 36 horas, extubação há 24 horas, sem reintubação. Em jejum por via oral desde a admissão, com hidratação venosa e sem sonda enteral. Prescrição atual EFETIVAMENTE ADMINISTRADA (todas por via parenteral, já que não há via oral nem enteral): hidratação venosa, omeprazol endovenoso, insulina regular subcutânea de correção, enoxaparina profilática subcutânea. SUSPENSOS desde a admissão por AUSÊNCIA DE VIA de administração e anotados como pendência: AAS 100 mg, losartana e atorvastatina — a metformina foi suspensa por decisão clínica, como se faz na fase aguda. Evolução médica de hoje: 'Antiagregação e demais orais pendentes há 72h por ausência de via — situação indesejável no pós-AVC. Aguardando avaliação fonoaudiológica para definição de via alimentar; considerar sonda nasoenteral se via oral não liberada, o que também resolveria a administração dos medicamentos orais'. Sem antibiótico em uso. Sem febre registrada."
+    }
+  }
+}

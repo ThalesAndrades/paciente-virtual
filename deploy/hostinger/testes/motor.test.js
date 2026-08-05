@@ -216,9 +216,12 @@ test("prompt do paciente nunca carrega o sensível nem o exame físico", () => {
   }
 });
 
-test("todos os 40 casos geram um prompt íntegro", () => {
+test("todos os casos geram um prompt íntegro", () => {
+  // Piso, não igualdade: o acervo cresce (novas profissões entram), e um teste
+  // preso ao número de ontem falha por sucesso. O piso ainda pega o que importa —
+  // alguém apagar casos sem querer.
   const casos = fs.readdirSync(path.join(RAIZ, "casos")).filter((n) => n.endsWith(".json"));
-  assert.equal(casos.length, 40);
+  assert.ok(casos.length >= 40, `esperado ao menos 40 casos, há ${casos.length}`);
   for (const arquivo of casos) {
     const prompt = sistemaPaciente(lerCaso(arquivo.replace(/\.json$/, "")));
     assert.ok(prompt.length > 3000, `${arquivo}: prompt curto demais (${prompt.length})`);
@@ -226,6 +229,42 @@ test("todos os 40 casos geram um prompt íntegro", () => {
       !/\btrue\b|\bfalse\b|\[object Object\]|undefined/.test(prompt),
       `${arquivo}: representação bruta vazou`
     );
+  }
+});
+
+test("nenhum caso perde persona, fala ou revelação por tipo errado", () => {
+  // O defeito que este teste existe para impedir já aconteceu: quatro campos
+  // foram escritos como STRING em casos novos, e o motor os lê como OBJETO
+  // (`persona.resumo`, `estilo_de_fala.registro`, ...). O JSON abria, o caso
+  // aparecia na lista, os testes passavam — e os blocos QUEM VOCÊ É, COMO VOCÊ
+  // FALA e COMO VOCÊ SE ABRE saíam VAZIOS do prompt. O paciente ficava sem
+  // personalidade, em silêncio, sem nada quebrar.
+  const OBJETOS = ["persona", "estilo_de_fala", "dinamica_de_revelacao", "fidelidade_clinica"];
+  const BLOCOS = ["QUEM VOCÊ É", "COMO VOCÊ FALA", "COMO VOCÊ SE ABRE"];
+
+  const casos = fs.readdirSync(path.join(RAIZ, "casos")).filter((n) => n.endsWith(".json"));
+  for (const arquivo of casos) {
+    const id = arquivo.replace(/\.json$/, "");
+    const caso = lerCaso(id);
+    for (const campo of OBJETOS) {
+      assert.equal(
+        typeof caso[campo],
+        "object",
+        `${arquivo}: "${campo}" precisa ser objeto — como string, o motor lê vazio e o caso perde ${campo}`
+      );
+      assert.ok(caso[campo] !== null, `${arquivo}: "${campo}" está nulo`);
+    }
+    // Não basta ser objeto: o bloco tem de chegar com conteúdo no prompt.
+    const prompt = sistemaPaciente(caso);
+    for (const bloco of BLOCOS) {
+      const i = prompt.indexOf(bloco);
+      assert.ok(i >= 0, `${arquivo}: o bloco "${bloco}" não aparece no prompt`);
+      const trecho = prompt.slice(i + bloco.length, i + bloco.length + 400);
+      assert.ok(
+        trecho.replace(/[\s━─\-]/g, "").length > 60,
+        `${arquivo}: o bloco "${bloco}" chegou vazio ao prompt`
+      );
+    }
   }
 });
 

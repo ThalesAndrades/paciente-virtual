@@ -113,7 +113,7 @@ function listarCasos() {
       const ident = caso.identificacao || {};
       return {
         id,
-        categoria: caso.categoria === "medicina" ? "medicina" : "psicologia",
+        categoria: String(caso.categoria || "psicologia"),
         titulo: caso.titulo || id.replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase()),
         queixa: caso.queixa_principal || "",
         paciente: {
@@ -395,7 +395,7 @@ async function iniciarConsulta(req, res) {
   json(res, 200, {
     id,
     caso: casoId,
-    categoria: caso.categoria === "medicina" ? "medicina" : "psicologia",
+    categoria: String(caso.categoria || "psicologia"),
     voz: ident.voz || "feminino",
     paciente: {
       nome: ident.nome || "",

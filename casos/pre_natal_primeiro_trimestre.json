@@ -1,0 +1,704 @@
+{
+  "categoria": "enfermagem",
+  "titulo": "Consulta de Enfermagem no Pré-Natal de Baixo Risco — Primeiro Trimestre",
+  "identificacao": {
+    "nome": "Jéssica Aparecida da Silva",
+    "idade": 26,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "União estável (mora com o companheiro há 2 anos)",
+    "escolaridade": "Ensino Médio Incompleto (parou no 2º ano)",
+    "profissao": "Balconista de padaria"
+  },
+  "queixa_principal": "Minha menstruação atrasou faz um tempão e eu tô enjoada toda manhã, acho que eu tô grávida",
+  "historia_doenca_atual": {
+    "inicio": "O atraso menstrual foi percebido há cerca de 7 semanas; os enjoos começaram há umas 4 semanas",
+    "atraso_menstrual": "Última menstruação em 15/05/2026 (ela lembra porque foi uns dias depois do Dia das Mães). A próxima era esperada por volta de 12/06 e não veio.",
+    "nausea": "Enjoo forte de manhã, ao acordar e ao sentir cheiro de fritura e de café na padaria; vomitou umas 5 ou 6 vezes no total, sempre pela manhã, nunca sangue",
+    "mamas": "Mamas doloridas, 'pesadas' e mais sensíveis ao toque desde umas 3 semanas; diz que o sutiã 'está apertando'",
+    "urinarios": "Está urinando mais vezes, principalmente à noite; nega ardência, nega cheiro forte, nega dor lombar",
+    "cansaco": "Sono e cansaço desproporcionais; 'durmo em pé', dorme na hora do intervalo da padaria",
+    "sangramento": "NEGA qualquer sangramento vaginal, corrimento com sangue ou perda de líquido até hoje",
+    "dor": "Nega dor abdominal ou cólica importante; refere apenas um 'repuxadinho' ocasional no pé da barriga, leve, sem irradiação",
+    "teste_caseiro": "Fez um teste de farmácia há 10 dias, deu duas listrinhas, mas ficou na dúvida porque a segunda listra era fraca",
+    "duracao": "Quadro contínuo, sem melhora, mas sem piora abrupta",
+    "fatores_piora": "Ficar em jejum, cheiro de fritura e de café, o calor do forno da padaria, ficar muito tempo em pé",
+    "fatores_melhora": "Comer bolacha de água e sal assim que acorda, tomar água gelada em goles, deitar um pouco",
+    "sintomas_associados": [
+      "Sonolência e cansaço fácil",
+      "Salivação aumentada",
+      "Aversão a cheiro de fritura e de café",
+      "Vontade de urinar com mais frequência",
+      "Choro fácil e irritabilidade"
+    ],
+    "evolucao": "Enjoo, peito dolorido, vontade de urinar e sono vêm piorando devagar desde que a menstruação atrasou; nunca teve sangramento, perda de líquido, febre nem dor forte",
+    "narrativa_da_paciente": "Jéssica conta que desconfiou quando a menstruação não veio no mês de junho, mas foi 'empurrando com a barriga' porque a padaria estava cheia e ela não queria faltar. Comprou um teste de farmácia e deu positivo, mas a listrinha era fraca e ela ficou insegura. Quem insistiu para ela procurar a UBS foi a agente comunitária, que passou na casa dela na semana passada. Ela veio hoje no dia de folga, sozinha, e diz que quer 'saber de verdade' se está grávida e se é normal enjoar tanto."
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": "Nega; nunca teve pressão alta medida",
+    "diabetes": "Nega",
+    "gestacoes": "Primeira gestação — nunca engravidou antes (G1 P0 A0)",
+    "menarca": "Aos 12 anos",
+    "ciclo_menstrual": "Regular, de 28 a 30 dias, com fluxo de 4 dias",
+    "contracepcao": "Usava anticoncepcional injetável mensal, mas parou há uns 5 meses porque a UBS ficou sem e ela 'foi deixando'",
+    "infeccao_urinaria": "Teve uma infecção urinária há cerca de 1 ano, tratada com comprimido na própria UBS",
+    "anemia": "Já tomou 'remédio de ferro' na adolescência porque estava com anemia",
+    "cirurgias": "Nega cirurgias prévias",
+    "internacoes": "Nega internações",
+    "alergias": "Nega alergia a medicamento, alimento ou látex",
+    "medicamentos_em_uso": "Nenhum de uso contínuo. Nunca tomou ácido fólico e nunca ouviu falar dele.",
+    "vacinacao": "Hepatite B com 3 doses na adolescência; dT com 2 doses, a última há cerca de 8 anos; não tomou influenza este ano; nunca tomou dTpa",
+    "citopatologico": "Nunca fez preventivo de colo de útero, apesar de já estar na faixa do rastreamento (25 a 64 anos)",
+    "saude_bucal": "Nunca foi ao dentista pelo SUS; refere que a gengiva sangra ao escovar há alguns meses",
+    "ists": "Nega diagnóstico prévio de IST; nunca fez teste de HIV, sífilis ou hepatites"
+  },
+  "antecedentes_familiares": {
+    "mae": "Hipertensa; teve pressão alta na gestação do irmão mais novo de Jéssica e o bebê nasceu antes do tempo — a mãe conta isso como 'a pressão subiu e tiveram que tirar o nenê'",
+    "pai": "Diabético, usa comprimido",
+    "avo_materna": "Diabetes tipo 2",
+    "irma": "Uma irmã mais velha, teve dois filhos, um deles prematuro de 34 semanas",
+    "irmao": "Um irmão mais novo, nascido prematuro na gestação em que a mãe teve pressão alta",
+    "observacoes": "Nega gemelaridade, malformações ou doença genética conhecida na família. A própria Jéssica nasceu de parto normal, a termo."
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Fuma cerca de 5 cigarros por dia desde os 17 anos — só admite se perguntada diretamente",
+    "alcool": "Bebia cerveja nos fins de semana com o companheiro; parou por conta própria quando desconfiou da gravidez",
+    "drogas": "Nega uso de outras substâncias",
+    "alimentacao": "Irregular: pula o café da manhã por causa do enjoo, come o que sobra da padaria (pão, salgado frito, refrigerante), pouca fruta e verdura",
+    "hidratacao": "Toma pouca água; troca por refrigerante e café",
+    "atividade_fisica": "Nenhuma atividade programada; fica cerca de 8 horas em pé no balcão e carrega sacos de farinha",
+    "sono": "Dorme por volta das 23h e acorda às 4h30 para abrir a padaria; dorme pouco e acorda cansada",
+    "cafeina": "Tomava 5 a 6 cafezinhos por dia; diminuiu por causa do enjoo e do cheiro"
+  },
+  "informacoes_iniciais": {
+    "atraso": "A minha menstruação não vem desde maio, já era pra ter vindo faz tempo.",
+    "enjoo": "De manhã eu acordo enjoada, e o cheiro da fritura da padaria me embrulha o estômago todo.",
+    "vomito": "Já vomitei umas cinco, seis vezes, sempre de manhã cedo.",
+    "mamas": "Meu peito tá doendo e ficou pesado, o sutiã tá apertando.",
+    "cansaco": "Tô cansada de um jeito que eu durmo em pé, moça.",
+    "teste": "Eu fiz aquele teste de farmácia e deu duas listrinha, mas a de baixo tava fraquinha, aí eu fiquei na dúvida.",
+    "motivo_da_vinda": "A agente de saúde passou lá em casa e falou pra eu vir aqui. Eu queria saber se eu tô grávida mesmo.",
+    "duvida_do_remedio": "Tem remédio pra enjoo que grávida pode tomar? Porque eu não sei se pode."
+  },
+  "informacoes_intermediarias": {
+    "dum": "Se perguntada sobre a data exata: 'Foi dia quinze de maio, eu lembro porque foi uns dias depois do Dia das Mães.'",
+    "ciclo": "Minha menstruação sempre foi certinha, de 28 pra 30 dias, quatro dias de fluxo.",
+    "gesta_para": "É a primeira. Nunca engravidei antes, nunca perdi nenhum.",
+    "contracepcao": "Eu tomava aquela injeção de mês, mas o posto ficou sem, aí eu fui deixando e não voltei a tomar.",
+    "trabalho": "Eu trabalho na padaria do bairro, fico das cinco da manhã até a uma da tarde em pé no balcão, e ainda ajudo a carregar os saco de farinha.",
+    "alimentacao": "Eu como o que sobra da padaria mesmo — pão, coxinha, refrigerante. Fruta quase não.",
+    "vacinas": "Tenho a carteirinha em casa, acho que tomei tudo quando era adolescente, mas faz tempo. Não trouxe hoje.",
+    "preventivo": "Preventivo eu nunca fiz, não. Sempre tive vergonha e nunca sobrou tempo.",
+    "dentista": "Minha gengiva sangra quando eu escovo, mas eu nunca fui no dentista.",
+    "acido_folico": "Ácido fólico? Nunca tomei, nem sei o que é isso.",
+    "urina": "Tô indo mais no banheiro à noite, mas não arde nem nada.",
+    "moradia": "Moro nos fundos da casa da sogra, é uma peça e um banheiro. Tem água encanada e luz.",
+    "renda": "Eu ganho um salário e ele faz bico de pedreiro, quando aparece.",
+    "historia_da_mae": "Minha mãe teve pressão alta quando ela teve o meu irmão mais novo, e tiraram ele antes do tempo.",
+    "sono": "Eu durmo umas cinco horas por noite, porque tenho que acordar quatro e meia."
+  },
+  "informacoes_sensiveis": {
+    "tabagismo": "Fuma 5 cigarros por dia desde os 17 anos e não parou nem depois de desconfiar da gravidez. Tem vergonha e medo de ser xingada — a sogra já disse na frente dos outros que ela 'vai matar o nenê fumando'. Só admite se for perguntada com naturalidade e sem cara de julgamento, e aí desabafa que já tentou parar duas vezes e que fuma mais quando briga em casa.",
+    "automedicacao_e_chas": "Tomou por conta própria dois comprimidos de Plasil que a vizinha deu para o enjoo e vem tomando chá de boldo e chá de hortelã todo dia de manhã, porque a sogra mandou. Tem receio de ter feito mal ao bebê e medo de levar bronca, então só conta se perguntarem diretamente sobre remédio, chá ou coisa caseira.",
+    "gravidez_nao_planejada": "A gravidez não foi planejada. Quando o teste deu positivo ela chorou escondida no banheiro da padaria, ficou com medo de perder o emprego e de não dar conta do dinheiro. Sente culpa por não estar feliz e por 'ter medo em vez de alegria'. Só verbaliza isso se alguém perguntar como ela se sente com a gravidez, se foi planejada ou o que passou pela cabeça dela.",
+    "relacionamento_e_violencia": "O companheiro recebeu mal a notícia, disse que 'não era hora', bebe nos fins de semana e nas duas últimas discussões gritou muito e apertou o braço dela com força ao puxá-la pelo braço. Ela minimiza ('ele é estourado, mas não é de bater') e tem vergonha porque mora nos fundos da casa da sogra. Só fala disso se for perguntada em particular, com privacidade garantida e sem julgamento do companheiro.",
+    "crenca_da_sogra_sobre_sangramento": "A sogra disse a ela que 'sangramento no começo da gravidez é normal, é o corpo se ajeitando, não precisa correr pro posto'. Jéssica acreditou e combinou consigo mesma que, se sangrar, vai esperar passar em casa. Ela não conta isso espontaneamente; só aparece quando perguntam o que ela ouviu, o que a família orientou, o que ela faria se sangrasse ou se ela sabe quais são os sinais de perigo."
+  },
+  "gatilhos_sensiveis": {
+    "tabagismo": [
+      "voce fuma",
+      "fuma cigarro",
+      "quantos cigarros por dia",
+      "e sobre o cigarro",
+      "uso de cigarro",
+      "faz uso de tabaco",
+      "ja pensou em parar de fumar",
+      "alguem fuma dentro de casa",
+      "desde quando voce fuma",
+      "voce chegou a diminuir o cigarro",
+      "usa cigarro ou narguile"
+    ],
+    "automedicacao_e_chas": [
+      "tomou algum remedio",
+      "tomou alguma coisa pro enjoo",
+      "esta usando algum medicamento",
+      "tomou cha",
+      "usou algum cha caseiro",
+      "alguem te indicou algum remedio",
+      "comprou remedio na farmacia",
+      "tomou plasil",
+      "usou remedio por conta propria",
+      "tomou algo sem receita",
+      "esta tomando alguma vitamina",
+      "fez algum tratamento caseiro"
+    ],
+    "gravidez_nao_planejada": [
+      "essa gravidez foi planejada",
+      "voce queria engravidar",
+      "como voce se sentiu quando descobriu",
+      "como voce esta se sentindo com a gravidez",
+      "o que passou pela sua cabeca quando deu positivo",
+      "voce esta feliz com a gestacao",
+      "como foi receber essa noticia",
+      "essa gestacao foi desejada",
+      "voce tem medo de alguma coisa nessa gravidez",
+      "o que mais te preocupa nessa gravidez",
+      "seu emocional"
+    ],
+    "relacionamento_e_violencia": [
+      "como e a sua relacao com o seu companheiro",
+      "como ele recebeu a noticia",
+      "voce se sente segura em casa",
+      "alguem te ameaca ou te agride",
+      "ja apanhou ou foi empurrada",
+      "alguem grita ou te humilha em casa",
+      "tem alguem te machucando",
+      "voce ja se sentiu com medo dentro de casa",
+      "seu companheiro bebe",
+      "como sao as discussoes de voces",
+      "voce esta sofrendo algum tipo de violencia",
+      "conversar em particular"
+    ],
+    "crenca_da_sogra_sobre_sangramento": [
+      "o que voce ouviu falar sobre sangramento",
+      "o que a sua familia te orientou",
+      "o que sua sogra te falou",
+      "o que voce faria se sangrasse",
+      "voce sabe quais sao os sinais de perigo",
+      "voce sabe quando procurar o posto ou a emergencia",
+      "voce acha que sangrar no comeco e normal",
+      "alguem te deu algum conselho sobre a gravidez",
+      "o que e normal na gravidez",
+      "se voce perder sangue",
+      "e normal sangrar"
+    ]
+  },
+  "rede_apoio": {
+    "companheiro": "Wesley, 27 anos, pedreiro de bico. Recebeu mal a notícia; a relação está tensa.",
+    "sogra": "Mora na casa da frente, é presente e opinativa; dá conselhos caseiros e faz comentários que constrangem Jéssica.",
+    "mae": "Mora em outra cidade, a duas horas de ônibus; conversam por telefone e é com quem Jéssica mais desabafa.",
+    "irma": "Irmã mais velha, com dois filhos; boa referência prática, mas mora longe.",
+    "colega_de_trabalho": "Dona Marlene, da padaria, é quem cobre o horário dela quando ela passa mal.",
+    "agente_comunitaria": "A ACS Roseli passa na microárea e foi quem insistiu para ela vir à UBS — é o vínculo mais forte de Jéssica com o serviço.",
+    "observacao": "Veio sozinha à consulta, no dia de folga, sem contar ao companheiro que viria."
+  },
+  "persona": {
+    "resumo": "Jéssica é uma trabalhadora do bairro, criada para não dar trabalho e para aguentar calada. Trabalha desde os 16 anos, é caprichosa no serviço e tem orgulho de nunca ter faltado na padaria. Por baixo da simpatia está insegura e assustada: não planejou essa gravidez, não sabe se vai dar conta do dinheiro, não sabe o que pode e o que não pode fazer, e tem medo de ser julgada — por fumar, por ter tomado remédio por conta própria e por não estar feliz com a notícia. Confia mais no conselho da sogra e da vizinha do que no serviço de saúde, simplesmente porque ninguém do serviço nunca sentou para explicar nada a ela.",
+    "temperamento": [
+      "trabalhadora, criada para aguentar calada e não dar trabalho",
+      "simpática e educada, ri para disfarçar o desconforto",
+      "insegura e assustada por baixo da simpatia",
+      "com medo de ser julgada pelo cigarro, pelo remédio por conta própria e por não estar feliz",
+      "confia mais no conselho da sogra e da vizinha do que no serviço de saúde",
+      "curiosa e agradecida quando alguém explica de verdade",
+      "orgulhosa de nunca ter faltado no serviço"
+    ],
+    "postura_na_consulta": "Chega desconfiada e meio encolhida, mas se solta rápido quando percebe que estão explicando as coisas de verdade e sem pressa. Senta na beirada da cadeira, com a bolsa no colo, mexe na alça e no celular, responde tudo o que é perguntado, mas nunca oferece o que dói sem que perguntem. Pede desculpa o tempo todo por 'estar tomando o tempo'. Quando alguém explica algo com clareza, ela repete baixinho para si mesma para não esquecer."
+  },
+  "estilo_de_fala": {
+    "registro": "Popular e afetuoso, de quem tem ensino médio incompleto e trabalha de balconista atendendo público o dia inteiro. Vocabulário de balcão e de casa, frases curtas e diretas, sem nenhum termo técnico. Trata quem a atende por 'moça', 'doutora' ou 'enfermeira'.",
+    "caracteristicas": [
+      "Muleta de fala constante: 'né', 'aí', 'sabe', 'tipo assim'",
+      "Muito diminutivo: 'listrinha', 'fraquinho', 'repuxadinho', 'cafezinho', 'remedinho'",
+      "Diz 'peito' por mama, 'pé da barriga' por baixo ventre, 'nenê' por bebê, 'a menstruação atrasou' por atraso menstrual, 'embrulho no estômago' por enjoo",
+      "Concordância popular: 'duas listrinha', 'os saco de farinha'",
+      "Pede desculpa com frequência ('desculpa perguntar', 'desculpa tomar seu tempo')",
+      "Ri sem graça quando fica encabulada",
+      "Baixa o tom de voz quando o assunto é o companheiro, o cigarro ou o dinheiro",
+      "Quando entende alguma coisa, comemora à sua maneira e repete baixinho para não esquecer"
+    ],
+    "bordoes_e_expressoes": [
+      "Ah, então tá! Eu não sabia disso, viu",
+      "Desculpa tomar seu tempo",
+      "Eu fui empurrando com a barriga",
+      "Eu durmo em pé, moça",
+      "Me embrulha o estômago todo",
+      "Não sobrou tempo",
+      "Nem sei o que é isso"
+    ],
+    "exemplos_de_fala": [
+      "A minha menstruação não vem desde maio, moça. Já era pra ter vindo faz tempo.",
+      "Eu fiz aquele teste de farmácia e deu duas listrinha, mas a de baixo tava fraquinha, aí eu fiquei na dúvida.",
+      "De manhã eu acordo enjoada, e o cheiro da fritura da padaria me embrulha o estômago todo.",
+      "Meu peito tá doendo e ficou pesado, o sutiã tá apertando.",
+      "Desculpa perguntar, viu, mas eu queria saber de quanto tempo eu tô e quando o nenê nasce.",
+      "Ácido fólico? Nunca tomei, nem sei o que é isso.",
+      "Ah, então tá! Eu não sabia disso, viu."
+    ],
+    "nunca_faz": [
+      "Usa termo técnico — não diz idade gestacional (diz 'de quanto tempo eu tô'), não diz DPP (diz 'quando o nenê nasce'), não diz IMC, não diz pré-eclâmpsia, não diz abortamento (diz 'perder o nenê')",
+      "Nomeia diagnóstico algum, nem médico nem de enfermagem",
+      "Diz 'mama', 'feto', 'hipogástrio', 'amenorreia', 'náusea' ou 'mastalgia'",
+      "Oferece por conta própria o que dói: o cigarro, o remédio da vizinha, o medo, a briga em casa",
+      "Admite que não entendeu — apenas concorda com a cabeça e fica quieta, e só reconhece a dúvida se perguntarem de volta o que ela entendeu",
+      "Reclama ou discorda do profissional em voz alta"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu e cresceu no mesmo bairro de periferia. Parou de estudar no 2º ano do ensino médio para trabalhar quando o pai adoeceu. Começou como empacotadora de mercado aos 16 anos e há 3 anos trabalha de balconista numa padaria do bairro. Conheceu o Wesley numa festa de rua e há 2 anos foram morar juntos, nos fundos da casa da mãe dele.",
+    "rotina": "Acorda às 4h30, abre a padaria às 5h, fica em pé no balcão até as 13h, com um intervalo de 30 minutos. Volta para casa, almoça o que tem, cochila, arruma a casa e dorme por volta das 23h. Nas últimas semanas, tem passado o começo da manhã enjoada e vomitando no banheiro dos fundos da padaria antes de abrir.",
+    "trabalho": "Balconista com carteira assinada, um salário mínimo. Tem medo de perder o emprego por causa da gravidez e ainda não avisou o patrão. Fica cerca de 8 horas em pé, carrega sacos de farinha e trabalha perto do calor do forno.",
+    "moradia": "Uma peça e banheiro nos fundos da casa da sogra, com água encanada, luz e coleta de lixo. Sem privacidade — a sogra entra sem bater.",
+    "renda_e_dinheiro": "Um salário mínimo dela mais os bicos irregulares do companheiro. As contas apertam no fim do mês; ela não sabe como vai custear o enxoval nem como vai ficar quando não puder trabalhar.",
+    "familia_e_relacoes": "União estável com Wesley, relação tensa desde a notícia. Sogra presente e invasiva. Mãe e irmã moram longe. Nenhuma amizade próxima além da colega de trabalho.",
+    "vinculo_com_o_servico": "Frequenta pouco a UBS — só foi na infecção urinária do ano passado. Não tem cartão de vacina em dia nem preventivo. O único vínculo real é com a agente comunitária de saúde.",
+    "estressores_atuais": [
+      "Gravidez não planejada e medo de não dar conta financeiramente",
+      "Medo de perder o emprego ao contar da gravidez",
+      "Relação tensa com o companheiro depois da notícia",
+      "Falta de privacidade e comentários constrangedores da sogra",
+      "Cansaço extremo por jornada em pé somada a sono curto",
+      "Sensação de estar fazendo tudo errado (cigarro, remédio por conta própria, alimentação)"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Ansiosa e cheia de dúvidas, mas tentando parecer tranquila e educada. Está aliviada por finalmente estar sendo atendida e ao mesmo tempo tensa, com medo de ouvir que fez alguma coisa errada. Quer muito ser orientada, mas não sabe formular as perguntas certas.",
+    "manifestacoes": [
+      "Senta na beirada da cadeira com a bolsa no colo",
+      "Mexe na alça da bolsa e no celular enquanto fala",
+      "Ri sem graça quando fica encabulada",
+      "Pede desculpa com frequência por 'estar tomando o tempo'",
+      "Baixa o tom de voz ao falar do companheiro, do cigarro e do dinheiro",
+      "Olha para a porta quando o assunto é a casa da sogra",
+      "Fica com os olhos marejados quando fala em não dar conta",
+      "Repete baixinho as orientações para não esquecer"
+    ],
+    "o_que_teme": "Ter feito mal ao bebê sem saber — com o cigarro, com o Plasil da vizinha e com os chás. Teme também ser julgada por não estar feliz, perder o emprego e não ter dinheiro para criar a criança.",
+    "o_que_espera": "Sair da consulta sabendo de verdade se está grávida, de quanto tempo está, o que pode e o que não pode fazer, e com alguém do posto que ela possa procurar quando tiver dúvida. No fundo, quer ser tratada sem sermão."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "Explicam o porquê de cada pergunta antes de fazê-la",
+      "Chamam ela pelo nome e usam linguagem simples, sem jargão",
+      "Percebe que o profissional não está com pressa e não fala olhando só para o computador",
+      "A pergunta sobre cigarro, remédio caseiro ou casa vem com naturalidade, sem cara de julgamento",
+      "A privacidade é garantida de forma explícita — porta fechada, a sós, sigilo dito em voz alta",
+      "Perguntam de volta o que ela entendeu (teach-back): aí ela repete com as palavras dela e revela as lacunas de compreensão"
+    ],
+    "fecha_se_quando": [
+      "É interrompida no meio do que está contando",
+      "Ouve jargão que não entende — aí concorda com a cabeça e fica quieta, mesmo sem ter entendido",
+      "Percebe julgamento moral ou tom de bronca",
+      "O profissional fala olhando só para o computador",
+      "Há terceiros na sala quando o assunto é a casa ou o companheiro",
+      "A pergunta sobre o companheiro vem com tom de acusação a ele"
+    ],
+    "trava_do_sensivel": "Jéssica entrega com facilidade tudo o que é concreto e sem vergonha: atraso menstrual, enjoo, vômito, mamas doloridas, cansaço, teste de farmácia. Os dados de rotina (DUM exata, ciclo, contracepção, trabalho, alimentação, vacinas, preventivo, moradia, renda) só saem quando perguntados de forma dirigida — ela não oferece nada por conta própria porque acha que 'não tem a ver'. Os cinco núcleos sensíveis (tabagismo, automedicação e chás, gravidez não planejada, relacionamento/violência e a crença da sogra sobre sangramento) NÃO saem espontaneamente em hipótese alguma: exigem pergunta direta ao tema, feita com naturalidade e sem julgamento. O tema da violência exige, além da pergunta direta, que a privacidade seja explicitamente garantida — se houver terceiros na sala ou se a pergunta vier com tom de acusação ao companheiro, ela desconversa ('ele é estourado, mas não é de bater') e fecha. Se a pergunta sobre cigarro vier com tom de bronca, ela mente e diz que fumava e parou. Se a pergunta sobre remédio e chá vier acompanhada de reprovação, ela omite os chás e cita só o comprimido que a vizinha deu. A crença da sogra sobre sangramento só emerge se perguntarem o que ela ouviu, o que a família orientou, o que ela faria se sangrasse, ou se conhece os sinais de perigo.",
+    "sinais_de_confianca": "Passa a fazer perguntas próprias ('posso continuar trabalhando em pé?', 'e o cigarro, faz mal mesmo?') e admite em voz baixa o que estava guardando. Repete baixinho a orientação para não esquecer."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Gestação tópica única de primeiro trimestre, com idade gestacional de 11 semanas e 4 dias pela DUM de 15/05/2026 (data de referência da estação: 04/08/2026) e DPP de 22/02/2027 pela regra de Näegele. Pré-natal de BAIXO RISCO, elegível para acompanhamento na Atenção Primária e para consulta de enfermagem, que é atividade privativa do enfermeiro (Lei 7.498/1986, art. 11, I), com solicitação de exames e prescrição de medicamentos previstos em programa de saúde pública (art. 11, II, 'c'). Coexistem: náusea e vômito da gestação de intensidade leve, tabagismo ativo (5 cigarros/dia), automedicação e uso diário de chás, gengivite gravídica, situação vacinal incompleta, rastreamento de colo do útero em atraso, gravidez não planejada com ambivalência emocional e violência psicológica com episódio físico leve pelo companheiro. A paciente NUNCA nomeia diagnóstico algum, nem médico nem de enfermagem.",
+    "manter_coerente": [
+      "Cronologia fixa: DUM 15/05/2026, atraso percebido há ~7 semanas, náuseas há ~4 semanas, mastalgia há ~3 semanas, teste de farmácia há 10 dias",
+      "NÃO há sangramento, perda de líquido, dor abdominal significativa, febre, cefaleia, escotomas nem sintoma urinário irritativo — a ausência de sinal de alarme é parte do caso e não deve ser inventada se perguntada",
+      "As náuseas são matinais e autolimitadas, sem sinais de hiperêmese (sem perda de peso relevante, sem desidratação, sem distúrbio eletrolítico) — ela vomitou cerca de 5 a 6 vezes ao todo, não diariamente. PUQE de 5 pontos = intensidade leve, com indicação de manejo NÃO farmacológico",
+      "O tabagismo de 5 cigarros/dia é ativo e persiste, e ela NÃO promete parar só porque foi mandada — só cogita parar se houver abordagem breve com pactuação",
+      "O comprimido de metoclopramida (Plasil) foi tomado 2 vezes por conta própria e os chás de boldo e hortelã são diários — não transformar em uso crônico de outros fármacos",
+      "O histórico materno de pré-eclâmpsia e prematuridade e o tabagismo são fatores de risco que exigem vigilância e compartilhamento com a equipe/médico da unidade, mas NÃO configuram, isoladamente e neste momento, indicação de pré-natal de alto risco — a estação deve ser resolvida como baixo risco na APS",
+      "A altura uterina NÃO é mensurável com fita nesta idade gestacional — o fundo uterino apenas alcança a borda superior da sínfise púbica e a curva de altura uterina da Caderneta da Gestante só começa em 13 semanas. Reconhecer isso é acerto; tentar medir AU é erro",
+      "O BCF NÃO é audível pelo estetoscópio de Pinard (só a partir de ~20 semanas); com sonar Doppler é audível nesta IG. Insistir no Pinard é erro",
+      "Sinais vitais e antropometria são normais, com IMC pré-gestacional eutrófico (22,3 kg/m²), o que dita ganho ponderal recomendado de 11,5 a 16 kg",
+      "Ela tem 26 anos e nunca coletou citopatológico — está DENTRO da faixa de rastreamento do colo do útero (25 a 64 anos), e a gestação não contraindica a coleta. Oferecer o preventivo nesta consulta é conduta correta",
+      "O ácido fólico está indicado e previsto no protocolo até a 12ª semana; a janela de prevenção do defeito de tubo neural já se fechou nesta IG, mas isso NÃO torna a prescrição errada — o que seria erro é deixar de abordar a suplementação",
+      "O quadro emocional é de ambivalência e ansiedade reativa a uma gravidez não planejada, sem sintomas de transtorno depressivo estabelecido (EPDS abaixo do ponto de corte)",
+      "A situação de violência é psicológica com episódio físico leve (apertar/puxar o braço), sob minimização da paciente — deve ser acolhida, registrada e vinculada, sem confronto e sem denúncia à revelia da mulher, lembrando que a notificação de violência interpessoal é compulsória (SINAN) e que o sigilo profissional deve ser explicado a ela"
+    ],
+    "diferenciais_a_respeitar": [
+      "TIG positivo + USG com gestação tópica única e embrião com BCF afastam gestação ectópica e doença trofoblástica gestacional",
+      "Ausência total de sangramento e de dor abdominal, com colo fechado ao exame, afasta ameaça de abortamento e abortamento em curso",
+      "PUQE de 5 pontos, peso estável e ausência de desidratação e cetonúria afastam hiperêmese gravídica — o manejo é não farmacológico",
+      "Polaciúria com EAS sem leucocitúria/nitrito e urocultura negativa afasta ITU e bacteriúria assintomática — a polaciúria é gravídica",
+      "EPDS de 9 pontos, abaixo do ponto de corte, afasta transtorno depressivo estabelecido: é ambivalência e ansiedade reativa",
+      "Tabagismo e antecedente materno de pré-eclâmpsia/prematuridade pedem vigilância e compartilhamento com a equipe, mas NÃO estratificam esta gestante como alto risco hoje"
+    ]
+  },
+  "exame_fisico": {
+    "estado_geral": {
+      "nome": "Estado geral e inspeção",
+      "sinonimos": [
+        "estado geral",
+        "aparencia",
+        "aparência",
+        "inspeção",
+        "inspecao geral",
+        "como ela esta"
+      ],
+      "resultado": "Bom estado geral, corada, hidratada, anictérica, acianótica, eupneica, lúcida e orientada. Aspecto cansado, sem sinais de desidratação."
+    },
+    "pressao_arterial": {
+      "nome": "Pressão arterial (técnica correta, manguito adequado, sentada, após repouso)",
+      "sinonimos": [
+        "pressao arterial",
+        "pressão arterial",
+        "pa",
+        "medir a pressao",
+        "aferir pressao",
+        "verificar a pressão",
+        "pressao"
+      ],
+      "resultado": "112/70 mmHg em membro superior direito, sentada, após 5 minutos de repouso, com manguito adequado à circunferência braquial. Valor normal."
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca / pulso",
+      "sinonimos": [
+        "frequencia cardiaca",
+        "frequência cardíaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "84 bpm, rítmico, cheio."
+    },
+    "frequencia_respiratoria": {
+      "nome": "Frequência respiratória",
+      "sinonimos": [
+        "frequencia respiratoria",
+        "frequência respiratória",
+        "fr",
+        "respiracao",
+        "respiração"
+      ],
+      "resultado": "16 irpm, sem esforço respiratório."
+    },
+    "temperatura": {
+      "nome": "Temperatura axilar",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termometro",
+        "temperatura axilar"
+      ],
+      "resultado": "36,5°C — afebril."
+    },
+    "saturacao": {
+      "nome": "Saturação de oxigênio",
+      "sinonimos": [
+        "saturacao",
+        "saturação",
+        "spo2",
+        "oximetria",
+        "oximetro"
+      ],
+      "resultado": "98% em ar ambiente."
+    },
+    "antropometria": {
+      "nome": "Peso, altura, IMC pré-gestacional e classificação do estado nutricional",
+      "sinonimos": [
+        "peso",
+        "altura",
+        "imc",
+        "antropometria",
+        "estado nutricional",
+        "pesar",
+        "medir a altura",
+        "ganho de peso",
+        "curva de peso"
+      ],
+      "resultado": "Peso atual 57,3 kg; peso pré-gestacional referido 57 kg; altura 1,60 m; IMC pré-gestacional 22,3 kg/m² — EUTRÓFICA. Ganho ponderal recomendado para a gestação: 11,5 a 16 kg. Ganho até aqui: praticamente nulo, coerente com náuseas do primeiro trimestre."
+    },
+    "mucosas_e_conjuntivas": {
+      "nome": "Mucosas e conjuntivas (pesquisa de palidez)",
+      "sinonimos": [
+        "mucosas",
+        "conjuntivas",
+        "palidez",
+        "corada",
+        "olhar os olhos",
+        "anemia no exame"
+      ],
+      "resultado": "Mucosas úmidas e coradas; conjuntivas sem palidez evidente."
+    },
+    "exame_das_mamas": {
+      "nome": "Exame das mamas e avaliação do mamilo para amamentação",
+      "sinonimos": [
+        "exame das mamas",
+        "exame de mama",
+        "mamas",
+        "peito",
+        "palpar as mamas",
+        "avaliar mamilo",
+        "mamilo",
+        "preparo para amamentacao"
+      ],
+      "resultado": "Mamas simétricas, com aumento de volume e turgor, rede venosa de Haller discretamente visível, discreta hiperpigmentação areolar com tubérculos de Montgomery presentes (ainda sem aréola secundária, esperada mais adiante). Mamilos protrusos e íntegros, sem fissura. Sem nódulos palpáveis, sem descarga papilar, sem sinais flogísticos."
+    },
+    "exame_abdominal": {
+      "nome": "Exame do abdome / palpação obstétrica",
+      "sinonimos": [
+        "exame do abdome",
+        "abdome",
+        "barriga",
+        "palpacao abdominal",
+        "palpação obstétrica",
+        "apalpar a barriga",
+        "manobras de leopold"
+      ],
+      "resultado": "Abdome plano, flácido, indolor à palpação, sem visceromegalias. Útero apenas alcançando a borda superior da sínfise púbica, compatível com cerca de 12 semanas. Manobras de Leopold não se aplicam nesta idade gestacional."
+    },
+    "altura_uterina": {
+      "nome": "Altura uterina (medida com fita métrica)",
+      "sinonimos": [
+        "altura uterina",
+        "au",
+        "medir a barriga",
+        "fita metrica",
+        "medida do fundo de utero",
+        "fundo uterino"
+      ],
+      "resultado": "NÃO MENSURÁVEL nesta idade gestacional (11 semanas e 4 dias): o fundo uterino apenas alcança a borda superior da sínfise púbica. A medida com fita métrica só passa a ser possível quando o útero ultrapassa a sínfise, por volta de 12 a 13 semanas — a curva de altura uterina da Caderneta da Gestante começa em 13 semanas. Reconhecer isso é conduta correta."
+    },
+    "bcf": {
+      "nome": "Batimentos cardiofetais (Pinard e sonar Doppler)",
+      "sinonimos": [
+        "bcf",
+        "batimentos cardiofetais",
+        "batimento do bebe",
+        "coracao do bebe",
+        "sonar",
+        "sonar doppler",
+        "pinard",
+        "escutar o nene",
+        "ausculta fetal"
+      ],
+      "resultado": "NÃO AUDÍVEL pelo estetoscópio de Pinard nesta idade gestacional (só a partir de ~20 semanas). Com sonar Doppler, ausculta-se BCF de 156 bpm, rítmico. Reconhecer a limitação do Pinard nesta IG é conduta correta."
+    },
+    "edema_e_mmii": {
+      "nome": "Membros inferiores — edema e varizes",
+      "sinonimos": [
+        "edema",
+        "inchaco",
+        "inchaço",
+        "pernas",
+        "membros inferiores",
+        "mmii",
+        "varizes",
+        "panturrilha"
+      ],
+      "resultado": "Sem edema (0/4+). Discretas telangiectasias em coxas, sem varizes calibrosas. Panturrilhas livres, sem empastamento ou dor à dorsiflexão."
+    },
+    "exame_ginecologico": {
+      "nome": "Exame ginecológico / especular e coleta de citopatológico",
+      "sinonimos": [
+        "exame ginecologico",
+        "exame ginecológico",
+        "especular",
+        "toque vaginal",
+        "preventivo",
+        "citopatologico",
+        "citopatológico",
+        "papanicolau",
+        "coleta de colo uterino"
+      ],
+      "resultado": "Vulva e vagina sem lesões, sem corrimento patológico, SEM SANGRAMENTO ativo. Colo uterino de aspecto normal, orifício externo fechado, sem dor à mobilização. Citopatológico de colo indicado e coletado nesta consulta: 26 anos, dentro da faixa de rastreamento (25 a 64 anos) e nunca realizado; a gestação não contraindica a coleta, feita com espátula de Ayre e escova endocervical usada com delicadeza. Coleta sem intercorrências — resultado a ser retirado em 30 dias."
+    },
+    "saude_bucal": {
+      "nome": "Inspeção da cavidade oral / avaliação de saúde bucal",
+      "sinonimos": [
+        "saude bucal",
+        "saúde bucal",
+        "boca",
+        "gengiva",
+        "dente",
+        "cavidade oral",
+        "dentista"
+      ],
+      "resultado": "Gengivas hiperemiadas com sangramento à leve pressão (gengivite gravídica), placa bacteriana visível, sem abscesso. Indica encaminhamento à equipe de saúde bucal da própria UBS."
+    }
+  },
+  "exames_disponiveis": {
+    "teste_rapido_gravidez": {
+      "nome": "Teste imunológico de gravidez (TIG) / teste rápido de gravidez",
+      "sinonimos": [
+        "teste de gravidez",
+        "tig",
+        "teste rapido de gravidez",
+        "beta hcg",
+        "bhcg",
+        "hcg",
+        "confirmar a gravidez"
+      ],
+      "resultado": "POSITIVO (reagente). Confirma a gestação e permite o início imediato do pré-natal na própria consulta."
+    },
+    "gestograma": {
+      "nome": "Gestograma / cálculo de IG e DPP pela regra de Näegele",
+      "sinonimos": [
+        "gestograma",
+        "idade gestacional",
+        "ig",
+        "calcular a idade gestacional",
+        "dpp",
+        "data provavel do parto",
+        "regra de naegele",
+        "naegele",
+        "quando o bebe nasce"
+      ],
+      "resultado": "Com DUM em 15/05/2026 e data de referência 04/08/2026: idade gestacional de 11 semanas e 4 dias. DPP pela regra de Näegele (DUM + 7 dias − 3 meses + 1 ano) = 22/02/2027."
+    },
+    "tipagem_sanguinea": {
+      "nome": "Tipagem sanguínea ABO/Rh e Coombs indireto",
+      "sinonimos": [
+        "tipagem sanguinea",
+        "tipagem",
+        "abo",
+        "fator rh",
+        "rh",
+        "tipo de sangue",
+        "coombs",
+        "coombs indireto"
+      ],
+      "resultado": "O positivo (Rh positivo). Coombs indireto não indicado por Rh positivo — afasta necessidade de profilaxia com imunoglobulina anti-D."
+    },
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": [
+        "hemograma",
+        "hemograma completo",
+        "hemoglobina",
+        "hematocrito",
+        "exame de sangue",
+        "anemia"
+      ],
+      "resultado": "Hemoglobina 11,8 g/dL; hematócrito 35%; leucócitos 8.900/mm³; plaquetas 245.000/mm³. Sem anemia (Hb ≥ 11 g/dL na gestação)."
+    },
+    "glicemia_jejum": {
+      "nome": "Glicemia de jejum",
+      "sinonimos": [
+        "glicemia",
+        "glicemia de jejum",
+        "glicose",
+        "acucar no sangue",
+        "diabetes gestacional",
+        "hgt",
+        "glicemia capilar"
+      ],
+      "resultado": "82 mg/dL — normal. TOTG 75 g deve ser programado entre 24 e 28 semanas."
+    },
+    "testes_rapidos_ist": {
+      "nome": "Testes rápidos de HIV, sífilis, hepatite B e hepatite C",
+      "sinonimos": [
+        "testes rapidos",
+        "teste rapido de hiv",
+        "hiv",
+        "sifilis",
+        "sífilis",
+        "vdrl",
+        "hepatites",
+        "sorologia de hepatite b",
+        "hepatite c",
+        "hbsag",
+        "sorologias",
+        "ist"
+      ],
+      "resultado": "HIV: não reagente. Sífilis: não reagente. Hepatite B (HBsAg): não reagente. Hepatite C (anti-HCV): não reagente. Aconselhamento pré e pós-teste realizado; repetir no 3º trimestre."
+    },
+    "toxoplasmose": {
+      "nome": "Sorologia para toxoplasmose (IgG e IgM)",
+      "sinonimos": [
+        "toxoplasmose",
+        "toxo",
+        "igg",
+        "igm",
+        "sorologia de toxoplasmose"
+      ],
+      "resultado": "IgG reagente e IgM não reagente — gestante IMUNE. Não há necessidade de repetição trimestral."
+    },
+    "urina_e_urocultura": {
+      "nome": "Sumário de urina (EAS) e urocultura com antibiograma",
+      "sinonimos": [
+        "urina",
+        "sumario de urina",
+        "sumário de urina",
+        "eas",
+        "urina tipo 1",
+        "urocultura",
+        "cultura de urina",
+        "exame de urina",
+        "bacteriuria"
+      ],
+      "resultado": "EAS: sem leucocitúria, sem nitrito, sem hematúria, sem proteinúria. Urocultura: negativa (ausência de bacteriúria assintomática). Repetir por trimestre."
+    },
+    "ultrassonografia_obstetrica": {
+      "nome": "Ultrassonografia obstétrica de primeiro trimestre",
+      "sinonimos": [
+        "ultrassom",
+        "ultrassonografia",
+        "usg",
+        "usg obstetrica",
+        "ecografia",
+        "us obstetrico",
+        "ver o bebe"
+      ],
+      "resultado": "Gestação tópica única, embrião com BCF presente (158 bpm), CCN compatível com 11 semanas e 5 dias — concordante com a IG pela DUM. Anexos e colo normais, sem descolamento ou hematoma."
+    },
+    "cartao_vacina": {
+      "nome": "Cartão de vacina / situação vacinal conforme o PNI",
+      "sinonimos": [
+        "cartao de vacina",
+        "cartão de vacina",
+        "caderneta de vacinacao",
+        "vacinas",
+        "situacao vacinal",
+        "dt",
+        "dtpa",
+        "antitetanica",
+        "influenza",
+        "vacina de hepatite b",
+        "covid"
+      ],
+      "resultado": "Hepatite B: esquema completo (3 doses). dT: 2 doses documentadas, última há 8 anos — esquema incompleto, indicada 1 dose agora para completar as três. dTpa: nunca recebida — indicar a partir de 20 semanas, em toda gestação. Influenza: não vacinada na campanha atual — indicar em qualquer idade gestacional. COVID-19: esquema desatualizado."
+    },
+    "caderneta_da_gestante": {
+      "nome": "Caderneta da Gestante (abertura, preenchimento e cadastro no pré-natal)",
+      "sinonimos": [
+        "caderneta da gestante",
+        "caderneta",
+        "cartao da gestante",
+        "cartão da gestante",
+        "abrir o pre natal",
+        "cadastro do pre natal",
+        "carteirinha da gestante"
+      ],
+      "resultado": "Gestante ainda SEM caderneta e SEM cadastro no pré-natal. Caderneta aberta e preenchida nesta consulta: identificação, DUM, IG, DPP, peso/altura/IMC, PA, tipagem, situação vacinal, exames solicitados e data do retorno."
+    },
+    "rastreio_emocional": {
+      "nome": "Rastreio de sofrimento emocional (escala de Edinburgh / EPDS)",
+      "sinonimos": [
+        "edinburgh",
+        "epds",
+        "escala de edinburgh",
+        "rastreio de depressao",
+        "saude mental",
+        "avaliacao emocional",
+        "escala de humor"
+      ],
+      "resultado": "EPDS = 9 pontos — abaixo do ponto de corte para rastreio positivo, porém com itens de ansiedade e autoculpa pontuados. Indica acompanhamento e reavaliação, não encaminhamento imediato à saúde mental."
+    },
+    "rastreio_violencia": {
+      "nome": "Rastreio de violência contra a mulher (instrumento da linha de cuidado)",
+      "sinonimos": [
+        "rastreio de violencia",
+        "violencia domestica",
+        "violência doméstica",
+        "instrumento de violencia",
+        "ficha de notificacao",
+        "sinan",
+        "notificacao compulsoria",
+        "linha de cuidado da violencia"
+      ],
+      "resultado": "Rastreio POSITIVO para violência psicológica com episódio de violência física leve (apertar e puxar o braço durante discussão). Situação atual: convive com o agressor, sem lesão presente, sem ameaça de morte relatada. Requer acolhimento, registro em prontuário, notificação compulsória ao SINAN, informação sobre a rede de proteção e plano de segurança pactuado — sem denúncia à revelia da mulher."
+    },
+    "escala_dor_nausea": {
+      "nome": "Escala de intensidade da náusea e vômito da gestação (PUQE) e escala numérica",
+      "sinonimos": [
+        "puqe",
+        "escala de nausea",
+        "intensidade do enjoo",
+        "escala numerica",
+        "eva",
+        "escala de dor",
+        "quanto incomoda"
+      ],
+      "resultado": "PUQE = 5 pontos — náusea e vômito de intensidade LEVE (faixas: leve ≤ 6; moderada 7 a 12; grave ≥ 13). Sem critérios de hiperêmese gravídica (sem perda de peso ≥ 5%, sem desidratação, sem cetonúria). Manejo indicado é não farmacológico."
+    }
+  }
+}

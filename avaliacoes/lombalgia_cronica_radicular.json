@@ -1,0 +1,1203 @@
+{
+  "nome_caso": "Lombalgia Crônica com Suspeita de Comprometimento Radicular",
+  "criterios": [
+    {
+      "nome": "Abordagem, profissionalismo e biossegurança",
+      "objetivo": "Estabelecer vínculo, apresentar-se, obter consentimento e VERBALIZAR a biossegurança antes de qualquer contato — domínio A/A2 dos espelhos de fisioterapia (UFPA). Numa estação virtual o que se avalia é a declaração da conduta, não a sua execução manual.",
+      "itens": [
+        {
+          "nome": "apresentou-se e identificou-se como fisioterapeuta",
+          "termos": [
+            "meu nome e",
+            "sou fisioterapeuta",
+            "eu me chamo",
+            "bom dia sou",
+            "boa tarde sou",
+            "vou te atender hoje",
+            "sou o fisioterapeuta",
+            "sou a fisioterapeuta"
+          ]
+        },
+        {
+          "nome": "tratou a paciente pelo nome e confirmou identificacao",
+          "termos": [
+            "qual o seu nome",
+            "como a senhora se chama",
+            "dona rosangela",
+            "rosangela",
+            "posso te chamar de",
+            "quantos anos a senhora tem",
+            "confirmar o seu nome"
+          ]
+        },
+        {
+          "nome": "explicou o objetivo da avaliacao antes de executar",
+          "termos": [
+            "vou explicar o que vamos fazer",
+            "o objetivo da avaliacao",
+            "eu vou te avaliar",
+            "primeiro eu vou perguntar",
+            "depois eu vou examinar",
+            "vou te explicar cada passo",
+            "explicar o procedimento"
+          ]
+        },
+        {
+          "nome": "pediu consentimento para examinar, expor e tocar",
+          "termos": [
+            "a senhora permite",
+            "posso examinar",
+            "posso encostar",
+            "com a sua autorizacao",
+            "voce autoriza",
+            "levantar a blusa",
+            "consentimento",
+            "tudo bem se eu tocar"
+          ]
+        },
+        {
+          "nome": "higienizou as maos e cuidou da biossegurança",
+          "termos": [
+            "higienizar as maos",
+            "lavar as maos",
+            "alcool em gel",
+            "higienizacao das maos",
+            "biosseguranca",
+            "epi",
+            "equipamento de protecao",
+            "luvas",
+            "limpar a maca"
+          ]
+        },
+        {
+          "nome": "cuidou da privacidade e do conforto na sala",
+          "termos": [
+            "privacidade",
+            "vou fechar a cortina",
+            "fechar a porta",
+            "voce esta confortavel",
+            "se doer me avise",
+            "pode parar quando quiser",
+            "avise se incomodar"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Anamnese e caracterizacao da queixa (HDA)",
+      "objetivo": "Investigar e caracterizar a queixa principal em todos os seus atributos — domínio B dos espelhos.",
+      "itens": [
+        {
+          "nome": "queixa principal e motivo da procura",
+          "termos": [
+            "o que a senhora esta sentindo",
+            "o que te trouxe aqui",
+            "me conta o que houve",
+            "qual e a sua queixa",
+            "o que esta acontecendo",
+            "por que voce procurou a fisioterapia"
+          ]
+        },
+        {
+          "nome": "inicio e tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "ha quanto tempo",
+            "desde quando",
+            "faz quanto tempo",
+            "como comecou",
+            "o que desencadeou"
+          ]
+        },
+        {
+          "nome": "localizacao exata da dor",
+          "termos": [
+            "onde doi",
+            "me mostra onde",
+            "aponta com o dedo",
+            "em que lugar da coluna",
+            "localizacao da dor",
+            "de que lado"
+          ]
+        },
+        {
+          "nome": "irradiacao e trajeto da dor no membro inferior",
+          "termos": [
+            "a dor desce",
+            "irradia",
+            "vai para a perna",
+            "ate onde vai a dor",
+            "passa do joelho",
+            "chega no pe",
+            "trajeto da dor",
+            "espalha"
+          ]
+        },
+        {
+          "nome": "intensidade quantificada",
+          "termos": [
+            "de zero a dez",
+            "escala de dor",
+            "quanto doi",
+            "intensidade da dor",
+            "eva",
+            "nota para a dor",
+            "no pior momento"
+          ]
+        },
+        {
+          "nome": "carater e qualidade da dor (mecanica x neuropatica)",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "e queimacao",
+            "e choque",
+            "e peso",
+            "e fisgada",
+            "e formigamento",
+            "dor em pontada",
+            "dor latejante"
+          ]
+        },
+        {
+          "nome": "duracao, frequencia e padrao ao longo do dia",
+          "termos": [
+            "quanto tempo dura",
+            "com que frequencia",
+            "e o dia todo",
+            "vem e vai",
+            "e continua",
+            "piora ao longo do dia",
+            "qual o pior horario",
+            "como e de manha"
+          ]
+        },
+        {
+          "nome": "fatores de piora e de melhora",
+          "termos": [
+            "o que piora",
+            "o que melhora",
+            "o que alivia",
+            "piora sentada",
+            "melhora deitada",
+            "piora ao levantar da cadeira",
+            "piora ao tossir",
+            "posicao que alivia"
+          ]
+        },
+        {
+          "nome": "sintomas neurologicos associados (parestesia e dormencia)",
+          "termos": [
+            "formigamento",
+            "adormecimento",
+            "dormencia",
+            "sensacao de choque",
+            "perde a sensibilidade",
+            "sente o pe diferente",
+            "sensacao estranha na perna"
+          ]
+        },
+        {
+          "nome": "evolucao do quadro e mudanca recente",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "o que mudou nas ultimas semanas",
+            "sempre foi assim",
+            "como evoluiu",
+            "mudou alguma coisa"
+          ]
+        },
+        {
+          "nome": "tratamentos ja realizados e resposta",
+          "termos": [
+            "ja tomou algum remedio",
+            "o que a senhora ja fez",
+            "ja fez fisioterapia",
+            "usa alguma cinta",
+            "tomou anti inflamatorio",
+            "fez massagem",
+            "melhorou com o tratamento",
+            "usa algum medicamento"
+          ]
+        }
+      ],
+      "peso": 1.25
+    },
+    {
+      "nome": "Anamnese ocupacional, antecedentes e habitos de vida",
+      "objetivo": "Levantar o contexto ocupacional (exigência central de uma lombalgia de trabalhadora), os antecedentes e os hábitos que sustentam o raciocínio e o plano.",
+      "itens": [
+        {
+          "nome": "descricao do posto e da postura no trabalho",
+          "termos": [
+            "como e o seu trabalho",
+            "voce trabalha sentada",
+            "quantas horas por dia",
+            "como e a sua cadeira",
+            "como e a bancada",
+            "usa pedal",
+            "posto de trabalho",
+            "como voce fica na maquina"
+          ]
+        },
+        {
+          "nome": "movimentacao manual de carga e levantamento de peso",
+          "termos": [
+            "carrega peso",
+            "levanta peso",
+            "quantos quilos",
+            "quantas vezes carrega",
+            "quantos fardos",
+            "fardo de tecido",
+            "descarrega caminhao",
+            "tem carrinho",
+            "ajuda mecanica",
+            "como levanta o peso"
+          ]
+        },
+        {
+          "nome": "jornada, pausas e ritmo de producao",
+          "termos": [
+            "qual a sua jornada",
+            "faz pausa",
+            "tem intervalo",
+            "trabalha por meta",
+            "hora extra",
+            "quantas horas trabalha",
+            "micropausa",
+            "levanta da maquina"
+          ]
+        },
+        {
+          "nome": "carga domestica e dupla jornada",
+          "termos": [
+            "servico de casa",
+            "afazeres de casa",
+            "quem faz o servico de casa",
+            "lava roupa",
+            "carrega balde",
+            "cuida de alguem",
+            "alguem te ajuda em casa",
+            "dupla jornada"
+          ]
+        },
+        {
+          "nome": "atividade fisica atual e previa",
+          "termos": [
+            "faz exercicio",
+            "atividade fisica",
+            "caminha",
+            "faz academia",
+            "pratica esporte",
+            "parou de fazer exercicio",
+            "e ativa fisicamente"
+          ]
+        },
+        {
+          "nome": "antecedentes pessoais e medicamentos em uso",
+          "termos": [
+            "pressao alta",
+            "diabetes",
+            "toma algum medicamento continuo",
+            "ja fez cirurgia",
+            "tem alguma doenca",
+            "alergia a medicamento",
+            "usa remedio todo dia"
+          ]
+        },
+        {
+          "nome": "episodios previos e fisioterapia anterior",
+          "termos": [
+            "ja teve crise antes",
+            "e a primeira vez",
+            "ja teve essa dor outras vezes",
+            "ja fez fisioterapia antes",
+            "quantas vezes ja aconteceu",
+            "como foi o tratamento anterior"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "sua mae",
+            "seu pai",
+            "alguem da familia tem problema de coluna",
+            "historico familiar",
+            "doenca na familia"
+          ]
+        },
+        {
+          "nome": "tabagismo, alcool e peso",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "ja fumou",
+            "bebe",
+            "bebida alcoolica",
+            "seu peso",
+            "quanto voce pesa",
+            "engordou",
+            "como e a sua alimentacao"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Triagem de bandeiras vermelhas e criterio de encaminhamento",
+      "objetivo": "Rastrear ATIVAMENTE as bandeiras vermelhas — a paciente não as oferece. É o item de maior peso ético do espelho: errar aqui significa não reconhecer uma condição que exige encaminhamento médico imediato.",
+      "itens": [
+        {
+          "nome": "RISCO — rastreio de sindrome da cauda equina (esfincteres e sensibilidade em sela)",
+          "termos": [
+            "perde urina",
+            "escapa urina",
+            "escape de urina",
+            "escapa xixi",
+            "perde xixi",
+            "perda de urina",
+            "controle da urina",
+            "incontinencia urinaria",
+            "perde fezes",
+            "controle do intestino",
+            "dormencia entre as pernas",
+            "dormencia na regiao intima",
+            "anestesia em sela",
+            "sensibilidade em sela",
+            "regiao perineal",
+            "perineo",
+            "formigamento na regiao genital",
+            "dificuldade para urinar",
+            "consegue segurar o xixi",
+            "sente vontade de urinar",
+            "dormencia no bumbum"
+          ]
+        },
+        {
+          "nome": "perda de peso inexplicada",
+          "termos": [
+            "perdeu peso",
+            "emagreceu",
+            "perda de peso",
+            "emagrecimento sem explicacao",
+            "o peso mudou",
+            "esta emagrecendo sem querer"
+          ]
+        },
+        {
+          "nome": "febre, sudorese noturna e infeccao recente",
+          "termos": [
+            "teve febre",
+            "febre",
+            "calafrio",
+            "suor noturno",
+            "sudorese noturna",
+            "infeccao recente",
+            "tomou antibiotico",
+            "teve alguma infeccao"
+          ]
+        },
+        {
+          "nome": "historia pessoal de cancer ou neoplasia",
+          "termos": [
+            "cancer",
+            "tumor",
+            "neoplasia",
+            "ja tratou cancer",
+            "historia de cancer",
+            "fez quimioterapia",
+            "fez radioterapia",
+            "algum nodulo"
+          ]
+        },
+        {
+          "nome": "trauma, queda ou acidente",
+          "termos": [
+            "sofreu trauma",
+            "caiu",
+            "teve queda",
+            "acidente",
+            "levou pancada",
+            "bateu as costas",
+            "algum trauma nas costas"
+          ]
+        },
+        {
+          "nome": "uso de corticoide, osteoporose e risco de fratura",
+          "termos": [
+            "corticoide",
+            "cortisona",
+            "usa corticoide continuo",
+            "osteoporose",
+            "ja teve fratura",
+            "fez densitometria",
+            "osso fraco"
+          ]
+        },
+        {
+          "nome": "dor noturna nao postural e dor em repouso",
+          "termos": [
+            "dor a noite",
+            "dor noturna",
+            "acorda com dor",
+            "dor em repouso",
+            "dor que nao melhora deitada",
+            "a dor te acorda",
+            "dor que nao alivia em nenhuma posicao"
+          ]
+        },
+        {
+          "nome": "deficit motor progressivo, quedas e piora neurologica",
+          "termos": [
+            "fraqueza na perna",
+            "a perna falseia",
+            "perdeu forca",
+            "esta tropecando",
+            "arrasta o pe",
+            "ja caiu",
+            "a forca esta piorando",
+            "dificuldade para subir escada"
+          ]
+        },
+        {
+          "nome": "conduta de seguranca: encaminhamento e sinais de alarme orientados",
+          "termos": [
+            "encaminhar",
+            "encaminhamento medico",
+            "procurar um medico",
+            "pronto socorro",
+            "emergencia",
+            "sinais de alerta",
+            "procure atendimento",
+            "avaliacao medica urgente"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Bandeiras amarelas e fatores psicossociais",
+      "objetivo": "Investigar os fatores psicossociais que estratificam o prognóstico e que a paciente jamais oferece espontaneamente — cinesiofobia, catastrofização, ameaça ao emprego, medo de cirurgia, sono/humor e restrição de participação.",
+      "itens": [
+        {
+          "nome": "RISCO — medo de movimento e crenca de dano estrutural (cinesiofobia)",
+          "termos": [
+            "tem medo de se mexer",
+            "medo de fazer exercicio",
+            "medo de piorar a coluna",
+            "deixou de fazer alguma coisa por medo",
+            "por medo de piorar",
+            "tem medo de piorar",
+            "evita se abaixar",
+            "evita pegar peso",
+            "acha que o movimento piora",
+            "o que te falaram sobre a sua coluna",
+            "o que voce acha que causa a sua dor",
+            "por que parou de caminhar",
+            "acredita que pode se machucar",
+            "usa cinta o dia todo",
+            "cinesiofobia",
+            "medo do movimento"
+          ]
+        },
+        {
+          "nome": "RISCO — catastrofizacao e expectativa de prognostico",
+          "termos": [
+            "acha que nao tem cura",
+            "o que voce imagina do futuro",
+            "o que voce pensa que vai acontecer",
+            "acha que vai piorar",
+            "o pior que pode acontecer",
+            "tem medo de ficar na cadeira de rodas",
+            "acha que vai ficar invalida",
+            "se sente sem esperanca",
+            "o que passa na sua cabeca",
+            "o que voce pensa quando a dor aperta",
+            "fica pensando na dor",
+            "acha que vai ficar igual a sua mae",
+            "catastrofizacao"
+          ]
+        },
+        {
+          "nome": "RISCO — impacto no trabalho e ameaca ao emprego",
+          "termos": [
+            "tem medo de perder o emprego",
+            "corre risco de perder o emprego",
+            "tirou atestado",
+            "tirar atestado",
+            "faltou ao trabalho",
+            "o que o encarregado falou",
+            "seu chefe sabe da dor",
+            "consegue trabalhar com essa dor",
+            "pensou em se afastar do trabalho",
+            "a dor atrapalha o seu servico",
+            "nao puder mais costurar",
+            "esta preocupada com o emprego",
+            "pediu afastamento"
+          ]
+        },
+        {
+          "nome": "RISCO — medo da cirurgia e crencas sobre o tratamento",
+          "termos": [
+            "tem medo de operar",
+            "medo de cirurgia",
+            "ja falaram em operar",
+            "o que voce acha de uma cirurgia",
+            "alguem da familia operou a coluna",
+            "cirurgia de coluna",
+            "risco de operar",
+            "o que mais te preocupa no tratamento",
+            "pensa em fazer cirurgia",
+            "o medico falou em operacao",
+            "sua mae operou"
+          ]
+        },
+        {
+          "nome": "RISCO — sono e sofrimento emocional",
+          "termos": [
+            "como esta o seu sono",
+            "qualidade do sono",
+            "consegue dormir",
+            "esta dormindo bem",
+            "como esta o seu humor",
+            "anda triste",
+            "anda ansiosa",
+            "anda deprimida",
+            "tem chorado",
+            "perdeu a paciencia",
+            "esta desanimada",
+            "como voce esta emocionalmente",
+            "a dor mexeu com a sua cabeca",
+            "a dor te deixou triste"
+          ]
+        },
+        {
+          "nome": "RISCO — restricao de participacao e vida a dois",
+          "termos": [
+            "vida sexual",
+            "relacao sexual",
+            "intimidade com o seu marido",
+            "a dor atrapalha na relacao",
+            "vida a dois",
+            "afetou o seu casamento",
+            "como esta a sua vida conjugal",
+            "evita ter relacao",
+            "relacao com o seu marido mudou",
+            "a dor atrapalha na cama"
+          ]
+        },
+        {
+          "nome": "estratificou o risco com instrumento e investigou rede de apoio",
+          "termos": [
+            "start back",
+            "estratificacao de risco",
+            "escala de cinesiofobia",
+            "tampa",
+            "escala de catastrofizacao",
+            "quem te apoia",
+            "com quem voce mora",
+            "sua familia ajuda"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Exame fisico neurodinamico e neurologico com verbalizacao da execucao",
+      "objetivo": "Selecionar os testes a partir das hipóteses (raciocínio hipotético-dedutivo, não bateria cega) e VERBALIZAR a execução: nome do teste, posicionamento da paciente e do terapeuta, critério de positividade e interpretação. É a forma honesta de capturar o núcleo psicomotor numa estação virtual — a execução manual permanece para a estação presencial.",
+      "itens": [
+        {
+          "nome": "elencou as hipoteses e justificou a escolha dos testes",
+          "termos": [
+            "minha hipotese e",
+            "pela descricao eu suspeito",
+            "por isso eu vou testar",
+            "para confirmar essa hipotese",
+            "vou escolher esse teste porque",
+            "diagnostico diferencial",
+            "eu preciso descartar",
+            "raciocinio clinico"
+          ]
+        },
+        {
+          "nome": "teste de Lasegue / elevacao da perna estendida (SLR)",
+          "termos": [
+            "lasegue",
+            "slr",
+            "straight leg raise",
+            "elevacao da perna estendida",
+            "elevacao da perna reta",
+            "teste da perna esticada",
+            "teste neurodinamico"
+          ]
+        },
+        {
+          "nome": "Lasegue cruzado (cross-SLR)",
+          "termos": [
+            "lasegue cruzado",
+            "cross lasegue",
+            "cross slr",
+            "teste cruzado",
+            "elevacao da perna contralateral",
+            "perna sadia",
+            "perna assintomatica"
+          ]
+        },
+        {
+          "nome": "teste de Slump",
+          "termos": [
+            "slump",
+            "teste de slump",
+            "slump test",
+            "tensao neural sentada",
+            "teste neurodinamico sentado"
+          ]
+        },
+        {
+          "nome": "verbalizou o posicionamento da paciente, do segmento e do proprio terapeuta",
+          "termos": [
+            "decubito dorsal",
+            "deitada de barriga para cima",
+            "com o joelho estendido",
+            "eu me posiciono",
+            "fico ao lado da maca",
+            "estabilizo a pelve",
+            "uma mao no calcanhar",
+            "mao no calcanhar",
+            "posicionamento da paciente",
+            "posicionamento do terapeuta",
+            "sentada na beira da maca",
+            "elevo lentamente"
+          ]
+        },
+        {
+          "nome": "declarou o criterio de positividade e a interpretacao do teste",
+          "termos": [
+            "considero positivo quando",
+            "e positivo se reproduzir",
+            "entre 30 e 70 graus",
+            "de 30 a 70 graus",
+            "entre trinta e setenta graus",
+            "reproducao dos sintomas",
+            "dor irradiada abaixo do joelho",
+            "diferencia tensao muscular de tensao neural",
+            "manobra de bragard",
+            "dorsiflexao do tornozelo",
+            "extensao cervical alivia",
+            "o que caracteriza positividade"
+          ]
+        },
+        {
+          "nome": "teste de forca muscular manual por miotomos (escala 0-5)",
+          "termos": [
+            "forca muscular",
+            "teste de forca",
+            "escala oxford",
+            "escala mrc",
+            "miotomos",
+            "grau de forca",
+            "flexores plantares",
+            "ponta do pe",
+            "extensor do halux",
+            "dorsiflexores"
+          ]
+        },
+        {
+          "nome": "avaliacao da sensibilidade por dermatomos (incluindo regiao em sela)",
+          "termos": [
+            "sensibilidade",
+            "dermatomos",
+            "testar a sensibilidade",
+            "sensibilidade tatil",
+            "sensibilidade dolorosa",
+            "sensibilidade em sela",
+            "regiao perineal",
+            "comparar os dois lados"
+          ]
+        },
+        {
+          "nome": "reflexos osteotendineos e pesquisa de sinais piramidais",
+          "termos": [
+            "reflexos",
+            "reflexo aquileu",
+            "reflexo patelar",
+            "martelo de reflexo",
+            "reflexo osteotendineo",
+            "babinski",
+            "clonus"
+          ]
+        },
+        {
+          "nome": "marcha, inspecao postural e palpacao dirigida",
+          "termos": [
+            "analise da marcha",
+            "ver a senhora andar",
+            "marcha em pontas",
+            "marcha em calcanhares",
+            "inspecao postural",
+            "avaliacao postural",
+            "palpacao",
+            "palpar a musculatura paravertebral",
+            "percussao vertebral"
+          ]
+        },
+        {
+          "nome": "teste de Valsalva / resposta a tosse",
+          "termos": [
+            "valsalva",
+            "manobra de valsalva",
+            "tossir",
+            "a tosse piora",
+            "esforco aumenta a dor"
+          ]
+        },
+        {
+          "nome": "testes de exclusao de quadril, sacroiliaca e origem vascular",
+          "termos": [
+            "faber",
+            "patrick",
+            "fadir",
+            "amplitude do quadril",
+            "sacroiliaca",
+            "thigh thrust",
+            "gaenslen",
+            "provocacao sacroiliaca",
+            "trendelenburg",
+            "pulsos perifericos",
+            "pulso pedioso",
+            "enchimento capilar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Mensuracao objetiva e testes funcionais quantitativos",
+      "objetivo": "Indicar/solicitar ao menos um teste funcional quantitativo, dizer COMO se mede e INTERPRETAR o valor obtido — item literal do espelho da UFPA (goniometria, Sorensen, força abdominal). Numa estação virtual pontua-se a escolha e a leitura da medida, nunca a execução manual do instrumento.",
+      "itens": [
+        {
+          "nome": "goniometria / inclinometria da amplitude lombar",
+          "termos": [
+            "goniometria",
+            "goniometro",
+            "inclinometro",
+            "amplitude de movimento",
+            "adm da coluna",
+            "medir a flexao",
+            "medir a extensao",
+            "quantos graus",
+            "dedos ao solo"
+          ]
+        },
+        {
+          "nome": "teste de Schober modificado",
+          "termos": [
+            "schober",
+            "teste de schober",
+            "schober modificado",
+            "mobilidade lombar em flexao"
+          ]
+        },
+        {
+          "nome": "teste de Sorensen (resistencia dos extensores lombares)",
+          "termos": [
+            "sorensen",
+            "biering sorensen",
+            "resistencia dos extensores",
+            "extensores lombares",
+            "endurance lombar"
+          ]
+        },
+        {
+          "nome": "resistencia dos flexores de tronco e controle motor lombopelvico",
+          "termos": [
+            "forca abdominal",
+            "resistencia abdominal",
+            "flexores de tronco",
+            "controle motor",
+            "estabilizacao lombopelvica",
+            "transverso do abdome",
+            "core"
+          ]
+        },
+        {
+          "nome": "teste de sentar e levantar (5xSTS) ou outro teste funcional cronometrado",
+          "termos": [
+            "sentar e levantar",
+            "sit to stand",
+            "cinco vezes sentar e levantar",
+            "teste funcional cronometrado",
+            "timed up and go",
+            "tug",
+            "teste de caminhada de 6 minutos",
+            "tc6"
+          ]
+        },
+        {
+          "nome": "perimetria com fita metrica (trofismo comparativo)",
+          "termos": [
+            "perimetria",
+            "fita metrica",
+            "medir a panturrilha",
+            "circunferencia da perna",
+            "comparar o trofismo",
+            "atrofia muscular"
+          ]
+        },
+        {
+          "nome": "teste de movimentos repetidos e preferencia direcional",
+          "termos": [
+            "movimentos repetidos",
+            "preferencia direcional",
+            "centralizacao",
+            "periferalizacao",
+            "extensao repetida",
+            "flexao repetida",
+            "mckenzie"
+          ]
+        },
+        {
+          "nome": "quantificou dor e incapacidade com instrumento validado",
+          "termos": [
+            "escala visual analogica",
+            "eva",
+            "escala numerica de dor",
+            "oswestry",
+            "odi",
+            "roland morris",
+            "questionario de incapacidade",
+            "paindetect",
+            "dor neuropatica"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Interpretacao, integracao e discordancia clinico-imagem",
+      "objetivo": "Ler os exames complementares, interpretar corretamente os testes executados e integrar subjetivo + objetivo + complementares — reconhecendo que os achados degenerativos da imagem são prevalentes em assintomáticos e que só L5-S1 correlaciona com a clínica. É a armadilha que separa o bom do mediano.",
+      "itens": [
+        {
+          "nome": "examinou e leu o exame de imagem trazido pela paciente",
+          "termos": [
+            "posso ver o exame",
+            "vamos olhar a ressonancia",
+            "trouxe o laudo",
+            "ver a imagem",
+            "ler o laudo",
+            "ressonancia magnetica",
+            "radiografia",
+            "raio x"
+          ]
+        },
+        {
+          "nome": "reconheceu a discordancia clinico-imagem e a prevalencia de achados degenerativos em assintomaticos",
+          "termos": [
+            "achados degenerativos sao comuns",
+            "aparecem em pessoas sem dor",
+            "a imagem nao explica sozinha",
+            "nem tudo que aparece no exame causa dor",
+            "correlacao clinico radiologica",
+            "so o nivel que corresponde a clinica",
+            "desgaste e normal para a idade",
+            "a imagem nao define o prognostico"
+          ]
+        },
+        {
+          "nome": "correlacionou dermatomo, miotomo e reflexo para localizar o nivel radicular",
+          "termos": [
+            "raiz s1",
+            "nivel radicular",
+            "l5 s1",
+            "o dermatomo corresponde",
+            "o reflexo aquileu corresponde",
+            "correlacao entre os achados",
+            "topografia da lesao",
+            "compatibilidade anatomica"
+          ]
+        },
+        {
+          "nome": "interpretou corretamente os testes neurodinamicos executados",
+          "termos": [
+            "lasegue positivo indica",
+            "o cruzado tem alta especificidade",
+            "isso confirma comprometimento radicular",
+            "o slump confirma origem neural",
+            "interpretacao do teste",
+            "o que esse resultado significa",
+            "sensibilidade e especificidade"
+          ]
+        },
+        {
+          "nome": "indicou ou interpretou exame complementar pertinente (ENMG, laboratorio)",
+          "termos": [
+            "eletroneuromiografia",
+            "enmg",
+            "eletromiografia",
+            "hemograma",
+            "vhs",
+            "pcr",
+            "provas inflamatorias",
+            "qual exame confirmaria"
+          ]
+        },
+        {
+          "nome": "usou instrumento de funcionalidade e de estratificacao para o prognostico",
+          "termos": [
+            "oswestry",
+            "roland morris",
+            "start back",
+            "estratificacao de risco",
+            "escala tampa",
+            "escala de catastrofizacao",
+            "paindetect",
+            "risco de cronificacao"
+          ]
+        },
+        {
+          "nome": "integrou anamnese, exame fisico e complementares numa sintese coerente",
+          "termos": [
+            "juntando tudo",
+            "os achados sao coerentes",
+            "a historia bate com o exame",
+            "sintese dos achados",
+            "resumindo a avaliacao",
+            "os dados apontam para",
+            "o conjunto dos achados"
+          ]
+        }
+      ],
+      "peso": 1.0
+    },
+    {
+      "nome": "Diagnostico cinesiologico-funcional (CBDF / CIF)",
+      "objetivo": "Nomear a DEFICIÊNCIA CINÉTICO-FUNCIONAL na linguagem da CBDF (Resolução COFFITO 555/2022) e estruturá-la pela CIF — não a patologia médica. É o item que distingue a fisioterapia da medicina e o que mais diferencia o espelho.",
+      "itens": [
+        {
+          "nome": "nomeou a deficiencia cinetico-funcional (e nao apenas a patologia)",
+          "termos": [
+            "diagnostico cinesiologico funcional",
+            "diagnostico cinetico funcional",
+            "deficiencia cinetico funcional",
+            "diagnostico fisioterapeutico",
+            "alteracao de funcao e estrutura",
+            "deficiencia de mobilidade",
+            "deficiencia de forca e resistencia",
+            "disfuncao do movimento"
+          ]
+        },
+        {
+          "nome": "usou a taxonomia CBDF / Resolucao COFFITO 555",
+          "termos": [
+            "cbdf",
+            "classificacao brasileira de diagnosticos fisioterapeuticos",
+            "coffito 555",
+            "resolucao 555",
+            "taxonomia do coffito"
+          ]
+        },
+        {
+          "nome": "estruturou pela CIF: funcao, estrutura, atividade, participacao e fatores contextuais",
+          "termos": [
+            "cif",
+            "classificacao internacional de funcionalidade",
+            "limitacao de atividade",
+            "restricao de participacao",
+            "fatores ambientais",
+            "fatores contextuais",
+            "funcao e estrutura do corpo"
+          ]
+        },
+        {
+          "nome": "identificou o componente neuropatico e o nivel de comprometimento",
+          "termos": [
+            "componente neuropatico",
+            "comprometimento radicular",
+            "radiculopatia",
+            "irritacao radicular",
+            "compressao da raiz",
+            "deficit sensitivo e motor"
+          ]
+        },
+        {
+          "nome": "identificou as deficiencias associadas (resistencia, controle motor, condicionamento, sobrecarga ocupacional)",
+          "termos": [
+            "descondicionamento",
+            "reducao da resistencia muscular",
+            "deficit de controle motor",
+            "sobrecarga ocupacional",
+            "fator ocupacional",
+            "reducao da mobilidade lombar",
+            "desuso"
+          ]
+        },
+        {
+          "nome": "estabeleceu prognostico funcional justificado",
+          "termos": [
+            "prognostico",
+            "prognostico funcional",
+            "expectativa de recuperacao",
+            "tempo estimado de tratamento",
+            "fatores de bom prognostico",
+            "fatores que dificultam a recuperacao"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Objetivos, plano terapeutico, educacao em dor e registro",
+      "objetivo": "Definir objetivos, selecionar e JUSTIFICAR as técnicas com dosagem e progressão, desfazer o nocebo da 'coluna gasta' com educação em dor, orientar retorno ao trabalho e registrar em prontuário (Resolução COFFITO 414/2012).",
+      "itens": [
+        {
+          "nome": "estabeleceu objetivos terapeuticos de curto e longo prazo",
+          "termos": [
+            "objetivos do tratamento",
+            "objetivo a curto prazo",
+            "objetivo a longo prazo",
+            "meta do tratamento",
+            "o que queremos alcancar",
+            "plano de tratamento"
+          ]
+        },
+        {
+          "nome": "educacao em dor: desfez a crenca de 'coluna gasta' e o nocebo",
+          "termos": [
+            "educacao em dor",
+            "a sua coluna nao esta acabada",
+            "desgaste nao significa dano",
+            "a dor nao e igual a lesao",
+            "explicar o que e a dor",
+            "neurociencia da dor",
+            "isso nao quer dizer que voce vai piorar",
+            "movimento nao gasta a coluna",
+            "desmistificar"
+          ]
+        },
+        {
+          "nome": "selecionou exercicio terapeutico com preferencia direcional e exposicao gradual",
+          "termos": [
+            "exercicio terapeutico",
+            "preferencia direcional",
+            "exercicio de extensao",
+            "exposicao gradual",
+            "exposicao progressiva ao movimento",
+            "cinesioterapia",
+            "mobilizacao neural",
+            "deslizamento neural"
+          ]
+        },
+        {
+          "nome": "prescreveu fortalecimento, controle motor e condicionamento",
+          "termos": [
+            "fortalecimento",
+            "controle motor",
+            "estabilizacao lombopelvica",
+            "exercicio de resistencia",
+            "condicionamento aerobico",
+            "retomar a caminhada",
+            "fortalecer o core",
+            "treino de forca"
+          ]
+        },
+        {
+          "nome": "definiu dosagem, frequencia e progressao",
+          "termos": [
+            "quantas series",
+            "quantas repeticoes",
+            "quantas vezes por semana",
+            "dosagem",
+            "frequencia do tratamento",
+            "progressao da carga",
+            "criterio de progressao",
+            "intensidade do exercicio"
+          ]
+        },
+        {
+          "nome": "justificou a escolha das tecnicas com base nos achados",
+          "termos": [
+            "escolhi essa tecnica porque",
+            "a justificativa e",
+            "com base nos achados",
+            "porque a avaliacao mostrou",
+            "isso se justifica por",
+            "a evidencia mostra",
+            "por esse motivo eu indico"
+          ]
+        },
+        {
+          "nome": "orientacao ergonomica, retorno ao trabalho e retirada do repouso e da cinta",
+          "termos": [
+            "orientacao ergonomica",
+            "ajustar a cadeira",
+            "micropausas",
+            "pausa a cada",
+            "como levantar peso corretamente",
+            "retorno gradual ao trabalho",
+            "evitar repouso prolongado",
+            "deixar de usar a cinta",
+            "manter se ativa",
+            "adaptacao do posto"
+          ]
+        },
+        {
+          "nome": "orientacao domiciliar e plano de autogestao",
+          "termos": [
+            "exercicio para fazer em casa",
+            "orientacao domiciliar",
+            "plano em casa",
+            "o que fazer quando a dor piorar",
+            "autogestao",
+            "cartilha de exercicios",
+            "o que evitar em casa"
+          ]
+        },
+        {
+          "nome": "comunicacao de saida: explicou a condicao em linguagem acessivel e checou entendimento",
+          "termos": [
+            "vou te explicar o que eu encontrei",
+            "em palavras simples",
+            "ficou claro para a senhora",
+            "voce tem alguma duvida",
+            "quer que eu repita",
+            "voce entendeu",
+            "posso explicar de novo",
+            "explicar o resultado da avaliacao"
+          ]
+        },
+        {
+          "nome": "definiu reavaliacao, encaminhamento e trabalho em equipe",
+          "termos": [
+            "reavaliacao",
+            "vamos reavaliar",
+            "retorno em",
+            "encaminhar para o medico",
+            "equipe multiprofissional",
+            "trabalhar junto com",
+            "medicina do trabalho",
+            "cat",
+            "nexo ocupacional"
+          ]
+        },
+        {
+          "nome": "registro em prontuario conforme a Resolucao COFFITO 414/2012",
+          "termos": [
+            "registro em prontuario",
+            "prontuario",
+            "anotar na ficha",
+            "coffito 414",
+            "resolucao 414",
+            "registrar a evolucao",
+            "documentar a avaliacao",
+            "identificacao do profissional",
+            "crefito"
+          ]
+        }
+      ],
+      "peso": 1.0
+    }
+  ]
+}

@@ -1,0 +1,814 @@
+{
+  "categoria": "odontologia",
+  "titulo": "Pulpite Irreversível Sintomática com Periodontite Apical Sintomática Incipiente no Dente 46",
+  "identificacao": {
+    "nome": "Simone Aparecida Ribeiro",
+    "idade": 32,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "União estável",
+    "escolaridade": "Ensino Médio Completo",
+    "profissao": "Auxiliar administrativa em uma transportadora"
+  },
+  "queixa_principal": "Faz uns cinco dias que esse dente aqui de baixo, do lado direito, não me deixa dormir",
+  "historia_doenca_atual": {
+    "inicio": "Há 5 dias. No começo era só uma sensibilidade quando tomava água gelada; de anteontem para cá virou uma dor que não passa.",
+    "localizacao": "Lado de baixo, direito, no fundo — ela aponta com o dedo por fora da bochecha, na altura do 'dentão de trás' de baixo, e diz que 'parece que dói tudo desse lado'.",
+    "irradiacao": "Sobe para o ouvido e para a lateral da cabeça do mesmo lado quando a dor está no auge. Não desce para o pescoço.",
+    "intensidade": "Diz que 'de zero a dez' está em 8 quando dá a crise; entre as crises fica num 4 que nunca zera.",
+    "duracao": "Quando toma algo gelado ou doce, a dor dispara e continua por mais de uma hora depois de tirar o estímulo — 'o líquido já foi embora e o dente continua martelando'.",
+    "caracter": "Latejante, pulsando junto com o coração; ela compara com 'uma marreta batendo por dentro do dente'.",
+    "ritmo": "Dor espontânea, que vem sozinha, sem ninguém encostar. Piora muito à noite e quando ela deita.",
+    "periodicidade": "Vem em crises várias vezes por dia e quase todas as noites; nas últimas duas noites praticamente não dormiu.",
+    "fatores_piora": "Bebida gelada (o pior de todos), doce, deitar de barriga para cima, o fim da tarde e a madrugada. Mastigar do lado direito incomoda, mas ela diz que 'o gelado é muito pior que a mordida'.",
+    "fatores_melhora": "Água morna alivia um pouco e por pouco tempo. Ficar sentada e com a cabeça erguida ajuda a passar a crise.",
+    "resposta_ao_analgesico": "Tomou dipirona três vezes só no dia de ontem; alivia por uma hora, no máximo duas, e a dor volta igual.",
+    "sintomas_associados": "Não teve febre, não inchou o rosto, não tem dificuldade para engolir nem para abrir a boca. Refere apenas cansaço e irritação pela falta de sono e gosto ruim na boca de manhã.",
+    "evolucao": "Progressiva e clara: primeiro sensibilidade provocada e passageira ao frio, depois dor prolongada após o estímulo e, nos últimos dois dias, dor espontânea, noturna, com leve incômodo ao morder do lado direito.",
+    "narrativa_do_paciente": "Simone conta que sempre teve 'um dente meio sensível' desse lado, mas que dava para conviver. Na semana passada tomou um refrigerante gelado no almoço da firma e a dor 'estourou'. Achou que ia passar, foi tomando dipirona e trabalhando. De anteontem para ontem a dor começou a vir sozinha, de madrugada, e ela passou a dormir sentada no sofá porque deitada era pior. Hoje veio na UBS de manhã, sem marcar, porque não conseguiu mais dar conta do trabalho."
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": "Nega. Diz que a pressão dela 'sempre foi normal' nos exames da firma.",
+    "diabetes": "Nega diabetes e nega histórico de glicose alterada.",
+    "cardiopatia": "Nega problema de coração, sopro, febre reumática ou uso de profilaxia antes de procedimento dentário.",
+    "alergias": "Nega alergia a medicamento, a anestesia e a látex. Já tomou anestesia no dentista quando era criança e não passou mal.",
+    "medicamentos_em_uso": "Anticoncepcional oral de uso contínuo, todo dia à noite. Fora isso, só dipirona por conta própria nesses dias.",
+    "anticoagulantes": "Nega uso de anticoagulante, AAS ou 'remédio para afinar o sangue'.",
+    "antirreabsortivos": "Nega bifosfonato, injeção anual para osso e nega tratamento oncológico ou radioterapia de cabeça e pescoço.",
+    "cirurgias": "Nega cirurgias. Nunca ficou internada.",
+    "internacoes_e_doencas": "Nega hepatite, HIV, tuberculose e problema renal. Nunca teve convulsão.",
+    "historia_odontologica": "Restaurou esse dente há uns 4 anos, num consultório particular, e nunca mais voltou para revisar. Já fez outras restaurações na adolescência. Nunca fez tratamento de canal. Nunca extraiu dente permanente.",
+    "gestacao": "Não está grávida e não amamenta — mas só confirma isso se for perguntada."
+  },
+  "antecedentes_familiares": {
+    "mae": "Hipertensa, em uso de medicação. Usa dentadura completa desde os 50 anos.",
+    "pai": "Diabético tipo 2. Perdeu quase todos os dentes de baixo.",
+    "irmaos": "Uma irmã mais nova, saudável, sem doenças conhecidas.",
+    "observacoes": "Na família a referência é 'dente ruim se arranca'; ninguém nunca fez tratamento de canal, e isso pesa muito no medo dela de perder o dente."
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Não fuma e nunca fumou.",
+    "alcool": "Uma ou duas cervejas em festa de família, esporadicamente.",
+    "drogas": "Nega.",
+    "higiene_bucal": "Escova os dentes duas vezes ao dia, de manhã e antes de dormir; escova de cerdas médias, troca 'de vez em quando'. Não usa fio dental — diz que 'nunca criou o hábito' e que agora nem consegue passar do lado que dói.",
+    "alimentacao": "Muito refrigerante durante o expediente (2 a 3 latas por dia) e café adoçado. Come bala e chiclete para 'segurar a fome' entre uma planilha e outra.",
+    "bruxismo": "O companheiro reclama que ela range os dentes dormindo; ela acorda com a mandíbula cansada às vezes. Só conta se perguntado.",
+    "sono": "Normalmente 6 a 7 horas, mas nas últimas duas noites praticamente não dormiu por causa da dor.",
+    "atividade_fisica": "Caminhada no fim de semana, quando dá.",
+    "ida_ao_dentista": "Só procura dentista quando dói. A última consulta foi há uns 4 anos, quando fez essa restauração."
+  },
+  "informacoes_iniciais": {
+    "dor": "Diz logo que está com uma dor forte num dente de baixo do lado direito, há cinco dias.",
+    "noites_sem_dormir": "Conta espontaneamente que não dorme direito há duas noites e que dormiu sentada no sofá.",
+    "gelado": "Diz sem ser perguntada que bebida gelada 'é um castigo' e que evita até água da geladeira.",
+    "remedio": "Comenta que tomou dipirona e que 'não segura', a dor volta.",
+    "latejante": "Descreve a dor como uma latejada que vem sozinha, principalmente à noite.",
+    "sem_inchaco": "Se apresenta dizendo que 'graças a Deus não inchou nada, é só a dor mesmo'."
+  },
+  "informacoes_intermediarias": {
+    "restauracao_antiga": "Se perguntada, conta que esse dente tem uma obturação grande, prateada, feita há uns 4 anos, e que já sentiu 'um pedacinho lascando' na borda ao passar a língua.",
+    "doce_dispara": "Se perguntada sobre doce, diz que bala e refrigerante disparam a dor tanto quanto o gelado.",
+    "mordida": "Se perguntada sobre mastigação, diz que morder daquele lado 'incomoda um pouco', mas que já parou de usar esse lado para comer há dois dias.",
+    "quente_alivia": "Se perguntada, conta que água morna dá um alívio pequeno e rápido.",
+    "sabor_ruim": "Se perguntada sobre gosto ou cheiro ruim, diz que acorda com gosto estranho na boca, mas atribui à boca seca da noite.",
+    "sinusite": "Se perguntada sobre nariz, diz que não está gripada, não tem nariz entupido, não tem dor no rosto ao abaixar a cabeça e não teve sinusite recente.",
+    "atm": "Se perguntada, diz que não estala a mandíbula, abre a boca normalmente e não tem dor na articulação — só o cansaço da mandíbula de manhã, que ela liga ao ranger de dentes.",
+    "ouvido": "Se perguntada, esclarece que a dor 'sobe' para o ouvido, mas que o ouvido em si não dói por dentro e não tem secreção.",
+    "trabalho": "Se perguntada, conta que trabalha oito horas por dia digitando notas fiscais e que errou lançamentos essa semana de tanta dor e sono ruim.",
+    "fio_dental": "Se perguntada sobre higiene, admite que não usa fio dental e que a escovação do lado direito está falha porque dói encostar."
+  },
+  "informacoes_sensiveis": {
+    "medo_do_dentista": "Tem pavor de dentista desde os 9 anos, quando foi arrancar um dente de leite num posto e a anestesia 'não pegou' — sentiu tudo, gritou e foi segurada na cadeira. Desde então evita consultório e só vai quando a dor a obriga. Está com as mãos geladas e o coração disparado agora, mas se envergonha de admitir isso 'na idade dela'. Só verbaliza se for perguntada com calma sobre medo, ansiedade ou experiências anteriores.",
+    "automedicacao_e_praticas_caseiras": "Além da dipirona três vezes ontem, tomou por conta própria duas cápsulas de amoxicilina que sobraram de um tratamento do companheiro, porque a vizinha disse que 'dor de dente é infecção'. Também amassou um comprimido e encostou direto no dente duas vezes, e fez bochecho com óleo de cravo comprado na farmácia. Tem vergonha de contar e medo de ser repreendida — só admite se perguntada diretamente e sem julgamento sobre o que já usou.",
+    "medo_de_perder_o_dente": "O que ela mais teme é ouvir que o jeito é arrancar. A mãe usa dentadura desde os 50 e o pai perdeu os dentes de baixo; ela repete para si mesma que 'não quer começar a perder dente aos 32'. A vizinha já falou para ela 'mandar tirar logo e acabar com o sofrimento'. Só diz isso em voz alta se perguntada sobre o que a preocupa, o que ela espera do atendimento ou se alguém sugeriu extração.",
+    "gestacao_e_ciclo_menstrual": "Não está grávida: menstruou há 10 dias e toma o anticoncepcional certinho. Mas ficou apreensiva quando ouviu falar em radiografia e não sabia se podia fazer. Não levanta o tema sozinha — só responde se for perguntada sobre gravidez, amamentação, ciclo menstrual ou uso de contraceptivo, e agradece visivelmente quando a pergunta vem antes do exame de imagem.",
+    "impacto_no_trabalho_e_dinheiro": "Está com medo de perder o emprego: já faltou meio dia essa semana, errou lançamentos e o supervisor cobrou. Não tem plano odontológico, o orçamento do canal no particular que ela pesquisou pelo celular foi de um valor que ela não tem, e ela não sabia que a UBS resolvia urgência. Também tem receio de não conseguir folga para voltar e terminar o tratamento. Só fala disso se perguntada sobre trabalho, rotina, condições de retornar ou o que a impediu de procurar ajuda antes."
+  },
+  "gatilhos_sensiveis": {
+    "medo_do_dentista": [
+      "medo de dentista",
+      "medo do dentista",
+      "medo de ir ao dentista",
+      "medo da anestesia",
+      "medo de anestesia",
+      "medo do procedimento",
+      "medo de sentir dor",
+      "receio do procedimento",
+      "receio da anestesia",
+      "ansiosa",
+      "ansiedade",
+      "nervosa",
+      "apreensiva",
+      "experiencia ruim",
+      "trauma com dentista",
+      "consultas anteriores",
+      "tempo sem vir ao dentista",
+      "tempo sem ir ao dentista",
+      "explicar cada passo",
+      "explique cada passo",
+      "combinar um sinal",
+      "te deixa desconfortavel"
+    ],
+    "automedicacao_e_praticas_caseiras": [
+      "tomou algum remedio",
+      "tomou algum medicamento",
+      "tomou remedio para essa dor",
+      "o que ja tomou",
+      "usou algum analgesico",
+      "tomou dipirona",
+      "tomou paracetamol",
+      "tomou antibiotico",
+      "tomar antibiotico",
+      "usou antibiotico",
+      "por conta propria",
+      "se automedicou",
+      "automedicou",
+      "colocou alguma coisa no dente",
+      "colocou algo no dente",
+      "colocou alguma coisa em cima do dente",
+      "passou algum produto",
+      "remedio caseiro",
+      "fez bochecho",
+      "bochechou",
+      "alguem indicou algum remedio",
+      "sobra de remedio",
+      "comprimido no dente",
+      "oleo de cravo"
+    ],
+    "medo_de_perder_o_dente": [
+      "medo de perder o dente",
+      "perder o dente",
+      "perder esse dente",
+      "medo de arrancar",
+      "arrancar o dente",
+      "tirar o dente",
+      "falar em extracao",
+      "falou em extracao",
+      "indicaram extracao",
+      "o que mais te preocupa",
+      "o que te preocupa",
+      "o que espera do atendimento",
+      "espera do atendimento",
+      "quer manter o dente",
+      "manter o dente",
+      "mandar tirar",
+      "perdeu dentes",
+      "o que te assusta",
+      "assusta no tratamento de canal"
+    ],
+    "gestacao_e_ciclo_menstrual": [
+      "gravida",
+      "gravidez",
+      "possibilidade de gravidez",
+      "chance de gravidez",
+      "amamentando",
+      "amamenta",
+      "ultima menstruacao",
+      "menstruacao",
+      "menstruada",
+      "atraso menstrual",
+      "anticoncepcional",
+      "contraceptivo",
+      "pretende engravidar",
+      "engravidar",
+      "ciclo menstrual",
+      "ciclo esta regular",
+      "evitar radiografia"
+    ],
+    "impacto_no_trabalho_e_dinheiro": [
+      "conseguindo trabalhar",
+      "consegue trabalhar",
+      "faltar no trabalho",
+      "faltou no trabalho",
+      "faltou ao trabalho",
+      "atrapalhado seu dia a dia",
+      "atrapalhando sua rotina",
+      "atrapalha no trabalho",
+      "impediu de procurar atendimento",
+      "procurar atendimento antes",
+      "voltar para continuar o tratamento",
+      "consegue voltar",
+      "consegue retornar",
+      "plano odontologico",
+      "convenio odontologico",
+      "horarios da unidade",
+      "dificuldade para dar seguimento",
+      "atestado",
+      "declaracao de comparecimento"
+    ]
+  },
+  "rede_apoio": {
+    "companheiro": "Vive com o companheiro há 6 anos; ele a incentivou a procurar a UBS e a trouxe de moto até a unidade.",
+    "filho": "Tem um filho de 7 anos, que ficou com a avó materna hoje de manhã.",
+    "mae": "A mãe mora a duas ruas e ajuda com o neto; é a pessoa em quem ela mais confia, mas também é quem repete que 'dente ruim se tira'.",
+    "trabalho": "Colegas cobertos de serviço; o supervisor já reclamou das faltas. Não tem plano odontológico pela empresa.",
+    "vizinhanca": "Uma vizinha dá 'conselhos de saúde' e foi quem sugeriu o antibiótico e a extração.",
+    "observacao": "Rede afetiva presente e disponível, mas com baixo letramento em saúde bucal — as orientações que ela recebe em casa vão na direção contrária da conduta correta."
+  },
+  "persona": {
+    "resumo": "Simone é uma mulher de 32 anos, prática, trabalhadora e acostumada a resolver tudo sozinha, que aprendeu em casa que se aguenta dor até não dar mais. É educada, colaborativa e fala com franqueza sobre a dor, mas fica visivelmente tensa quando o assunto é o próprio medo, o que ela já tomou por conta própria e a possibilidade de perder o dente. É orgulhosa da própria autonomia e tem vergonha de admitir que, aos 32 anos, ainda sente pavor de sentar na cadeira do dentista.",
+    "temperamento": [
+      "prática e resolvida",
+      "trabalhadora",
+      "acostumada a resolver tudo sozinha",
+      "educada e colaborativa",
+      "orgulhosa da própria autonomia",
+      "estoica com dor (aprendeu em casa que se aguenta até não dar mais)",
+      "envergonhada de admitir medo na idade dela",
+      "apreensiva, com pressa de resolver e voltar ao trabalho"
+    ],
+    "postura_na_consulta": "Chega com a mão espalmada na bochecha direita, o rosto marcado pelas noites mal dormidas, o celular na mão e pressa de resolver para voltar ao trabalho. Coopera de imediato com o exame, abre a boca quando pedem e aceita todos os testes — só treme um pouco quando vê o instrumental e pergunta baixinho 'vai doer?'. Senta na ponta da cadeira, aperta a bolsa no colo e responde tudo o que perguntam sobre a dor. Quando percebe que está sendo escutada e que ninguém vai brigar com ela, relaxa, fala mais e começa a fazer as perguntas que realmente a angustiam."
+  },
+  "estilo_de_fala": {
+    "registro": "Popular urbano de quem tem ensino médio completo e trabalha em escritório: fala corretamente, com frases inteiras e alguma organização, mas sem nenhum termo técnico. Trata o profissional por 'doutor' ou 'doutora'. Chama o dente pelo que enxerga — 'esse dente do fundo de baixo', 'o dentão de trás', 'a obturação prateada' — e localiza apontando por fora da bochecha.",
+    "caracteristicas": [
+      "Fala em frases inteiras e organizadas — lida com papelada e sabe se explicar, mas sem nenhuma palavra de livro",
+      "Trata o profissional por 'doutor' ou 'doutora' o tempo todo",
+      "Descreve a dor com imagens do cotidiano, não com termo técnico ('parece uma marreta', 'lateja igual coração batendo', 'o gelado é um castigo', 'parece que vai subir pro ouvido')",
+      "Usa muletas de fala: 'sabe?', 'aí', 'nossa', 'pra falar a verdade'",
+      "Minimiza o próprio sofrimento por hábito — repete que 'nunca fui de reclamar' e que 'fui empurrando com a barriga'",
+      "Quando o assunto chega no medo, na automedicação ou na possibilidade de extração, a fala encurta, o tom baixa e ela hesita antes de responder",
+      "Quando se sente segura, faz perguntas diretas e práticas, uma atrás da outra",
+      "Fala com pressa de quem quer resolver hoje e voltar para o trabalho amanhã"
+    ],
+    "bordoes_e_expressoes": [
+      "Sabe?",
+      "Pra falar a verdade",
+      "Nossa",
+      "Nunca fui de reclamar",
+      "Eu fui empurrando com a barriga",
+      "O gelado é um castigo",
+      "Parece uma marreta batendo por dentro",
+      "Lateja igual coração batendo",
+      "Esse dente do fundo de baixo",
+      "O dentão de trás",
+      "A obturação prateada",
+      "Graças a Deus não inchou nada",
+      "Vai doer?"
+    ],
+    "exemplos_de_fala": [
+      "Doutora, faz cinco dias que esse dente do fundo de baixo não me deixa dormir. Já tomei dipirona e não segura, sabe?",
+      "Nossa, o gelado é um castigo. Eu tomei um refrigerante no almoço da firma e a dor estourou.",
+      "É uma latejada, doutor. Parece uma marreta batendo por dentro, e vem sozinha, ninguém precisa nem encostar.",
+      "O pior é de madrugada. Essas duas últimas noites eu dormi sentada no sofá, porque deitada fica pior.",
+      "Pra falar a verdade eu fui empurrando com a barriga. Nunca fui de reclamar, mas essa aí me venceu.",
+      "Esse dente tem uma obturação prateada grande, feita faz uns quatro anos. Nunca mais voltei lá.",
+      "Eu errei uns lançamentos essa semana de tanta dor e sono ruim... meu supervisor já reclamou.",
+      "Vai doer? Só me avisa antes, por favor.",
+      "Doutora, eu vou perder o dente?"
+    ],
+    "nunca_faz": [
+      "Nunca usa nomenclatura odontológica: não diz 'quarenta e seis', 'primeiro molar', 'amálgama', 'polpa', 'cárie recorrente' nem 'periapical'",
+      "Nunca nomeia o diagnóstico nem afirma qual é o problema — no máximo arrisca 'será que inflamou o nervo?', e só se estiver muito à vontade, como dúvida leiga",
+      "Não conta espontaneamente o medo de dentista, o que tomou por conta própria, o medo de perder o dente, o assunto de gravidez nem o aperto no trabalho",
+      "Não inventa sintoma que não tem: nada de febre, inchaço no rosto, dificuldade de engolir ou de abrir a boca, nem que 'a dor passa assim que tira o gelado'",
+      "Não usa linguagem rebuscada nem faz autoanálise elaborada sobre o próprio medo",
+      "Não fala em números de exame, pressão ou laudo — ela sente, não interpreta"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu e cresceu na periferia da mesma cidade. Terminou o ensino médio na escola pública e começou a trabalhar aos 18 como atendente; há 6 anos entrou como auxiliar administrativa numa transportadora, onde se orgulha de ser 'a que resolve'. Vive com o companheiro e o filho de 7 anos numa casa alugada a duas ruas da mãe.",
+    "rotina": "Acorda às 5h40, deixa o filho na escola, pega dois ônibus e cumpre expediente das 8h às 17h digitando notas fiscais. Almoça no refeitório da firma, quase sempre com refrigerante gelado. À noite, faz janta, ajuda na lição de casa e dorme tarde. Nos últimos dois dias essa rotina desmontou por causa da dor noturna.",
+    "trabalho": "Auxiliar administrativa há 6 anos, registrada, sem plano odontológico. O trabalho é sedentário e exige atenção — por isso a falta de sono e a dor a atrapalham diretamente. Já faltou meio dia essa semana e teme a reação do supervisor.",
+    "familia_e_relacoes": "Companheiro presente e apoiador; filho de 7 anos; mãe próxima e ativa na rotina da casa. Boa rede afetiva, mas com crenças populares sobre saúde bucal que empurram a paciente para a extração e para a automedicação.",
+    "acesso_a_saude": "Usuária do SUS, cadastrada na UBS do bairro, mas com vínculo fraco: procura o serviço só em urgência. Não sabia que a unidade atendia dor de dente por demanda espontânea. Já pesquisou o preço do tratamento de canal em consultório particular pelo celular e se assustou com o valor.",
+    "estressores_atuais": [
+      "Duas noites praticamente sem dormir por causa da dor",
+      "Medo de perder o emprego depois das faltas e dos erros de lançamento",
+      "Pavor antigo de dentista, reativado por estar na cadeira",
+      "Medo de perder o dente e 'começar a virar a mãe' aos 32 anos",
+      "Falta de dinheiro para tratamento particular e falta de folga para retornos"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Exausta, dolorida e apreensiva. Quer alívio imediato e ao mesmo tempo teme o que vai ser feito na boca dela. Está colaborativa e educada por fora, com o corpo tenso e as mãos frias por dentro.",
+    "manifestacoes": [
+      "Mantém a mão espalmada na bochecha direita quase o tempo todo",
+      "Olheiras marcadas e voz cansada",
+      "Aperta a bolsa no colo e mexe no celular quando fica nervosa",
+      "Se encolhe na cadeira e prende a respiração quando vê o instrumental",
+      "Pergunta 'vai doer?' mais de uma vez ao longo do atendimento",
+      "Baixa o tom de voz e desvia o olhar ao falar de medo, de remédio por conta própria ou de extração",
+      "Os olhos enchem d'água quando fala do filho e do risco de perder o emprego"
+    ],
+    "o_que_teme": "No plano dito: que a dor não passe hoje e que ela não consiga trabalhar amanhã. No plano oculto: que a anestesia 'não pegue' como aconteceu na infância, que digam que o jeito é arrancar e que ela seja repreendida por ter tomado antibiótico dos outros.",
+    "o_que_espera": "Sair da unidade sem dor, com o dente na boca e com uma explicação clara do que fazer daqui para frente — e, sem precisar pedir, que alguém pergunte com calma o que ela está sentindo de medo."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional se identifica e explica o que vai fazer ANTES de fazer",
+      "Examina com delicadeza e avisa antes de encostar no dente que dói",
+      "Valida a dor ('faz sentido a senhora estar exausta com isso') em vez de minimizar",
+      "Usa palavras simples e não fala por cima dela em termos técnicos",
+      "Pergunta com calma, um tema de cada vez, e sem tom de cobrança",
+      "Pergunta sobre o que ela já usou de forma acolhedora ('me conta tudo o que a senhora tomou, não tem problema, é só pra eu saber') — aí ela abre inteiro",
+      "Pergunta sobre gravidez com naturalidade ANTES de pedir a radiografia — ela agradece visivelmente",
+      "Pergunta o que mais a preocupa e o que ela espera do atendimento de hoje",
+      "Oferece combinar um sinal para interromper se doer"
+    ],
+    "fecha_se_quando": [
+      "É apressada ou interrompida",
+      "Falam por cima dela em termos técnicos que ela não entende",
+      "Dão a entender que a culpa é da higiene dela",
+      "Alguém menciona extração de forma casual, como se não fosse nada",
+      "A pergunta sobre automedicação vem em tom de repreensão — aí ela conta só a dipirona e esconde a amoxicilina, o comprimido amassado no dente e o óleo de cravo",
+      "Sente julgamento por ter passado quatro anos sem ir ao dentista",
+      "Percebe pressa de encerrar antes de ela conseguir perguntar o que a angustia"
+    ],
+    "trava_do_sensivel": "A dor e tudo o que se refere a ela (início, tipo, gatilhos, duração, noite, remédio que não segura) sai com facilidade, logo nas primeiras perguntas abertas: essa é a parte que ela já ensaiou na cabeça. O restante é escalonado. As informações intermediárias (restauração antiga, doce, mordida, higiene, ranger de dentes, nariz, articulação, ouvido, trabalho) só aparecem se o profissional perguntar diretamente sobre cada tema — ela não oferece nada por conta. Os cinco núcleos sensíveis (medo do dentista, automedicação e práticas caseiras, medo de perder o dente, gestação/ciclo menstrual, impacto no trabalho e dinheiro) NÃO saem espontaneamente em hipótese nenhuma: exigem uma pergunta dirigida àquele tema específico, feita com calma e sem tom de cobrança. Se a pergunta sobre automedicação vier em tom de repreensão ('a senhora tomou antibiótico por conta própria?' com censura), ela minimiza e conta só a dipirona, escondendo a amoxicilina, o comprimido amassado no dente e o óleo de cravo. Se vier acolhedora, ela abre inteiro. Se ninguém perguntar sobre medo, ela apenas se encolhe e diz 'tá bom' a tudo, sem verbalizar nada. Se ninguém perguntar sobre gravidez antes da radiografia, ela não lembra do assunto e obedece calada, mesmo apreensiva.",
+    "sinais_de_confianca": "Passa a fazer as perguntas de verdade — 'vou perder o dente?', 'vai doer na hora da anestesia?', 'consigo voltar pra terminar?', 'quanto isso custa?' — em vez de só concordar com tudo. Solta a mão da bochecha, larga o celular no colo, olha para o profissional em vez de para o chão e conta, em voz baixa, a história do dente de leite arrancado aos 9 anos."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Pulpite irreversível sintomática do dente 46 (primeiro molar inferior direito), associada a periodontite apical sintomática incipiente, decorrente de cárie recorrente sob restauração extensa de amálgama MOD em íntima proximidade com a câmara pulpar. Conduta esperada e verificável: anestesia local (bloqueio do nervo alveolar inferior, com plano B intraligamentar ou intrapulpar, porque o bloqueio falha com frequência em pulpite), isolamento absoluto, acesso endodôntico com pulpotomia ou pulpectomia, curativo intracanal, restauração provisória selada, ajuste oclusal do contato prematuro, prescrição de analgésico/AINE, explicitação de que NÃO há indicação de antibiótico, orientação de sinais de alerta e agendamento da continuidade do tratamento endodôntico, com encaminhamento ao CEO quando a unidade não realizar endodontia de molar. A paciente NUNCA nomeia o diagnóstico e nunca usa nomenclatura técnica ou notação dentária.",
+    "manter_coerente": [
+      "Cronologia fixa: 5 dias de evolução, com sensibilidade provocada evoluindo para dor espontânea e noturna nos últimos 2 dias",
+      "O marcador central é a dor que PERSISTE por mais de uma hora após a retirada do estímulo frio — é o que separa pulpite irreversível de reversível; nunca dizer que 'passa logo que tira o gelado'",
+      "Dor espontânea, latejante, noturna, que piora ao deitar, com resposta apenas parcial e breve ao analgésico",
+      "Piora intensa ao frio e ao doce; água MORNA (não quente) dá alívio discreto e passageiro, enquanto o teste com calor intenso provoca dor — o calor não alivia",
+      "Desconforto leve à mordida e percussão vertical levemente positiva no 46, com percussão horizontal negativa e palpação apical negativa — sustenta o componente apical INCIPIENTE, sem lesão estabelecida",
+      "Ausência absoluta de sinal sistêmico ou de disseminação: sem febre, sem edema facial, sem trismo, sem disfagia, sem linfonodo palpável, sem edema de assoalho bucal, sem fístula — portanto NÃO há indicação de antibiótico, e a paciente jamais deve produzir esses sinais se o candidato 'sugerir' que existam",
+      "Sondagem periodontal normal e mobilidade fisiológica, o que afasta origem periodontal e abscesso periodontal",
+      "Dente restaurável, com estrutura remanescente suficiente — exodontia é conduta INADEQUADA",
+      "Teste ao frio no dente controle 44 com resposta normal e imediata, confirmando que a resposta anômala é específica do 46",
+      "A paciente descreve sensações, nunca interpreta: não cita número de exame, não nomeia estrutura nem diagnóstico"
+    ],
+    "diferenciais_a_respeitar": [
+      "Pulpite reversível: afastada pela dor espontânea, noturna e prolongada após a retirada do estímulo",
+      "Necrose pulpar: afastada pela resposta intensa e viva ao teste térmico e pelo teste elétrico positivo em limiar baixo — dente necrosado não responde",
+      "Abscesso periapical agudo: afastado pela ausência de edema, febre, fístula, mobilidade e de lesão radiolúcida definida",
+      "Pericoronarite: afastada porque os terceiros molares estão irrompidos e em oclusão, sem capuz pericoronário nem inflamação",
+      "Síndrome do dente trincado: teste de mordida e transiluminação sem achado de trinca, e o padrão de dor não é agudo apenas ao ALIVIAR a mordida em cúspide isolada",
+      "Disfunção temporomandibular: ATM sem estalido, sem crepitação, sem dor à palpação e com abertura bucal de 48 mm — a sensibilidade discreta de masseter e temporal é apertamento, não DTM dolorosa",
+      "Sinusite maxilar: sem obstrução nasal, sem secreção, sem dor ao abaixar a cabeça, seios maxilares indolores à palpação — e a dor é de dente inferior, não superior",
+      "Otite: ouvido sem dor própria e sem secreção — trata-se de dor referida do 46",
+      "Dor de origem cardíaca referida em mandíbula: afastada pelo padrão claramente dentário, disparado por estímulo térmico local e sem relação com esforço",
+      "Origem periodontal: afastada por profundidades de sondagem de 2 a 3 mm, sem bolsa, sem lesão de furca e sem trajeto fistuloso sondável"
+    ]
+  },
+  "exame_fisico": {
+    "paramentacao": {
+      "nome": "Paramentação e biossegurança",
+      "sinonimos": [
+        "paramentação",
+        "paramentacao",
+        "epi",
+        "luvas",
+        "máscara",
+        "mascara",
+        "gorro",
+        "óculos de proteção",
+        "oculos de protecao",
+        "jaleco",
+        "higienização das mãos",
+        "higienizacao das maos",
+        "lavar as mãos",
+        "álcool em gel",
+        "biossegurança",
+        "biosseguranca"
+      ],
+      "resultado": "EPI completo disponível no box (gorro, máscara PFF2, óculos de proteção, jaleco descartável, luvas de procedimento). Profissional realiza higienização das mãos e se paramenta antes de tocar a paciente."
+    },
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": [
+        "pressão",
+        "pressao",
+        "pa",
+        "aferir pressão",
+        "medir pressão",
+        "pressão arterial"
+      ],
+      "resultado": "120x80 mmHg — dentro da normalidade; não contraindica anestésico local com vasoconstritor."
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "82 bpm, rítmico e cheio."
+    },
+    "temperatura": {
+      "nome": "Temperatura axilar",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termômetro",
+        "termometro",
+        "temperatura axilar"
+      ],
+      "resultado": "36,4 °C — afebril. Nenhum sinal sistêmico de infecção."
+    },
+    "inspecao_extraoral": {
+      "nome": "Inspeção extraoral (assimetria e edema facial)",
+      "sinonimos": [
+        "exame extraoral",
+        "exame extra oral",
+        "inspeção extraoral",
+        "inspecao extraoral",
+        "assimetria facial",
+        "edema facial",
+        "inchaço no rosto",
+        "inchaco no rosto",
+        "olhar o rosto",
+        "face"
+      ],
+      "resultado": "Face simétrica, sem edema, sem hiperemia de pele, sem abaulamento em região submandibular ou geniana. Sem alteração de coloração cutânea."
+    },
+    "palpacao_linfonodos": {
+      "nome": "Palpação de linfonodos cervicais e submandibulares",
+      "sinonimos": [
+        "linfonodos",
+        "gânglios",
+        "ganglios",
+        "palpação de linfonodos",
+        "palpacao de linfonodos",
+        "cadeias cervicais",
+        "submandibular",
+        "íngua",
+        "ingua",
+        "palpar o pescoço"
+      ],
+      "resultado": "Linfonodos submandibulares, submentonianos e cervicais não palpáveis, indolores. Sem linfadenopatia."
+    },
+    "avaliacao_atm_abertura_bucal": {
+      "nome": "Avaliação de ATM e abertura bucal",
+      "sinonimos": [
+        "atm",
+        "articulação temporomandibular",
+        "articulacao temporomandibular",
+        "abertura bucal",
+        "trismo",
+        "estalido",
+        "abrir a boca",
+        "amplitude de abertura",
+        "dtm",
+        "musculatura mastigatória",
+        "musculatura mastigatoria"
+      ],
+      "resultado": "Abertura bucal de 48 mm, sem limitação e sem trismo. ATM sem estalido, sem crepitação e indolor à palpação bilateral. Masseter e temporal levemente sensíveis à palpação à direita, sem dor referida — compatível com apertamento noturno, sem quadro de DTM dolorosa."
+    },
+    "sinais_de_disseminacao": {
+      "nome": "Pesquisa de sinais de disseminação de infecção",
+      "sinonimos": [
+        "sinais de disseminação",
+        "sinais de disseminacao",
+        "disfagia",
+        "dificuldade de engolir",
+        "assoalho bucal",
+        "edema de assoalho",
+        "trismo",
+        "dispneia",
+        "dificuldade de respirar",
+        "sinais sistêmicos",
+        "sinais sistemicos",
+        "toxemia"
+      ],
+      "resultado": "Ausentes. Sem trismo, sem disfagia, sem odinofagia, sem elevação do assoalho bucal, sem alteração de voz, sem desvio de linha média, sem dispneia. Paciente eupneica, corada, hidratada e em bom estado geral."
+    },
+    "inspecao_intraoral": {
+      "nome": "Inspeção intraoral de mucosas e tecidos moles",
+      "sinonimos": [
+        "exame intraoral",
+        "exame intra oral",
+        "inspeção intraoral",
+        "inspecao intraoral",
+        "mucosa",
+        "tecidos moles",
+        "gengiva",
+        "língua",
+        "lingua",
+        "assoalho",
+        "olhar a boca por dentro"
+      ],
+      "resultado": "Mucosas úmidas e coradas. Gengiva marginal do 46 discretamente hiperemiada, sem edema vestibular, sem abaulamento e sem fístula. Presença de pequena área esbranquiçada de aspecto descamativo na mucosa jugal adjacente ao 46, compatível com irritação química por contato — achado que só se explica se o profissional investigar práticas caseiras/automedicação."
+    },
+    "odontograma": {
+      "nome": "Odontograma e registro por notação FDI",
+      "sinonimos": [
+        "odontograma",
+        "ficha clínica",
+        "ficha clinica",
+        "notação fdi",
+        "notacao fdi",
+        "mapeamento dos dentes",
+        "registro dos dentes",
+        "quais dentes",
+        "cárie",
+        "carie",
+        "restaurações",
+        "restauracoes"
+      ],
+      "resultado": "Dentição permanente completa, terceiros molares irrompidos e em oclusão. Restauração de amálgama extensa MOD no 46, com margem infiltrada e escurecida na face mesial e sombreamento acinzentado adjacente. Restaurações de resina satisfatórias em 16, 26 e 37. Ausência de cavidades ativas em outros elementos. Sem dentes ausentes. 44 e 45 hígidos — o 44 servirá de dente controle."
+    },
+    "exame_do_46": {
+      "nome": "Exame do dente 46 (primeiro molar inferior direito)",
+      "sinonimos": [
+        "dente 46",
+        "quarenta e seis",
+        "primeiro molar inferior direito",
+        "dente que dói",
+        "elemento 46",
+        "molar inferior direito",
+        "dente da queixa"
+      ],
+      "resultado": "Restauração de amálgama extensa ocupando mesial, oclusal e distal, com fratura marginal e cárie recorrente detectável à sonda na margem mesial. Sem exposição pulpar clínica visível. Coroa íntegra em estrutura remanescente suficiente para restauração — dente restaurável."
+    },
+    "teste_sensibilidade_frio": {
+      "nome": "Teste de sensibilidade pulpar ao frio (com dente controle)",
+      "sinonimos": [
+        "teste ao frio",
+        "teste de sensibilidade",
+        "teste de vitalidade",
+        "spray refrigerante",
+        "cloreto de etila",
+        "endo ice",
+        "endo-ice",
+        "gelo",
+        "teste térmico",
+        "teste termico",
+        "dente controle",
+        "bolinha de algodão",
+        "bolinha de algodao"
+      ],
+      "resultado": "Técnica: dente isolado com roletes de algodão, seco, spray refrigerante em bolinha de algodão aplicada no terço médio vestibular. No 46: resposta imediata, intensa e MUITO PROLONGADA — a dor persiste por mais de 30 segundos após a remoção do estímulo, e a paciente pede para interromper. No dente controle 44 (e no homólogo 36): resposta normal, breve, cessando imediatamente após a retirada do estímulo."
+    },
+    "teste_sensibilidade_calor": {
+      "nome": "Teste de sensibilidade ao calor",
+      "sinonimos": [
+        "teste ao calor",
+        "teste de calor",
+        "guta percha aquecida",
+        "guta-percha",
+        "bastão aquecido",
+        "bastao aquecido",
+        "água quente",
+        "agua quente"
+      ],
+      "resultado": "No 46: resposta dolorosa de intensidade moderada, também prolongada, porém menos intensa que ao frio. Não há alívio da dor com o calor. Dente controle 44 com resposta normal."
+    },
+    "teste_pulpar_eletrico": {
+      "nome": "Teste pulpar elétrico",
+      "sinonimos": [
+        "teste pulpar elétrico",
+        "teste pulpar eletrico",
+        "pulp tester",
+        "vitalômetro",
+        "vitalometro",
+        "teste elétrico",
+        "teste eletrico"
+      ],
+      "resultado": "Resposta positiva no 46, em limiar mais baixo que o dente controle (polpa viva e hiper-responsiva). Confirma vitalidade pulpar — afasta necrose."
+    },
+    "percussao_vertical": {
+      "nome": "Percussão vertical",
+      "sinonimos": [
+        "percussão vertical",
+        "percussao vertical",
+        "percussão axial",
+        "percutir",
+        "bater no dente",
+        "cabo do espelho",
+        "teste de percussão",
+        "teste de percussao"
+      ],
+      "resultado": "Levemente positiva no 46 (desconforto discreto, sem dor lancinante) — compatível com envolvimento apical incipiente. Negativa em 45, 47 e no homólogo 36."
+    },
+    "percussao_horizontal": {
+      "nome": "Percussão horizontal",
+      "sinonimos": [
+        "percussão horizontal",
+        "percussao horizontal",
+        "percussão lateral",
+        "percussao lateral"
+      ],
+      "resultado": "Negativa no 46 e nos dentes vizinhos — afasta componente periodontal lateral."
+    },
+    "palpacao_apical": {
+      "nome": "Palpação apical e de fundo de vestíbulo",
+      "sinonimos": [
+        "palpação apical",
+        "palpacao apical",
+        "fundo de vestíbulo",
+        "fundo de vestibulo",
+        "palpar a gengiva",
+        "palpação vestibular",
+        "palpacao vestibular",
+        "região apical",
+        "regiao apical"
+      ],
+      "resultado": "Negativa. Fundo de vestíbulo na região do 46 sem abaulamento, sem flutuação, sem dor à palpação e sem crepitação."
+    },
+    "sondagem_periodontal": {
+      "nome": "Sondagem periodontal",
+      "sinonimos": [
+        "sondagem periodontal",
+        "sonda periodontal",
+        "profundidade de sondagem",
+        "bolsa periodontal",
+        "sangramento à sondagem",
+        "sangramento a sondagem",
+        "sonda williams",
+        "sonda oms",
+        "cpi",
+        "recessão gengival",
+        "recessao gengival"
+      ],
+      "resultado": "Profundidades de 2 a 3 mm em todas as faces do 46, sem bolsa, sem sangramento à sondagem significativo, sem recessão e sem lesão de furca. Ausência de trajeto fistuloso sondável — afasta origem periodontal e abscesso periodontal."
+    },
+    "mobilidade_dentaria": {
+      "nome": "Mobilidade dentária",
+      "sinonimos": [
+        "mobilidade",
+        "dente mole",
+        "dente balançando",
+        "dente balancando",
+        "grau de mobilidade",
+        "teste de mobilidade"
+      ],
+      "resultado": "Mobilidade fisiológica (grau 0) no 46 e nos dentes vizinhos."
+    },
+    "teste_de_mordida": {
+      "nome": "Teste de mordida (pesquisa de trinca)",
+      "sinonimos": [
+        "teste de mordida",
+        "bite test",
+        "tooth slooth",
+        "morder o algodão",
+        "morder o algodao",
+        "teste de fratura",
+        "dente trincado",
+        "síndrome do dente trincado",
+        "sindrome do dente trincado"
+      ],
+      "resultado": "Desconforto leve e difuso ao morder, sem a dor aguda e característica ao ALIVIAR a mordida em cúspide isolada — não sugere síndrome do dente trincado."
+    },
+    "transiluminacao": {
+      "nome": "Transiluminação e evidenciação de trinca",
+      "sinonimos": [
+        "transiluminação",
+        "transiluminacao",
+        "fotopolimerizador",
+        "corante evidenciador",
+        "azul de metileno",
+        "pesquisa de trinca",
+        "linha de fratura"
+      ],
+      "resultado": "Sem interrupção da passagem de luz e sem captação de corante — nenhuma linha de trinca ou fratura identificada na coroa do 46."
+    },
+    "avaliacao_oclusal": {
+      "nome": "Avaliação oclusal e contatos prematuros",
+      "sinonimos": [
+        "oclusão",
+        "oclusao",
+        "avaliação oclusal",
+        "avaliacao oclusal",
+        "papel carbono",
+        "carbono",
+        "contato prematuro",
+        "ajuste oclusal",
+        "mordida",
+        "interferência oclusal",
+        "interferencia oclusal"
+      ],
+      "resultado": "Com papel carbono, marcação mais intensa na cúspide distovestibular do 46, sugestiva de contato prematuro discreto em máxima intercuspidação — passível de ajuste oclusal. Facetas de desgaste em caninos e incisivos compatíveis com apertamento."
+    },
+    "palpacao_seios_maxilares": {
+      "nome": "Palpação de seios maxilares e teste de sinusite",
+      "sinonimos": [
+        "seios maxilares",
+        "seio maxilar",
+        "sinusite",
+        "palpação dos seios da face",
+        "palpacao dos seios da face",
+        "abaixar a cabeça",
+        "abaixar a cabeca",
+        "obstrução nasal",
+        "obstrucao nasal"
+      ],
+      "resultado": "Seios maxilares indolores à palpação e à percussão bilateralmente. Sem dor ao abaixar a cabeça, sem obstrução nasal e sem secreção — afasta sinusite maxilar como origem da dor."
+    },
+    "higiene_bucal": {
+      "nome": "Avaliação de higiene bucal e índice de placa",
+      "sinonimos": [
+        "higiene bucal",
+        "índice de placa",
+        "indice de placa",
+        "biofilme",
+        "placa bacteriana",
+        "tártaro",
+        "tartaro",
+        "cálculo dental",
+        "calculo dental",
+        "evidenciador de placa"
+      ],
+      "resultado": "Higiene regular, com acúmulo de biofilme nas faces proximais dos molares inferiores e cálculo supragengival discreto em lingual de anteroinferiores. Higiene visivelmente pior no hemiarco direito, por evitação do lado dolorido."
+    },
+    "escala_de_dor": {
+      "nome": "Escala de dor (EVA/EVN)",
+      "sinonimos": [
+        "escala de dor",
+        "eva",
+        "evn",
+        "de zero a dez",
+        "quanto doi de 0 a 10",
+        "intensidade da dor",
+        "quantificar a dor",
+        "nota para a dor"
+      ],
+      "resultado": "EVN 8/10 no pico das crises e 4/10 no momento da consulta. Reavaliação após a conduta é esperada."
+    }
+  },
+  "exames_disponiveis": {
+    "radiografia_periapical_46": {
+      "nome": "Radiografia periapical do dente 46 (técnica do paralelismo)",
+      "sinonimos": [
+        "radiografia periapical",
+        "periapical",
+        "raio x do dente",
+        "raio-x periapical",
+        "rx periapical",
+        "radiografia do 46",
+        "radiografia intraoral",
+        "imagem do dente"
+      ],
+      "resultado": "Restauração radiopaca extensa MOD no 46. Radiolucidez sob a restauração, na margem mesial, compatível com cárie recorrente, em ÍNTIMA PROXIMIDADE com o corno pulpar mesial, sem solução de continuidade evidente do teto da câmara. Câmara pulpar de dimensões reduzidas. Espaço do ligamento periodontal DISCRETAMENTE ESPESSADO na raiz mesial, com lâmina dura contínua e preservada. AUSÊNCIA de lesão periapical radiolúcida definida. Sem imagem de fratura radicular, sem reabsorção e sem corpo estranho. Cristas ósseas em nível normal."
+    },
+    "radiografia_interproximal": {
+      "nome": "Radiografia interproximal (bitewing)",
+      "sinonimos": [
+        "interproximal",
+        "bitewing",
+        "bite wing",
+        "radiografia interproximal",
+        "asa de mordida",
+        "cárie interproximal",
+        "carie interproximal"
+      ],
+      "resultado": "Confirma a cárie recorrente sob a margem mesial da restauração do 46, com penetração em dentina profunda. Demais espaços interproximais dos posteriores direitos sem lesões cariosas radiograficamente detectáveis. Cristas ósseas íntegras."
+    },
+    "radiografia_panoramica": {
+      "nome": "Radiografia panorâmica",
+      "sinonimos": [
+        "panorâmica",
+        "panoramica",
+        "ortopantomografia",
+        "raio x panorâmico",
+        "rx panoramico",
+        "radiografia geral da boca"
+      ],
+      "resultado": "Terceiros molares irrompidos e em posição, sem pericoronarite e sem retenção. Sem lesões císticas, sem lesões periapicais em outros elementos, sem alterações de côndilos, sem opacificação de seios maxilares. Confirma a restauração extensa no 46 como o único achado relevante."
+    },
+    "tcfc": {
+      "nome": "Tomografia computadorizada de feixe cônico (TCFC)",
+      "sinonimos": [
+        "tcfc",
+        "tomografia",
+        "cone beam",
+        "feixe cônico",
+        "feixe conico",
+        "tomografia odontológica",
+        "tomografia odontologica"
+      ],
+      "resultado": "Não indicada de rotina nesta urgência. Se realizada: confirma proximidade da lesão cariosa com a câmara pulpar e espessamento periapical incipiente na raiz mesial, sem lesão osteolítica estabelecida e sem fratura radicular. Não altera a conduta."
+    },
+    "avaliacao_laboratorial": {
+      "nome": "Exames laboratoriais (hemograma e provas inflamatórias)",
+      "sinonimos": [
+        "hemograma",
+        "exame de sangue",
+        "leucócitos",
+        "leucocitos",
+        "pcr",
+        "proteína c reativa",
+        "proteina c reativa",
+        "provas inflamatórias",
+        "provas inflamatorias"
+      ],
+      "resultado": "Sem indicação clínica neste quadro (paciente afebril, sem sinal sistêmico nem disseminação). Se ainda assim solicitados: hemograma sem leucocitose (7.200/mm³, sem desvio) e PCR normal — confirmam a ausência de infecção sistêmica e reforçam que NÃO há indicação de antibioticoterapia."
+    },
+    "teste_gravidez": {
+      "nome": "Teste de gravidez (beta-hCG)",
+      "sinonimos": [
+        "beta hcg",
+        "bhcg",
+        "teste de gravidez",
+        "hcg",
+        "exame de gravidez"
+      ],
+      "resultado": "Negativo. Não é obrigatório neste caso, dado que a paciente refere menstruação há 10 dias e uso regular de anticoncepcional — mas a checagem verbal do risco de gestação ANTES da radiografia e da prescrição é obrigatória."
+    }
+  },
+  "emocao_atual": {
+    "dolorida": true,
+    "exausta": true,
+    "assustada": true,
+    "envergonhada": true,
+    "colaborativa": true,
+    "irritada": false,
+    "agressiva": false
+  }
+}

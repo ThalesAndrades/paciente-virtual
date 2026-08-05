@@ -1,0 +1,800 @@
+{
+  "nome_caso": "Alta Hospitalar com Varfarina — Conciliação Medicamentosa em Idosa Polimedicada",
+  "criterios": [
+    {
+      "nome": "Abertura e vinculo",
+      "objetivo": "Apresentar-se como farmaceutico, confirmar a identidade de quem usa o medicamento, garantir privacidade e pedir consentimento antes de iniciar o servico.",
+      "itens": [
+        {
+          "nome": "apresenta-se como farmaceutico",
+          "termos": [
+            "sou o farmaceutico",
+            "sou a farmaceutica",
+            "meu nome e",
+            "eu sou responsavel tecnico",
+            "farmaceutico responsavel"
+          ]
+        },
+        {
+          "nome": "confirma identidade e para quem e o medicamento",
+          "termos": [
+            "qual o seu nome",
+            "como a senhora se chama",
+            "os remedios sao pra senhora mesma",
+            "e a senhora quem toma",
+            "confirmar seu nome",
+            "quantos anos a senhora tem"
+          ]
+        },
+        {
+          "nome": "garante privacidade e consentimento",
+          "termos": [
+            "vamos para a sala",
+            "consultorio farmaceutico",
+            "aqui e reservado",
+            "a senhora permite",
+            "posso fazer algumas perguntas",
+            "tudo o que a senhora falar fica em sigilo",
+            "sigilo"
+          ]
+        },
+        {
+          "nome": "explica o objetivo do atendimento",
+          "termos": [
+            "vou revisar seus medicamentos",
+            "vamos organizar os remedios",
+            "conciliacao",
+            "revisao da farmacoterapia",
+            "quero entender o que a senhora esta tomando"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Anamnese farmaceutica - Melhor Historia Farmacoterapeutica Possivel",
+      "objetivo": "Reconstruir a farmacoterapia REAL da paciente: sacola de medicamentos, prescricao de alta, medicamentos por conta propria, MIP, fitoterapicos, medicamento de terceiro, alergias e comorbidades. Os itens de camada 2 so pontuam se o candidato perguntar diretamente sobre o tema.",
+      "itens": [
+        {
+          "nome": "solicita e revisa a sacola de medicamentos (brown bag)",
+          "termos": [
+            "brown bag",
+            "sacola de medicamentos",
+            "posso ver os remedios",
+            "me mostra as caixas",
+            "trouxe os remedios",
+            "vamos abrir a sacola",
+            "conferir as cartelas",
+            "contagem de comprimidos"
+          ]
+        },
+        {
+          "nome": "solicita e le o sumario de alta e a receita",
+          "termos": [
+            "sumario de alta",
+            "resumo de alta",
+            "receita do hospital",
+            "papel do hospital",
+            "prescricao de alta",
+            "alta hospitalar",
+            "o que veio escrito"
+          ]
+        },
+        {
+          "nome": "levanta a lista completa de medicamentos em uso",
+          "termos": [
+            "quais remedios a senhora toma",
+            "o que a senhora esta tomando",
+            "todos os medicamentos",
+            "lista de medicamentos",
+            "que horas toma cada um",
+            "quantas vezes por dia",
+            "ha quanto tempo toma",
+            "quem receitou"
+          ]
+        },
+        {
+          "nome": "investiga alergias e reacoes previas",
+          "termos": [
+            "tem alergia",
+            "alergia a algum remedio",
+            "ja passou mal com algum medicamento",
+            "reacao a remedio",
+            "intolerancia"
+          ]
+        },
+        {
+          "nome": "investiga comorbidades e antecedentes",
+          "termos": [
+            "pressao alta",
+            "diabetes",
+            "colesterol",
+            "outras doencas",
+            "problema de estomago",
+            "gastrite",
+            "problema no rim",
+            "por que a senhora internou"
+          ]
+        },
+        {
+          "nome": "RISCO - investiga medicamento antigo mantido por conta propria (AAS)",
+          "termos": [
+            "esta tomando aspirina",
+            "usa aas",
+            "toma cardioaspirina",
+            "continuou com algum remedio antigo",
+            "parou algum remedio que tomava antes",
+            "algum comprimido que nao esta na receita da alta",
+            "toma algum remedio por conta propria",
+            "alguem mandou parar algum remedio",
+            "aas cem miligramas",
+            "remedio que tomava antes de internar",
+            "toma mais algum remedio pra afinar o sangue"
+          ]
+        },
+        {
+          "nome": "RISCO - investiga MIP/anti-inflamatorio comprado no balcao",
+          "termos": [
+            "comprou algum remedio na farmacia",
+            "tomou algo pra dor",
+            "usou anti inflamatorio",
+            "diclofenaco",
+            "cataflam",
+            "voltaren",
+            "remedio pra dor no joelho",
+            "comprou algo sem receita",
+            "alguem indicou algum remedio no balcao",
+            "tomou analgesico",
+            "usou pomada pra dor",
+            "tomou remedio pro joelho"
+          ]
+        },
+        {
+          "nome": "RISCO - investiga fitoterapico, cha e produto natural",
+          "termos": [
+            "toma algum cha",
+            "usa planta medicinal",
+            "toma alguma coisa natural",
+            "usa fitoterapico",
+            "toma suplemento",
+            "usa remedio caseiro",
+            "toma cha de ervas",
+            "gengibre",
+            "toma vitamina",
+            "produto natural",
+            "toma algo pra circulacao",
+            "usa alguma erva ou raiz"
+          ]
+        },
+        {
+          "nome": "RISCO - investiga antibiotico de terceiro e sintoma urinario",
+          "termos": [
+            "esta tomando antibiotico",
+            "alguem te deu algum remedio",
+            "usou remedio de outra pessoa",
+            "sobrou remedio de alguem",
+            "esta com ardencia pra urinar",
+            "sente ardor ao urinar",
+            "algum problema de urina",
+            "comecou algum remedio novo essa semana",
+            "vizinho indicou algum remedio",
+            "tomou sulfa ou bactrim",
+            "remedio pra infeccao de urina",
+            "tomou remedio que sobrou"
+          ]
+        }
+      ],
+      "peso": 1.75
+    },
+    {
+      "nome": "Avaliacao da adesao",
+      "objetivo": "Investigar adesao de forma nao julgadora e detectar o erro de adesao que e a propria causa do descontrole: a dose dobrada compensatoria. Aplicacao de instrumento validado (Morisky-Green ou BMQ) e verificacao do entendimento sobre o monitoramento pontuam.",
+      "itens": [
+        {
+          "nome": "RISCO - detecta esquecimento e dose dobrada compensatoria",
+          "termos": [
+            "como esta tomando a varfarina",
+            "esqueceu de tomar alguma dose",
+            "o que faz quando esquece",
+            "toma todo dia no mesmo horario",
+            "ja tomou dois comprimidos juntos",
+            "quantos comprimidos do amarelinho",
+            "tem dificuldade de lembrar do remedio",
+            "toma direitinho como passaram",
+            "usa caixinha ou lembrete pros remedios",
+            "pulou algum dia de remedio",
+            "como a senhora toma o amarelinho"
+          ]
+        },
+        {
+          "nome": "RISCO - identifica desconhecimento sobre o RNI e o monitoramento",
+          "termos": [
+            "sabe o que e o rni",
+            "sabe pra que serve esse exame de sangue",
+            "explicaram sobre o controle do sangue",
+            "sabe quando tem que repetir o exame",
+            "marcaram retorno pra repetir o exame",
+            "sabe pra que serve esse remedio novo",
+            "te explicaram como funciona a varfarina",
+            "sabe o que precisa acompanhar tomando esse remedio",
+            "conhece o exame de coagulacao",
+            "alguem falou sobre tempo de protrombina",
+            "o que a senhora entendeu da alta"
+          ]
+        },
+        {
+          "nome": "aplica instrumento validado de adesao",
+          "termos": [
+            "morisky",
+            "morisky green",
+            "bmq",
+            "brief medication questionnaire",
+            "mmas",
+            "teste de adesao",
+            "questionario de adesao",
+            "teste de batalla"
+          ]
+        },
+        {
+          "nome": "investiga barreiras de adesao sem julgamento",
+          "termos": [
+            "tem dificuldade de comprar",
+            "custo do remedio",
+            "consegue ler a caixa",
+            "enxerga a receita",
+            "alguem ajuda a senhora com os remedios",
+            "mora sozinha",
+            "onde guarda os remedios",
+            "muita gente esquece",
+            "e comum acontecer",
+            "isso acontece com todo mundo",
+            "nao tem problema nenhum a senhora me contar"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Afericao de parametros e avaliacao de exames",
+      "objetivo": "Medir os parametros ao alcance do farmaceutico (Resolucao CFF 585/2013 e RDC 44/2009) e interpretar os exames disponiveis, com destaque para o RNI e a funcao renal.",
+      "itens": [
+        {
+          "nome": "afere pressao arterial",
+          "termos": [
+            "medir a pressao",
+            "aferir a pressao",
+            "verificar pressao",
+            "pressao arterial",
+            "vou medir sua pressao"
+          ]
+        },
+        {
+          "nome": "afere frequencia cardiaca e ritmo",
+          "termos": [
+            "frequencia cardiaca",
+            "pulso",
+            "batimentos",
+            "ritmo cardiaco",
+            "contar o pulso"
+          ]
+        },
+        {
+          "nome": "afere glicemia capilar",
+          "termos": [
+            "glicemia capilar",
+            "glicemia",
+            "dextro",
+            "hgt",
+            "ponta de dedo",
+            "teste de glicose"
+          ]
+        },
+        {
+          "nome": "RISCO - inspeciona pele e mucosas em busca de sangramento",
+          "termos": [
+            "esta sangrando em algum lugar",
+            "sangra a gengiva quando escova",
+            "apareceu mancha roxa",
+            "apareceu hematoma",
+            "sangramento no nariz",
+            "notou sangue nas fezes ou na urina",
+            "reparou algum sinal de sangramento",
+            "sangra mais facil que antes",
+            "fez algum roxo sem bater",
+            "sangramento na boca",
+            "notou alguma coisa diferente na pele"
+          ]
+        },
+        {
+          "nome": "avalia o RNI",
+          "termos": [
+            "rni",
+            "inr",
+            "tempo de protrombina",
+            "coagulograma",
+            "exame de coagulacao",
+            "resultado do exame de hoje",
+            "controle da varfarina"
+          ]
+        },
+        {
+          "nome": "avalia funcao renal e estima a depuracao",
+          "termos": [
+            "creatinina",
+            "funcao renal",
+            "clearance",
+            "clcr",
+            "cockcroft",
+            "tfg",
+            "depuracao",
+            "ajuste por funcao renal"
+          ]
+        },
+        {
+          "nome": "avalia hemograma e sinais de perda sanguinea",
+          "termos": [
+            "hemograma",
+            "hemoglobina",
+            "hematocrito",
+            "plaquetas",
+            "anemia",
+            "queda da hemoglobina"
+          ]
+        },
+        {
+          "nome": "avalia exame de urina e demais exames",
+          "termos": [
+            "urina",
+            "eas",
+            "urina tipo 1",
+            "urocultura",
+            "hba1c",
+            "hemoglobina glicada",
+            "potassio",
+            "eletrolitos",
+            "peso e altura",
+            "imc"
+          ]
+        }
+      ],
+      "peso": 1.0
+    },
+    {
+      "nome": "Identificacao do PRM/RNM e das discrepancias de conciliacao",
+      "objetivo": "Nomear explicitamente os problemas relacionados a medicamentos: as tres discrepancias de conciliacao na transicao do cuidado e as interacoes de relevancia clinica que explicam o RNI de 6,8.",
+      "itens": [
+        {
+          "nome": "discrepancia - omissao nao documentada da hidroclorotiazida",
+          "termos": [
+            "hidroclorotiazida",
+            "comprimido da agua",
+            "diuretico",
+            "sumiu da receita",
+            "omissao",
+            "nao consta no sumario de alta",
+            "foi suspenso sem registro",
+            "discrepancia nao documentada",
+            "por isso a pressao subiu"
+          ]
+        },
+        {
+          "nome": "discrepancia - AAS mantido sem indicacao junto ao anticoagulante",
+          "termos": [
+            "duplicidade",
+            "aas com varfarina",
+            "dois antitromboticos",
+            "aspirina junto com anticoagulante",
+            "aas sem indicacao",
+            "risco hemorragico dobrado",
+            "terapia antitrombotica duplicada",
+            "suspender o aas"
+          ]
+        },
+        {
+          "nome": "discrepancia - omeprazol cronico de doze anos ausente do sumario e nunca reavaliado (identificar e sinalizar; NAO suspender agora, pois a gastroprotecao tem indicacao neste momento)",
+          "termos": [
+            "omeprazol ha anos",
+            "inibidor de bomba",
+            "ibp",
+            "nunca foi reavaliado",
+            "uso cronico sem reavaliacao",
+            "reavaliar o omeprazol",
+            "doze anos de omeprazol",
+            "candidato a desprescricao",
+            "manter a gastroprotecao por enquanto"
+          ]
+        },
+        {
+          "nome": "interacao maior - varfarina com sulfametoxazol-trimetoprima",
+          "termos": [
+            "sulfametoxazol",
+            "trimetoprima",
+            "bactrim",
+            "sulfa aumenta o rni",
+            "interacao maior",
+            "potencializa a varfarina",
+            "inibicao do cyp2c9",
+            "antibiotico elevou o rni"
+          ]
+        },
+        {
+          "nome": "interacao - varfarina com diclofenaco (AINE)",
+          "termos": [
+            "diclofenaco com a varfarina",
+            "diclofenaco aumenta o sangramento",
+            "aine com anticoagulante",
+            "anti inflamatorio com anticoagulante",
+            "lesao de mucosa",
+            "risco de sangramento gastrico",
+            "antiagregacao plaquetaria"
+          ]
+        },
+        {
+          "nome": "interacao - gengibre como agravante do risco hemorragico",
+          "termos": [
+            "gengibre tambem afina",
+            "gengibre aumenta o risco de sangramento",
+            "o cha de gengibre interage",
+            "fitoterapico interage",
+            "cha aumenta o sangramento",
+            "planta com efeito antiagregante",
+            "produto natural tambem interage"
+          ]
+        },
+        {
+          "nome": "risco renal do AINE (BRA + AINE sobre rim ja reduzido; o 'triple whammy' se fecha quando o diuretico voltar sem retirar o AINE)",
+          "termos": [
+            "triple whammy",
+            "bra com diuretico e aine",
+            "losartana com anti inflamatorio",
+            "bra com aine",
+            "risco de lesao renal",
+            "piora da funcao renal",
+            "creatinina subiu",
+            "nefrotoxicidade",
+            "aine em idoso com rim ruim"
+          ]
+        },
+        {
+          "nome": "medicamento potencialmente inapropriado para idoso",
+          "termos": [
+            "criterios de beers",
+            "beers",
+            "stopp start",
+            "medicamento potencialmente inapropriado",
+            "consenso brasileiro de medicamentos inapropriados",
+            "aine em idoso",
+            "polifarmacia"
+          ]
+        },
+        {
+          "nome": "nomeia o problema central - supraanticoagulacao",
+          "termos": [
+            "rni muito acima do alvo",
+            "supraanticoagulacao",
+            "anticoagulacao excessiva",
+            "sangramento por excesso de anticoagulante",
+            "inseguranca do medicamento",
+            "reacao adversa ao medicamento",
+            "resultado negativo associado ao medicamento",
+            "prm de seguranca"
+          ]
+        },
+        {
+          "nome": "identifica infeccao urinaria tratada sem prescricao",
+          "termos": [
+            "infeccao urinaria",
+            "itu",
+            "antibiotico sem prescricao",
+            "automedicacao com antibiotico",
+            "tratamento inadequado",
+            "necessidade nao tratada corretamente",
+            "precisa de avaliacao medica para o antibiotico"
+          ]
+        }
+      ],
+      "peso": 2.0
+    },
+    {
+      "nome": "Decisao clinica e seguranca (ITEM DE ZERAGEM)",
+      "objetivo": "Reconhecer o sinal de alarme (RNI 6,8 com sangramento ativo) e ENCAMINHAR IMEDIATAMENTE para avaliacao medica, suspendendo o que agrava. Orientar e mandar para casa, ou dispensar qualquer medicamento agravante, DERRUBA a estacao.",
+      "itens": [
+        {
+          "nome": "ZERAGEM - reconhece o sinal de alarme e encaminha imediatamente",
+          "termos": [
+            "encaminhar agora",
+            "encaminhamento imediato",
+            "procurar servico de urgencia",
+            "ir ao pronto socorro hoje",
+            "precisa de avaliacao medica agora",
+            "nao da pra resolver aqui na farmacia",
+            "isso e uma urgencia",
+            "sinal de alarme",
+            "red flag",
+            "risco de sangramento grave",
+            "nao vou deixar a senhora ir pra casa assim"
+          ]
+        },
+        {
+          "nome": "ZERAGEM - orienta NAO tomar a proxima dose de varfarina ate avaliacao",
+          "termos": [
+            "nao tome a proxima dose",
+            "suspender a varfarina",
+            "segurar o amarelinho",
+            "nao tomar o anticoagulante hoje",
+            "parar a varfarina ate avaliar",
+            "nao tome mais nenhum comprimido pra afinar o sangue"
+          ]
+        },
+        {
+          "nome": "ZERAGEM - suspende o anti-inflamatorio e o AAS",
+          "termos": [
+            "parar o diclofenaco",
+            "suspender o anti inflamatorio",
+            "nao tomar mais o remedio de dor",
+            "parar o aas",
+            "suspender a aspirina",
+            "nao pode tomar anti inflamatorio",
+            "nao vou dispensar anti inflamatorio",
+            "esse remedio nao pode com a varfarina"
+          ]
+        },
+        {
+          "nome": "ZERAGEM - nao dispensa medicamento contraindicado",
+          "termos": [
+            "nao posso dispensar",
+            "nao vou vender esse remedio",
+            "contraindicado no seu caso",
+            "nao e seguro dispensar agora",
+            "nao indico esse medicamento"
+          ]
+        },
+        {
+          "nome": "suspende o antibiotico de terceiro e encaminha para avaliacao da ITU",
+          "termos": [
+            "parar o antibiotico do vizinho",
+            "nao pode tomar remedio de outra pessoa",
+            "suspender a sulfa",
+            "precisa de avaliacao para a infeccao de urina",
+            "antibiotico so com prescricao",
+            "levar essa cartela para o medico ver"
+          ]
+        },
+        {
+          "nome": "orienta suspender o cha de gengibre",
+          "termos": [
+            "parar o cha de gengibre",
+            "suspender o cha",
+            "natural tambem interfere",
+            "nao tomar o cha ate avaliar"
+          ]
+        },
+        {
+          "nome": "orienta sinais de gravidade que exigem retorno imediato",
+          "termos": [
+            "se sangrar muito procure",
+            "sangue na urina",
+            "fezes pretas",
+            "melena",
+            "vomito com sangue",
+            "dor de cabeca forte",
+            "confusao mental",
+            "sangramento que nao para",
+            "queda ou pancada na cabeca",
+            "sinais de alerta"
+          ]
+        },
+        {
+          "nome": "garante o transporte e a seguranca do encaminhamento",
+          "termos": [
+            "a senhora tem como ir",
+            "vai acompanhada",
+            "posso chamar alguem",
+            "avisar a filha",
+            "avisar a vizinha",
+            "vou ligar para a unidade",
+            "levar a sacola e os papeis"
+          ]
+        }
+      ],
+      "peso": 2.0
+    },
+    {
+      "nome": "Orientacao e comunicacao",
+      "objetivo": "Comunicar em linguagem acessivel a idosa com baixa escolaridade e baixa visao, cobrindo regime, armazenamento, o que fazer se esquecer a dose e o que monitorar, verificando a compreensao com teach-back.",
+      "itens": [
+        {
+          "nome": "usa linguagem simples e sem jargao",
+          "termos": [
+            "em palavras simples",
+            "de um jeito facil",
+            "sem termo tecnico",
+            "vou explicar devagar",
+            "vou falar bem devagar",
+            "a senhora esta me acompanhando",
+            "ficou claro ate aqui",
+            "o remedio de afinar o sangue",
+            "o amarelinho"
+          ]
+        },
+        {
+          "nome": "verifica a compreensao com teach-back",
+          "termos": [
+            "teach back",
+            "me repete do seu jeito",
+            "a senhora pode me contar o que entendeu",
+            "me diz como vai fazer em casa",
+            "so pra eu ter certeza que expliquei direito",
+            "confirmar entendimento"
+          ]
+        },
+        {
+          "nome": "orienta o regime completo do tratamento",
+          "termos": [
+            "a dose e de",
+            "um comprimido por dia",
+            "que horas tomar",
+            "quantas vezes ao dia",
+            "por quanto tempo",
+            "em jejum",
+            "depois da refeicao",
+            "horario de cada remedio"
+          ]
+        },
+        {
+          "nome": "orienta o que fazer se esquecer a dose",
+          "termos": [
+            "se esquecer nao dobre",
+            "nunca tome dois juntos",
+            "nao compense a dose",
+            "se esquecer pule a dose",
+            "o que fazer se esquecer"
+          ]
+        },
+        {
+          "nome": "orienta armazenamento e organizacao",
+          "termos": [
+            "armazenamento",
+            "onde guardar",
+            "longe do sol",
+            "longe da umidade",
+            "nao guardar em cima da geladeira",
+            "manter na embalagem original",
+            "caixinha organizadora",
+            "porta comprimidos",
+            "descartar o vencido"
+          ]
+        },
+        {
+          "nome": "entrega lista escrita em letra grande",
+          "termos": [
+            "vou escrever pra senhora",
+            "lista escrita",
+            "letra grande",
+            "quadro de horarios",
+            "papel com os horarios",
+            "desenhar os horarios"
+          ]
+        },
+        {
+          "nome": "orienta sobre alimentacao e verduras verdes",
+          "termos": [
+            "verduras verdes",
+            "vitamina k",
+            "couve",
+            "manter a alimentacao constante",
+            "nao mudar a dieta de repente",
+            "alimentos que interferem"
+          ]
+        },
+        {
+          "nome": "orienta a nao se automedicar e a consultar antes de comprar",
+          "termos": [
+            "nao compre remedio por conta",
+            "me pergunte antes de comprar",
+            "nao tome remedio de outra pessoa",
+            "sempre consultar antes",
+            "avise que usa anticoagulante",
+            "diga ao dentista que toma esse remedio"
+          ]
+        }
+      ],
+      "peso": 1.0
+    },
+    {
+      "nome": "Farmacovigilancia",
+      "objetivo": "Caracterizar o sangramento como suspeita de reacao adversa, estabelecer causalidade por algoritmo validado e NOTIFICAR no VigiMed/Anvisa.",
+      "itens": [
+        {
+          "nome": "caracteriza como suspeita de reacao adversa",
+          "termos": [
+            "suspeita de reacao adversa",
+            "ram",
+            "evento adverso",
+            "reacao ao medicamento",
+            "efeito adverso do anticoagulante"
+          ]
+        },
+        {
+          "nome": "aplica algoritmo de causalidade",
+          "termos": [
+            "naranjo",
+            "algoritmo de naranjo",
+            "oms umc",
+            "karch lasagna",
+            "avaliar causalidade",
+            "nexo causal",
+            "grau de causalidade"
+          ]
+        },
+        {
+          "nome": "notifica no VigiMed/Anvisa",
+          "termos": [
+            "vigimed",
+            "notificar a anvisa",
+            "notificacao de evento adverso",
+            "farmacovigilancia",
+            "vou notificar",
+            "notifivisa",
+            "queixa tecnica"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Plano de cuidado, documentacao SOAP e carta ao prescritor",
+      "objetivo": "Pactuar plano exequivel com metas e retorno, registrar em SOAP e comunicar o prescritor por escrito com a lista conciliada.",
+      "itens": [
+        {
+          "nome": "pactua o plano e define retorno",
+          "termos": [
+            "vamos combinar assim",
+            "a senhora concorda",
+            "plano de cuidado",
+            "quero que a senhora volte",
+            "retorno",
+            "reavaliar em",
+            "acompanhamento farmacoterapeutico",
+            "marcar novo atendimento"
+          ]
+        },
+        {
+          "nome": "registra em SOAP no prontuario",
+          "termos": [
+            "soap",
+            "subjetivo objetivo avaliacao plano",
+            "registrar no prontuario",
+            "prontuario farmaceutico",
+            "declaracao de servico farmaceutico",
+            "documentar o atendimento"
+          ]
+        },
+        {
+          "nome": "emite carta de encaminhamento com a lista conciliada",
+          "termos": [
+            "carta de encaminhamento",
+            "encaminhamento por escrito",
+            "vou escrever para o medico",
+            "lista conciliada",
+            "relatorio ao prescritor",
+            "comunicar o prescritor",
+            "levar esse papel para o medico"
+          ]
+        },
+        {
+          "nome": "articula com a rede e a equipe",
+          "termos": [
+            "avisar a unidade de saude",
+            "falar com a equipe do posto",
+            "agente comunitaria",
+            "contatar o ambulatorio",
+            "antecipar o retorno",
+            "acionar a familia"
+          ]
+        }
+      ],
+      "peso": 0.5
+    }
+  ]
+}

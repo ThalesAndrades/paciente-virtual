@@ -1,0 +1,1115 @@
+{
+  "nome_caso": "Disfagia Orofaríngea Neurogênica pós-AVC",
+  "criterios": [
+    {
+      "nome": "Apresentacao, identificacao e vinculo",
+      "objetivo": "Apresentar-se pelo nome e pela profissao, confirmar a identidade do paciente, explicar o objetivo da avaliacao, obter consentimento e dirigir-se ao PACIENTE, e nao apenas a acompanhante. Adequado: 3 ou mais acoes. Parcialmente adequado: 2. Inadequado: 1 ou nenhuma.",
+      "itens": [
+        {
+          "nome": "identifica-se pelo nome",
+          "termos": [
+            "meu nome e",
+            "eu me chamo",
+            "sou o",
+            "sou a",
+            "prazer"
+          ]
+        },
+        {
+          "nome": "identifica-se como fonoaudiologo",
+          "termos": [
+            "fonoaudiologo",
+            "fonoaudiologa",
+            "fonoaudiologia",
+            "sou da fono",
+            "equipe de fonoaudiologia",
+            "fono do hospital"
+          ]
+        },
+        {
+          "nome": "confirma a identidade do paciente",
+          "termos": [
+            "o senhor e o seu",
+            "confirma seu nome",
+            "qual o seu nome",
+            "seu nome completo",
+            "me confirma o nome",
+            "data de nascimento"
+          ]
+        },
+        {
+          "nome": "identifica o acompanhante e o vinculo",
+          "termos": [
+            "a senhora e",
+            "qual o seu parentesco",
+            "e filha dele",
+            "quem esta acompanhando",
+            "como a senhora se chama",
+            "e da familia"
+          ]
+        },
+        {
+          "nome": "explica o objetivo da avaliacao",
+          "termos": [
+            "vim avaliar a degluticao",
+            "vou avaliar se ele pode comer",
+            "avaliar se pode beber",
+            "a equipe me chamou para avaliar",
+            "vou verificar como esta o engolir",
+            "explicar o que vou fazer",
+            "objetivo da avaliacao"
+          ]
+        },
+        {
+          "nome": "obtem consentimento e dirige-se ao paciente",
+          "termos": [
+            "o senhor permite",
+            "posso avaliar",
+            "voce concorda",
+            "tudo bem para o senhor",
+            "com sua autorizacao",
+            "seu osvaldo",
+            "o senhor me entende",
+            "vou falar com o senhor"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Anamnese fonoaudiologica dirigida",
+      "objetivo": "Investigar os itens pertinentes a disfagia neurogenica junto ao paciente e a acompanhante. Adequado: investiga 6 ou mais itens. Parcialmente adequado: investiga 3 a 5 itens. Inadequado: investiga 2 ou menos.",
+      "itens": [
+        {
+          "nome": "tempo e territorio do AVC",
+          "termos": [
+            "quando foi o avc",
+            "ha quantos dias",
+            "quando aconteceu o derrame",
+            "que dia deu o avc",
+            "qual foi o lado do avc",
+            "que area do cerebro",
+            "quando comecou tudo isso"
+          ]
+        },
+        {
+          "nome": "tempo de intubacao e extubacao",
+          "termos": [
+            "ficou intubado",
+            "tempo de intubacao",
+            "quando extubou",
+            "tirou o tubo quando",
+            "quantos dias no tubo",
+            "ficou no respirador",
+            "usou tubo na garganta"
+          ]
+        },
+        {
+          "nome": "via alimentar atual e jejum",
+          "termos": [
+            "esta em jejum",
+            "esta comendo alguma coisa",
+            "como esta se alimentando",
+            "esta no soro",
+            "via alimentar",
+            "ja tem sonda",
+            "esta recebendo dieta"
+          ]
+        },
+        {
+          "nome": "queixa de engasgo, tosse e voz molhada",
+          "termos": [
+            "engasga",
+            "engasgo",
+            "tosse quando come",
+            "tosse quando bebe",
+            "voz muda depois de comer",
+            "voz molhada",
+            "sente a comida parar",
+            "entala",
+            "trava na garganta"
+          ]
+        },
+        {
+          "nome": "consistencia e tempo de refeicao previos",
+          "termos": [
+            "o que ele comia",
+            "como era a alimentacao antes",
+            "comia comida solida",
+            "so comia sopa",
+            "quanto tempo demorava para comer",
+            "demorava nas refeicoes",
+            "evitava algum alimento"
+          ]
+        },
+        {
+          "nome": "perda de peso e desidratacao",
+          "termos": [
+            "perdeu peso",
+            "emagreceu",
+            "quantos quilos",
+            "a roupa ficou folgada",
+            "esta desidratado",
+            "esta bebendo liquido",
+            "sente sede"
+          ]
+        },
+        {
+          "nome": "medicacoes em uso, sedativos e antiagregantes",
+          "termos": [
+            "que remedios usa",
+            "medicacoes em uso",
+            "esta tomando algum remedio",
+            "remedio para dormir",
+            "sedativo",
+            "prescricao medica",
+            "usa anticoagulante"
+          ]
+        },
+        {
+          "nome": "nivel de consciencia, colaboracao e cognicao",
+          "termos": [
+            "esta alerta",
+            "esta orientado",
+            "entende o que falo",
+            "consegue colaborar",
+            "nivel de consciencia",
+            "glasgow",
+            "esta sonolento",
+            "esta desperto"
+          ]
+        },
+        {
+          "nome": "queixa de fala, voz e comunicacao",
+          "termos": [
+            "a fala mudou",
+            "fala enrolada",
+            "dificuldade para falar",
+            "a voz mudou",
+            "esta rouco",
+            "as pessoas entendem o senhor",
+            "consegue se comunicar"
+          ]
+        },
+        {
+          "nome": "comorbidades e antecedentes pertinentes",
+          "termos": [
+            "pressao alta",
+            "diabetes",
+            "avc anterior",
+            "ja teve outro derrame",
+            "doenca respiratoria",
+            "fumava",
+            "cirurgia previa",
+            "refluxo"
+          ]
+        }
+      ],
+      "peso": 1.25
+    },
+    {
+      "nome": "Investigacao dos riscos sensiveis (itens de RISCO)",
+      "objetivo": "Investigar ativamente, com pergunta dirigida e sem julgamento, os nucleos que so aparecem sob pergunta direta e que mudam a conduta: oferta indevida de alimento durante o jejum, engasgos e pneumonia previos, condicao da protese e da higiene oral, medo e recusa da sonda, sofrimento emocional do paciente e sobrecarga da cuidadora. Adequado: investiga 4 ou mais nucleos. Parcialmente adequado: investiga 2 ou 3. Inadequado: investiga 1 ou nenhum.",
+      "itens": [
+        {
+          "nome": "RISCO - oferta de alimento escondido durante o jejum",
+          "termos": [
+            "alguem ofereceu agua para ele",
+            "deu alguma coisa pra ele beber",
+            "ele comeu alguma coisa nesses dias",
+            "deu comida escondido",
+            "ele tomou agua hoje",
+            "quem ofereceu alimento",
+            "ele esta em jejum mesmo",
+            "molhou a boca dele",
+            "deu bolacha",
+            "deu algo por fora da dieta",
+            "a senhora chegou a dar alguma coisa",
+            "alguem da familia deu comida",
+            "ofereceram algo por via oral",
+            "deram algo para ele comer ou beber",
+            "ele colocou alguma coisa na boca"
+          ]
+        },
+        {
+          "nome": "RISCO - engasgos previos e pneumonia aspirativa anterior",
+          "termos": [
+            "ele ja engasgou antes",
+            "engasgava em casa",
+            "engasgo com agua",
+            "tossia na hora de comer",
+            "ele ja teve pneumonia",
+            "ja internou por pneumonia",
+            "ja teve infeccao no pulmao",
+            "a voz mudava depois de comer",
+            "ja se engasgou com comida",
+            "antes do avc ele comia bem",
+            "tinha dificuldade pra engolir antes",
+            "isso ja acontecia antes do avc",
+            "ja teve infeccao respiratoria antes"
+          ]
+        },
+        {
+          "nome": "RISCO - protese dentaria e higiene oral",
+          "termos": [
+            "ele usa dentadura",
+            "ele usa protese",
+            "protese dentaria",
+            "ele tem dentes",
+            "como estao os dentes dele",
+            "escovaram a boca dele",
+            "higiene da boca",
+            "limparam a boca dele",
+            "escova os dentes",
+            "estao cuidando da boca dele",
+            "onde esta a dentadura",
+            "fizeram higiene oral desde a internacao",
+            "quando foi a ultima vez que limparam a boca"
+          ]
+        },
+        {
+          "nome": "RISCO - medo da sonda e vontade do paciente",
+          "termos": [
+            "ja falaram em sonda",
+            "sonda pelo nariz",
+            "sonda nasoenteral",
+            "colocar sonda",
+            "o que o senhor acha da sonda",
+            "ele aceitaria uma sonda",
+            "ele ja disse o que quer",
+            "conversaram sobre alimentacao por sonda",
+            "tem medo de alguma coisa",
+            "o que mais preocupa voces",
+            "o que mais preocupa o senhor",
+            "qual a vontade do paciente",
+            "o que o senhor gostaria que fosse feito",
+            "ja passaram sonda antes"
+          ]
+        },
+        {
+          "nome": "RISCO - vergonha e sofrimento emocional do paciente",
+          "termos": [
+            "como o senhor esta se sentindo com tudo isso",
+            "como o senhor esta lidando com isso",
+            "como esta o animo dele",
+            "o senhor esta triste",
+            "isso incomoda o senhor",
+            "se sente constrangido",
+            "tem vergonha disso",
+            "sente vergonha",
+            "esta com vergonha",
+            "esta desanimado",
+            "como e pro senhor nao conseguir falar",
+            "o que mais te incomoda agora",
+            "o que mais incomoda o senhor",
+            "os netos tem vindo visitar",
+            "prefere ficar sozinho na hora da refeicao"
+          ]
+        },
+        {
+          "nome": "RISCO - sobrecarga da cuidadora e planejamento de alta",
+          "termos": [
+            "quem vai cuidar dele em casa",
+            "a senhora cuida sozinha",
+            "e a senhora como esta",
+            "e a senhora como tem passado",
+            "como esta sendo para a senhora",
+            "quem mais ajuda voces",
+            "a senhora esta cansada",
+            "a senhora tem ajuda",
+            "a senhora tem conseguido descansar",
+            "a senhora tem dormido",
+            "quem cuida da senhora",
+            "tem ajuda em casa",
+            "quem fica com ele",
+            "a senhora trabalha",
+            "como vai ser a alta",
+            "voces tem apoio",
+            "rede de apoio da familia",
+            "a senhora consegue dar conta",
+            "a senhora esta dando conta"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Pre-requisitos de seguranca para avaliacao a beira do leito",
+      "objetivo": "Verificar e VERBALIZAR os pre-requisitos antes de qualquer oferta de alimento. Adequado: verifica 4 ou mais itens. Parcialmente adequado: verifica 2 ou 3. Inadequado: verifica 1 ou nenhum. Ofertar alimento sem verificar nivel de consciencia, posicionamento e saturacao basal deve ser considerado inadequado.",
+      "itens": [
+        {
+          "nome": "nivel de consciencia e capacidade de colaborar",
+          "termos": [
+            "nivel de consciencia",
+            "glasgow",
+            "esta alerta",
+            "esta responsivo",
+            "consegue colaborar",
+            "atende comandos",
+            "esta desperto",
+            "sustenta a atencao"
+          ]
+        },
+        {
+          "nome": "estabilidade respiratoria e saturacao basal",
+          "termos": [
+            "saturacao basal",
+            "spo2",
+            "oximetria",
+            "saturacao de oxigenio",
+            "esta em ar ambiente",
+            "usa oxigenio",
+            "frequencia respiratoria",
+            "desconforto respiratorio",
+            "ausculta pulmonar",
+            "sinais vitais"
+          ]
+        },
+        {
+          "nome": "posicionamento a 90 graus e alinhamento cervical",
+          "termos": [
+            "elevar a cabeceira",
+            "cabeceira a noventa graus",
+            "90 graus",
+            "sentar o paciente",
+            "posicionamento",
+            "alinhar a cabeca",
+            "postura sentada",
+            "apoio de coxim",
+            "controle de tronco"
+          ]
+        },
+        {
+          "nome": "higiene oral previa a oferta",
+          "termos": [
+            "higiene oral antes",
+            "limpar a boca antes",
+            "escovar antes de ofertar",
+            "realizar higiene oral",
+            "higienizar a cavidade oral",
+            "remover residuo da boca",
+            "gaze e antisseptico"
+          ]
+        },
+        {
+          "nome": "ausencia de aspiracao recente, febre ou instabilidade",
+          "termos": [
+            "teve febre",
+            "aspiracao traqueal recente",
+            "aspirou secrecao",
+            "esta estavel",
+            "estabilidade clinica",
+            "sem intercorrencia",
+            "quanto tempo desde a extubacao",
+            "checar o prontuario"
+          ]
+        },
+        {
+          "nome": "material de seguranca e retaguarda disponiveis",
+          "termos": [
+            "aspirador disponivel",
+            "material de aspiracao",
+            "oximetro na mao",
+            "estetoscopio",
+            "seringa dosadora",
+            "colher de cha",
+            "espessante disponivel",
+            "equipe por perto"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Avaliacao estrutural e funcional dos orgaos fonoarticulatorios (verbalizada)",
+      "objetivo": "Solicitar, verbalizando, e interpretar a avaliacao estrutural e funcional dos OFA. Adequado: solicita e interpreta 6 ou mais estruturas/funcoes. Parcialmente adequado: 3 a 5. Inadequado: 2 ou menos.",
+      "itens": [
+        {
+          "nome": "inspecao da cavidade oral, denticao e higiene",
+          "termos": [
+            "cavidade oral",
+            "inspeciono a boca",
+            "inspecao da boca",
+            "higiene oral",
+            "denticao",
+            "protese",
+            "dentadura",
+            "saburra",
+            "mucosa oral",
+            "residuo na boca"
+          ]
+        },
+        {
+          "nome": "simetria facial e mimica",
+          "termos": [
+            "simetria facial",
+            "assimetria facial",
+            "mimica facial",
+            "paralisia facial",
+            "sulco nasolabial",
+            "rima labial",
+            "desvio da boca",
+            "observo a face"
+          ]
+        },
+        {
+          "nome": "labios - tonus, mobilidade e vedamento",
+          "termos": [
+            "labios",
+            "vedamento labial",
+            "tonus labial",
+            "mobilidade dos labios",
+            "protrusao e retracao",
+            "escape de saliva",
+            "sialorreia",
+            "avaliar os labios"
+          ]
+        },
+        {
+          "nome": "lingua - tonus, mobilidade, forca e simetria",
+          "termos": [
+            "lingua",
+            "mobilidade de lingua",
+            "tonus de lingua",
+            "forca de lingua",
+            "protrusao da lingua",
+            "lateralizacao",
+            "elevacao de ponta de lingua",
+            "desvio de lingua",
+            "avaliar a lingua"
+          ]
+        },
+        {
+          "nome": "veu palatino, reflexos e sensibilidade",
+          "termos": [
+            "veu palatino",
+            "palato mole",
+            "elevacao do veu",
+            "reflexo de vomito",
+            "reflexo nauseoso",
+            "sensibilidade orofaringea",
+            "sensibilidade intraoral",
+            "uvula"
+          ]
+        },
+        {
+          "nome": "mandibula e funcao mastigatoria",
+          "termos": [
+            "mandibula",
+            "mastigacao",
+            "abertura de boca",
+            "trismo",
+            "movimento mandibular",
+            "funcao mastigatoria",
+            "avaliar a mastigacao"
+          ]
+        },
+        {
+          "nome": "degluticao de saliva e elevacao laringea",
+          "termos": [
+            "degluticao de saliva",
+            "engolir saliva",
+            "elevacao laringea",
+            "excursao laringea",
+            "disparo da degluticao",
+            "acumulo de saliva",
+            "estase de saliva",
+            "degluticoes multiplas"
+          ]
+        },
+        {
+          "nome": "qualidade vocal basal e tempo maximo de fonacao",
+          "termos": [
+            "qualidade vocal",
+            "voz basal",
+            "avaliar a voz",
+            "rouquidao",
+            "voz molhada",
+            "tempo maximo de fonacao",
+            "tmf",
+            "sustentar a vogal",
+            "emitir a"
+          ]
+        },
+        {
+          "nome": "tosse voluntaria e eficacia do clareamento",
+          "termos": [
+            "tosse voluntaria",
+            "pedir para tossir",
+            "reflexo de tosse",
+            "eficacia da tosse",
+            "forca da tosse",
+            "pigarro",
+            "clareamento de via aerea"
+          ]
+        },
+        {
+          "nome": "fala, articulacao, inteligibilidade e linguagem",
+          "termos": [
+            "articulacao",
+            "inteligibilidade",
+            "disartria",
+            "apraxia de fala",
+            "avaliar a fala",
+            "compreensao",
+            "nomeacao",
+            "afasia",
+            "avaliar a linguagem"
+          ]
+        },
+        {
+          "nome": "ausculta cervical basal",
+          "termos": [
+            "ausculta cervical",
+            "ausculta cervical basal",
+            "escutar o pescoco",
+            "estetoscopio no pescoco",
+            "ruido cervical",
+            "linha de base da ausculta"
+          ]
+        }
+      ],
+      "peso": 1.25
+    },
+    {
+      "nome": "Prova de degluticao escalonada - ITEM CRITICO",
+      "objetivo": "Realizar a avaliacao clinica da degluticao com escalonamento correto e interromper ao primeiro sinal franco de aspiracao. Adequado exige: iniciar pela consistencia mais segura (pastoso antes de liquido), volume inicial pequeno (3 a 5 mL), progressao gradual, monitorizacao dos sinais clinicos com ausculta cervical e oximetria, e INTERRUPCAO ao sinal franco. PENALIZACAO: iniciar por agua/liquido fino, ofertar volume livre ou 100 mL, ofertar solido, ou prosseguir apos tosse com voz molhada e queda de saturacao caracteriza conduta insegura e zera este criterio.",
+      "itens": [
+        {
+          "nome": "inicia pela consistencia mais segura (pastoso)",
+          "termos": [
+            "comeco pelo pastoso",
+            "inicio com pastoso",
+            "consistencia pastosa",
+            "pastoso homogeneo",
+            "iddsi 4",
+            "pudim",
+            "consistencia mais segura",
+            "primeiro o pastoso"
+          ]
+        },
+        {
+          "nome": "volume inicial pequeno de 3 a 5 mL",
+          "termos": [
+            "tres mililitros",
+            "3 ml",
+            "cinco mililitros",
+            "5 ml",
+            "volume pequeno",
+            "colher de cha",
+            "seringa dosadora",
+            "pequena quantidade"
+          ]
+        },
+        {
+          "nome": "progressao gradual de volumes",
+          "termos": [
+            "aumento o volume",
+            "progrido o volume",
+            "escalonamento de volumes",
+            "dez mililitros",
+            "10 ml",
+            "aumento gradualmente",
+            "passo para o proximo volume"
+          ]
+        },
+        {
+          "nome": "progressao de consistencias com liquido espessado antes do fino",
+          "termos": [
+            "liquido espessado",
+            "espessante",
+            "nectar",
+            "iddsi 3",
+            "agua espessada",
+            "depois do pastoso ofereco espessado",
+            "so depois o liquido fino"
+          ]
+        },
+        {
+          "nome": "monitorizacao de tosse, pigarro e voz molhada",
+          "termos": [
+            "observo tosse",
+            "verifico se tosse",
+            "pigarro",
+            "voz molhada",
+            "peco para falar depois de engolir",
+            "checo a voz apos a degluticao",
+            "sinais de penetracao",
+            "sinais de aspiracao"
+          ]
+        },
+        {
+          "nome": "ausculta cervical durante as ofertas",
+          "termos": [
+            "ausculta cervical durante",
+            "ausculto o pescoco na oferta",
+            "ausculta da degluticao",
+            "ruido de estase",
+            "ruido umido",
+            "escuto a degluticao"
+          ]
+        },
+        {
+          "nome": "oximetria durante as ofertas e queda de saturacao",
+          "termos": [
+            "monitoro a saturacao",
+            "oximetria durante",
+            "spo2 durante a oferta",
+            "queda de saturacao",
+            "dessaturacao",
+            "acompanho o oximetro"
+          ]
+        },
+        {
+          "nome": "observacao do escape oral, residuo e degluticoes multiplas",
+          "termos": [
+            "escape oral anterior",
+            "escape posterior",
+            "residuo oral",
+            "residuo em sulcos",
+            "degluticoes multiplas",
+            "tempo de transito oral",
+            "elevacao laringea na oferta"
+          ]
+        },
+        {
+          "nome": "INTERROMPE ao primeiro sinal franco de aspiracao",
+          "termos": [
+            "interrompo a prova",
+            "suspendo a oferta",
+            "paro o teste",
+            "encerro a avaliacao com alimento",
+            "nao ofereco mais",
+            "cesso a oferta",
+            "interrompo por sinal de aspiracao",
+            "nao progrido o volume"
+          ]
+        }
+      ],
+      "peso": 1.75
+    },
+    {
+      "nome": "Diagnostico fonoaudiologico com classificacao de grau",
+      "objetivo": "Formular o diagnostico em terminologia fonoaudiologica correta E classificar a severidade por escala NOMEADA, ANTES de solicitar exame objetivo. Adequado: verbaliza disfagia orofaringea neurogenica E o grau moderado E a escala que o sustenta (PARD, DOSS, ASHA NOMS ou equivalente). Parcialmente adequado: verbaliza o grau sem nomear a escala, ou usa formulacao vaga do tipo alteracao de degluticao. Inadequado: nao verbaliza, ou emite diagnostico medico (pneumonia, broncoaspiracao, AVC) como se fosse o diagnostico fonoaudiologico. Dizer apenas disfagia, sem a topografia orofaringea, nao satisfaz o primeiro item.",
+      "itens": [
+        {
+          "nome": "nomeia disfagia orofaringea",
+          "termos": [
+            "disfagia orofaringea",
+            "disfagia oro faringea",
+            "disfagia de fase oral e faringea",
+            "disturbio de degluticao orofaringeo",
+            "disfagia oro faringe"
+          ]
+        },
+        {
+          "nome": "caracteriza a etiologia neurogenica",
+          "termos": [
+            "neurogenica",
+            "de origem neurogenica",
+            "secundaria ao avc",
+            "pos avc",
+            "etiologia neurologica",
+            "de causa neurologica"
+          ]
+        },
+        {
+          "nome": "verbaliza o grau de comprometimento",
+          "termos": [
+            "grau moderado",
+            "disfagia moderada",
+            "comprometimento moderado",
+            "severidade moderada",
+            "classifico a gravidade",
+            "classifico o grau"
+          ]
+        },
+        {
+          "nome": "sustenta o grau em escala nomeada",
+          "termos": [
+            "pard",
+            "protocolo de avaliacao do risco para disfagia",
+            "doss",
+            "dysphagia outcome and severity scale",
+            "asha noms",
+            "nivel 5 do pard",
+            "pard nivel 5",
+            "doss nivel 3",
+            "escala de severidade da disfagia"
+          ]
+        },
+        {
+          "nome": "descreve os achados que sustentam o diagnostico",
+          "termos": [
+            "atraso do disparo",
+            "reducao da elevacao laringea",
+            "escape oral posterior",
+            "sinais de penetracao",
+            "aspiracao para liquido fino",
+            "tosse ineficaz",
+            "residuo faringeo",
+            "justifico pelo achado"
+          ]
+        },
+        {
+          "nome": "identifica disartria e comprometimento de comunicacao associados",
+          "termos": [
+            "disartria",
+            "disartria unilateral de neuronio motor superior",
+            "disartria unilateral",
+            "alteracao de fala",
+            "reducao da inteligibilidade",
+            "disturbio de comunicacao associado",
+            "anomia leve",
+            "afasia anomica"
+          ]
+        },
+        {
+          "nome": "reconhece a disfagia previa ao AVC como agravante",
+          "termos": [
+            "quadro previo",
+            "disfagia ja existia antes",
+            "presbifagia",
+            "disfagia previa agravada",
+            "vinha engasgando ha meses",
+            "condicao anterior ao avc"
+          ]
+        }
+      ],
+      "peso": 1.25
+    },
+    {
+      "nome": "Indicacao e interpretacao de exame objetivo de outra profissao",
+      "objetivo": "Indicar o exame objetivo pertinente COM justificativa e interpretar o laudo recebido, reconhecendo que se trata de exame realizado por outra profissao. Adequado: indica videofluoroscopia OU FEES com justificativa clinica explicita e interpreta o laudo. Parcialmente adequado: indica o exame sem justificativa ou sem interpretar. Inadequado: nao indica, ou indica exame que nao se aplica ao caso, ou declara que realizaria o exame sozinho, sem o medico que introduz o endoscopio ou opera o equipamento de radioscopia. Observacao para o corretor: no Brasil o fonoaudiologo PARTICIPA da videoendoscopia e da videofluoroscopia, conduzindo o protocolo de ofertas e interpretando a degluticao — o que se penaliza aqui e dispensar o medico, nao reivindicar a propria atuacao no exame.",
+      "itens": [
+        {
+          "nome": "indica videofluoroscopia da degluticao",
+          "termos": [
+            "videofluoroscopia",
+            "vfss",
+            "videodeglutograma",
+            "estudo videofluoroscopico",
+            "deglutograma",
+            "exame contrastado da degluticao"
+          ]
+        },
+        {
+          "nome": "indica videoendoscopia da degluticao (FEES)",
+          "termos": [
+            "fees",
+            "videoendoscopia da degluticao",
+            "nasofibrolaringoscopia",
+            "nasofibroscopia da degluticao",
+            "endoscopia da degluticao",
+            "exame endoscopico da degluticao"
+          ]
+        },
+        {
+          "nome": "justifica pela suspeita de aspiracao silenciosa ou discordancia clinica",
+          "termos": [
+            "suspeita de aspiracao silenciosa",
+            "aspiracao silenciosa",
+            "para confirmar a aspiracao",
+            "discordancia clinica",
+            "definir a consistencia segura",
+            "sensibilidade laringea reduzida",
+            "tosse ineficaz justifica o exame",
+            "complementar a avaliacao clinica"
+          ]
+        },
+        {
+          "nome": "reconhece que o exame e realizado com outro profissional",
+          "termos": [
+            "solicito ao medico",
+            "encaminho para o otorrino",
+            "junto com o radiologista",
+            "exame realizado pelo medico",
+            "solicitar a equipe medica",
+            "exame de outra especialidade"
+          ]
+        },
+        {
+          "nome": "interpreta o laudo recebido",
+          "termos": [
+            "o laudo mostra",
+            "de acordo com o exame",
+            "penetration aspiration scale",
+            "pas nivel",
+            "escala de rosenbek",
+            "penetracao laringea",
+            "aspiracao traqueal",
+            "confirma o achado clinico"
+          ]
+        },
+        {
+          "nome": "solicita exames de apoio pertinentes ao risco pulmonar",
+          "termos": [
+            "raio x de torax",
+            "radiografia de torax",
+            "checar sinais de pneumonia",
+            "hemograma",
+            "proteina c reativa",
+            "avaliar risco pulmonar"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Conduta, via alimentar e plano terapeutico",
+      "objetivo": "Definir a via de alimentacao e a consistencia referenciadas ao IDDSI, propor manobras e adaptacoes, indicar higiene oral, registrar em escala funcional e planejar reavaliacao. Adequado: define 4 ou mais elementos, incluindo obrigatoriamente a restricao de liquido fino. Parcialmente adequado: 2 ou 3 elementos. Inadequado: 1 ou nenhum, OU libera dieta por via oral livre ou liquido fino, o que caracteriza conduta insegura.",
+      "itens": [
+        {
+          "nome": "restringe liquido fino e indica espessamento",
+          "termos": [
+            "suspender liquido fino",
+            "nao oferecer agua pura",
+            "espessar os liquidos",
+            "liquido espessado",
+            "espessante alimentar",
+            "iddsi 3",
+            "nectar",
+            "agua espessada"
+          ]
+        },
+        {
+          "nome": "libera consistencia pastosa em volume controlado",
+          "termos": [
+            "dieta pastosa",
+            "consistencia pastosa homogenea",
+            "iddsi 4",
+            "libero pastoso",
+            "volume pequeno por oferta",
+            "colher de cha",
+            "dieta pastosa homogenea"
+          ]
+        },
+        {
+          "nome": "define via alternativa ou complementacao se ingesta insuficiente",
+          "termos": [
+            "via alternativa de alimentacao",
+            "sonda nasoenteral",
+            "complementacao por sonda",
+            "sugiro a equipe avaliar sonda",
+            "aporte nutricional insuficiente",
+            "complemento nutricional",
+            "acionar a nutricao"
+          ]
+        },
+        {
+          "nome": "postura, manobras e adaptacoes",
+          "termos": [
+            "sentado a noventa graus",
+            "queixo para baixo",
+            "chin down",
+            "degluticoes multiplas",
+            "manobra de degluticao",
+            "alternar solido e liquido",
+            "permanecer sentado apos a refeicao",
+            "ambiente sem distracao",
+            "ritmo lento na oferta"
+          ]
+        },
+        {
+          "nome": "higiene oral e adequacao da protese",
+          "termos": [
+            "higiene oral tres vezes ao dia",
+            "escovacao",
+            "protocolo de higiene oral",
+            "encaminhar ao dentista",
+            "adequar a protese",
+            "protese mal adaptada",
+            "reduzir risco de pneumonia"
+          ]
+        },
+        {
+          "nome": "registra em escala funcional (FOIS)",
+          "termos": [
+            "fois",
+            "functional oral intake scale",
+            "escala funcional de ingestao oral",
+            "nivel na fois",
+            "asha noms",
+            "registro em escala funcional"
+          ]
+        },
+        {
+          "nome": "define fonoterapia, objetivos e reavaliacao",
+          "termos": [
+            "iniciar fonoterapia",
+            "terapia de degluticao",
+            "exercicios de motricidade orofacial",
+            "frequencia das sessoes",
+            "reavaliar em 48 horas",
+            "reavaliacao diaria",
+            "plano terapeutico",
+            "acompanhamento fonoaudiologico"
+          ]
+        },
+        {
+          "nome": "registra em prontuario",
+          "termos": [
+            "registro em prontuario",
+            "anoto no prontuario",
+            "evolucao fonoaudiologica",
+            "deixo registrado",
+            "parecer fonoaudiologico",
+            "relatorio fonoaudiologico"
+          ]
+        }
+      ],
+      "peso": 1.0
+    },
+    {
+      "nome": "Escopo profissional, etica e trabalho interprofissional",
+      "objetivo": "Manter-se no escopo da Fonoaudiologia e articular a conduta com a equipe. Adequado: comunica a recomendacao a equipe medica/enfermagem/nutricao E respeita o escopo. Inadequado, com anulacao do criterio de conduta: emitir diagnostico medico, prescrever farmaco, prescrever dieta isoladamente sem a equipe, ou decidir sozinho a passagem de sonda.",
+      "itens": [
+        {
+          "nome": "comunica a recomendacao a equipe medica",
+          "termos": [
+            "comunico a equipe medica",
+            "informo o medico",
+            "converso com o medico assistente",
+            "levo a equipe",
+            "discuto com a equipe",
+            "sugiro a equipe"
+          ]
+        },
+        {
+          "nome": "articula com enfermagem e nutricao",
+          "termos": [
+            "oriento a enfermagem",
+            "aviso a enfermagem",
+            "aciono a nutricao",
+            "nutricionista",
+            "equipe multiprofissional",
+            "equipe interprofissional",
+            "discussao de caso"
+          ]
+        },
+        {
+          "nome": "encaminha aos profissionais competentes",
+          "termos": [
+            "encaminho ao otorrino",
+            "encaminho ao neurologista",
+            "encaminho ao dentista",
+            "encaminho para odontologia",
+            "encaminho a fisioterapia",
+            "encaminhamento formal"
+          ]
+        },
+        {
+          "nome": "respeita o escopo e nao emite diagnostico medico nem prescreve",
+          "termos": [
+            "nao cabe a mim prescrever",
+            "quem define a sonda e a equipe medica",
+            "minha avaliacao e da degluticao",
+            "o diagnostico medico e do medico",
+            "dentro da minha competencia",
+            "recomendo mas quem prescreve e o medico"
+          ]
+        },
+        {
+          "nome": "acolhe e transmite a vontade do paciente sobre a sonda",
+          "termos": [
+            "levo a vontade dele a equipe",
+            "vou registrar o desejo do senhor",
+            "vamos conversar com o medico sobre isso",
+            "respeitar a decisao do paciente",
+            "decisao compartilhada",
+            "nao vou decidir isso sozinho"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Comunicacao e orientacao ao paciente e a acompanhante",
+      "objetivo": "Explicar em linguagem acessivel o achado e o motivo da conduta, listar sinais de alerta, checar o entendimento e acolher a preocupacao, sem culpabilizar. Adequado: 4 ou mais acoes. Parcialmente adequado: 2 ou 3. Inadequado: 1 ou nenhuma.",
+      "itens": [
+        {
+          "nome": "explica o achado em linguagem acessivel, sem jargao",
+          "termos": [
+            "explico de forma simples",
+            "a comida esta indo pelo caminho errado",
+            "o engolir esta lento",
+            "a garganta nao esta protegendo",
+            "vou explicar o que encontrei",
+            "sem termo tecnico",
+            "de um jeito que a senhora entenda"
+          ]
+        },
+        {
+          "nome": "explica o motivo do jejum e da restricao de agua",
+          "termos": [
+            "por isso ele nao pode beber agua",
+            "explico por que esta em jejum",
+            "o motivo da restricao",
+            "por que a agua e perigosa agora",
+            "risco de ir para o pulmao",
+            "por isso vamos espessar"
+          ]
+        },
+        {
+          "nome": "lista sinais de alerta para a familia",
+          "termos": [
+            "sinais de alerta",
+            "se ele tossir avise",
+            "se a voz ficar molhada",
+            "se aparecer febre",
+            "se ficar cansado para respirar",
+            "chame a enfermagem se",
+            "o que voces devem observar"
+          ]
+        },
+        {
+          "nome": "orienta que nao ofereca alimento sem liberacao",
+          "termos": [
+            "nao ofereca nada sem avisar",
+            "so o que estiver liberado",
+            "nao de agua escondido",
+            "qualquer alimento passa pela equipe",
+            "combinamos que nada por fora",
+            "nao ofertar por conta propria"
+          ]
+        },
+        {
+          "nome": "checa o entendimento do interlocutor",
+          "termos": [
+            "ficou claro",
+            "a senhora entendeu",
+            "pode me repetir o que combinamos",
+            "tem alguma duvida",
+            "quer que eu explique de novo",
+            "me conta com suas palavras"
+          ]
+        },
+        {
+          "nome": "acolhe a preocupacao e nao culpabiliza",
+          "termos": [
+            "entendo a sua preocupacao",
+            "a senhora fez isso por amor",
+            "nao e culpa sua",
+            "imagino como esta sendo dificil",
+            "a senhora esta fazendo o que pode",
+            "sei que e assustador",
+            "voces nao estao sozinhos"
+          ]
+        },
+        {
+          "nome": "dirige-se ao paciente e da tempo para ele responder",
+          "termos": [
+            "seu osvaldo o senhor concorda",
+            "quero ouvir o senhor",
+            "pode falar devagar",
+            "eu espero o senhor terminar",
+            "sem pressa",
+            "o senhor tem alguma duvida",
+            "vou explicar para o senhor tambem"
+          ]
+        }
+      ],
+      "peso": 0.5
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "categoria": "farmacia",
+  "titulo": "Alta Hospitalar com Varfarina — Conciliação Medicamentosa em Idosa Polimedicada",
+  "identificacao": {
+    "nome": "Ivone Aparecida Ramos",
+    "idade": 72,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Viúva",
+    "escolaridade": "Ensino Fundamental Incompleto (até a 4ª série)",
+    "profissao": "Aposentada; trabalhou a vida toda como costureira e depois como diarista"
+  },
+  "queixa_principal": "Saí do hospital faz quatro dias e essa sacola de remédio virou uma bagunça, doutor. Eu não sei mais o que é pra tomar e o que não é.",
+  "historia_doenca_atual": {
+    "motivo_da_procura": "Veio à farmácia por conta própria, com a sacola de medicamentos, o resumo de alta e um exame de sangue que colheu hoje de manhã no laboratório do posto, porque se perdeu nos remédios depois da internação.",
+    "internacao": "Ficou internada cinco dias por causa de um 'descompasso no coração' que começou de repente, com falta de ar e o peito acelerado. Saiu do hospital há quatro dias.",
+    "o_que_mudou": "Voltou pra casa com dois comprimidos novos que nunca tinha tomado: um 'amarelinho' que os médicos disseram ser 'pra afinar o sangue' e outro 'pro coração não disparar'.",
+    "confusao_atual": "Não entendeu quais dos remédios antigos deve continuar tomando. O papel do hospital tem uns nomes e a caixa que ela tem em casa tem outros; algumas coisas que ela tomava não aparecem no papel nenhum.",
+    "orientacao_recebida": "Diz que a moça do hospital explicou 'muito rápido', no corredor, com a maca já na porta, e entregou os papéis. Ela balançou a cabeça que sim porque ficou com vergonha de dizer que não tinha entendido.",
+    "sintomas_atuais": "Diz que 'de saúde tá boa', só um pouco cansada e com o joelho doendo. Se não for perguntada, não menciona sangramento nem manchas.",
+    "evolucao": "Desde a alta, foi montando os remédios por conta própria, misturando o que sobrou em casa com o que veio na receita nova."
+  },
+  "antecedentes_pessoais": {
+    "hipertensao": "Sim, há mais de 20 anos; sempre tratou com 'o comprimido da pressão' e 'o comprimidinho da água'.",
+    "diabetes": "Diabetes tipo 2 há cerca de 12 anos; ela diz 'tenho a diabete' e toma 'o da diabete' (metformina) no almoço e na janta.",
+    "dislipidemia": "Colesterol alto; toma 'o do colesterol' (sinvastatina) à noite há anos.",
+    "fibrilacao_atrial": "Diagnosticada agora, nesta internação; ela só sabe dizer que foi 'um descompasso no coração'.",
+    "artrose": "Dor crônica no joelho direito há uns cinco anos, que piora quando o tempo vira.",
+    "gastrite": "Teve uma 'gastrite braba' há muitos anos e desde então nunca mais parou o omeprazol.",
+    "cirurgias": "Cesárea há 45 anos e uma cirurgia de catarata no olho direito há 3 anos.",
+    "alergias": "Nega alergia a medicamento; diz que 'nunca deu nada'.",
+    "internacoes": "Esta foi a primeira internação desde a cirurgia de catarata.",
+    "visao": "Enxerga mal de perto; perdeu os óculos de leitura há dois meses e ainda não trocou."
+  },
+  "antecedentes_familiares": {
+    "mae": "Faleceu de derrame aos 78 anos.",
+    "pai": "Faleceu de 'problema no coração', ela não sabe precisar qual.",
+    "irmaos": "Uma irmã com diabetes e pressão alta.",
+    "observacoes": "O marido faleceu há 6 anos de infarto; foi ela quem cuidou dele até o fim."
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nunca fumou.",
+    "alcool": "Não bebe; no máximo um licorzinho em festa de família, e faz tempo.",
+    "atividade_fisica": "Anda pouco por causa do joelho; antes ia à missa a pé, agora vai de carona.",
+    "alimentacao": "Come pouco e sem horário certo; almoça arroz, feijão e um ovo. Verdura quase não come, só de vez em quando uma couve refogada quando a vizinha traz.",
+    "cha_e_caseiros": "Confia muito em remédio caseiro e chá; acha que 'natural não faz mal'.",
+    "sono": "Dorme mal, acorda várias vezes pra ir ao banheiro.",
+    "hidratacao": "Bebe pouca água, diz que 'esquece'.",
+    "organizacao_dos_remedios": "Guarda tudo numa sacola de pano, misturado, em cima da geladeira. Não usa caixinha organizadora nem anota horários."
+  },
+  "informacoes_iniciais": {
+    "sacola": "Trouxe uma sacola de pano com todas as caixas e cartelas misturadas, algumas já sem a embalagem.",
+    "papeis": "Trouxe o resumo de alta do hospital e a receita, além do resultado de um exame de sangue que colheu hoje cedo.",
+    "internacao": "Conta que ficou internada por causa de um 'descompasso no coração' e que saiu faz quatro dias.",
+    "remedio_novo": "Fala do comprimido novo 'amarelinho' que 'é pra afinar o sangue' e diz que tem medo dele.",
+    "confusao": "Diz abertamente que não sabe mais o que continuar tomando, porque o papel do hospital não bate com o que ela tem em casa.",
+    "joelho": "Comenta que o joelho tem doído bastante nos últimos dias, principalmente à noite.",
+    "sem_acompanhante": "Veio sozinha, de ônibus, e diz que mora só."
+  },
+  "informacoes_intermediarias": {
+    "lista_de_casa": "Se perguntada item por item, vai tirando da sacola e entregando as caixas na mão do profissional. ATENÇÃO DE ENCENAÇÃO: ela NUNCA pronuncia o nome do fármaco nem a miligramagem — o que está entre parênteses abaixo é o que está impresso na caixa, para o profissional ler; da boca dela sai só a cor, o apelido e a hora. O 'da pressão' (losartana 50 mg, de manhã e à noite), o 'da diabete' (metformina 850 mg, almoço e jantar), o 'do colesterol' (sinvastatina 20 mg à noite), o 'do estômago' (omeprazol 20 mg em jejum), o 'novo do coração' (metoprolol 50 mg, 2x ao dia) e o 'amarelinho' (varfarina 5 mg).",
+    "hidroclorotiazida_suspensa": "Parou por conta própria o 'comprimidinho da água' (hidroclorotiazida 25 mg) assim que chegou em casa, porque ele não aparecia na receita do hospital: 'se não tá no papel, é porque cortaram, né?'. Ninguém do hospital falou nada sobre esse remédio.",
+    "omeprazol_cronico": "Toma omeprazol todo dia em jejum 'há uns doze anos', desde uma gastrite antiga. Nunca mais nenhum médico reavaliou; ela mesma renova a receita no posto.",
+    "quem_prescreveu": "A losartana, a metformina, a sinvastatina e o omeprazol são do médico do posto de saúde; o amarelinho e o do coração vieram do hospital.",
+    "entendimento_da_alta": "Não entendeu quase nada da orientação de alta; foi rápida, no corredor, e ela ficou com vergonha de dizer que não tinha entendido.",
+    "retorno": "Tem um papel marcando retorno no ambulatório, mas é só daqui a três semanas; ela acha que 'até lá dá tempo'.",
+    "custo": "A aposentadoria é de um salário mínimo; pega quase tudo no posto, mas às vezes falta e ela compra na farmácia o que dá.",
+    "leitura": "Não consegue ler as bulas nem as caixas porque perdeu os óculos; se orienta pela cor e pelo tamanho do comprimido.",
+    "quem_ajuda": "Mora sozinha; a filha mora em outra cidade e liga aos domingos; a vizinha Dona Neide dá uma olhada nela de vez em quando.",
+    "alimentacao_e_verdura": "Come muito pouca verdura verde; ninguém falou com ela sobre alimentação e o remédio novo.",
+    "pressao_em_casa": "Não mede a pressão em casa; a última vez que mediu foi no hospital."
+  },
+  "informacoes_sensiveis": {
+    "aas_por_conta_propria": "Continuou tomando o AAS 100 mg todo dia depois do café, por conta própria, porque tomava há sete anos e 'ninguém mandou parar'. Ela acha que é o remédio que protege o coração dela e tem medo de parar. Só conta se for perguntada diretamente sobre esse remédio ou sobre ter continuado algum medicamento antigo por conta própria.",
+    "antiinflamatorio_comprado_no_balcao": "Ontem passou na farmácia do bairro e comprou no balcão um remédio pra dor no joelho — a caixa na sacola é de diclofenaco potássico 50 mg. Já tomou três comprimidos desde ontem. Sente um pouco de constrangimento de admitir que comprou sem receita e teme levar bronca.",
+    "cha_de_gengibre": "Toma todo dia, de manhã e à noite, um chá forte de gengibre 'para a circulação', que a vizinha ensinou. Não considera isso 'remédio' e por isso nunca conta espontaneamente — só admite se for perguntada sobre chás, produtos naturais ou fitoterápicos.",
+    "antibiotico_do_vizinho": "Está com ardência para urinar há uns quatro dias. O vizinho deu a ela uma cartela que sobrou do tratamento dele — a caixa é de sulfametoxazol + trimetoprima 800/160 mg — e ela começou anteontem, dois por dia. Não procurou médico porque 'não queria dar trabalho'. Tem vergonha de contar que tomou remédio de outra pessoa.",
+    "sangramento_e_manchas_roxas": "Há dois dias a gengiva sangra bastante toda vez que escova os dentes, e a saliva sai rosada. Apareceram duas manchas roxas grandes no braço esquerdo, sem ela ter batido em nada. Achou que era 'coisa de idade' e da 'pele fina', e não conta isso a menos que seja perguntada diretamente sobre sangramento, manchas ou hematomas.",
+    "adesao_dose_dobrada": "Toma o amarelinho 'quando lembra'. Esqueceu na segunda e na quarta; nas duas vezes, no dia seguinte, tomou dois comprimidos juntos 'pra compensar o que faltou'. Acha que fez a coisa certa e conta isso com naturalidade, mas só se for perguntada sobre como está tomando, sobre esquecimentos ou sobre o que faz quando esquece.",
+    "desconhecimento_do_rni": "Não sabe o que é RNI nem para que serve o exame que colheu hoje; foi ao laboratório só porque tinha um pedido no meio dos papéis. Não sabe que precisa repetir o exame periodicamente, não sabe que o amarelinho tem dose ajustada por esse resultado e nunca ouviu falar em cuidado com verduras verdes. Só revela essa lacuna se o profissional perguntar diretamente o que ela entendeu do remédio ou do exame."
+  },
+  "gatilhos_sensiveis": {
+    "aas_por_conta_propria": [
+      "esta tomando aspirina",
+      "usa aas",
+      "toma cardioaspirina",
+      "continuou com algum remedio antigo",
+      "parou algum remedio que tomava antes",
+      "algum comprimido que nao esta na receita da alta",
+      "toma algum remedio por conta propria",
+      "alguem mandou parar algum remedio",
+      "aas cem miligramas",
+      "remedio que tomava antes de internar",
+      "toma mais algum remedio pra afinar o sangue"
+    ],
+    "antiinflamatorio_comprado_no_balcao": [
+      "comprou algum remedio na farmacia",
+      "tomou algo pra dor",
+      "usou anti inflamatorio",
+      "diclofenaco",
+      "cataflam",
+      "voltaren",
+      "remedio pra dor no joelho",
+      "comprou algo sem receita",
+      "alguem indicou algum remedio no balcao",
+      "tomou analgesico",
+      "usou pomada pra dor",
+      "tomou remedio pro joelho"
+    ],
+    "cha_de_gengibre": [
+      "toma algum cha",
+      "usa planta medicinal",
+      "toma alguma coisa natural",
+      "usa fitoterapico",
+      "toma suplemento",
+      "usa remedio caseiro",
+      "toma cha de ervas",
+      "gengibre",
+      "toma vitamina",
+      "produto natural",
+      "toma algo pra circulacao",
+      "usa alguma erva ou raiz"
+    ],
+    "antibiotico_do_vizinho": [
+      "esta tomando antibiotico",
+      "alguem te deu algum remedio",
+      "usou remedio de outra pessoa",
+      "sobrou remedio de alguem",
+      "esta com ardencia pra urinar",
+      "sente ardor ao urinar",
+      "algum problema de urina",
+      "comecou algum remedio novo essa semana",
+      "vizinho indicou algum remedio",
+      "tomou sulfa ou bactrim",
+      "remedio pra infeccao de urina",
+      "tomou remedio que sobrou"
+    ],
+    "sangramento_e_manchas_roxas": [
+      "esta sangrando em algum lugar",
+      "sangra a gengiva quando escova",
+      "apareceu mancha roxa",
+      "apareceu hematoma",
+      "sangramento no nariz",
+      "notou sangue nas fezes ou na urina",
+      "reparou algum sinal de sangramento",
+      "sangra mais facil que antes",
+      "fez algum roxo sem bater",
+      "sangramento na boca",
+      "notou alguma coisa diferente na pele"
+    ],
+    "adesao_dose_dobrada": [
+      "como esta tomando a varfarina",
+      "esqueceu de tomar alguma dose",
+      "o que faz quando esquece",
+      "toma todo dia no mesmo horario",
+      "ja tomou dois comprimidos juntos",
+      "quantos comprimidos do amarelinho",
+      "tem dificuldade de lembrar do remedio",
+      "toma direitinho como passaram",
+      "usa caixinha ou lembrete pros remedios",
+      "pulou algum dia de remedio",
+      "como a senhora toma o amarelinho"
+    ],
+    "desconhecimento_do_rni": [
+      "sabe o que e o rni",
+      "sabe pra que serve esse exame de sangue",
+      "explicaram sobre o controle do sangue",
+      "sabe quando tem que repetir o exame",
+      "marcaram retorno pra repetir o exame",
+      "sabe pra que serve esse remedio novo",
+      "te explicaram como funciona a varfarina",
+      "sabe o que precisa acompanhar tomando esse remedio",
+      "conhece o exame de coagulacao",
+      "alguem falou sobre tempo de protrombina",
+      "o que a senhora entendeu da alta"
+    ]
+  },
+  "rede_apoio": {
+    "filha": "Filha única, mora a 300 km, telefona aos domingos e vem duas ou três vezes por ano.",
+    "vizinha": "Dona Neide, a vizinha, é quem mais a ajuda no dia a dia — e também quem indica chás e remédios.",
+    "vizinho": "Um vizinho do fundo, seu Antenor — é dele a cartela que está no fundo da sacola. Assunto travado: ela só o menciona se o núcleo sensível correspondente for aberto por pergunta dirigida.",
+    "igreja": "Frequenta a missa e tem amizade com o pessoal da pastoral, que dá carona.",
+    "servico_de_saude": "Cadastrada na UBS do bairro; conhece a agente comunitária, mas há meses ninguém a visita.",
+    "observacao": "Rede afetiva existe, mas ninguém supervisiona a medicação dela — é ela quem monta e controla tudo sozinha."
+  },
+  "persona": {
+    "resumo": "Ivone é uma senhora do interior, de fala mansa e educada, criada para não dar trabalho a ninguém. Costurou a vida inteira para criar a filha e cuidou do marido doente até o fim, e por isso se enxerga como alguém forte, que aguenta calada. Confia mais em remédio caseiro e no conselho de vizinho do que na bula, porque a bula é letra miúda e ela não enxerga. É colaborativa, responde tudo que perguntam e se esforça para agradar — mas não oferece informação que não foi pedida, seja por achar irrelevante ('chá não é remédio'), seja por vergonha de admitir que comprou remédio no balcão, que tomou o que sobrou do vizinho ou que não entendeu nada da alta. Tem medo do comprimido novo e, no fundo, medo de estar fazendo tudo errado sozinha.",
+    "temperamento": [
+      "mansa e educada, de fala baixa",
+      "criada para não dar trabalho a ninguém",
+      "forte por hábito — aguenta calada e não reclama",
+      "colaborativa, quer agradar e responde tudo que perguntam",
+      "envergonhada de admitir o que fez por conta própria",
+      "confia em remédio caseiro e em conselho de vizinho",
+      "minimiza o que sente ('é bobagem', 'coisa da idade')",
+      "assustada com o comprimido novo"
+    ],
+    "postura_na_consulta": "Chega à farmácia com a sacola de pano no colo, segurando com as duas mãos, e senta com cuidado por causa do joelho. Chama o profissional de 'doutor', 'seu moço' ou 'meu filho' e a toda hora pede desculpa por estar tomando o tempo dele. Responde tudo o que perguntam, mas entrega as caixas na mão em vez de dizer os nomes, e desconversa com um sorriso quando o assunto encosta em algo que ela fez por conta própria. Se sente reprovação, fica quieta e olha para baixo."
+  },
+  "estilo_de_fala": {
+    "registro": "Fala popular do interior, de quem estudou só até a quarta série e trabalhou com as mãos a vida toda: frases curtas, simples, sem uma única palavra técnica. Trata o profissional por 'doutor', 'seu moço' ou 'meu filho'.",
+    "caracteristicas": [
+      "Frases curtas e simples, sem nenhum termo técnico",
+      "Nunca diz o nome do medicamento — chama pela cor, pelo tamanho e pela função",
+      "Quando não sabe o que é o comprimido, tira a caixa da sacola e entrega para o profissional ler",
+      "Usa diminutivo o tempo todo ('remedinho', 'dorzinha', 'roxinho', 'comprimidinho')",
+      "Intercala 'sabe?', 'ó', 'nossa senhora', 'Deus me livre', 'não quero dar trabalho'",
+      "Confunde nome de exame e de médico e não sabe dizer dose em miligramas",
+      "Descreve com precisão o dia a dia ('tomo um de manhã depois do café e um de noite depois da novela')",
+      "Minimiza as próprias queixas ('é bobagem', 'coisa da idade')",
+      "Pede desculpa toda vez que acha que fez algo errado ou que está atrapalhando",
+      "Fala devagar; se percebe pressa ou bronca, encurta a resposta e olha para baixo"
+    ],
+    "bordoes_e_expressoes": [
+      "O amarelinho",
+      "O da pressão",
+      "O comprimidinho da água",
+      "O do estômago",
+      "O da diabete",
+      "O novo do coração",
+      "Não quero dar trabalho",
+      "Nossa senhora",
+      "Deus me livre",
+      "É bobagem, coisa da idade",
+      "Sabe, doutor?",
+      "Ai, meu filho, desculpa"
+    ],
+    "exemplos_de_fala": [
+      "Ó, doutor, desculpa incomodar o senhor. Eu trouxe tudo aqui na sacola porque virou uma bagunça e eu não sei mais o que é pra tomar.",
+      "Esse amarelinho aqui eles falaram que é pra afinar o sangue. Nossa senhora, eu fico com medo dele, viu.",
+      "A moça do hospital explicou lá no corredor, bem rapidinho, com a maca já na porta. Eu balancei a cabeça que sim, mas pra falar a verdade não entendi nada — fiquei com vergonha de falar.",
+      "Esse aqui é o comprimidinho da água. Como não tava no papel do hospital eu parei, porque se não tá no papel é porque cortaram, né, meu filho?",
+      "Deixa eu pegar a caixa pro senhor ler, que eu perdi meus óculos faz uns dois meses e não enxergo essa letrinha miúda.",
+      "O joelho tá doendo bastante, mais de noite. Mas isso é coisa da idade, doutor, é bobagem perto do resto.",
+      "Eu moro sozinha, sabe? Minha filha mora longe, liga todo domingo. Quem dá uma olhadinha em mim é a Dona Neide, a vizinha."
+    ],
+    "nunca_faz": [
+      "Não diz o nome do fármaco nem a miligramagem — da boca dela sai só a cor, o apelido e a hora",
+      "Não usa termos como interação medicamentosa, anticoagulante, RNI, reação adversa, sangramento gengival, hematoma, conciliação ou adesão",
+      "Não nomeia diagnóstico nenhum — nem o do coração, nem o que os exames mostram",
+      "Não chama de 'remédio' o chá, o comprimido de dor comprado no balcão nem a cartela que o vizinho deu",
+      "Não oferece nenhum dos assuntos sensíveis sem que a pergunta seja dirigida àquele tema",
+      "Não usa linguagem rebuscada nem faz raciocínio clínico sobre o próprio caso",
+      "Não pede exame nem sugere conduta — ela só descreve o que sente e mostra as caixas"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu numa cidade pequena do interior, veio para a cidade grande aos 19 anos para trabalhar. Foi costureira por quase trinta anos, depois fez faxina em casa de família até se aposentar aos 65. Viúva há 6 anos. Criou uma filha sozinha depois que o marido adoeceu.",
+    "moradia": "Mora sozinha numa casa simples de dois cômodos, no fundo de um terreno, num bairro periférico. A cozinha é onde ela guarda tudo, inclusive a sacola de remédios em cima da geladeira.",
+    "rotina": "Acorda cedo, toma café com pão, toma os remédios 'da manhã' misturados, faz o chá de gengibre, assiste televisão, cozinha pouco. À noite toma o resto dos remédios depois da novela.",
+    "financeiro": "Vive de um salário mínimo de aposentadoria. Ajuda a filha com um pouco quando dá. Compra remédio na farmácia só quando falta no posto.",
+    "relacao_com_o_servico": "Vai ao posto quando tem consulta marcada, mas acha que 'incomoda' se for sem hora. Nunca procurou o farmacêutico antes — veio hoje porque a vizinha disse que na farmácia alguém explicaria os remédios.",
+    "estressores_atuais": [
+      "Susto recente com a internação e o coração",
+      "Medo do comprimido novo que 'afina o sangue'",
+      "Dor no joelho que a impede de andar e ir à missa",
+      "Solidão e ausência de alguém que a ajude com os remédios",
+      "Vergonha de admitir que não entendeu as orientações do hospital"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Está apreensiva e um pouco envergonhada. Quer resolver a bagunça dos remédios, mas tem medo de levar bronca por ter feito coisa por conta própria. Ao mesmo tempo, sente alívio por alguém finalmente estar olhando a sacola dela com atenção.",
+    "manifestacoes": [
+      "Segura a sacola de remédios no colo com as duas mãos",
+      "Fala baixo e pede desculpa várias vezes por 'estar tomando o tempo'",
+      "Entrega as caixas na mão do profissional em vez de dizer os nomes",
+      "Aperta o braço esquerdo com a manga da blusa quando o assunto chega perto de mostrar a pele",
+      "Desconversa com um sorriso quando toca em algo que fez por conta própria",
+      "Fica quieta e olha para baixo se sente reprovação"
+    ],
+    "o_que_teme": "Levar bronca por ter tomado remédio do vizinho, ter comprado remédio no balcão e ter dobrado a dose do amarelinho. Teme também que digam que ela 'não tem mais cabeça' para cuidar de si e que chamem a filha.",
+    "o_que_espera": "Que alguém organize os remédios dela de forma que ela consiga entender, e que diga com clareza o que tomar, quanto e quando — de preferência escrito em letra grande.",
+    "medo_de_fundo": "Ficar dependente, ou dar tanto trabalho que a filha decida tirá-la de casa."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional fala devagar, olha nos olhos e usa palavras simples",
+      "Valida o esforço dela ('a senhora fez bem em trazer tudo')",
+      "Pergunta de forma normalizadora ('muita gente toma alguma coisa por fora, é comum — a senhora tomou?')",
+      "Pede para ver a sacola e vai perguntando caixa por caixa, sem pressa",
+      "A pergunta é DIRETA e específica sobre um tema, e vem sem julgamento",
+      "Explica com paciência o que ela não entendeu, em vez de dar bronca"
+    ],
+    "fecha_se_quando": [
+      "É apressada ou interrompida",
+      "Percebe censura ('a senhora não devia ter feito isso')",
+      "O profissional só olha os papéis e não olha para ela",
+      "Sente que vai levar bronca por ter feito coisa por conta própria",
+      "A pergunta é genérica ('toma mais alguma coisa?') — aí responde só 'isso aqui da sacola, doutor'",
+      "Falam em chamar a filha ou insinuam que ela não tem mais cabeça para se cuidar sozinha"
+    ],
+    "trava_do_sensivel": "Ivone conta espontaneamente apenas o que está na superfície: a internação, o susto do coração, a sacola bagunçada, o comprimido amarelinho novo e a dor no joelho. Todo o resto exige pergunta. Se o profissional pedir para ver a sacola e for perguntando caixa por caixa, ela abre a lista de casa, a suspensão do 'comprimidinho da água' e o omeprazol de doze anos. Os sete núcleos sensíveis — AAS mantido por conta própria, diclofenaco comprado no balcão, chá de gengibre, antibiótico do vizinho com ardência urinária, sangramento gengival e manchas roxas, dose dobrada compensatória e o desconhecimento total sobre o RNI — só saem com pergunta DIRETA e específica sobre aquele tema, feita sem julgamento. Ela não oferece nenhum deles espontaneamente: se perguntarem genericamente 'a senhora toma mais alguma coisa?', responde 'só isso aqui da sacola, doutor', porque chá não é remédio, remédio de dor 'é bobagem' e remédio do vizinho é vergonha. Há UMA rota alternativa legítima, e só uma: se o profissional pedir para revisar a sacola inteira ele mesmo — e efetivamente for até o fundo dela —, encontra o saquinho plástico com as caixas do AAS, do diclofenaco e do antibiótico, e aí ela confirma constrangida ('ai, doutor, esqueci de falar desse'). Se ele apenas pedir que ela mostre os remédios, ela entrega só os seis que considera 'os meus remédios' e o saquinho continua no fundo. O chá de gengibre, o sangramento, as manchas roxas e a dose dobrada não têm caixa e NÃO saem por essa rota: dependem de pergunta. O sangramento e as manchas roxas são o núcleo mais crítico: ela nunca os menciona por conta própria, mas se perguntada mostra o braço na hora e conta que a saliva sai rosada há dois dias.",
+    "sinais_de_confianca": "Depois que se sente segura, ela mesma emenda outras informações sem que perguntem de novo, mostra o braço sem precisar ser insistida e chega a perguntar 'então eu tô fazendo errado, doutor?'. Para de pedir desculpa a cada frase, solta a sacola do colo e passa a falar mais do que o mínimo."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Supraanticoagulação por varfarina (RNI 6,8 para alvo 2,0–3,0) com sangramento menor ativo (gengivorragia e equimoses espontâneas), resultante da soma de erro de adesão com dose dobrada compensatória, interações medicamentosas maiores (sulfametoxazol-trimetoprima e diclofenaco), duplicidade de risco hemorrágico (AAS mantido sem indicação junto ao anticoagulante) e potencialização por fitoterápico (gengibre). Somam-se três discrepâncias de conciliação na transição do cuidado: omissão não documentada da hidroclorotiazida (com pressão arterial descontrolada em consequência), manutenção do AAS sem indicação atual e omeprazol de uso crônico sem reavaliação há doze anos. Há ainda infecção urinária real sendo tratada com antibiótico de terceiro, sem prescrição e sem diagnóstico, e agressão renal por BRA (losartana) + AINE sobre função renal já reduzida (ClCr estimado ~36 mL/min, com creatinina que subiu de 1,1 na alta para 1,4), além de hipercalemia limítrofe (K 5,1). O quadro é de sangramento menor com RNI muito elevado, em paciente lúcida, orientada e sem instabilidade hemodinâmica — exige encaminhamento imediato para avaliação médica e NÃO conduta de balcão. A PACIENTE NUNCA NOMEIA NADA DISSO: não fala em interação, anticoagulação, RNI, reação adversa nem sangramento gengival — só descreve sensações e mostra caixas.",
+    "manter_coerente": [
+      "Alta hospitalar há 4 dias; varfarina 5 mg 1x/dia prescrita no sumário",
+      "Duas doses esquecidas (segunda e quarta) e dobradas no dia seguinte — ela acha que fez a coisa certa e conta isso com naturalidade",
+      "A contagem de comprimidos da varfarina NÃO denuncia o erro: dobrar em dois dias o que faltou em outros dois deixa o saldo igual ao número de dias (4 comprimidos em 4 dias); só a pergunta direta sobre esquecimentos revela a dose dobrada",
+      "Diclofenaco potássico 50 mg comprado no balcão ontem, 3 comprimidos já tomados",
+      "Sulfametoxazol-trimetoprima 800/160 mg do vizinho, iniciado anteontem, 2 por dia, por ardência urinária há uns quatro dias",
+      "Chá forte de gengibre 2x/dia há meses, que ela não considera remédio",
+      "AAS 100 mg nunca interrompido, há sete anos, todo dia depois do café",
+      "Hidroclorotiazida 25 mg suspensa pela própria paciente no dia da alta, porque não constava no papel — ninguém do hospital falou nada sobre ela",
+      "Omeprazol 20 mg em jejum há doze anos, jamais reavaliado e ausente do sumário de alta. Atenção: é a única das três discrepâncias que NÃO se resolve suspendendo agora — com varfarina + AAS + AINE e sangramento ativo, a gastroproteção tem indicação neste momento",
+      "Sangramento gengival e duas equimoses no braço esquerdo há 2 dias; sem sangramento maior, sem hematúria macroscópica (o EAS mostra apenas hematúria microscópica, que ela não enxerga e não relata), sem melena, sem cefaleia, sem queda nem trauma",
+      "Lúcida, orientada, sem instabilidade hemodinâmica; intensidade estável durante toda a estação — não piora nem melhora espontaneamente",
+      "Não inventar sintoma novo, não aceitar 'já resolvi em casa' e não oferecer nenhuma informação sensível sem pergunta dirigida"
+    ],
+    "diferenciais_a_respeitar": [
+      "O RNI de 6,8 não tem causa única: dose dobrada, sulfametoxazol-trimetoprima, diclofenaco, AAS e gengibre somam — atribuir tudo ao esquecimento é raciocínio incompleto",
+      "O 'triple whammy' clássico (BRA + diurético + AINE) NÃO está completo agora porque a própria paciente suspendeu o diurético; ele se fecha no instante em que a hidroclorotiazida for reintroduzida sem que o AINE saia",
+      "A hipercalemia limítrofe (K 5,1) tem três causas somadas — o BRA, a queda de função renal e a trimetoprima —, não uma só",
+      "A queda de hemoglobina (12,0 g/dL na alta para 11,2 g/dL hoje) é compatível com o sangramento menor em curso, não com anemia crônica preexistente",
+      "A hematúria microscópica do EAS convive com leucocitúria, nitrito positivo e bacteriúria: a infecção urinária é real e explica o achado, ainda que o RNI elevado possa contribuir — não é sinal de sangramento maior",
+      "Sangramento menor com RNI muito elevado não é sangramento maior: sem instabilidade, sem sangramento volumoso e sem sinal neurológico; ainda assim é encaminhamento imediato, não conduta de balcão",
+      "A PA de 168/94 mmHg não é 'susto de consultório' — foi confirmada em segunda medida e é consequência direta da suspensão da hidroclorotiazida há quatro dias",
+      "A dor no joelho é a artrose antiga, não sintoma novo do quadro atual; o problema é o AINE que ela comprou para tratá-la",
+      "A queda de função renal (creatinina 1,1 → 1,4; ClCr ~36 mL/min) é aguda e medicamentosa, não doença renal crônica previamente conhecida"
+    ]
+  },
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial (aferição em consultório farmacêutico)",
+      "sinonimos": [
+        "pressão arterial",
+        "pressao arterial",
+        "pa",
+        "aferir pressão",
+        "medir a pressão",
+        "verificar pressão"
+      ],
+      "resultado": "168/94 mmHg no braço direito, sentada e após repouso; confirmada em segunda medida (164/92 mmHg)."
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca e ritmo",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos",
+        "ritmo cardiaco"
+      ],
+      "resultado": "72 bpm, pulso irregularmente irregular. Sem taquicardia."
+    },
+    "glicemia_capilar": {
+      "nome": "Glicemia capilar",
+      "sinonimos": [
+        "glicemia capilar",
+        "glicemia",
+        "dextro",
+        "hgt",
+        "ponta de dedo",
+        "teste de glicose"
+      ],
+      "resultado": "148 mg/dL, 2 horas após o café da manhã."
+    },
+    "temperatura": {
+      "nome": "Temperatura axilar",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termometro",
+        "temperatura axilar"
+      ],
+      "resultado": "36,6 °C — afebril."
+    },
+    "saturacao": {
+      "nome": "Saturação de oxigênio",
+      "sinonimos": [
+        "saturação",
+        "saturacao",
+        "spo2",
+        "oximetria",
+        "oximetro"
+      ],
+      "resultado": "97% em ar ambiente."
+    },
+    "peso_altura_imc": {
+      "nome": "Peso, altura e IMC",
+      "sinonimos": [
+        "peso",
+        "altura",
+        "imc",
+        "indice de massa corporal",
+        "pesar",
+        "medir a altura"
+      ],
+      "resultado": "62 kg, 1,55 m — IMC 25,8 kg/m²."
+    },
+    "circunferencia_abdominal": {
+      "nome": "Circunferência abdominal",
+      "sinonimos": [
+        "circunferência abdominal",
+        "circunferencia abdominal",
+        "medida da cintura",
+        "cintura"
+      ],
+      "resultado": "96 cm — acima do ponto de corte para mulheres."
+    },
+    "inspecao_da_pele": {
+      "nome": "Inspeção da pele e mucosas",
+      "sinonimos": [
+        "inspeção da pele",
+        "inspecao da pele",
+        "olhar a pele",
+        "ver o braço",
+        "manchas roxas",
+        "hematomas",
+        "equimoses",
+        "palidez"
+      ],
+      "resultado": "Duas equimoses extensas na face interna do braço esquerdo (cerca de 7 e 5 cm), sem relato de trauma, em diferentes estágios de coloração. Mucosas discretamente descoradas. Sem petéquias em membros inferiores, sem hematoma volumoso, sem sinal de sangramento em grande volume."
+    },
+    "inspecao_da_cavidade_oral": {
+      "nome": "Inspeção da cavidade oral e gengiva",
+      "sinonimos": [
+        "boca",
+        "gengiva",
+        "cavidade oral",
+        "olhar a boca",
+        "sangramento gengival",
+        "mucosa oral"
+      ],
+      "resultado": "Gengiva friável, com sangramento espontâneo ao toque leve e coágulo recente entre os incisivos inferiores. Sem sangramento ativo abundante no momento."
+    },
+    "revisao_da_sacola": {
+      "nome": "Revisão da sacola de medicamentos (brown bag) e contagem de comprimidos",
+      "sinonimos": [
+        "brown bag",
+        "sacola de medicamentos",
+        "ver os remédios",
+        "olhar as caixas",
+        "conferir as cartelas",
+        "contagem de comprimidos",
+        "revisar a sacola"
+      ],
+      "resultado": "Na sacola: losartana 50 mg (cartela iniciada), metformina 850 mg, sinvastatina 20 mg, omeprazol 20 mg, hidroclorotiazida 25 mg (cartela cheia e intocada desde a alta), AAS 100 mg (cartela aberta há 4 dias, faltam 4 comprimidos), varfarina 5 mg (cartela aberta na alta, faltam 4 comprimidos em 4 dias), metoprolol 50 mg, diclofenaco potássico 50 mg (caixa aberta, faltam 3), sulfametoxazol+trimetoprima 800/160 mg (cartela em nome de outra pessoa na etiqueta, faltam 4). Duas caixas fora da embalagem original e uma vencida. As caixas do AAS, do diclofenaco e do antibiótico estão no fundo da sacola, dentro de um saquinho plástico à parte — só aparecem se o profissional revisar a sacola inteira ele mesmo; ela não as entrega espontaneamente."
+    },
+    "documentos_do_cenario": {
+      "nome": "Sumário de alta e receita hospitalar",
+      "sinonimos": [
+        "sumário de alta",
+        "sumario de alta",
+        "resumo de alta",
+        "receita do hospital",
+        "papel do hospital",
+        "prescrição de alta",
+        "alta hospitalar"
+      ],
+      "resultado": "Sumário de alta por fibrilação atrial de início recente, CHA2DS2-VASc alto, com prescrição de: varfarina 5 mg 1x/dia, metoprolol 50 mg 2x/dia, losartana 50 mg 2x/dia, metformina 850 mg 2x/dia e sinvastatina 20 mg à noite. O documento NÃO cita hidroclorotiazida, NÃO cita omeprazol e NÃO cita AAS — não há registro de suspensão intencional de nenhum deles. Consta pedido de RNI de controle sem data definida e retorno ambulatorial em 3 semanas."
+    }
+  },
+  "exames_disponiveis": {
+    "rni": {
+      "nome": "RNI / Tempo de protrombina (colhido hoje)",
+      "sinonimos": [
+        "rni",
+        "inr",
+        "tempo de protrombina",
+        "tp",
+        "coagulograma",
+        "exame de coagulação",
+        "controle da varfarina",
+        "resultado do exame de hoje",
+        "exame que a senhora trouxe",
+        "exame de sangue de hoje",
+        "o exame do laboratorio"
+      ],
+      "resultado": "RNI = 6,8 (faixa terapêutica alvo para fibrilação atrial: 2,0 a 3,0). Tempo de protrombina 58 segundos (controle 12,5 s). Atividade de protrombina 12%."
+    },
+    "creatinina_clearance": {
+      "nome": "Creatinina sérica e estimativa de função renal",
+      "sinonimos": [
+        "creatinina",
+        "função renal",
+        "funcao renal",
+        "clearance",
+        "clcr",
+        "cockcroft",
+        "tfg",
+        "ureia"
+      ],
+      "resultado": "Creatinina 1,4 mg/dL; ureia 58 mg/dL. Creatinina registrada no sumário de alta: 1,1 mg/dL. (Cockcroft-Gault com 62 kg, 72 anos, mulher ≈ 36 mL/min — o cálculo cabe ao candidato.)"
+    },
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": [
+        "hemograma",
+        "hemoglobina",
+        "hematocrito",
+        "plaquetas",
+        "serie vermelha",
+        "exame de sangue"
+      ],
+      "resultado": "Hemoglobina 11,2 g/dL e hematócrito 34%; valor registrado no sumário de alta há 4 dias: 12,0 g/dL. Plaquetas 212.000/mm³; leucócitos 9.800/mm³."
+    },
+    "eas_urina": {
+      "nome": "Urina tipo 1 (EAS)",
+      "sinonimos": [
+        "urina",
+        "eas",
+        "urina tipo 1",
+        "sumario de urina",
+        "exame de urina",
+        "urocultura"
+      ],
+      "resultado": "Leucocitúria (48 leucócitos/campo), nitrito positivo, bacteriúria moderada, hematúria microscópica (12 hemácias/campo). Urocultura em andamento, sem resultado."
+    },
+    "hba1c": {
+      "nome": "Hemoglobina glicada (HbA1c)",
+      "sinonimos": [
+        "hba1c",
+        "hemoglobina glicada",
+        "glicada",
+        "controle do diabetes"
+      ],
+      "resultado": "7,4%."
+    },
+    "eletrolitos": {
+      "nome": "Sódio e potássio",
+      "sinonimos": [
+        "sodio",
+        "potassio",
+        "eletrolitos",
+        "sais",
+        "na",
+        "k"
+      ],
+      "resultado": "Sódio 139 mEq/L; potássio 5,1 mEq/L (limite superior/discretamente elevado)."
+    },
+    "hepatico": {
+      "nome": "Enzimas hepáticas e CPK",
+      "sinonimos": [
+        "tgo",
+        "tgp",
+        "transaminases",
+        "enzimas hepaticas",
+        "cpk",
+        "figado"
+      ],
+      "resultado": "TGO 26 U/L, TGP 31 U/L, CPK 118 U/L — todos dentro dos valores de referência."
+    },
+    "perfil_lipidico": {
+      "nome": "Perfil lipídico",
+      "sinonimos": [
+        "colesterol",
+        "perfil lipidico",
+        "ldl",
+        "hdl",
+        "triglicerideos",
+        "lipidograma"
+      ],
+      "resultado": "Colesterol total 182 mg/dL, LDL 104 mg/dL, HDL 46 mg/dL, triglicerídeos 148 mg/dL."
+    }
+  }
+}

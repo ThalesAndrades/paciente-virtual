@@ -614,3 +614,38 @@ input, select, textarea {
 .acoes-conta .botao { margin-top: 0; padding: 9px 14px; font-size: var(--t-apoio); }
 
 @media (max-width: 620px) { .linha-form { grid-template-columns: 1fr; } }
+
+/* ── Cores das áreas novas ─────────────────────────────────────────────────
+   Mesma mecânica de --med/--psi: um tom cheio e um suave por área, com par
+   escuro. A home desenha os cards a partir do acervo, então área nova só
+   precisa de um par de cores aqui (e cai no tom da marca se nem isso tiver). */
+:root {
+  --enf: #0e7490; --enf-suave: #d9f0f6;
+  --fis: #b45309; --fis-suave: #f8ead7;
+  --nut: #4d7c0f; --nut-suave: #e9f2d9;
+  --odo: #0369a1; --odo-suave: #dcedfb;
+  --far: #be185d; --far-suave: #fbdfec;
+  --fon: #4f46e5; --fon-suave: #e3e4fb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --enf: #53c6de; --enf-suave: #0f3038;
+    --fis: #eba24f; --fis-suave: #3a2a12;
+    --nut: #9cc94f; --nut-suave: #23300f;
+    --odo: #62b4ef; --odo-suave: #0f2a3c;
+    --far: #f083b4; --far-suave: #381123;
+    --fon: #93a0f5; --fon-suave: #1b1e40;
+  }
+}
+.cat-card.enfermagem, .cartao.enfermagem { --cor: var(--enf); --cor-suave: var(--enf-suave); }
+.cat-card.fisioterapia, .cartao.fisioterapia { --cor: var(--fis); --cor-suave: var(--fis-suave); }
+.cat-card.nutricao, .cartao.nutricao { --cor: var(--nut); --cor-suave: var(--nut-suave); }
+.cat-card.odontologia, .cartao.odontologia { --cor: var(--odo); --cor-suave: var(--odo-suave); }
+.cat-card.farmacia, .cartao.farmacia { --cor: var(--far); --cor-suave: var(--far-suave); }
+.cat-card.fonoaudiologia, .cartao.fonoaudiologia { --cor: var(--fon); --cor-suave: var(--fon-suave); }
+.chip-cat.enfermagem, .cab-badge.enfermagem { color: var(--enf); background: var(--enf-suave); }
+.chip-cat.fisioterapia, .cab-badge.fisioterapia { color: var(--fis); background: var(--fis-suave); }
+.chip-cat.nutricao, .cab-badge.nutricao { color: var(--nut); background: var(--nut-suave); }
+.chip-cat.odontologia, .cab-badge.odontologia { color: var(--odo); background: var(--odo-suave); }
+.chip-cat.farmacia, .cab-badge.farmacia { color: var(--far); background: var(--far-suave); }
+.chip-cat.fonoaudiologia, .cab-badge.fonoaudiologia { color: var(--fon); background: var(--fon-suave); }

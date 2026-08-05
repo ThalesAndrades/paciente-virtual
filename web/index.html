@@ -60,20 +60,8 @@
   <p class="pref-dica" id="quem-sou" style="margin:0 0 10px"></p>
 
   <label>Escolha a área</label>
-  <div class="categorias">
-    <button type="button" class="cat-card med" data-cat="medicina">
-      <div class="ic">🩺</div>
-      <h3>Medicina</h3>
-      <p>Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa.</p>
-      <span class="qtd" id="qtd-medicina">— casos</span>
-    </button>
-    <button type="button" class="cat-card psi" data-cat="psicologia">
-      <div class="ic">🧠</div>
-      <h3>Psicologia</h3>
-      <p>Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente.</p>
-      <span class="qtd" id="qtd-psicologia">— casos</span>
-    </button>
-  </div>
+  <!-- Preenchido por carregarCasos(): um card por categoria presente no acervo. -->
+  <div class="categorias" id="categorias"></div>
 
   <div class="aleatorio-linha aleatorio-home"><button class="btn-aleatorio" id="aleatorio-geral" type="button">🎲 Caso clínico aleatório</button></div>
   <button id="botao-painel" class="botao secundario oculto">📊 Painel do professor</button>
@@ -309,7 +297,27 @@ function mostrarTela(id) {
   const h = tela.querySelector("h1, h2");
   if (h) { h.setAttribute("tabindex", "-1"); try { h.focus({ preventScroll: true }); } catch {} }
 }
-const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)" } };
+/* Catálogo de áreas. A home NÃO tem mais cards fixos: ela desenha um card por
+   categoria que exista nos casos carregados — área nova no acervo aparece sozinha,
+   sem tocar nesta página. O fallback cobre categoria que ainda não está aqui:
+   melhor um card genérico do que um caso invisível (ou um crash de `.cor`). */
+const CAT = {
+  medicina: { nome: "Medicina", chip: "med", cor: "var(--med)", ic: "🩺", desc: "Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa." },
+  psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)", ic: "🧠", desc: "Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente." },
+  enfermagem: { nome: "Enfermagem", chip: "enfermagem", cor: "var(--enf)", ic: "💉", desc: "Consulta de enfermagem: acolhimento, avaliação e orientação com raciocínio clínico próprio." },
+  fisioterapia: { nome: "Fisioterapia", chip: "fisioterapia", cor: "var(--fis)", ic: "🦴", desc: "Avaliação cinesiológico-funcional: história, testes e raciocínio para o diagnóstico fisioterapêutico." },
+  nutricao: { nome: "Nutrição", chip: "nutricao", cor: "var(--nut)", ic: "🥗", desc: "Anamnese alimentar e diagnóstico nutricional, com conduta pactuada com a pessoa." },
+  odontologia: { nome: "Odontologia", chip: "odontologia", cor: "var(--odo)", ic: "🦷", desc: "Urgência e clínica odontológica: anamnese, exame e conduta com comunicação clara." },
+  farmacia: { nome: "Farmácia", chip: "farmacia", cor: "var(--far)", ic: "💊", desc: "Atenção farmacêutica: conciliação, interações e adesão, medicamento a medicamento." },
+  fonoaudiologia: { nome: "Fonoaudiologia", chip: "fonoaudiologia", cor: "var(--fon)", ic: "🗣️", desc: "Avaliação fonoaudiológica de linguagem, voz, audição e deglutição." },
+};
+function catDe(cat) {
+  return CAT[cat] || {
+    nome: String(cat || "?").replace(/^./, (c) => c.toUpperCase()),
+    chip: "psi", cor: "var(--primaria)", ic: "🩹",
+    desc: "Casos de simulação clínica desta área.",
+  };
+}
 
 /* ---------- Código de acesso + modo aleatório ----------
    O código NÃO mora mais aqui: quem confere é o servidor, que devolve um cookie de
@@ -534,21 +542,37 @@ function aplicarPreferenciaAudio(l) {
 /* ---------- Casos ---------- */
 async function carregarCasos() {
   try { estado.casos = await (await fetch("/api/casos")).json(); } catch { estado.casos = []; }
-  const conta = (c) => estado.casos.filter((x) => x.categoria === c).length;
-  $("qtd-medicina").textContent = conta("medicina") + " casos";
-  $("qtd-psicologia").textContent = conta("psicologia") + " casos";
+
+  // Um card por categoria que EXISTE no acervo, na ordem do catálogo (desconhecidas
+  // vão para o fim). Categoria sem caso não vira card — botão para lista vazia é ruído.
+  const grupos = {};
+  for (const c of estado.casos) grupos[c.categoria] = (grupos[c.categoria] || 0) + 1;
+  const ordem = [...Object.keys(CAT).filter((c) => grupos[c]), ...Object.keys(grupos).filter((c) => !CAT[c])];
+
+  const alvo = $("categorias"); alvo.innerHTML = "";
+  for (const cat of ordem) {
+    const m = catDe(cat);
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cat-card " + m.chip;
+    b.dataset.cat = cat;
+    b.innerHTML = `<div class="ic">${m.ic}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${grupos[cat]} ${grupos[cat] === 1 ? "caso" : "casos"}</span>`;
+    b.addEventListener("click", () => abrirCategoria(cat));
+    alvo.appendChild(b);
+  }
 }
 function abrirCategoria(cat) {
   estado.categoriaAtual = cat;
-  $("cat-titulo").textContent = CAT[cat].nome;
-  $("cat-chip").textContent = CAT[cat].nome; $("cat-chip").className = "chip-cat " + CAT[cat].chip;
-  $("cat-sub").textContent = cat === "medicina" ? "Escolha um caso e conduza a consulta: anamnese, sinais vitais e exames à mão." : "Escolha um caso e conduza a entrevista terapêutica com acolhimento.";
+  const meta = catDe(cat);
+  $("cat-titulo").textContent = meta.nome;
+  $("cat-chip").textContent = meta.nome; $("cat-chip").className = "chip-cat " + meta.chip;
+  $("cat-sub").textContent = meta.desc;
   const lista = $("lista-casos"); lista.innerHTML = "";
   const doCat = estado.casos.filter((c) => c.categoria === cat);
   if (!doCat.length) { lista.innerHTML = "<p class='subtitulo'>Nenhum caso nesta área ainda.</p>"; }
   for (const caso of doCat) {
     const b = document.createElement("button");
-    b.className = "cartao " + CAT[cat].chip;
+    b.className = "cartao " + meta.chip;
     b.innerHTML = `<div class="av">${(caso.paciente.nome || "?").charAt(0)}</div><div><h3>${caso.titulo}</h3><p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao || ""}</p><p class="q">${caso.queixa}</p></div>`;
     b.addEventListener("click", () => exigirCodigo(() => iniciarConsulta(caso.id, false)));
     lista.appendChild(b);
@@ -581,19 +605,23 @@ async function iniciarConsulta(casoId, aleatorio) {
   estado.consultaId = dados.id; estado.voz = dados.voz; estado.avisoDemoExibido = false;
   estado.categoriaCaso = dados.categoria; estado.instrumentos = dados.instrumentos || null;
   estado.pacienteNome = (dados.paciente.nome || "O paciente").trim().split(/\s+/)[0];
-  const cor = CAT[dados.categoria].cor;
+  const cor = catDe(dados.categoria).cor;
 
   $("mensagens").innerHTML = "";
   const av = $("avatar-paciente"); av.textContent = (dados.paciente.nome || "?").charAt(0); av.style.setProperty("--cor", cor);
   $("nome-paciente").textContent = dados.paciente.nome;
   const p = dados.paciente;
   $("dados-paciente").textContent = `${p.idade} anos · ${p.sexo}${p.profissao ? " · " + p.profissao : ""}`;
-  const badge = $("cab-badge"); badge.textContent = CAT[dados.categoria].nome; badge.className = "cab-badge " + CAT[dados.categoria].chip;
+  const badge = $("cab-badge"); const mc = catDe(dados.categoria); badge.textContent = mc.nome; badge.className = "cab-badge " + mc.chip;
 
   montarInstrumentos();
   $("campo-anotacoes").value = "";
   iniciarCronometro();
-  adicionarBalao("aviso", dados.categoria === "medicina"
+  const i = dados.instrumentos || {};
+  const temInstrumentos = ((i.vitais||[]).length + (i.fisico||[]).length + (i.exames||[]).length) > 0;
+  // O aviso segue os INSTRUMENTOS do caso, não o nome da área: enfermagem e
+  // odontologia também examinam, e área nova não pode cair num texto errado.
+  adicionarBalao("aviso", temInstrumentos
     ? "Consulta iniciada. Faça a anamnese, use os instrumentos (🩺) para sinais vitais e exames, e clique em “Encerrar e avaliar” ao final."
     : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
   mostrarTela("tela-consulta");
@@ -1221,7 +1249,6 @@ $("botao-revisao").addEventListener("click", () => {
 });
 document.querySelectorAll("#pref-audio .seg").forEach((s) => s.addEventListener("click", () => aplicarPreferenciaAudio(s.dataset.audio === "1")));
 $("botao-som").addEventListener("click", () => aplicarPreferenciaAudio(!estado.falarRespostas));
-document.querySelectorAll(".cat-card").forEach((c) => c.addEventListener("click", () => abrirCategoria(c.dataset.cat)));
 $("cat-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abrirCategoria(estado.categoriaAtual); else mostrarTela("tela-inicio"); });
 /* ── Gestão de contas (só administrador) ────────────────────────────────────

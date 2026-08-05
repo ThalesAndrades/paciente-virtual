@@ -1,0 +1,1099 @@
+{
+  "nome_caso": "Pulpite Irreversível Sintomática com Periodontite Apical Sintomática Incipiente no Dente 46",
+  "criterios": [
+    {
+      "nome": "Apresentação e vínculo",
+      "objetivo": "Identificar-se ao paciente e perguntar seu nome. Adequado = as duas ações; parcialmente adequado = apenas uma; inadequado = nenhuma.",
+      "itens": [
+        {
+          "nome": "identifica-se ao paciente",
+          "termos": [
+            "meu nome e",
+            "eu sou o dentista",
+            "eu sou a dentista",
+            "sou cirurgiao dentista",
+            "sou cirurgia dentista",
+            "sou a cirurgia dentista",
+            "me chamo",
+            "bom dia sou",
+            "vou te atender hoje",
+            "sou o responsavel pelo atendimento"
+          ]
+        },
+        {
+          "nome": "pergunta o nome do paciente",
+          "termos": [
+            "qual o seu nome",
+            "como a senhora se chama",
+            "como voce se chama",
+            "seu nome",
+            "como prefere ser chamada",
+            "me diz seu nome"
+          ]
+        },
+        {
+          "nome": "confirma idade e ocupacao",
+          "termos": [
+            "quantos anos",
+            "sua idade",
+            "no que voce trabalha",
+            "qual sua profissao",
+            "voce trabalha com o que",
+            "sua ocupacao"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Biossegurança e paramentação",
+      "objetivo": "Higienizar as mãos e paramentar-se (luvas, máscara, gorro, óculos) ANTES de tocar a paciente. Item de estação na Odontologia, não pressuposto. Omitir biossegurança é falta grave.",
+      "itens": [
+        {
+          "nome": "higienizacao das maos",
+          "termos": [
+            "higienizar as maos",
+            "lavar as maos",
+            "higienizacao das maos",
+            "alcool em gel",
+            "antissepsia das maos"
+          ]
+        },
+        {
+          "nome": "luvas",
+          "termos": [
+            "luvas",
+            "calcar as luvas",
+            "luva de procedimento",
+            "vou calcar a luva"
+          ]
+        },
+        {
+          "nome": "mascara e gorro",
+          "termos": [
+            "mascara",
+            "pff2",
+            "n95",
+            "gorro",
+            "touca"
+          ]
+        },
+        {
+          "nome": "oculos de protecao e jaleco",
+          "termos": [
+            "oculos de protecao",
+            "protetor facial",
+            "face shield",
+            "jaleco",
+            "avental descartavel",
+            "prope",
+            "epi",
+            "paramentacao"
+          ]
+        },
+        {
+          "nome": "protecao do paciente",
+          "termos": [
+            "oculos para a paciente",
+            "babador",
+            "avental de chumbo",
+            "protetor de tireoide",
+            "vou proteger seus olhos"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Caracterização da dor (HDA odontológica)",
+      "objetivo": "Item de maior peso da estação. Adequado = investiga 6 ou mais atributos da dor; parcialmente adequado = 1 a 5; inadequado = nenhum.",
+      "itens": [
+        {
+          "nome": "queixa e motivo da procura",
+          "termos": [
+            "o que a senhora esta sentindo",
+            "o que te trouxe aqui",
+            "me conta o que houve",
+            "qual a sua queixa",
+            "o que esta acontecendo",
+            "o que esta sentindo",
+            "em que posso ajudar"
+          ]
+        },
+        {
+          "nome": "inicio e tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "ha quanto tempo",
+            "desde quando",
+            "faz quanto tempo que doi",
+            "quantos dias"
+          ]
+        },
+        {
+          "nome": "localizacao e identificacao do dente",
+          "termos": [
+            "onde doi",
+            "qual dente",
+            "aponta o dente",
+            "consegue mostrar onde",
+            "em que lado",
+            "e em cima ou embaixo",
+            "localizacao da dor"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "a dor espalha",
+            "vai para o ouvido",
+            "sobe para a cabeca",
+            "corre para outro lugar",
+            "a dor caminha"
+          ]
+        },
+        {
+          "nome": "tipo ou carater da dor",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "latejante",
+            "pontada",
+            "fisgada",
+            "queimacao",
+            "dor constante",
+            "dor pulsatil",
+            "parece o que"
+          ]
+        },
+        {
+          "nome": "dor espontanea x provocada",
+          "termos": [
+            "a dor vem sozinha",
+            "doi sem encostar",
+            "so doi quando estimula",
+            "precisa de alguma coisa para doer",
+            "dor espontanea ou provocada",
+            "aparece do nada"
+          ]
+        },
+        {
+          "nome": "duracao apos o estimulo",
+          "termos": [
+            "quanto tempo a dor dura",
+            "depois que tira o gelado a dor passa",
+            "a dor continua depois",
+            "quanto tempo demora para passar",
+            "passa logo ou demora",
+            "persiste apos o estimulo"
+          ]
+        },
+        {
+          "nome": "dor noturna e ao deitar",
+          "termos": [
+            "doi a noite",
+            "acorda de dor",
+            "piora quando deita",
+            "consegue dormir",
+            "atrapalha o sono",
+            "dor noturna"
+          ]
+        },
+        {
+          "nome": "fatores de piora (frio, calor, doce, mastigacao)",
+          "termos": [
+            "o que piora",
+            "piora com gelado",
+            "piora com frio",
+            "piora com quente",
+            "piora com doce",
+            "piora ao mastigar",
+            "piora ao morder",
+            "o que faz doer mais"
+          ]
+        },
+        {
+          "nome": "fatores de melhora",
+          "termos": [
+            "o que melhora",
+            "o que alivia",
+            "alguma coisa faz passar",
+            "melhora com agua morna",
+            "melhora com alguma posicao"
+          ]
+        },
+        {
+          "nome": "resposta ao analgesico",
+          "termos": [
+            "melhorou com remedio",
+            "o analgesico resolve",
+            "a dipirona faz efeito",
+            "o remedio segura a dor",
+            "quanto tempo o remedio alivia"
+          ]
+        },
+        {
+          "nome": "intensidade por escala",
+          "termos": [
+            "de zero a dez",
+            "de 0 a 10",
+            "escala de dor",
+            "quanto doi",
+            "que nota voce da para a dor",
+            "intensidade da dor"
+          ]
+        },
+        {
+          "nome": "sintomas associados e sinais sistemicos",
+          "termos": [
+            "teve febre",
+            "inchou o rosto",
+            "dificuldade de abrir a boca",
+            "mais alguma coisa",
+            "outros sintomas",
+            "gosto ruim",
+            "saiu pus"
+          ]
+        },
+        {
+          "nome": "evolucao do quadro",
+          "termos": [
+            "esta piorando",
+            "melhorou ou piorou",
+            "como evoluiu",
+            "desde que comecou mudou alguma coisa",
+            "esta pior do que no inicio"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "História médica e medicamentosa dirigida (segurança)",
+      "objetivo": "Investigar comorbidades, alergias, medicação em uso, anticoagulantes, antirreabsortivos, gestação, automedicação e hábitos. Governa a segurança da anestesia, da radiografia e da prescrição. Realizar procedimento sem checar alergia/anticoagulação é item crítico.",
+      "itens": [
+        {
+          "nome": "comorbidades (hipertensao, diabetes, cardiopatia)",
+          "termos": [
+            "pressao alta",
+            "hipertensao",
+            "diabetes",
+            "acucar no sangue",
+            "problema de coracao",
+            "cardiopatia",
+            "sopro no coracao",
+            "febre reumatica",
+            "alguma doenca",
+            "faz tratamento de saude"
+          ]
+        },
+        {
+          "nome": "alergias (anestesico e antibiotico)",
+          "termos": [
+            "tem alergia",
+            "alergia a algum remedio",
+            "alergia a anestesia",
+            "alergia a antibiotico",
+            "ja passou mal com anestesia",
+            "alergia a latex",
+            "alergia a penicilina",
+            "alguma reacao a medicamento"
+          ]
+        },
+        {
+          "nome": "medicacao de uso continuo",
+          "termos": [
+            "usa algum remedio continuo",
+            "remedio de uso continuo",
+            "toma remedio todo dia",
+            "medicacao de uso continuo",
+            "esta tomando algum medicamento",
+            "toma algum medicamento",
+            "quais remedios voce usa",
+            "quais remedios usa"
+          ]
+        },
+        {
+          "nome": "anticoagulantes e antirreabsortivos",
+          "termos": [
+            "usa anticoagulante",
+            "remedio para afinar o sangue",
+            "toma aas",
+            "varfarina",
+            "marevan",
+            "bifosfonato",
+            "injecao para osteoporose",
+            "antirreabsortivo",
+            "ja fez radioterapia de cabeca e pescoco",
+            "faz tratamento oncologico"
+          ]
+        },
+        {
+          "nome": "RISCO - gestacao e ciclo menstrual antes de radiografia e prescricao",
+          "termos": [
+            "possibilidade de gravidez",
+            "possibilidade de estar gravida",
+            "estar gravida",
+            "esta gravida",
+            "chance de gravidez",
+            "quando foi sua ultima menstruacao",
+            "ultima menstruacao",
+            "esta amamentando",
+            "usa anticoncepcional",
+            "usa algum contraceptivo",
+            "atraso menstrual",
+            "pretende engravidar",
+            "esta menstruada",
+            "ciclo esta regular",
+            "evitar radiografia"
+          ]
+        },
+        {
+          "nome": "RISCO - automedicacao e praticas caseiras",
+          "termos": [
+            "tomou algum remedio",
+            "tomou algum medicamento",
+            "o que ja tomou",
+            "usou algum analgesico",
+            "tomou dipirona",
+            "tomou paracetamol",
+            "chegou a tomar antibiotico",
+            "tomou antibiotico",
+            "por conta propria",
+            "se automedicou",
+            "colocou alguma coisa no dente",
+            "colocou alguma coisa em cima do dente",
+            "passou algum produto",
+            "usou algum remedio caseiro",
+            "remedio caseiro",
+            "fez bochecho",
+            "alguem indicou algum remedio",
+            "sobra de remedio"
+          ]
+        },
+        {
+          "nome": "historia odontologica previa",
+          "termos": [
+            "quando foi ao dentista pela ultima vez",
+            "ja fez tratamento nesse dente",
+            "ja fez canal",
+            "quando restaurou esse dente",
+            "ja extraiu algum dente",
+            "ja teve problema com anestesia no dentista"
+          ]
+        },
+        {
+          "nome": "habitos de vida e higiene bucal",
+          "termos": [
+            "voce fuma",
+            "fuma",
+            "e fumante",
+            "cigarro",
+            "bebe alcool",
+            "quantas vezes escova os dentes",
+            "usa fio dental",
+            "como e sua alimentacao",
+            "consome muito doce",
+            "toma refrigerante",
+            "range os dentes",
+            "aperta os dentes",
+            "bruxismo"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame extraoral e pesquisa de sinais de disseminação",
+      "objetivo": "Inspecionar assimetria e edema, palpar linfonodos, avaliar ATM e abertura bucal e aferir sinais vitais. Deixar de identificar sinal de disseminação (trismo, disfagia, edema de assoalho, febre) é item crítico.",
+      "itens": [
+        {
+          "nome": "inspecao extraoral (assimetria e edema)",
+          "termos": [
+            "exame extraoral",
+            "inspecao extraoral",
+            "assimetria facial",
+            "edema facial",
+            "inchaco no rosto",
+            "olhar o rosto",
+            "avaliar a face"
+          ]
+        },
+        {
+          "nome": "palpacao de linfonodos",
+          "termos": [
+            "linfonodos",
+            "ganglios",
+            "palpar o pescoco",
+            "cadeias cervicais",
+            "submandibular",
+            "ingua"
+          ]
+        },
+        {
+          "nome": "avaliacao de ATM e abertura bucal",
+          "termos": [
+            "atm",
+            "articulacao temporomandibular",
+            "abertura bucal",
+            "trismo",
+            "estalido",
+            "amplitude de abertura",
+            "musculatura mastigatoria",
+            "palpar masseter"
+          ]
+        },
+        {
+          "nome": "pesquisa de sinais de disseminacao",
+          "termos": [
+            "sinais de disseminacao",
+            "disfagia",
+            "dificuldade de engolir",
+            "assoalho bucal",
+            "edema de assoalho",
+            "dificuldade de respirar",
+            "alteracao da voz",
+            "sinais sistemicos"
+          ]
+        },
+        {
+          "nome": "sinais vitais (PA e temperatura) antes da anestesia",
+          "termos": [
+            "aferir a pressao",
+            "medir a pressao",
+            "pressao arterial",
+            "temperatura",
+            "termometro",
+            "sinais vitais",
+            "frequencia cardiaca",
+            "pulso"
+          ]
+        },
+        {
+          "nome": "palpacao de seios maxilares",
+          "termos": [
+            "seios maxilares",
+            "seio maxilar",
+            "seios da face",
+            "palpacao dos seios da face",
+            "palpar os seios",
+            "abaixar a cabeca",
+            "obstrucao nasal"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Exame intraoral e registro no odontograma",
+      "objetivo": "Inspecionar mucosas e tecidos moles, avaliar higiene, procurar fístula e edema vestibular, identificar o dente pela notação FDI e registrar cárie, restauração e fratura no odontograma.",
+      "itens": [
+        {
+          "nome": "inspecao de mucosas e tecidos moles",
+          "termos": [
+            "exame intraoral",
+            "inspecao intraoral",
+            "mucosa",
+            "mucosa jugal",
+            "tecidos moles",
+            "gengiva marginal",
+            "aspecto da gengiva",
+            "lingua",
+            "assoalho da boca",
+            "olhar por dentro da boca"
+          ]
+        },
+        {
+          "nome": "pesquisa de fistula e edema vestibular",
+          "termos": [
+            "fistula",
+            "bolinha na gengiva",
+            "abaulamento",
+            "edema vestibular",
+            "flutuacao",
+            "saida de pus",
+            "secrecao purulenta"
+          ]
+        },
+        {
+          "nome": "identificacao do dente por notacao FDI",
+          "termos": [
+            "dente 46",
+            "quarenta e seis",
+            "primeiro molar inferior direito",
+            "elemento 46",
+            "notacao fdi",
+            "molar inferior direito"
+          ]
+        },
+        {
+          "nome": "registro no odontograma",
+          "termos": [
+            "odontograma",
+            "registrar no odontograma",
+            "mapear os dentes",
+            "registro dos dentes",
+            "anotar na ficha"
+          ]
+        },
+        {
+          "nome": "avaliacao da restauracao e da carie recorrente",
+          "termos": [
+            "restauracao extensa",
+            "obturacao",
+            "amalgama",
+            "restauracao infiltrada",
+            "carie recorrente",
+            "lesao de carie",
+            "carie na margem",
+            "sonda exploradora",
+            "margem da restauracao",
+            "fratura da restauracao"
+          ]
+        },
+        {
+          "nome": "avaliacao de higiene bucal",
+          "termos": [
+            "higiene bucal",
+            "placa bacteriana",
+            "biofilme",
+            "tartaro",
+            "calculo dental",
+            "indice de placa",
+            "evidenciador de placa"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Testes complementares indicados E executados com técnica correta",
+      "objetivo": "Não basta 'realizar': o espelho exige técnica correta — teste ao frio com dente isolado, seco e COM DENTE CONTROLE contralateral; percussão vertical e horizontal com cabo do espelho; palpação apical; sondagem periodontal e mobilidade.",
+      "itens": [
+        {
+          "nome": "teste de sensibilidade ao frio",
+          "termos": [
+            "teste ao frio",
+            "teste de sensibilidade",
+            "teste de vitalidade",
+            "spray refrigerante",
+            "cloreto de etila",
+            "endo ice",
+            "teste termico",
+            "bolinha de algodao"
+          ]
+        },
+        {
+          "nome": "uso de dente controle contralateral",
+          "termos": [
+            "dente controle",
+            "dente contralateral",
+            "comparar com o outro lado",
+            "testar o dente vizinho",
+            "dente homologo",
+            "testar o 44",
+            "testar o 36",
+            "referencia de normalidade"
+          ]
+        },
+        {
+          "nome": "isolamento e secagem do dente para o teste",
+          "termos": [
+            "isolar o dente",
+            "secar o dente",
+            "rolete de algodao",
+            "isolamento relativo",
+            "afastar a saliva",
+            "sugador"
+          ]
+        },
+        {
+          "nome": "teste ao calor",
+          "termos": [
+            "teste ao calor",
+            "guta percha aquecida",
+            "bastao aquecido",
+            "agua quente",
+            "teste de calor"
+          ]
+        },
+        {
+          "nome": "percussao vertical",
+          "termos": [
+            "percussao vertical",
+            "percussao axial",
+            "percutir o dente",
+            "cabo do espelho",
+            "teste de percussao",
+            "bater no dente"
+          ]
+        },
+        {
+          "nome": "percussao horizontal",
+          "termos": [
+            "percussao horizontal",
+            "percussao lateral",
+            "percutir lateralmente"
+          ]
+        },
+        {
+          "nome": "palpacao apical",
+          "termos": [
+            "palpacao apical",
+            "fundo de vestibulo",
+            "palpar a regiao apical",
+            "palpacao vestibular",
+            "palpar a gengiva sobre a raiz"
+          ]
+        },
+        {
+          "nome": "sondagem periodontal e mobilidade",
+          "termos": [
+            "sondagem periodontal",
+            "sonda periodontal",
+            "profundidade de sondagem",
+            "bolsa periodontal",
+            "sangramento a sondagem",
+            "mobilidade dentaria",
+            "dente mole",
+            "grau de mobilidade"
+          ]
+        },
+        {
+          "nome": "teste de mordida e pesquisa de trinca",
+          "termos": [
+            "teste de mordida",
+            "bite test",
+            "tooth slooth",
+            "morder o algodao",
+            "transiluminacao",
+            "corante evidenciador",
+            "pesquisa de trinca",
+            "linha de fratura"
+          ]
+        },
+        {
+          "nome": "avaliacao oclusal com papel carbono",
+          "termos": [
+            "avaliacao oclusal",
+            "papel carbono",
+            "verificar contato prematuro",
+            "pesquisar contato prematuro",
+            "interferencia oclusal",
+            "checar a oclusao",
+            "avaliar a oclusao",
+            "marcar a mordida"
+          ]
+        }
+      ],
+      "peso": 1.25
+    },
+    {
+      "nome": "Solicitação e interpretação da radiografia periapical",
+      "objetivo": "Pedir o exame (gatilho para liberação do impresso) e LER o achado: cárie recorrente em proximidade com a câmara pulpar, espessamento do ligamento periodontal e ausência de lesão periapical definida.",
+      "itens": [
+        {
+          "nome": "solicita radiografia periapical",
+          "termos": [
+            "radiografia periapical",
+            "raio x do dente",
+            "rx periapical",
+            "radiografia do 46",
+            "periapical do 46",
+            "pedir periapical",
+            "solicitar periapical",
+            "vou pedir uma radiografia",
+            "solicito radiografia",
+            "radiografia intraoral",
+            "tecnica do paralelismo"
+          ]
+        },
+        {
+          "nome": "interpreta a proximidade da carie com a camara pulpar",
+          "termos": [
+            "proximidade com a camara pulpar",
+            "proximo ao corno pulpar",
+            "carie profunda",
+            "restauracao proxima da polpa",
+            "dentina profunda",
+            "invasao da camara pulpar"
+          ]
+        },
+        {
+          "nome": "interpreta o espessamento do ligamento periodontal",
+          "termos": [
+            "espessamento do ligamento periodontal",
+            "espaco do ligamento aumentado",
+            "ligamento periodontal espessado",
+            "lamina dura",
+            "alargamento periapical"
+          ]
+        },
+        {
+          "nome": "reconhece a ausencia de lesao periapical radiolucida",
+          "termos": [
+            "sem lesao periapical",
+            "ausencia de lesao periapical",
+            "nao ha area radiolucida",
+            "sem rarefacao ossea",
+            "sem imagem de abscesso",
+            "lesao periapical ausente"
+          ]
+        },
+        {
+          "nome": "considera exames de imagem complementares quando indicado",
+          "termos": [
+            "radiografia interproximal",
+            "bitewing",
+            "radiografia panoramica",
+            "panoramica",
+            "tcfc",
+            "tomografia de feixe conico"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Hipótese diagnóstica com nomenclatura correta e diagnóstico diferencial",
+      "objetivo": "Nomear pulpite irreversível sintomática do 46 com periodontite apical sintomática incipiente e discutir os diferenciais, afastando-os com os achados obtidos.",
+      "itens": [
+        {
+          "nome": "hipotese principal - pulpite irreversivel sintomatica",
+          "termos": [
+            "pulpite irreversivel",
+            "pulpite irreversivel sintomatica",
+            "inflamacao irreversivel da polpa",
+            "polpa irreversivelmente inflamada",
+            "comprometimento pulpar irreversivel"
+          ]
+        },
+        {
+          "nome": "componente apical - periodontite apical sintomatica",
+          "termos": [
+            "periodontite apical sintomatica",
+            "periodontite apical",
+            "envolvimento periapical",
+            "comprometimento apical incipiente",
+            "inflamacao periapical"
+          ]
+        },
+        {
+          "nome": "identifica o dente correto pela notacao",
+          "termos": [
+            "no dente 46",
+            "elemento 46",
+            "quarenta e seis",
+            "primeiro molar inferior direito"
+          ]
+        },
+        {
+          "nome": "afasta pulpite reversivel",
+          "termos": [
+            "pulpite reversivel",
+            "nao e reversivel",
+            "descarta pulpite reversivel",
+            "afasta pulpite reversivel",
+            "dor prolongada descarta reversivel",
+            "nao se trata de reversivel"
+          ]
+        },
+        {
+          "nome": "afasta necrose pulpar",
+          "termos": [
+            "necrose pulpar",
+            "polpa necrosada",
+            "dente sem vitalidade",
+            "o dente responde ao teste entao ha vitalidade",
+            "nao ha necrose"
+          ]
+        },
+        {
+          "nome": "afasta abscesso periapical agudo",
+          "termos": [
+            "abscesso periapical",
+            "abscesso dentoalveolar",
+            "abscesso agudo",
+            "nao ha abscesso",
+            "sem colecao purulenta",
+            "sem sinal de abscesso"
+          ]
+        },
+        {
+          "nome": "considera outros diferenciais",
+          "termos": [
+            "pericoronarite",
+            "dtm",
+            "disfuncao temporomandibular",
+            "sinusite maxilar",
+            "sindrome do dente trincado",
+            "abscesso periodontal",
+            "dor referida",
+            "otite",
+            "diagnostico diferencial"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Conduta de urgência coerente e justificada",
+      "objetivo": "Anestesia adequada com plano B, isolamento absoluto, acesso endodôntico com pulpotomia/pulpectomia, curativo e provisório, ajuste oclusal se indicado, analgésico/AINE e explicitação de que NÃO há indicação de antibiótico. Prescrever antibiótico sem indicação ou indicar exodontia de dente restaurável são itens críticos.",
+      "itens": [
+        {
+          "nome": "anestesia local adequada",
+          "termos": [
+            "anestesia local",
+            "bloqueio do alveolar inferior",
+            "bloqueio alveolar inferior",
+            "lidocaina",
+            "articaina",
+            "anestesico com vasoconstritor",
+            "anestesiar o dente"
+          ]
+        },
+        {
+          "nome": "plano B anestesico (intraligamentar ou intrapulpar)",
+          "termos": [
+            "intraligamentar",
+            "intrapulpar",
+            "anestesia complementar",
+            "tecnica gow gates",
+            "bloqueio complementar",
+            "se o bloqueio falhar",
+            "anestesia intraossea"
+          ]
+        },
+        {
+          "nome": "isolamento absoluto",
+          "termos": [
+            "isolamento absoluto",
+            "dique de borracha",
+            "lencol de borracha",
+            "grampo",
+            "isolar o campo"
+          ]
+        },
+        {
+          "nome": "acesso endodontico com pulpotomia ou pulpectomia",
+          "termos": [
+            "acesso endodontico",
+            "abertura coronaria",
+            "pulpotomia",
+            "pulpectomia",
+            "remocao da polpa",
+            "biopulpectomia",
+            "tratamento endodontico de urgencia",
+            "esvaziamento do canal"
+          ]
+        },
+        {
+          "nome": "curativo intracanal e restauracao provisoria",
+          "termos": [
+            "curativo intracanal",
+            "curativo de demora",
+            "hidroxido de calcio",
+            "restauracao provisoria",
+            "selamento provisorio",
+            "coltosol",
+            "cimento provisorio",
+            "selamento hermetico"
+          ]
+        },
+        {
+          "nome": "ajuste oclusal quando indicado",
+          "termos": [
+            "ajuste oclusal",
+            "aliviar o contato",
+            "desgaste seletivo",
+            "remover contato prematuro",
+            "aliviar a oclusao"
+          ]
+        },
+        {
+          "nome": "prescricao de analgesico ou AINE",
+          "termos": [
+            "prescrever analgesico",
+            "prescricao de analgesico",
+            "analgesico de horario",
+            "aine",
+            "anti inflamatorio",
+            "ibuprofeno",
+            "prescrever dipirona",
+            "prescrevo dipirona",
+            "receitar dipirona",
+            "receito dipirona",
+            "prescrever paracetamol",
+            "receituario",
+            "receita"
+          ]
+        },
+        {
+          "nome": "CRITICO - explicita que NAO ha indicacao de antibiotico",
+          "termos": [
+            "nao ha indicacao de antibiotico",
+            "nao vou prescrever antibiotico",
+            "antibiotico nao esta indicado",
+            "sem sinal sistemico nao se usa antibiotico",
+            "antibiotico nao resolve dor de dente",
+            "nao e caso de antibioticoterapia",
+            "antibiotico so com sinal de disseminacao"
+          ]
+        },
+        {
+          "nome": "CRITICO - preserva o dente restauravel (nao indica exodontia)",
+          "termos": [
+            "o dente e restauravel",
+            "da para salvar o dente",
+            "nao ha indicacao de extracao",
+            "nao precisa arrancar",
+            "vamos preservar o dente",
+            "exodontia nao esta indicada",
+            "o dente tem estrutura suficiente"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Comunicação, orientação e registro/encaminhamento",
+      "objetivo": "Explicar diagnóstico e conduta em linguagem acessível, verificar compreensão, acolher os medos da paciente, orientar sinais de alerta, registrar em prontuário, agendar continuidade e encaminhar ao CEO quando indicado.",
+      "itens": [
+        {
+          "nome": "explica diagnostico e conduta em linguagem acessivel",
+          "termos": [
+            "vou te explicar",
+            "vou explicar o que aconteceu",
+            "deixa eu explicar",
+            "em palavras simples",
+            "o que aconteceu no seu dente foi",
+            "vou explicar o tratamento",
+            "explicar o procedimento"
+          ]
+        },
+        {
+          "nome": "verifica compreensao",
+          "termos": [
+            "ficou claro",
+            "voce entendeu",
+            "tem alguma duvida",
+            "quer que eu repita",
+            "consegue me repetir o que combinamos",
+            "alguma pergunta"
+          ]
+        },
+        {
+          "nome": "orienta sinais de alerta e retorno imediato",
+          "termos": [
+            "sinais de alerta",
+            "se inchar o rosto",
+            "se tiver febre",
+            "se nao conseguir engolir",
+            "se tiver falta de ar",
+            "se a dor piorar procure atendimento",
+            "procure o pronto atendimento",
+            "procure atendimento imediatamente",
+            "volte imediatamente",
+            "retorno imediato"
+          ]
+        },
+        {
+          "nome": "orienta cuidados e higiene",
+          "termos": [
+            "orientacao de higiene",
+            "escovar com cuidado",
+            "usar fio dental",
+            "evitar mastigar desse lado",
+            "evitar gelado e doce",
+            "orientacoes pos procedimento",
+            "cuidados em casa"
+          ]
+        },
+        {
+          "nome": "registro em prontuario e ficha clinica",
+          "termos": [
+            "registrar em prontuario",
+            "anotar no prontuario",
+            "preencher a ficha clinica",
+            "registro do atendimento",
+            "documentar o atendimento"
+          ]
+        },
+        {
+          "nome": "agenda continuidade e encaminha ao CEO quando indicado",
+          "termos": [
+            "agendar retorno",
+            "continuidade do tratamento",
+            "terminar o tratamento de canal",
+            "encaminhamento",
+            "encaminhar ao ceo",
+            "centro de especialidades odontologicas",
+            "guia de encaminhamento",
+            "referencia e contrarreferencia"
+          ]
+        },
+        {
+          "nome": "RISCO - acolhe o medo de dentista",
+          "termos": [
+            "medo de dentista",
+            "medo do dentista",
+            "medo da anestesia",
+            "receio do procedimento",
+            "esta ansiosa",
+            "esta nervosa",
+            "ja teve alguma experiencia ruim",
+            "experiencia ruim",
+            "como foram suas consultas anteriores",
+            "consultas anteriores",
+            "tempo sem vir ao dentista",
+            "quer que eu explique cada passo",
+            "explicar cada passo",
+            "prefere combinar um sinal",
+            "combinar um sinal",
+            "te deixa desconfortavel"
+          ]
+        },
+        {
+          "nome": "RISCO - acolhe o medo de perder o dente e as expectativas",
+          "termos": [
+            "o que mais te preocupa",
+            "o que te preocupa",
+            "espera do atendimento",
+            "medo de perder o dente",
+            "medo de arrancar o dente",
+            "alguem falou em extracao",
+            "alguem chegou a falar em extracao",
+            "gostaria de manter o dente",
+            "quer manter o dente",
+            "ja pensou em mandar tirar",
+            "alguem na familia que perdeu dentes",
+            "o que te assusta no tratamento de canal",
+            "existe algo que nao quer que seja feito"
+          ]
+        },
+        {
+          "nome": "RISCO - investiga impacto no trabalho e barreiras de acesso",
+          "termos": [
+            "atrapalhado seu dia a dia",
+            "esta conseguindo trabalhar",
+            "consegue trabalhar",
+            "chegou a faltar no trabalho",
+            "faltou no trabalho",
+            "atrapalhando sua rotina",
+            "impediu de procurar atendimento",
+            "procurar atendimento antes",
+            "consegue voltar para continuar o tratamento",
+            "consegue voltar",
+            "plano odontologico",
+            "horarios da unidade",
+            "dificuldade para dar seguimento",
+            "precisa de atestado",
+            "declaracao de comparecimento"
+          ]
+        }
+      ],
+      "peso": 0.5
+    }
+  ]
+}

@@ -1,0 +1,935 @@
+{
+  "nome_caso": "Consulta de Enfermagem no Pré-Natal de Baixo Risco — Primeiro Trimestre",
+  "criterios": [
+    {
+      "nome": "Acolhimento, identificação segura e biossegurança",
+      "objetivo": "Apresentar-se como enfermeiro(a) com nome e COREN, identificar a gestante com dois identificadores, higienizar as mãos e garantir privacidade e consentimento verbal. ITEM CRÍTICO: não higienizar as mãos antes do exame físico deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "apresentacao profissional (nome, categoria, COREN)",
+          "termos": [
+            "meu nome e",
+            "sou enfermeiro",
+            "sou a enfermeira",
+            "sou o enfermeiro",
+            "enfermeira da unidade",
+            "meu coren",
+            "bom dia, eu sou",
+            "vou te atender hoje"
+          ]
+        },
+        {
+          "nome": "identificacao com dois identificadores",
+          "termos": [
+            "seu nome completo",
+            "me confirma seu nome",
+            "data de nascimento",
+            "sua data de nascimento",
+            "quantos anos voce tem",
+            "numero do cartao sus",
+            "cartao do sus",
+            "numero do prontuario"
+          ]
+        },
+        {
+          "nome": "higienizacao das maos",
+          "termos": [
+            "higienizar as maos",
+            "higienizo as maos",
+            "lavar as maos",
+            "vou lavar as maos",
+            "alcool em gel",
+            "antissepsia das maos",
+            "higiene das maos"
+          ]
+        },
+        {
+          "nome": "privacidade, consentimento e sigilo",
+          "termos": [
+            "vou fechar a porta",
+            "aqui e um espaco reservado",
+            "fica so entre nos",
+            "tudo que voce falar e sigiloso",
+            "sigilo",
+            "voce me autoriza",
+            "posso te examinar",
+            "voce se sente confortavel",
+            "vou explicar o que vou fazer",
+            "biombo"
+          ]
+        },
+        {
+          "nome": "uso de EPI e descarte adequado",
+          "termos": [
+            "luva de procedimento",
+            "calcar as luvas",
+            "epi",
+            "descarte no perfurocortante",
+            "caixa de perfurocortante",
+            "descarte o material",
+            "lixo infectante"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Anamnese de enfermagem obstétrica dirigida",
+      "objetivo": "Coletar dados subjetivos da etapa de Avaliação do Processo de Enfermagem: DUM, ciclo, história obstétrica (GPA), contracepção, comorbidades, medicamentos, antecedentes familiares, vacinação, condições de trabalho e rede de apoio.",
+      "itens": [
+        {
+          "nome": "queixa e motivo da consulta",
+          "termos": [
+            "o que te trouxe aqui",
+            "me conta o que esta acontecendo",
+            "o que voce esta sentindo",
+            "qual a sua queixa",
+            "como posso te ajudar",
+            "me fala um pouco"
+          ]
+        },
+        {
+          "nome": "DUM - data da ultima menstruacao",
+          "termos": [
+            "ultima menstruacao",
+            "dum",
+            "quando foi sua ultima menstruacao",
+            "data da ultima menstruacao",
+            "quando menstruou pela ultima vez",
+            "quando desceu pela ultima vez"
+          ]
+        },
+        {
+          "nome": "caracteristicas do ciclo menstrual",
+          "termos": [
+            "seu ciclo e regular",
+            "ciclo menstrual",
+            "de quantos em quantos dias",
+            "quantos dias de fluxo",
+            "sua menstruacao e certinha",
+            "menarca"
+          ]
+        },
+        {
+          "nome": "historia obstetrica - gesta, para, aborto",
+          "termos": [
+            "quantas gestacoes",
+            "e a primeira gravidez",
+            "gesta para aborto",
+            "gpa",
+            "ja teve outros filhos",
+            "ja perdeu alguma gestacao",
+            "ja teve aborto",
+            "quantos partos",
+            "paridade"
+          ]
+        },
+        {
+          "nome": "metodo contraceptivo em uso",
+          "termos": [
+            "usava algum metodo",
+            "anticoncepcional",
+            "injecao anticoncepcional",
+            "camisinha",
+            "usava preservativo",
+            "metodo contraceptivo",
+            "diu"
+          ]
+        },
+        {
+          "nome": "sintomas do primeiro trimestre (nausea, vomito, mastalgia, polaciuria)",
+          "termos": [
+            "esta enjoada",
+            "tem enjoo",
+            "esta vomitando",
+            "quantas vezes vomitou",
+            "seu peito esta doendo",
+            "mama dolorida",
+            "esta urinando mais",
+            "sente muito sono",
+            "esta cansada"
+          ]
+        },
+        {
+          "nome": "comorbidades e antecedentes pessoais",
+          "termos": [
+            "voce tem pressao alta",
+            "voce ja teve pressao alta",
+            "voce tem hipertensao",
+            "voce tem diabetes",
+            "voce tem alguma doenca",
+            "faz tratamento de alguma coisa",
+            "ja foi internada",
+            "ja fez cirurgia",
+            "infeccao urinaria",
+            "ja teve anemia"
+          ]
+        },
+        {
+          "nome": "alergias",
+          "termos": [
+            "tem alergia",
+            "alergia a algum medicamento",
+            "alergia a remedio",
+            "e alergica a alguma coisa",
+            "alergia a latex"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares (hipertensao, diabetes, pre-eclampsia, prematuridade)",
+          "termos": [
+            "na sua familia",
+            "sua mae tem",
+            "seu pai tem",
+            "alguem da familia teve pressao alta na gravidez",
+            "historico familiar",
+            "alguem teve diabetes",
+            "algum bebe nasceu antes do tempo",
+            "gemeos na familia"
+          ]
+        },
+        {
+          "nome": "situacao vacinal",
+          "termos": [
+            "cartao de vacina",
+            "carteira de vacinacao",
+            "suas vacinas estao em dia",
+            "tomou a antitetanica",
+            "vacina dt",
+            "tomou dtpa",
+            "vacina de hepatite b",
+            "situacao vacinal"
+          ]
+        },
+        {
+          "nome": "condicoes de trabalho e esforco fisico",
+          "termos": [
+            "voce trabalha",
+            "trabalha em que",
+            "fica muito tempo em pe",
+            "carrega peso",
+            "como e a sua jornada",
+            "seu patrao sabe",
+            "esforco no trabalho"
+          ]
+        },
+        {
+          "nome": "alimentacao, hidratacao e sono",
+          "termos": [
+            "como e a sua alimentacao",
+            "o que voce costuma comer",
+            "toma bastante agua",
+            "hidratacao",
+            "como esta o seu sono",
+            "quantas horas voce dorme"
+          ]
+        },
+        {
+          "nome": "rede de apoio",
+          "termos": [
+            "quem mora com voce",
+            "com quem voce mora",
+            "voce tem apoio",
+            "quem te ajuda",
+            "tem alguem para te acompanhar",
+            "como e sua rede de apoio",
+            "voce veio sozinha"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Cálculo da idade gestacional e da DPP com devolutiva",
+      "objetivo": "Calcular a IG pela DUM e a DPP pela regra de Näegele ou pelo gestograma, e comunicar o resultado à gestante em linguagem acessível.",
+      "itens": [
+        {
+          "nome": "calcula a idade gestacional",
+          "termos": [
+            "idade gestacional",
+            "vou calcular de quanto tempo voce esta",
+            "voce esta de onze semanas",
+            "onze semanas e quatro dias",
+            "quase doze semanas",
+            "primeiro trimestre",
+            "gestograma"
+          ]
+        },
+        {
+          "nome": "calcula a DPP pela regra de Naegele",
+          "termos": [
+            "data provavel do parto",
+            "dpp",
+            "regra de naegele",
+            "naegele",
+            "vinte e dois de fevereiro",
+            "seu bebe deve nascer por volta de",
+            "previsao do parto"
+          ]
+        },
+        {
+          "nome": "informa o resultado a gestante em linguagem acessivel",
+          "termos": [
+            "voce esta gravida sim",
+            "o teste deu positivo",
+            "confirmou a gravidez",
+            "voce esta de quase tres meses",
+            "vou te explicar de quanto tempo",
+            "anotei aqui na sua carteirinha"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Exame físico obstétrico focado e sinais vitais",
+      "objetivo": "Executar exame físico direcionado com técnica correta, verbalizando os achados, e reconhecer os limites da idade gestacional: com 11 semanas e 4 dias a altura uterina ainda não é mensurável com fita (o útero apenas alcança a borda superior da sínfise e a curva da Caderneta começa em 13 semanas) e o BCF não é audível ao Pinard (só a partir de ~20 semanas), apenas ao sonar Doppler.",
+      "itens": [
+        {
+          "nome": "pressao arterial com tecnica correta e manguito adequado",
+          "termos": [
+            "pressao arterial",
+            "medir a pressao",
+            "aferir a pressao",
+            "verificar a pressao",
+            "manguito adequado",
+            "braco apoiado",
+            "apos repouso",
+            "pa"
+          ]
+        },
+        {
+          "nome": "demais sinais vitais",
+          "termos": [
+            "frequencia cardiaca",
+            "pulso",
+            "frequencia respiratoria",
+            "temperatura",
+            "saturacao",
+            "sinais vitais"
+          ]
+        },
+        {
+          "nome": "peso, altura, IMC pre-gestacional e estado nutricional",
+          "termos": [
+            "vou te pesar",
+            "quanto voce pesa",
+            "sua altura",
+            "imc",
+            "estado nutricional",
+            "peso antes da gravidez",
+            "peso pre gestacional",
+            "ganho de peso",
+            "curva de ganho ponderal"
+          ]
+        },
+        {
+          "nome": "exame das mamas e avaliacao do mamilo",
+          "termos": [
+            "exame das mamas",
+            "examinar as mamas",
+            "avaliar o peito",
+            "palpar as mamas",
+            "avaliar o mamilo",
+            "mamilo",
+            "preparo para amamentacao"
+          ]
+        },
+        {
+          "nome": "exame do abdome",
+          "termos": [
+            "examinar o abdome",
+            "palpar a barriga",
+            "exame abdominal",
+            "palpacao do utero",
+            "abdome"
+          ]
+        },
+        {
+          "nome": "reconhece que a altura uterina ainda nao e mensuravel",
+          "termos": [
+            "altura uterina ainda nao",
+            "nao da para medir a altura uterina",
+            "ainda nao se mede a altura uterina",
+            "altura uterina nao se aplica",
+            "utero ainda na sinfise",
+            "utero na sinfise pubica",
+            "a curva de altura uterina comeca em treze semanas",
+            "so da para medir a partir de doze semanas"
+          ]
+        },
+        {
+          "nome": "reconhece a limitacao do Pinard para BCF nesta IG",
+          "termos": [
+            "pinard so a partir de vinte semanas",
+            "ainda nao da para ouvir no pinard",
+            "com o sonar doppler",
+            "sonar doppler",
+            "batimentos so pelo sonar",
+            "bcf ainda nao audivel",
+            "nao se ausculta com pinard nessa idade"
+          ]
+        },
+        {
+          "nome": "avaliacao de edema e membros inferiores",
+          "termos": [
+            "edema",
+            "inchaco nas pernas",
+            "avaliar as pernas",
+            "membros inferiores",
+            "varizes",
+            "panturrilha"
+          ]
+        },
+        {
+          "nome": "avaliacao de saude bucal",
+          "termos": [
+            "saude bucal",
+            "olhar a boca",
+            "gengiva",
+            "sua gengiva sangra",
+            "avaliar os dentes",
+            "cavidade oral"
+          ]
+        },
+        {
+          "nome": "oferece a coleta do citopatologico",
+          "termos": [
+            "preventivo",
+            "citopatologico",
+            "papanicolau",
+            "coleta do colo do utero",
+            "exame ginecologico",
+            "quando foi seu ultimo preventivo",
+            "podemos coletar o preventivo hoje"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Solicitação dos exames do primeiro trimestre dentro do protocolo",
+      "objetivo": "Solicitar o elenco completo de exames do primeiro trimestre previsto no protocolo do pré-natal na APS, competência amparada pela Lei 7.498/86, art. 11, II, 'c'.",
+      "itens": [
+        {
+          "nome": "confirmacao da gravidez (TIG ou beta-hCG)",
+          "termos": [
+            "teste de gravidez",
+            "teste rapido de gravidez",
+            "tig",
+            "beta hcg",
+            "bhcg",
+            "confirmar a gravidez"
+          ]
+        },
+        {
+          "nome": "tipagem sanguinea ABO/Rh e Coombs indireto",
+          "termos": [
+            "tipagem sanguinea",
+            "tipagem",
+            "abo",
+            "fator rh",
+            "tipo de sangue",
+            "coombs indireto"
+          ]
+        },
+        {
+          "nome": "hemograma",
+          "termos": [
+            "hemograma",
+            "hemograma completo",
+            "hemoglobina",
+            "avaliar anemia"
+          ]
+        },
+        {
+          "nome": "glicemia de jejum",
+          "termos": [
+            "glicemia",
+            "glicemia de jejum",
+            "glicose",
+            "acucar no sangue",
+            "rastrear diabetes gestacional"
+          ]
+        },
+        {
+          "nome": "testes rapidos de HIV, sifilis e hepatites",
+          "termos": [
+            "teste rapido de hiv",
+            "hiv",
+            "sifilis",
+            "vdrl",
+            "hepatites",
+            "sorologia de hepatite b",
+            "hepatite c",
+            "hbsag",
+            "sorologias",
+            "testes rapidos"
+          ]
+        },
+        {
+          "nome": "sorologia para toxoplasmose",
+          "termos": [
+            "toxoplasmose",
+            "igg e igm",
+            "sorologia de toxoplasmose",
+            "toxo"
+          ]
+        },
+        {
+          "nome": "sumario de urina e urocultura",
+          "termos": [
+            "sumario de urina",
+            "urina tipo 1",
+            "eas",
+            "exame de urina",
+            "urocultura",
+            "cultura de urina",
+            "bacteriuria assintomatica"
+          ]
+        },
+        {
+          "nome": "ultrassonografia obstetrica",
+          "termos": [
+            "ultrassom",
+            "ultrassonografia",
+            "usg obstetrica",
+            "ecografia",
+            "us obstetrico"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Rastreio dos fatores de risco e dos temas sensíveis",
+      "objetivo": "Investigar ativamente, com pergunta direta e sem julgamento, os cinco núcleos de risco do caso. ITEM CRÍTICO: a pergunta sobre violência exige privacidade explicitamente garantida, e deixar de rastrear tabagismo ou violência deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "rastreio de tabagismo",
+          "termos": [
+            "voce fuma",
+            "fuma cigarro",
+            "quantos cigarros por dia",
+            "e sobre o cigarro",
+            "uso de cigarro",
+            "faz uso de tabaco",
+            "alguem fuma dentro de casa",
+            "desde quando voce fuma",
+            "voce chegou a diminuir o cigarro",
+            "usa cigarro ou narguile"
+          ]
+        },
+        {
+          "nome": "rastreio de automedicacao e uso de chas",
+          "termos": [
+            "tomou algum remedio",
+            "tomou alguma coisa pro enjoo",
+            "esta usando algum medicamento",
+            "tomou cha",
+            "usou algum cha caseiro",
+            "alguem te indicou algum remedio",
+            "comprou remedio na farmacia",
+            "tomou plasil",
+            "usou remedio por conta propria",
+            "tomou algo sem receita",
+            "esta tomando alguma vitamina",
+            "fez algum tratamento caseiro"
+          ]
+        },
+        {
+          "nome": "rastreio de gravidez nao planejada e ambivalencia emocional",
+          "termos": [
+            "essa gravidez foi planejada",
+            "voce queria engravidar",
+            "como voce se sentiu quando descobriu",
+            "como voce esta se sentindo com a gravidez",
+            "o que passou pela sua cabeca quando deu positivo",
+            "voce esta feliz com a gestacao",
+            "como foi receber essa noticia",
+            "essa gestacao foi desejada",
+            "voce tem medo de alguma coisa nessa gravidez",
+            "o que mais te preocupa nessa gravidez",
+            "seu emocional",
+            "escala de edinburgh",
+            "epds"
+          ]
+        },
+        {
+          "nome": "rastreio de violencia e avaliacao do relacionamento",
+          "termos": [
+            "como e a sua relacao com o seu companheiro",
+            "como ele recebeu a noticia",
+            "voce se sente segura em casa",
+            "alguem te ameaca ou te agride",
+            "ja apanhou ou foi empurrada",
+            "alguem grita ou te humilha em casa",
+            "tem alguem te machucando",
+            "voce ja se sentiu com medo dentro de casa",
+            "seu companheiro bebe",
+            "como sao as discussoes de voces",
+            "voce esta sofrendo algum tipo de violencia",
+            "conversar em particular"
+          ]
+        },
+        {
+          "nome": "investiga crencas e informacoes erradas sobre sangramento",
+          "termos": [
+            "o que voce ouviu falar sobre sangramento",
+            "o que a sua familia te orientou",
+            "o que sua sogra te falou",
+            "o que voce faria se sangrasse",
+            "voce sabe quais sao os sinais de perigo",
+            "voce sabe quando procurar o posto ou a emergencia",
+            "voce acha que sangrar no comeco e normal",
+            "alguem te deu algum conselho sobre a gravidez",
+            "o que e normal na gravidez",
+            "se voce perder sangue",
+            "e normal sangrar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Diagnósticos de enfermagem e planejamento (NANDA-I / CIPE + NOC)",
+      "objetivo": "Enunciar ao menos dois diagnósticos de enfermagem em linguagem padronizada, com título e fator relacionado, priorizá-los e definir resultados esperados mensuráveis pactuados com a gestante.",
+      "itens": [
+        {
+          "nome": "enuncia diagnostico de enfermagem em linguagem padronizada",
+          "termos": [
+            "diagnostico de enfermagem",
+            "nanda",
+            "cipe",
+            "taxonomia",
+            "linguagem padronizada",
+            "meu diagnostico de enfermagem e"
+          ]
+        },
+        {
+          "nome": "diagnostico de nausea",
+          "termos": [
+            "nausea relacionada",
+            "diagnostico de nausea",
+            "nausea gravidica",
+            "nausea associada a gestacao"
+          ]
+        },
+        {
+          "nome": "diagnostico de comportamento de saude propenso a risco (tabagismo)",
+          "termos": [
+            "comportamento de saude propenso a risco",
+            "controle ineficaz da saude",
+            "manutencao ineficaz da saude",
+            "relacionado ao tabagismo",
+            "risco de desenvolvimento fetal prejudicado",
+            "risco de diade materno fetal perturbada",
+            "diade materno fetal"
+          ]
+        },
+        {
+          "nome": "diagnostico de ansiedade",
+          "termos": [
+            "ansiedade relacionada",
+            "diagnostico de ansiedade",
+            "medo relacionado",
+            "enfrentamento ineficaz"
+          ]
+        },
+        {
+          "nome": "diagnostico de conhecimento deficiente / disposicao para maternidade",
+          "termos": [
+            "conhecimento deficiente",
+            "deficit de conhecimento",
+            "disposicao para maternidade melhorada",
+            "disposicao para processo de maternidade",
+            "conhecimento deficiente sobre a gestacao"
+          ]
+        },
+        {
+          "nome": "prioriza os diagnosticos e justifica",
+          "termos": [
+            "o diagnostico prioritario",
+            "prioridade agora e",
+            "vou priorizar",
+            "o mais urgente e",
+            "justifico a prioridade"
+          ]
+        },
+        {
+          "nome": "define resultados esperados mensuraveis e pactua metas",
+          "termos": [
+            "resultado esperado",
+            "meta pactuada",
+            "vamos pactuar uma meta",
+            "noc",
+            "vamos combinar",
+            "o que voce acha de pactuarmos",
+            "ate o proximo retorno a gente espera",
+            "objetivo do cuidado"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Condutas e prescrição de enfermagem dentro do protocolo",
+      "objetivo": "Prescrever e orientar o que está previsto no programa de saúde pública, classificar corretamente o risco gestacional e reconhecer os limites legais da atuação. ITEM CRÍTICO: prescrever medicamento fora do protocolo do enfermeiro ou contraindicado na gestação zera este critério.",
+      "itens": [
+        {
+          "nome": "prescreve acido folico conforme protocolo",
+          "termos": [
+            "acido folico",
+            "vou prescrever acido folico",
+            "quatrocentos microgramas",
+            "cinco miligramas de acido folico",
+            "suplementacao de acido folico",
+            "tomar todo dia o acido folico"
+          ]
+        },
+        {
+          "nome": "prescreve ou programa o sulfato ferroso conforme protocolo",
+          "termos": [
+            "sulfato ferroso",
+            "suplemento de ferro",
+            "ferro profilatico",
+            "quarenta miligramas de ferro elementar",
+            "a partir da vigesima semana",
+            "tomar o ferro com suco de laranja",
+            "tomar o ferro longe do leite e do cafe"
+          ]
+        },
+        {
+          "nome": "orienta manejo nao farmacologico da nausea",
+          "termos": [
+            "comer de pouco em pouco",
+            "fracionar as refeicoes",
+            "bolacha de agua e sal antes de levantar",
+            "evitar jejum prolongado",
+            "evitar cheiro forte",
+            "evitar fritura",
+            "gengibre",
+            "levantar devagar",
+            "comer algo seco antes de sair da cama"
+          ]
+        },
+        {
+          "nome": "orienta suspender a automedicacao e os chas",
+          "termos": [
+            "suspender o plasil",
+            "nao tome remedio por conta propria",
+            "parar de tomar o cha",
+            "cha de boldo nao e indicado",
+            "so tome o que for prescrito aqui",
+            "nao use medicamento sem orientacao",
+            "cuidado com cha caseiro na gravidez"
+          ]
+        },
+        {
+          "nome": "atualiza a situacao vacinal",
+          "termos": [
+            "vou atualizar suas vacinas",
+            "reforco da dt",
+            "completar o esquema da dt",
+            "vacina dtpa a partir de vinte semanas",
+            "vacina da gripe",
+            "influenza",
+            "encaminhar para a sala de vacina",
+            "atualizar o cartao vacinal"
+          ]
+        },
+        {
+          "nome": "classifica o risco gestacional como baixo risco na APS",
+          "termos": [
+            "gestacao de baixo risco",
+            "pre natal de baixo risco",
+            "estratificacao de risco",
+            "classificar o risco gestacional",
+            "acompanhamento aqui na unidade",
+            "nao e indicacao de alto risco por enquanto"
+          ]
+        },
+        {
+          "nome": "encaminha e compartilha com a equipe dentro dos limites legais",
+          "termos": [
+            "vou compartilhar com o medico da equipe",
+            "discutir com a equipe",
+            "encaminhar para o dentista",
+            "equipe de odontologia",
+            "encaminhar para o nutricionista",
+            "grupo de gestantes",
+            "matriciamento",
+            "encaminho para avaliacao medica"
+          ]
+        },
+        {
+          "nome": "prescricao de enfermagem com acao, frequencia e horario",
+          "termos": [
+            "prescricao de enfermagem",
+            "uma vez ao dia",
+            "todos os dias no mesmo horario",
+            "vou deixar prescrito",
+            "anotei aqui a posologia",
+            "voce vai tomar um comprimido"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Educação em saúde, sinais de alerta e teach-back",
+      "objetivo": "Orientar autocuidado e sinais de alerta com linguagem acessível, corrigir com empatia a informação errada sobre sangramento, abordar a cessação do tabagismo, abrir a Caderneta da Gestante, agendar retorno e checar a compreensão. ITEM CRÍTICO: não orientar o sinal de alerta hemorrágico deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "orienta sinal de alerta hemorragico",
+          "termos": [
+            "se voce sangrar procure imediatamente",
+            "qualquer sangramento voce vem",
+            "perda de sangue nao e normal",
+            "sangramento vaginal e sinal de alerta",
+            "sangrou, procure a emergencia",
+            "nao espere em casa se sangrar"
+          ]
+        },
+        {
+          "nome": "corrige com empatia a informacao errada sobre sangramento",
+          "termos": [
+            "sangramento no comeco nao e normal",
+            "quem te falou isso quis ajudar, mas",
+            "essa informacao nao esta certa",
+            "eu entendo que te falaram isso",
+            "muita gente acredita nisso, mas",
+            "nao e verdade que sangrar e o corpo se ajeitando"
+          ]
+        },
+        {
+          "nome": "orienta os demais sinais de alerta da gestacao",
+          "termos": [
+            "perda de liquido",
+            "dor de cabeca forte",
+            "cefaleia forte",
+            "vista embacada",
+            "enxergar pontos brilhantes",
+            "inchaco subito",
+            "febre",
+            "dor forte na barriga",
+            "vomito incontrolavel",
+            "ardencia para urinar"
+          ]
+        },
+        {
+          "nome": "aborda a cessacao do tabagismo",
+          "termos": [
+            "parar de fumar",
+            "cessacao do tabagismo",
+            "abordagem breve do tabagismo",
+            "reduzir o cigarro",
+            "o cigarro na gravidez",
+            "grupo de tabagismo da unidade",
+            "combinar uma meta para o cigarro",
+            "eu posso te ajudar a parar"
+          ]
+        },
+        {
+          "nome": "orienta autocuidado, alimentacao e trabalho",
+          "termos": [
+            "alimentacao saudavel",
+            "beber mais agua",
+            "evitar refrigerante",
+            "nao ficar tanto tempo em pe",
+            "evitar carregar peso",
+            "fazer pausas no trabalho",
+            "atestado ou declaracao de comparecimento",
+            "direitos da gestante"
+          ]
+        },
+        {
+          "nome": "abre e preenche a Caderneta da Gestante",
+          "termos": [
+            "caderneta da gestante",
+            "cartao da gestante",
+            "vou abrir sua caderneta",
+            "preencher a caderneta",
+            "cadastrar no pre natal",
+            "carteirinha da gestante"
+          ]
+        },
+        {
+          "nome": "agenda o retorno e vincula a equipe",
+          "termos": [
+            "vou agendar seu retorno",
+            "proxima consulta",
+            "volte em trinta dias",
+            "consulta mensal ate a vigesima oitava semana",
+            "traga os exames no retorno",
+            "a agente comunitaria vai te acompanhar",
+            "voce pode me procurar aqui na unidade"
+          ]
+        },
+        {
+          "nome": "checa a compreensao com teach-back",
+          "termos": [
+            "me repete o que voce entendeu",
+            "so pra eu ter certeza que expliquei direito",
+            "o que voce vai fazer se",
+            "me conta com suas palavras",
+            "voce consegue me dizer quando deve procurar o servico",
+            "ficou alguma duvida",
+            "teach back",
+            "me explica de volta"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Registro da evolução de enfermagem e assinatura com COREN",
+      "objetivo": "Registrar a consulta no prontuário e na caderneta de forma legível, cronológica, datada e horária, assinando com nome e número do COREN, incluindo a notificação compulsória quando cabível.",
+      "itens": [
+        {
+          "nome": "registra a evolucao de enfermagem no prontuario",
+          "termos": [
+            "vou registrar no prontuario",
+            "evolucao de enfermagem",
+            "anotacao de enfermagem",
+            "registro no prontuario",
+            "vou anotar tudo aqui",
+            "descrever no prontuario"
+          ]
+        },
+        {
+          "nome": "registra data, hora e as etapas do processo de enfermagem",
+          "termos": [
+            "data e hora",
+            "registrar o horario",
+            "processo de enfermagem",
+            "sae",
+            "historico, diagnostico, planejamento",
+            "impresso do processo de enfermagem"
+          ]
+        },
+        {
+          "nome": "assina com nome e numero do COREN",
+          "termos": [
+            "assino a evolucao com o coren",
+            "meu numero do coren",
+            "carimbo e coren",
+            "assinatura e coren",
+            "coren numero"
+          ]
+        },
+        {
+          "nome": "notificacao compulsoria quando cabivel",
+          "termos": [
+            "notificacao compulsoria",
+            "ficha de notificacao",
+            "sinan",
+            "notificar a violencia",
+            "notificacao de violencia interpessoal"
+          ]
+        }
+      ],
+      "peso": 0.5
+    }
+  ]
+}
