@@ -2,7 +2,16 @@
 
 import { contemAlgumTermo } from "./texto.js";
 
-export const PREFIXOS_PROFISSIONAL = ["PROFISSIONAL:", "EXAME FÍSICO:", "EXAME SOLICITADO:"];
+// `PERGUNTA VERIFICADA:` é a pergunta que o SERVIDOR atendeu na conversa por voz
+// (a consulta à ficha). Na voz em tempo real a transcrição é declarada pelo
+// navegador; esta linha é a única prova carimbada aqui dentro de que o aluno tocou
+// o tema — e é justamente nos temas de risco, que pesam mais na rubrica.
+export const PREFIXOS_PROFISSIONAL = [
+  "PROFISSIONAL:",
+  "PERGUNTA VERIFICADA:",
+  "EXAME FÍSICO:",
+  "EXAME SOLICITADO:",
+];
 
 export function extrairTextoProfissional(texto) {
   return texto

@@ -179,6 +179,7 @@
   <div class="entrada">
     <div id="inst-toggle-wrap"></div>
     <div class="interno">
+      <button id="botao-vivo" class="vivo oculto" aria-pressed="false" aria-label="Conversar ao vivo com o paciente">🔴<span class="mic-label">Ao vivo</span></button>
       <button id="botao-mic" aria-label="Segurar para falar">🎤<span class="mic-label">Segurar p/ falar</span></button>
       <input id="campo-mensagem" type="text" placeholder="Pergunte ao paciente…" autocomplete="off">
       <button id="botao-enviar" class="enviar">Enviar</button>
@@ -259,6 +260,9 @@
   <button id="botao-nova" class="botao">Nova consulta</button>
 </section>
 
+<!-- A camada WebRTC da conversa ao vivo. Fora da página porque é a única parte que
+     fala com um terceiro e tem máquina de estados própria. -->
+<script src="/tempo-real.js"></script>
 <script>
 "use strict";
 const PREF_AUDIO = "pv_audio_respostas";
@@ -940,6 +944,58 @@ function configurarMicrofone() {
 }
 async function carregarCapacidades() { try { estado.capacidades = await (await fetch("/api/voz")).json(); } catch { estado.capacidades = { stt: false, tts: {} }; } configurarMicrofone(); }
 
+/* ---------- Conversa ao vivo ----------
+   Full-duplex: o aluno fala e o paciente responde sem apertar nada, e pode ser
+   interrompido no meio da frase. O modo de segurar o microfone continua existindo —
+   é o caminho barato e o fallback de tudo que der errado aqui. */
+async function carregarTempoReal() {
+  if (!window.TempoReal || !TempoReal.suportado()) return;
+  try {
+    const info = await (await fetch("/api/tempo-real")).json();
+    estado.tempoReal = info;
+    if (info && info.disponivel) $("botao-vivo").classList.remove("oculto");
+  } catch { /* sem o recurso, o botão simplesmente não aparece */ }
+}
+
+// Enquanto a conversa ao vivo está no ar, o caminho por texto fica fora: são duas
+// conversas com memórias diferentes, e alternar entre elas faria o paciente perder
+// o fio do que acabou de ser dito.
+function travarEntradaTexto(travar) {
+  $("campo-mensagem").disabled = travar;
+  $("botao-enviar").disabled = travar;
+  $("botao-mic").disabled = travar;
+  $("campo-mensagem").placeholder = travar ? "Fale com o paciente…" : "Pergunte ao paciente…";
+}
+
+function aoEventoVivo(ev) {
+  if (ev.tipo === "profissional") { adicionarBalao("aluno", ev.texto); estado.perguntas++; atualizarMedidores(); }
+  else if (ev.tipo === "paciente") { adicionarBalao("paciente", ev.texto); }
+  else if (ev.tipo === "exame") { adicionarBalao("exame", ev.resultado, { titulo: ev.titulo, nome: ev.nome }); estado.exames++; atualizarMedidores(); }
+  else if (ev.tipo === "aviso") { definirDicaMic(ev.texto, false); }
+  else if (ev.tipo === "estado") {
+    const vivo = ev.estado === "ligado";
+    const botao = $("botao-vivo");
+    botao.classList.toggle("ligado", vivo);
+    botao.setAttribute("aria-pressed", vivo ? "true" : "false");
+    botao.classList.toggle("conectando", ev.estado === "conectando");
+    if (ev.estado === "ligado") definirDicaMic("Ao vivo: fale à vontade — pode interromper o paciente.", true);
+    else if (ev.estado === "conectando") definirDicaMic("Abrindo a conversa ao vivo…", false);
+    else { travarEntradaTexto(false); definirDicaMic(ev.mensagem || DICA_PADRAO, false); }
+    if (ev.estado === "erro" && ev.mensagem) torrada(ev.mensagem, true);
+  }
+}
+
+async function alternarVivo() {
+  if (!estado.consultaId || !window.TempoReal) return;
+  if (TempoReal.ativo()) { TempoReal.parar(); return; }
+  pararFala(); pararDigitacao(); // a voz da conversa ao vivo vem pelo WebRTC, não pelo TTS por frase
+  travarEntradaTexto(true);
+  const r = await TempoReal.iniciar({ consultaId: estado.consultaId, aoEvento: aoEventoVivo });
+  if (!r.ok) travarEntradaTexto(false);
+}
+
+function pararVivo() { if (window.TempoReal && TempoReal.ativo()) TempoReal.parar(); travarEntradaTexto(false); }
+
 /* ---------- Renderizadores ---------- */
 function formatarNota(n) { return n.toFixed(1).replace(".", ","); }
 // Medidor por critério. A cor é uma rampa ORDENADA de 3 faixas (a severidade é
@@ -1059,7 +1115,13 @@ function montarEventosLocais() {
 function balaoDeEvento(e) {
   const b = document.createElement("div");
   if (e.tipo === "exame") { b.className = "balao exame"; const t = document.createElement("strong"); t.textContent = `${e.titulo} — ${e.nome}`; b.appendChild(t); b.append(e.texto); }
-  else { b.className = `balao ${e.tipo === "profissional" ? "aluno" : "paciente"}`; b.textContent = e.texto; }
+  else {
+    b.className = `balao ${e.tipo === "profissional" ? "aluno" : "paciente"}`; b.textContent = e.texto;
+    // Na conversa ao vivo a transcrição é declarada pelo navegador do aluno. Estas
+    // perguntas são a exceção: passaram pelo servidor, que as atendeu. O professor
+    // precisa enxergar a diferença entre o que foi visto e o que foi contado.
+    if (e.verificada) { const s = document.createElement("span"); s.className = "rotulo-demo"; s.textContent = "verificada no servidor"; b.appendChild(s); }
+  }
   return b;
 }
 
@@ -1094,6 +1156,7 @@ async function abrirDetalhe(arq) {
     // O raciocínio que o aluno assumiu e as anotações que tomou — é o que o
     // professor mais quer ler, e antes nem era gravado.
     const blocos = [
+      ["Modo da consulta", d.modo],
       ["Hipótese diagnóstica", d.hipotese],
       ["Diferenciais", d.diferenciais],
       ["Conduta", d.conduta],
@@ -1129,6 +1192,9 @@ function fecharFechamento() { $("modal-fechamento").classList.add("oculto"); }
 async function encerrarConsulta(fechamento) {
   if (!estado.consultaId || estado.ocupado) return;
   fecharFechamento();
+  // Fecha a conversa ao vivo ANTES de encerrar: o último turno ainda pendente é
+  // despejado no transcript enquanto a consulta aceita escrita.
+  pararVivo();
   pararFala(); pararDigitacao(); pararCronometro(); liberarMicrofone();
   estado.ocupado = true; $("botao-encerrar").disabled = true;
   const t0 = Date.now();
@@ -1192,6 +1258,7 @@ function renderizarFechamento(d) {
 }
 function mostrarAvaliacao(d) {
   estado.consultaId = null; pararFala(); pararDigitacao(); pararCronometro();
+  pararVivo(); // encerra a sessão ao vivo antes de soltar o id: sem isso ela seguiria custando por minuto
   liberarMicrofone(); // consulta acabou: apaga o indicador de microfone aberto do navegador
   mostrarTela("tela-avaliacao");
   $("resumo-avaliacao").textContent = (estado.casoTitulo ? "Caso: " + estado.casoTitulo + " · " : "") + `transcrição salva em historico/${d.transcript}`;
@@ -1230,6 +1297,7 @@ function mostrarAvaliacao(d) {
 /* ---------- Ligações ---------- */
 audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
+$("botao-vivo").addEventListener("click", alternarVivo);
 $("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
 $("botao-encerrar").addEventListener("click", abrirFechamento);
 $("fecha-enviar").addEventListener("click", () => encerrarConsulta({
@@ -1417,6 +1485,7 @@ function esconderSplash() { const s = $("splash"); if (s && !s.classList.contain
 aplicarPreferenciaAudio(estado.falarRespostas);
 carregarCasos().finally(() => setTimeout(esconderSplash, 350));
 carregarCapacidades();
+carregarTempoReal();
 carregarAcesso();
 setTimeout(esconderSplash, 2200); // rede de segurança
 </script>

@@ -1,6 +1,21 @@
 # Conversa por voz em tempo real com o paciente
 
-**Data:** 2026-08-04 · **Status:** design aprovado, implementação não iniciada
+**Data:** 2026-08-04 · **Status:** ✅ implementado em 2026-08-05
+
+> **O que mudou do design para o código**
+>
+> - **O orçamento é por ALUNO**, não por IP — a "dependência pendente" lá embaixo foi
+>   resolvida: o login por matrícula existe, então o teto acompanha a pessoa. São três
+>   tetos (consulta · aluno/dia · servidor/dia), em `motor/orcamento.js`.
+> - **Uma ferramenta, não duas.** `consultar_ficha` cobre o portão sensível *e* o
+>   exame: a mesma pergunta que pode abrir um tema pode ser um pedido de aferição, e
+>   quem separa é o servidor. O resultado do exame vai para a TELA; ao modelo vai só
+>   o fato de que o procedimento aconteceu.
+> - **O carimbo tem nome.** Cada consulta à ficha vira uma linha `PERGUNTA VERIFICADA:`
+>   no transcript, que `avaliador.js` pontua junto das falas. É a evidência de servidor
+>   que sustenta a nota quando a transcrição é declarada pelo cliente.
+> - **`POST /api/consultas/:id/tempo-real` devolve também a URL da chamada SDP**, para
+>   a página não trazer o endereço do provedor fixo no código.
 
 ## O problema
 

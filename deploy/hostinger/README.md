@@ -96,29 +96,25 @@ npm test           # testes do motor portado e do servidor (node --test)
 | `OLLAMA_URL` | `http://127.0.0.1:11434` | Endpoint do Ollama (usado se não houver `OPENAI_API_KEY`). |
 | `PACIENTE_VIRTUAL_MODELO` | `qwen3:8b` | Modelo usado no Ollama. |
 | `LLM_TIMEOUT_MS` | `120000` | Tempo-limite das chamadas ao modelo. |
-| `PV_CODIGO_ACESSO` | `1010` | Código que o aluno digita para iniciar uma consulta. Conferido **no servidor**. |
-| `PV_SENHA_PROFESSOR` | — | Senha do painel de transcrições. **Sem ela o painel fica desligado.** |
+| `PV_BANCO` | `historico/pv.sqlite` | Banco de contas (SQLite). Fica no volume do histórico para sobreviver ao redeploy. |
 | `PV_SEGREDO` | sorteado a cada start | Segredo que assina o cookie de sessão. Sem ele, as sessões caem quando o servidor reinicia. |
+| `PV_ADMIN_MATRICULA` / `PV_ADMIN_SENHA` / `PV_ADMIN_NOME` | — | Semeia o **primeiro** administrador. Sem ninguém cadastrado, é uma casa sem porta. |
+| `PV_URL` | — | URL pública (base do Better Auth). Sem ela, a origem é deduzida da requisição. |
 
 ### Acesso
 
-O código de acesso é verificado **no servidor** (`POST /api/acesso`), que devolve um
-cookie de sessão assinado, válido por 12 horas. Antes a checagem existia só no
-JavaScript da página: dava para ler o código no ver-fonte e, pior, chamar a API direto
-sem passar por ela.
+Cada pessoa entra com **matrícula e senha** (Better Auth). Não há auto-cadastro: quem
+cria e reseta conta é o administrador — e por isso também não há verificação de e-mail
+nem "esqueci a senha".
 
-Dois papéis:
+Três papéis:
 
-- **aluno** (`PV_CODIGO_ACESSO`) — pode fazer consulta e usar a síntese de voz.
-- **professor** (`PV_SENHA_PROFESSOR`) — além disso, abre o painel com as transcrições.
+- **aluno** — faz consulta e usa a voz.
+- **professor** — além disso, abre o painel com as transcrições.
+- **admin** — além disso, cria, reseta e desativa contas.
 
-O painel guarda **dados pessoais de alunos**, então ele é *fail-closed*: sem
-`PV_SENHA_PROFESSOR` definida, `/api/relatorio` responde 403 e o botão nem aparece na
-página. O fluxo do aluno nunca depende de configuração — `PV_CODIGO_ACESSO` tem
-padrão, e uma instância recém-subida continua utilizável.
-
-O código do aluno é uma porta simples (é digitado em sala, e o rate limit segura força
-bruta). A senha do professor é que protege dado pessoal — use uma senha forte.
+O painel guarda **dados pessoais de alunos**, então a proteção é por PAPEL, não por
+alguém lembrar de configurar uma senha: é impossível "esquecer de ligar".
 
 ### Voz (fala do paciente e envio de áudio)
 
@@ -160,6 +156,35 @@ instrução de atuação a partir de `estilo_de_fala.registro` e `estado_emocion
 então a mesma frase é lida de um jeito por uma paciente em crise de pânico e de outro
 por uma senhora enlutada. Modelos que não aceitam `instructions` (como o `tts-1`)
 ignoram isso sem quebrar.
+
+### Conversa ao vivo (voz em tempo real)
+
+O aluno fala e o paciente responde sem apertar nada, podendo ser interrompido no meio
+da frase. O áudio vai **direto do navegador ao provedor** (WebRTC): o VPS fica fora do
+caminho, o que corta a latência e impede que o áudio de uma turma inteira sufoque o
+host. Liga sozinha quando o áudio da OpenAI está configurado; o modo de segurar o
+microfone continua existindo como fallback e como caminho barato.
+
+| Variável | Padrão | Descrição |
+| -------- | ------ | --------- |
+| `PV_TEMPO_REAL` | ligado | `0` desliga o recurso mesmo com tudo configurado. |
+| `PV_RT_MODELO` | `gpt-realtime-2.1-mini,gpt-realtime-mini,gpt-realtime-2.1` | Modelo(s) da conversa ao vivo. Cadeia de fallback. |
+| `PV_RT_VOZ_F` / `PV_RT_VOZ_M` | `marin` / `cedar` | Voz do paciente ao vivo (catálogo próprio, diferente do TTS por frase). |
+| `PV_RT_MIN_CONSULTA` | `12` | Teto de minutos de voz por consulta. |
+| `PV_RT_MIN_ALUNO_DIA` | `30` | Teto por aluno em 24 h (janela deslizante). |
+| `PV_RT_MIN_SERVIDOR_DIA` | `240` | Teto do servidor inteiro em 24 h — é o que protege quem paga a conta. |
+| `PV_RT_MIN_BLOCO` | `5` | Minutos concedidos por token. Blocos curtos custam uma renovação a mais e é o que se perde ao fechar a aba. |
+
+O orçamento conta **minutos concedidos, não consumidos**: como o servidor não vê o
+áudio, ele debita o bloco inteiro ao cunhar o token e erra de propósito para menos.
+
+**O segredo clínico continua no servidor.** As instruções da sessão são o mesmo
+personagem do caminho por texto — sem diagnóstico e sem `informacoes_sensiveis`. O que
+é sensível só existe atrás da ferramenta `consultar_ficha`, que o modelo é obrigado a
+chamar e que **o servidor** responde, aplicando o mesmo portão determinístico. Em
+troca da latência, a transcrição passa a ser declarada pelo navegador: por isso cada
+consulta à ficha é carimbada no transcript como `PERGUNTA VERIFICADA:`, e é nela que a
+rubrica se ancora nos itens de risco.
 
 #### Voz sem custo por chamada: Kokoro ao lado da aplicação
 

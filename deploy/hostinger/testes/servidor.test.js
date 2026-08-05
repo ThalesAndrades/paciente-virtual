@@ -2,6 +2,7 @@
 
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import http from "node:http";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -511,5 +512,177 @@ test("nova senha derruba a sessão antiga e só a nova vale", async () => {
     assert.equal((await vitima("/api/auth/sign-in/username", { username: "2026-099", password: "senha-trocada" })).status, 200);
   } finally {
     servidor.close();
+  }
+});
+
+/* ---------- Conversa por voz em tempo real ---------- */
+
+test("sem credencial de áudio, o tempo real diz que não existe em vez de falhar", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: capacidade } = await api("/api/tempo-real");
+    assert.equal(capacidade.disponivel, false);
+
+    const { dados: consulta } = await api("/api/consultas", { caso: "infarto" });
+    const r = await api(`/api/consultas/${consulta.id}/tempo-real`, {});
+    // 503 e não 500: a página cai no microfone de segurar em vez de tela morta.
+    assert.equal(r.status, 503);
+    assert.match(r.dados.erro, /indispon/i);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("a ficha aplica o portão do servidor e não devolve resultado de exame ao modelo", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: consulta } = await api("/api/consultas", { caso: "ideacao_suicida" });
+
+    const generica = await api(`/api/consultas/${consulta.id}/ficha`, { pergunta: "Bom dia, tudo bem?" });
+    assert.equal(generica.status, 200);
+    assert.equal(generica.dados.modelo.revelar, null);
+
+    const direta = await api(`/api/consultas/${consulta.id}/ficha`, {
+      pergunta: "A senhora chegou a pensar em morrer?",
+    });
+    assert.ok(direta.dados.modelo.revelar, "pergunta direta deveria abrir o tema");
+    assert.deepEqual(direta.dados.tela, []);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o turno declarado pelo navegador entra no transcript e conta como pergunta", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: consulta } = await api("/api/consultas", { caso: "infarto" });
+
+    const vazio = await api(`/api/consultas/${consulta.id}/turno`, {});
+    assert.equal(vazio.status, 400);
+
+    const ok = await api(`/api/consultas/${consulta.id}/turno`, {
+      profissional: "onde dói, seu José?",
+      paciente: "aqui no meio do peito, doutor",
+    });
+    assert.equal(ok.status, 200);
+
+    const { dados: fim } = await api(`/api/consultas/${consulta.id}/encerrar`, {});
+    assert.equal(fim.estatisticas.perguntas, 1);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("consulta encerrada não aceita mais ficha nem turno", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: consulta } = await api("/api/consultas", { caso: "infarto" });
+    await api(`/api/consultas/${consulta.id}/encerrar`, {});
+
+    const ficha = await api(`/api/consultas/${consulta.id}/ficha`, { pergunta: "e a pressão?" });
+    const turno = await api(`/api/consultas/${consulta.id}/turno`, { profissional: "oi" });
+    // A consulta some do Map ao encerrar; o que importa é não escrever nela.
+    assert.ok(ficha.status >= 400, `ficha deveria recusar, veio ${ficha.status}`);
+    assert.ok(turno.status >= 400, `turno deveria recusar, veio ${turno.status}`);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("tempo real e ficha exigem sessão", async () => {
+  const { servidor, api } = await subir();
+  try {
+    const semSessao = await api("/api/consultas/qualquer/ficha", { pergunta: "e aí?" });
+    assert.equal(semSessao.status, 401);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("com provedor no ar, o token é cunhado e os minutos são debitados", async () => {
+  // Provedor de mentira: valida o que sai daqui (credencial, instruções, ferramenta)
+  // sem gastar crédito de ninguém. É o único caminho do tempo real que fala com a
+  // rede, e o freio de custo mora justamente nele.
+  const { zerarOrcamento } = await import("../motor/orcamento.js");
+  const pedidos = [];
+  const provedor = http.createServer((req, res) => {
+    let corpo = "";
+    req.on("data", (p) => (corpo += p));
+    req.on("end", () => {
+      pedidos.push({ url: req.url, auth: req.headers.authorization, corpo: JSON.parse(corpo || "{}") });
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ value: "ek_de_teste", expires_at: 123 }));
+    });
+  });
+  await new Promise((ok) => provedor.listen(0, "127.0.0.1", ok));
+
+  const antes = {
+    base: process.env.OPENAI_AUDIO_BASE_URL,
+    chave: process.env.OPENAI_AUDIO_API_KEY,
+    forcar: process.env.PV_AUDIO_FORCAR,
+    modelo: process.env.PV_RT_MODELO,
+    bloco: process.env.PV_RT_MIN_BLOCO,
+    consulta: process.env.PV_RT_MIN_CONSULTA,
+  };
+  process.env.OPENAI_AUDIO_BASE_URL = `http://127.0.0.1:${provedor.address().port}/v1`;
+  process.env.OPENAI_AUDIO_API_KEY = "chave-de-teste";
+  process.env.PV_AUDIO_FORCAR = "1";
+  process.env.PV_RT_MODELO = "modelo-de-teste";
+  process.env.PV_RT_MIN_BLOCO = "5";
+  process.env.PV_RT_MIN_CONSULTA = "5";
+  zerarOrcamento();
+
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: consulta } = await api("/api/consultas", { caso: "ideacao_suicida" });
+
+    const r = await api(`/api/consultas/${consulta.id}/tempo-real`, {});
+    assert.equal(r.status, 200);
+    assert.equal(r.dados.token, "ek_de_teste");
+    assert.equal(r.dados.minutos, 5);
+    assert.match(r.dados.url, /\/realtime\/calls$/);
+
+    const pedido = pedidos.at(-1);
+    assert.match(pedido.url, /\/realtime\/client_secrets$/);
+    assert.equal(pedido.auth, "Bearer chave-de-teste");
+    const sessao = pedido.corpo.session;
+    assert.equal(sessao.tools[0].name, "consultar_ficha");
+    assert.ok(sessao.audio.input.turn_detection.type, "sem VAD não há barge-in");
+
+    // O que o provedor recebe NÃO pode conter o que o portão protege.
+    const { fileURLToPath } = await import("node:url");
+    const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+    const caso = JSON.parse(
+      fs.readFileSync(path.join(raiz, "casos", "ideacao_suicida.json"), "utf-8")
+    );
+    for (const valor of Object.values(caso.informacoes_sensiveis || {})) {
+      if (!valor || typeof valor === "object") continue;
+      assert.ok(!sessao.instructions.includes(String(valor)), "sensível vazou para o provedor");
+    }
+
+    // Segundo pedido esgota o teto da consulta: a página cai no microfone de segurar.
+    const segundo = await api(`/api/consultas/${consulta.id}/tempo-real`, {});
+    assert.equal(segundo.status, 429);
+    assert.match(segundo.dados.erro, /acabou/i);
+  } finally {
+    servidor.close();
+    provedor.close();
+    zerarOrcamento();
+    for (const [chave, valor] of Object.entries({
+      OPENAI_AUDIO_BASE_URL: antes.base,
+      OPENAI_AUDIO_API_KEY: antes.chave,
+      PV_AUDIO_FORCAR: antes.forcar,
+      PV_RT_MODELO: antes.modelo,
+      PV_RT_MIN_BLOCO: antes.bloco,
+      PV_RT_MIN_CONSULTA: antes.consulta,
+    })) {
+      if (valor === undefined) delete process.env[chave];
+      else process.env[chave] = valor;
+    }
   }
 });

@@ -65,10 +65,11 @@ código, professor por senha), com autorização por endpoint — o painel de
 transcrições é *fail-closed* e o aluno não o alcança. Antes o "código de acesso"
 existia só no JavaScript da página: dava para lê-lo no ver-fonte e chamar a API
 direto sem passar por ele.
-- [x] Sessão + papéis (aluno, professor)
+- [x] Sessão + papéis (aluno, professor, admin)
 - [x] Autorização nos endpoints (quem vê o quê)
-- [ ] **Contas individuais** — hoje o código é compartilhado pela turma; o nome do
-      aluno é digitado por ele mesmo, sem verificação
+- [x] **Contas individuais** (ago/2026) — matrícula e senha com Better Auth, criadas
+      pelo administrador; o nome deixou de ser digitado pelo próprio aluno, e o teto
+      de uso passou a ser por pessoa (é o que destravou o orçamento da voz ao vivo)
 - [ ] Modelo multi-tenant (instituição → turmas → alunos)
 - **Aceite:** dados de uma instituição nunca vazam para outra. Compartilha modelagem com 0.2.
 
@@ -87,7 +88,7 @@ direto sem passar por ele.
 - **1.1 Camada de modelo plugável** (IA · M · alto) — local para privacidade/offline; nuvem (Claude/GPT) opcional para qualidade máxima, escolha do professor.
 - **1.2 RAG de fidelidade clínica** (IA · L · alto) — ancorar respostas em diretrizes reais; blindar a coerência médica hoje dependente só do prompt.
 - **1.3 Guardrails de segurança** (IA · M · alto) — detectores de quebra de personagem, vazamento de diagnóstico e manejo de conteúdo sensível (ideação suicida exige cuidado extra).
-- **1.4 Voz full-duplex + barge-in** (Voz · L · alto) — WebRTC + STT/TTS em streaming + interrupção; alvo < 800 ms. Base já iniciada nos commits `perf(fluidez)`.
+- **1.4 Voz full-duplex + barge-in** (Voz · L · alto) — ✅ **entregue (ago/2026)**: WebRTC direto navegador ↔ provedor, com barge-in nativo (`semantic_vad`) e o portão clínico como ferramenta respondida pelo servidor. O modo de segurar o microfone continua como fallback. Falta **medir** a latência em sala e comparar o modelo `-mini` com o cheio em dois casos antes de fixar. Ver [a spec](superpowers/specs/2026-08-04-voz-tempo-real-design.md).
 - **1.5 Avaliação com LLM-judge calibrado** (IA · M · alto) — manter o checklist determinístico como baseline e somar julgamento semântico por rubrica, calibrado contra notas humanas (κ ≥ 0,8).
 
 ## Fase 2 — Produto (adoção)

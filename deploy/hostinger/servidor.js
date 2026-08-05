@@ -40,6 +40,9 @@ import {
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
+import { consultarFicha } from "./motor/ficha.js";
+import { conceder, saldo, tetos } from "./motor/orcamento.js";
+import { cunharToken, infoTempoReal, tempoRealDisponivel, urlChamada } from "./motor/tempo-real.js";
 import { conversar, modelosEmUso, registrarModelo } from "./motor/ia.js";
 import { podarHistorico, responderComoPaciente, responderComoPacienteStream } from "./motor/humanizar.js";
 import { dentroDoLimite, ipDe, segundosAteLiberar } from "./motor/limite.js";
@@ -59,6 +62,10 @@ const PAGINA = path.join(RAIZ, "web", "index.html");
 // disco para quem souber escrever `../`. O mesmo cuidado que o relatório já toma.
 const ESTATICOS = new Map([
   ["/estilo.css", { arquivo: path.join(RAIZ, "web", "estilo.css"), tipo: "text/css; charset=utf-8" }],
+  [
+    "/tempo-real.js",
+    { arquivo: path.join(RAIZ, "web", "tempo-real.js"), tipo: "text/javascript; charset=utf-8" },
+  ],
 ]);
 
 const AVISO_SEM_PARECER =
@@ -81,6 +88,11 @@ const LIMITE_CONSULTAS = 20;
 const LIMITE_VOZ = 400; // uma frase = uma síntese; uma consulta falada gasta dezenas
 const LIMITE_AUDIO = 120;
 const LIMITE_LOGIN = 20;
+// Cada token de tempo real é um bloco de minutos já debitado do orçamento; o teto
+// aqui é só contra pedir token em loop. O turno é a transcrição chegando do
+// navegador — uma conversa fluida gera dezenas por consulta.
+const LIMITE_TEMPO_REAL = 30;
+const LIMITE_TURNO = 400;
 
 // Áudio de uma fala do profissional. ~1 MB por minuto em webm/opus; o teto cobre
 // uma pergunta longa com folga e barra upload abusivo.
@@ -693,6 +705,7 @@ export function criarServidor() {
           // não estar liberado na conta e o servidor rebaixar sem avisar.
           servido_por: modelosEmUso(),
           voz: ttsInfo(),
+          tempo_real: { ...infoTempoReal(), tetos: tetos() },
           ultima_falha_ia: ultimaFalhaIA,
           consultas_ativas: consultas.size,
         });
@@ -836,6 +849,18 @@ export function criarServidor() {
         return json(res, 200, ttsInfo());
       }
 
+      // O que a página precisa saber ANTES de oferecer o botão: se o recurso existe
+      // e quanto ainda cabe hoje. Oferecer e falhar seria pior que não oferecer.
+      if (req.method === "GET" && pathname === "/api/tempo-real") {
+        const info = infoTempoReal();
+        const aluno = sessaoDe(req);
+        return json(res, 200, {
+          ...info,
+          tetos: tetos(),
+          saldo: aluno ? saldo({ aluno, consultaId: null }) : null,
+        });
+      }
+
       if (req.method === "POST" && pathname === "/api/falar") {
         if (!ehAluno(req)) return json(res, 401, { erro: "Sessão necessária." });
         if (estourouLimite(req, res, "voz", LIMITE_VOZ)) return;
@@ -917,6 +942,83 @@ export function criarServidor() {
         return json(res, 200, {
           eventos: [{ tipo: "exame", titulo, nome: item.nome, resultado: item.resultado }],
         });
+      }
+
+      // ---- Conversa por voz em tempo real (WebRTC direto navegador ↔ provedor).
+      //
+      // O servidor entra em três momentos e sai do caminho no resto: cunha o token
+      // (debitando o orçamento), responde ao portão clínico e recebe a transcrição.
+      // O áudio nunca passa por aqui.
+      const emTempoReal = pathname.match(/^\/api\/consultas\/([\w-]+)\/tempo-real$/);
+      if (req.method === "POST" && emTempoReal) {
+        const consulta = consultaAtiva(res, emTempoReal[1]);
+        if (!consulta) return;
+        if (!tempoRealDisponivel()) {
+          // 503 e não 500: é ausência de recurso, e a página cai no microfone de
+          // segurar. Nunca tela morta.
+          return json(res, 503, { erro: "Conversa em tempo real indisponível neste servidor." });
+        }
+        if (estourouLimite(req, res, "tempo-real", LIMITE_TEMPO_REAL)) return;
+
+        const aluno = sessaoDe(req) || ipDe(req);
+        const concessao = conceder({ aluno, consultaId: emTempoReal[1] });
+        if (!concessao.ok) {
+          return json(res, 429, { erro: concessao.motivo, orcamento: concessao.restante });
+        }
+
+        try {
+          const token = await cunharToken({
+            caso: consulta.caso,
+            voz: consulta.voz,
+            minutos: concessao.minutos,
+          });
+          // Marca o transcript UMA vez: quem ler depois precisa saber que dali em
+          // diante a fala foi declarada pelo navegador, não vista pelo servidor.
+          if (!consulta.tempoReal) {
+            consulta.tempoReal = true;
+            consulta.transcript += `MODO: tempo real (transcrição declarada pelo navegador)\n`;
+          }
+          return json(res, 200, {
+            token: token.valor,
+            url: urlChamada(),
+            modelo: token.modelo,
+            expira_em: token.expira_em,
+            minutos: concessao.minutos,
+            orcamento: concessao.restante,
+          });
+        } catch (erro) {
+          registrarFalhaIA("token de tempo real", erro);
+          return json(res, 502, { erro: "Não consegui abrir a conversa por voz agora." });
+        }
+      }
+
+      // O portão clínico como ferramenta: o modelo pergunta, o SERVIDOR decide.
+      const ficha = pathname.match(/^\/api\/consultas\/([\w-]+)\/ficha$/);
+      if (req.method === "POST" && ficha) {
+        const consulta = consultaAtiva(res, ficha[1]);
+        if (!consulta) return;
+        if (estourouLimite(req, res, "mensagens", LIMITE_MENSAGENS)) return;
+        const dados = await lerCorpo(req);
+        return json(res, 200, consultarFicha(consulta, dados.pergunta));
+      }
+
+      // Transcrição vinda do navegador. Declarada pelo cliente por construção — o
+      // que o servidor carimba são as consultas à ficha, que é onde a rubrica pesa.
+      const turno = pathname.match(/^\/api\/consultas\/([\w-]+)\/turno$/);
+      if (req.method === "POST" && turno) {
+        const consulta = consultaAtiva(res, turno[1]);
+        if (!consulta) return;
+        if (estourouLimite(req, res, "turno", LIMITE_TURNO)) return;
+        const dados = await lerCorpo(req);
+        const profissional = umaLinha(dados.profissional, MAX_CARACTERES_PERGUNTA);
+        const paciente = umaLinha(dados.paciente, MAX_CARACTERES_PERGUNTA);
+        if (!profissional && !paciente) return json(res, 400, { erro: "Turno vazio." });
+        if (profissional) {
+          consulta.transcript += `\nPROFISSIONAL: ${profissional}\n`;
+          consulta.perguntas += 1;
+        }
+        if (paciente) consulta.transcript += `\nPACIENTE: ${paciente}\n`;
+        return json(res, 200, { ok: true });
       }
 
       const encerrar = pathname.match(/^\/api\/consultas\/([\w-]+)\/encerrar$/);

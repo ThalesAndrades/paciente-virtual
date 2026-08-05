@@ -14,7 +14,10 @@ import {
 } from "../motor/avaliador.js";
 import { RESPOSTA_PADRAO, fatoSensivelDireto, responderDemo } from "../motor/demo.js";
 import { detectarExames } from "../motor/exames.js";
+import { consultarFicha } from "../motor/ficha.js";
 import { sistemaPaciente } from "../motor/humanizar.js";
+import { conceder, zerarOrcamento } from "../motor/orcamento.js";
+import { FERRAMENTAS, instrucoesTempoReal } from "../motor/tempo-real.js";
 import { limparRaciocinio } from "../motor/ia.js";
 import { contemTermo, normalizar } from "../motor/texto.js";
 
@@ -439,4 +442,123 @@ test("relatorio extrai metadados e estrutura o transcript", async () => {
   );
   assert.match(eventos[1].texto, /muito medo/);
   assert.equal(eventos[2].nome, "Eletrocardiograma");
+});
+
+/* ---------- Conversa por voz em tempo real ---------- */
+
+test("instruções da sessão ao vivo não carregam o sensível de caso nenhum", () => {
+  // Mesma garantia do caminho por texto, no caminho onde ela é mais frágil: aqui as
+  // instruções vão para um provedor que gera áudio direto, e o servidor não vê a
+  // pergunta. Se o sensível vazasse para cá, o portão viraria decoração.
+  const casos = fs.readdirSync(path.join(RAIZ, "casos")).filter((n) => n.endsWith(".json"));
+  for (const arquivo of casos) {
+    const caso = lerCaso(arquivo.replace(/\.json$/, ""));
+    const instrucoes = instrucoesTempoReal(caso);
+    for (const valor of Object.values(caso.informacoes_sensiveis || {})) {
+      if (!valor || typeof valor === "object") continue;
+      assert.ok(
+        !instrucoes.includes(String(valor)),
+        `${arquivo}: informação sensível vazou nas instruções ao vivo`
+      );
+    }
+    const diagnostico = (caso.fidelidade_clinica || {}).diagnostico_subjacente;
+    if (diagnostico) {
+      assert.ok(!instrucoes.includes(diagnostico), `${arquivo}: diagnóstico vazou nas instruções ao vivo`);
+    }
+  }
+});
+
+test("a sessão ao vivo obriga o modelo a consultar a ficha", () => {
+  const instrucoes = instrucoesTempoReal(lerCaso("ideacao_suicida"));
+  assert.match(instrucoes, /consultar_ficha/);
+  assert.equal(FERRAMENTAS.length, 1);
+  assert.equal(FERRAMENTAS[0].name, "consultar_ficha");
+  assert.deepEqual(FERRAMENTAS[0].parameters.required, ["pergunta"]);
+});
+
+test("ficha nega tema não tocado e libera na pergunta direta", () => {
+  const caso = lerCaso("ideacao_suicida");
+  const consulta = { caso, transcript: "", perguntas: 0, exames: 0 };
+
+  const generica = consultarFicha(consulta, "Como a senhora está hoje?");
+  assert.equal(generica.modelo.revelar, null);
+  assert.match(generica.modelo.instrucao, /NUNCA invente/);
+
+  const direta = consultarFicha(consulta, "A senhora chegou a pensar em morrer?");
+  assert.ok(direta.modelo.revelar, "pergunta direta deveria abrir o tema");
+
+  // O carimbo do servidor é o que sustenta a nota quando a transcrição é declarada
+  // pelo navegador.
+  assert.equal((consulta.transcript.match(/PERGUNTA VERIFICADA:/g) || []).length, 2);
+  assert.match(extrairTextoProfissional(consulta.transcript), /pensar em morrer/);
+});
+
+test("ficha manda o exame para a tela e nunca o resultado para o modelo", () => {
+  const caso = lerCaso("infarto");
+  const consulta = { caso, transcript: "", perguntas: 0, exames: 0 };
+  const saida = consultarFicha(consulta, "Vou medir a sua pressão arterial agora.");
+
+  assert.ok(saida.tela.length >= 1, "o exame deveria aparecer na tela");
+  const serializado = JSON.stringify(saida.modelo);
+  for (const item of saida.tela) {
+    assert.ok(!serializado.includes(item.resultado), "resultado de exame vazou para o modelo");
+    assert.ok(serializado.includes(item.nome), "o paciente precisa saber que o procedimento aconteceu");
+  }
+  assert.match(consulta.transcript, /RESULTADO:/);
+});
+
+test("orçamento concede em blocos e fecha quando a consulta estoura o teto", () => {
+  zerarOrcamento();
+  const anterior = { consulta: process.env.PV_RT_MIN_CONSULTA, bloco: process.env.PV_RT_MIN_BLOCO };
+  process.env.PV_RT_MIN_CONSULTA = "10";
+  process.env.PV_RT_MIN_BLOCO = "5";
+  try {
+    const alvo = { aluno: "aluno-1", consultaId: "c1" };
+    assert.equal(conceder(alvo).minutos, 5);
+    assert.equal(conceder(alvo).minutos, 5);
+
+    const terceira = conceder(alvo);
+    assert.equal(terceira.ok, false);
+    assert.match(terceira.motivo, /consulta/i);
+
+    // Outra consulta do mesmo aluno continua tendo o próprio teto...
+    assert.equal(conceder({ aluno: "aluno-1", consultaId: "c2" }).ok, true);
+    // ...até o teto do DIA, que é por aluno.
+    process.env.PV_RT_MIN_ALUNO_DIA = "10";
+    const quarta = conceder({ aluno: "aluno-1", consultaId: "c3" });
+    assert.equal(quarta.ok, false);
+    assert.match(quarta.motivo, /hoje/i);
+    // E o aluno ao lado não paga pela cota de quem gastou.
+    assert.equal(conceder({ aluno: "aluno-2", consultaId: "c4" }).ok, true);
+  } finally {
+    process.env.PV_RT_MIN_CONSULTA = anterior.consulta ?? "";
+    process.env.PV_RT_MIN_BLOCO = anterior.bloco ?? "";
+    delete process.env.PV_RT_MIN_ALUNO_DIA;
+    zerarOrcamento();
+  }
+});
+
+test("transcript ao vivo: MODO sai da linha do tempo e a pergunta verificada fica marcada", async () => {
+  const { estruturarTranscript, extrairMetadados } = await import("../motor/relatorio.js");
+  const transcript = [
+    "==================================================",
+    "CASO: infarto",
+    "ALUNO: aluno001",
+    "INICIO: 2026-08-05 10:00:00",
+    "MODO: tempo real (transcrição declarada pelo navegador)",
+    "==================================================",
+    "",
+    "PROFISSIONAL: bom dia, o que trouxe o senhor aqui?",
+    "PACIENTE: uma dor forte no peito, doutor",
+    "",
+    "PERGUNTA VERIFICADA: o senhor chegou a pensar em desistir?",
+  ].join("\n");
+
+  const metadados = extrairMetadados(transcript);
+  assert.match(metadados.modo, /tempo real/);
+
+  const eventos = estruturarTranscript(transcript);
+  assert.deepEqual(eventos.map((e) => e.tipo), ["profissional", "paciente", "profissional"]);
+  assert.equal(eventos[2].verificada, true);
+  assert.ok(!eventos.some((e) => /tempo real/.test(e.texto)), "MODO não é fala");
 });

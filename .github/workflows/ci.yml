@@ -13,7 +13,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          # 22 e não 20: o banco de contas usa `node:sqlite`, que só existe a partir
+          # do 22.5 — é a mesma versão que a imagem de produção roda.
+          node-version: "22"
 
       - name: Testes do servidor Node
         run: npm test
