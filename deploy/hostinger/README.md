@@ -157,6 +157,50 @@ então a mesma frase é lida de um jeito por uma paciente em crise de pânico e 
 por uma senhora enlutada. Modelos que não aceitam `instructions` (como o `tts-1`)
 ignoram isso sem quebrar.
 
+## Stack de produção (VPS Docker + Traefik)
+
+O `ubtec.sbs` não roda na hospedagem compartilhada: roda num VPS Docker, atrás do
+Traefik do Coolify. A stack está em [`docker-compose.yml`](docker-compose.yml), ao
+lado deste arquivo — **versionada de propósito**, porque enquanto ela só existia no
+servidor ela derivou: o container que servia foi criado à mão (Node 22 + `npm ci`)
+enquanto o arquivo em disco ainda descrevia a versão anterior (Node 20). Quem
+reiniciasse "o projeto" ressuscitava o container antigo, que entrava em crash-loop e
+podia ser registrado no Traefik por instantes.
+
+O container é descartável e sem build: **clona a `main` a cada start**. Então:
+
+- **Deploy de código novo** = `git push` na `main` + reiniciar o serviço.
+- **Mudança de configuração** = editar o compose (ou o `.env`) + `up -d`.
+
+Os segredos ficam num `.env` ao lado do compose (permissão `600`) — o compose só os
+referencia. Hoje ele guarda `OPENAI_API_KEY` e `PV_SEGREDO`.
+
+### Aplicando a stack pela primeira vez
+
+No diretório do projeto no host (`/docker/paciente-virtual`):
+
+```sh
+cp .env ../pv.env.bak                     # o .env é a única coisa insubstituível
+docker rm -f paciente-virtual-antigo      # o órfão do deploy anterior, se existir
+# grave o docker-compose.yml deste repositório por cima do antigo
+docker compose up -d --remove-orphans
+docker compose logs -f --tail=50
+```
+
+O `--remove-orphans` é o que impede a repetição do problema: containers com o rótulo
+do projeto que não estão no arquivo somem em vez de ficarem para trás.
+
+Conferência (de fora, sem sessão):
+
+```sh
+curl -s https://ubtec.sbs/healthz        # status ok, backend, painel
+curl -s https://ubtec.sbs/api/tempo-real # disponivel, modelo e os tetos de minuto
+```
+
+Se algo der errado, o rollback é o `.env` de volta e o compose anterior — os dados
+(transcrições e o banco de contas) vivem no volume `historico` e não são tocados por
+nenhuma dessas operações.
+
 ### Conversa ao vivo (voz em tempo real)
 
 O aluno fala e o paciente responde sem apertar nada, podendo ser interrompido no meio

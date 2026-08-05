@@ -1,0 +1,120 @@
+# Stack de produção do ubtec.sbs (VPS Docker + Traefik do Coolify).
+#
+# Este arquivo existe VERSIONADO por um motivo: ele só vivia no VPS, e por isso
+# derivou. O container que servia em agosto/2026 foi criado à mão, com Node 22 e
+# `npm ci`, enquanto o compose em disco ainda descrevia a versão anterior (Node 20,
+# sem dependências) — quem reiniciasse "o projeto" ressuscitava o container antigo,
+# que entrava em crash-loop e podia ser registrado no Traefik por instantes.
+#
+# O container é descartável e SEM build: ele clona a `main` do GitHub a cada start.
+# Deploy de código novo = push na `main` + reiniciar este serviço.
+#
+# Segredos NUNCA entram aqui. Ficam em `.env`, ao lado deste arquivo, com permissão
+# 600 — este arquivo só os referencia.
+
+name: paciente-virtual
+
+networks:
+  # Rede do proxy do Coolify (Traefik). Externa: quem a cria é o proxy, não nós.
+  coolify:
+    external: true
+
+volumes:
+  # O command faz `rm -rf /app` e re-clona: sem este volume, toda transcrição de
+  # aluno — e, desde o login por matrícula, o BANCO DE CONTAS — sumiria em qualquer
+  # redeploy, reboot ou OOM.
+  historico:
+
+services:
+  app:
+    # Node 22 não é preferência: o banco de contas usa `node:sqlite`, que só existe
+    # a partir do 22.5. No 20 o servidor nem sobe.
+    image: node:22-alpine
+    container_name: paciente-virtual
+    restart: unless-stopped
+    networks:
+      - coolify
+    volumes:
+      - historico:/dados/historico
+    environment:
+      HOST: 0.0.0.0
+      PORT: "3000"
+
+      # --- Modelo de linguagem ---
+      # A fala do paciente usa um instruct rápido; o parecer pedagógico usa um
+      # modelo de raciocínio. Ambos aceitam LISTA = cadeia de fallback: tenta o
+      # primeiro e cai para o próximo em erro ou rate-limit.
+      OPENAI_BASE_URL: https://api.openai.com/v1
+      OPENAI_MODEL: gpt-4.1,gpt-4o,gpt-4o-mini
+      OPENAI_MODEL_AVALIACAO: o4-mini,gpt-4.1,gpt-4o
+      # Ausente (ou sem saldo) NÃO derruba o site: o paciente cai no modo
+      # demonstração e a nota objetiva continua funcionando. Falha nunca bloqueia o
+      # aluno — por isso `:-` e não `:?`.
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+
+      # --- Sessão e contas ---
+      # Sem PV_SEGREDO as sessões caem a cada restart (todo mundo deslogado).
+      PV_SEGREDO: ${PV_SEGREDO:-}
+      # Base pública do Better Auth. Sem ela o servidor deduz a origem da requisição
+      # e avisa a cada start ("Base URL is not set").
+      PV_URL: https://ubtec.sbs
+      # O banco de contas mora no volume (via symlink /app/historico), então
+      # sobrevive ao re-clone. Explícito para não depender do symlink resolver.
+      PV_BANCO: /dados/historico/pv.sqlite
+
+      # --- Primeiro administrador ---
+      # DELIBERADAMENTE FORA. A conta `admin` já existe no banco; manter as
+      # variáveis aqui RESSUSCITARIA um admin desativado ou removido a cada start.
+      # Só descomente para semear uma instância nova (banco vazio), e remova depois.
+      # PV_ADMIN_MATRICULA: admin
+      # PV_ADMIN_NOME: Administrador
+      # PV_ADMIN_SENHA: ${PV_ADMIN_SENHA:-}
+
+      # --- Conversa por voz em tempo real ---
+      # Ligada quando há chave de áudio da OpenAI. Os tetos abaixo são os padrões do
+      # código, escritos aqui para ficarem visíveis a quem paga a conta.
+      # `PV_TEMPO_REAL: "0"` desliga o recurso sem mexer no código.
+      PV_RT_MIN_CONSULTA: "12"
+      PV_RT_MIN_ALUNO_DIA: "30"
+      PV_RT_MIN_SERVIDOR_DIA: "240"
+      PV_RT_MIN_BLOCO: "5"
+
+    # Um único `sh -c`, na ordem que importa: git → clone → volume → dependências →
+    # servidor. O `exec` no fim faz o Node virar o PID 1 e receber o SIGTERM do
+    # Docker, para o encerramento limpo do servidor funcionar.
+    command:
+      - sh
+      - -c
+      - >-
+        apk add --no-cache git >/dev/null 2>&1 &&
+        rm -rf /app &&
+        git clone --depth 1 https://github.com/ThalesAndrades/paciente-virtual /app &&
+        mkdir -p /dados/historico &&
+        rm -rf /app/historico && ln -s /dados/historico /app/historico &&
+        cd /app &&
+        npm ci --omit=dev --no-audit --no-fund &&
+        exec node deploy/hostinger/servidor.js
+
+    # O container leva alguns segundos clonando e instalando antes de escutar. O
+    # start_period cobre isso; depois, um /healthz mudo significa serviço morto.
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - "traefik.http.routers.pv.rule=Host(`ubtec.sbs`) || Host(`www.ubtec.sbs`)"
+      - traefik.http.routers.pv.entrypoints=https
+      - traefik.http.routers.pv.tls=true
+      - traefik.http.routers.pv.tls.certresolver=letsencrypt
+      - traefik.http.routers.pv.service=pv
+      - "traefik.http.routers.pv-web.rule=Host(`ubtec.sbs`) || Host(`www.ubtec.sbs`)"
+      - traefik.http.routers.pv-web.entrypoints=http
+      - traefik.http.routers.pv-web.service=pv
+      - traefik.http.routers.pv-web.middlewares=pv-redir
+      - traefik.http.middlewares.pv-redir.redirectscheme.scheme=https
+      - traefik.http.services.pv.loadbalancer.server.port=3000
