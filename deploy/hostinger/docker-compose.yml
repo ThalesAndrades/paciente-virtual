@@ -70,6 +70,15 @@ services:
       # PV_ADMIN_NOME: Administrador
       # PV_ADMIN_SENHA: ${PV_ADMIN_SENHA:-}
 
+      # --- Cobrança (THM Tecnologia) ---
+      # Ausentes, a forma de pagamento correspondente simplesmente não é oferecida
+      # na loja — em vez de aparecer e falhar no clique.
+      WOOVI_APP_ID: ${WOOVI_APP_ID:-}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      # Sem este segredo NENHUM webhook da Stripe é aceito. É de propósito: sem ele
+      # o endpoint aceitaria qualquer POST como confirmação de pagamento.
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+
       # --- Conversa por voz em tempo real ---
       # Ligada quando há chave de áudio da OpenAI. Os tetos abaixo são os padrões do
       # código, escritos aqui para ficarem visíveis a quem paga a conta.

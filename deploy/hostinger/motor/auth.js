@@ -212,6 +212,85 @@ export async function semearAdmin() {
   return { semeado: true, matricula };
 }
 
+// ── Cadastro público ──────────────────────────────────────────────────────
+//
+// A porta fechada continua fechada para a API do Better Auth (`disableSignUp`), e
+// aberta AQUI, numa rota nossa, com as regras que o produto exige: e-mail de
+// verdade (é para onde vai o recibo do pagamento), senha com tamanho mínimo,
+// limite por IP e créditos de boas-vindas concedidos na mesma transação lógica.
+//
+// Passar pela rota própria em vez de liberar `/api/auth/sign-up` é o que permite
+// tudo isso — e o que impede que amanhã um caminho esquecido crie conta sem crédito
+// nem papel definido.
+
+const EMAIL_VALIDO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+export function emailAceitavel(email) {
+  const limpo = String(email || "").trim().toLowerCase();
+  if (!EMAIL_VALIDO.test(limpo) || limpo.length > 160) return null;
+  // `.invalid` é reservado pela RFC 2606 e é o que usamos para conta criada pelo
+  // admin sem e-mail. Aceitar no cadastro público deixaria colidir de propósito.
+  if (limpo.endsWith(".invalid")) return null;
+  return limpo;
+}
+
+export async function usuarioPorEmail(email) {
+  const ctx = await auth().$context;
+  return (await ctx.internalAdapter.findUserByEmail(email)) || null;
+}
+
+// Apelido de acesso derivado do e-mail. O aluno vai poder entrar pelos dois, mas o
+// resto do sistema (transcrições, painel do professor) continua identificando
+// pessoas por este campo, como já fazia com matrícula.
+async function apelidoLivre(base) {
+  const ctx = await auth().$context;
+  const limpo = String(base || "aluno")
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]/g, "")
+    .slice(0, 32) || "aluno";
+  for (let tentativa = 0; tentativa < 50; tentativa++) {
+    const candidato = tentativa === 0 ? limpo : `${limpo}${tentativa + 1}`;
+    if (candidato.length < 3) continue;
+    const existe = await ctx.internalAdapter.findUserByEmail(emailSintetico(candidato));
+    const emUso = existe || (await ctx.adapter.findOne({ model: "user", where: [{ field: "username", value: candidato }] }));
+    if (!emUso) return candidato;
+  }
+  return `aluno${Date.now().toString(36)}`;
+}
+
+export async function criarUsuarioPublico({ nome, email, senha }) {
+  const enderecoLimpo = emailAceitavel(email);
+  if (!enderecoLimpo) throw new Error("E-mail inválido.");
+  if (String(senha || "").length < 8) throw new Error("A senha precisa ter pelo menos 8 caracteres.");
+
+  if (await usuarioPorEmail(enderecoLimpo)) {
+    throw new Error("Já existe uma conta com este e-mail.");
+  }
+
+  const ctx = await auth().$context;
+  const apelido = await apelidoLivre(enderecoLimpo.split("@")[0]);
+  const hash = await ctx.password.hash(senha);
+  const usuario = await ctx.internalAdapter.createUser({
+    email: enderecoLimpo,
+    name: String(nome || "").trim().slice(0, 80) || apelido,
+    // Não há verificação de e-mail: bloquear o acesso por causa dela seria travar
+    // o aluno na porta por um e-mail que talvez nem chegue. O endereço serve para
+    // recibo e para o aluno reconhecer a própria conta.
+    emailVerified: false,
+    role: "aluno",
+    username: apelido,
+    displayUsername: apelido,
+  });
+  await ctx.internalAdapter.createAccount({
+    userId: usuario.id,
+    providerId: "credential",
+    accountId: usuario.id,
+    password: hash,
+  });
+
+  return usuario;
+}
+
 // Cria uma conta. É o que o administrador usa para cadastrar a turma, e o que os
 // testes usam para montar cenário — a mesma porta, para que o testado seja o que
 // roda em produção.

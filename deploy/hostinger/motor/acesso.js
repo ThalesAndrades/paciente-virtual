@@ -106,6 +106,14 @@ export function nomeDe(req) {
   return (sessao && sessao.user && sessao.user.name) || matriculaDe(req);
 }
 
+// E-mail real de quem está logado, ou null quando a conta foi criada pelo admin com
+// endereço sintético. Serve para o recibo da cobrança — e só.
+export function emailDe(req) {
+  const sessao = sessaoBruta(req);
+  const email = (sessao && sessao.user && sessao.user.email) || "";
+  return email && !email.endsWith(".invalid") ? email : null;
+}
+
 // Estado para a página decidir o que mostrar. Nunca devolve credencial.
 export function estadoAcesso(req) {
   const papel = papelDe(req);

@@ -776,3 +776,39 @@ input, select, textarea {
   .cab-info span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .cab-badge { margin-left: 0; }
 }
+
+/* ── Créditos e loja ───────────────────────────────────────────────────────── */
+.cartao-saldo {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio);
+  padding: 14px 16px; margin: 0 0 18px; box-shadow: var(--sombra);
+}
+.cartao-saldo.vazio { border-color: color-mix(in srgb, var(--falha) 40%, var(--borda)); }
+.cartao-saldo .saldo-num { display: flex; align-items: baseline; gap: 6px; }
+.cartao-saldo .saldo-num strong { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; }
+.cartao-saldo .saldo-num span { color: var(--texto-suave); font-size: .85rem; }
+.cartao-saldo .saldo-txt { color: var(--texto-suave); font-size: .9rem; flex: 1; min-width: 140px; }
+.cartao-saldo .botao { padding: 10px 16px; }
+
+.planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 0 0 22px; }
+.plano {
+  display: flex; flex-direction: column; gap: 4px; text-align: left; cursor: pointer; font: inherit;
+  border: 1px solid var(--borda); border-radius: var(--raio); background: var(--superficie); color: var(--texto);
+  padding: 16px; box-shadow: var(--sombra); transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.plano:hover { transform: translateY(-2px); border-color: var(--primaria); box-shadow: var(--sombra-forte); }
+/* O destaque não é enfeite: é o pacote que sai mais barato por crédito, e dizer
+   isso poupa o aluno de fazer a conta. */
+.plano.destaque { border-color: var(--primaria); box-shadow: 0 0 0 2px var(--primaria-suave), var(--sombra); }
+.plano-rotulo { font-weight: 700; }
+.plano-preco { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; }
+.plano-preco i { font-size: .8rem; font-weight: 600; color: var(--texto-suave); font-style: normal; }
+.plano-nota { font-size: .84rem; color: var(--texto-suave); }
+
+.pix-caixa {
+  border: 1px solid var(--borda); border-radius: var(--raio); background: var(--superficie);
+  padding: 18px; box-shadow: var(--sombra); margin-top: 8px;
+}
+.pix-qr { width: 190px; height: 190px; display: block; margin: 0 0 12px; border-radius: 12px; background: #fff; }
+.pix-codigo { background: var(--superficie-2); border: 1px solid var(--borda); border-radius: var(--raio-sm); padding: 10px 12px; margin-bottom: 12px; }
+.pix-codigo code { font-size: .74rem; word-break: break-all; color: var(--texto-suave); }

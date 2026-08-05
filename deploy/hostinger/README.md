@@ -177,6 +177,70 @@ Não há nada para configurar:
   `estado_emocional` do caso. A página recebe seis números e duas palavras — nenhum
   texto do caso viaja para o navegador por causa da animação.
 
+## Créditos, planos e cobrança
+
+O acesso é por **créditos**. Uma consulta completa custa 10; a conversa por voz ao
+vivo custa 2 por minuto concedido. Quem cria conta ganha 20 créditos — uma
+experiência completa, por nossa conta.
+
+| | |
+| --- | --- |
+| **Assinatura Estudante** | R$ 59,90/mês · 250 créditos |
+| **Assinatura Residente** | R$ 129,90/mês · 600 créditos |
+| **Avulso** | 60 créditos R$ 24 · 200 créditos R$ 70 · 600 créditos R$ 180 |
+
+Os números vivem em [`motor/planos.js`](motor/planos.js), em um lugar só: a tela de
+compra, o débito do uso e o recibo leem a mesma tabela. A ancoragem é o custo real
+de API (~R$ 0,85 por consulta de texto, ~R$ 0,15 por minuto de voz), com margem para
+a infraestrutura fixa e para o caso que sai mais caro que a média.
+
+**Quem paga o quê.** Aluno gasta crédito; professor e admin não — quem avalia a
+turma não paga pela avaliação. Conta criada pelo admin também nasce com os créditos
+de boas-vindas, para uma turma cadastrada na véspera conseguir usar a ferramenta na
+aula.
+
+**Antes de começar**, se o saldo não cobre a experiência completa, a página avisa e
+deixa o aluno decidir: começar assim mesmo ou recarregar. Ninguém é cortado no meio
+de uma estação. Sem saldo para nem uma consulta, o caminho é a recarga.
+
+### Contabilidade
+
+`credito_lancamento` é um **razão**, não um contador: cada linha diz de onde o
+crédito veio ou para onde foi (boas-vindas, compra, assinatura, consulta, voz,
+estorno). Saldo é a soma. Um contador simples seria menos código e um pesadelo no
+primeiro suporte — "sumiram meus créditos" sem nenhuma linha para mostrar é uma
+discussão sem árbitro.
+
+O débito da consulta acontece **antes** de ela existir, com o id dela como
+referência: debitar depois abriria a janela em que duas abas começam ao mesmo tempo
+e uma sai de graça. Falha nossa depois da cobrança gera **estorno automático**.
+
+### Pix (Woovi) e cartão (Stripe)
+
+| Variável | Descrição |
+| -------- | --------- |
+| `WOOVI_APP_ID` | App ID da Woovi (THM Tecnologia). Sem ela, o Pix não é oferecido. |
+| `STRIPE_SECRET_KEY` | Chave secreta da Stripe (THM Tecnologia). Sem ela, o cartão não é oferecido. |
+| `STRIPE_WEBHOOK_SECRET` | Segredo do endpoint de webhook. **Sem ela, nenhum webhook da Stripe é aceito.** |
+| `THM_CREDITOS_BOAS_VINDAS` | Créditos da conta nova (padrão: 20). `0` desliga. |
+
+Webhooks a cadastrar nos painéis:
+
+- Stripe → `https://ubtec.sbs/api/webhooks/stripe` (eventos `checkout.session.completed`,
+  `invoice.paid`, `customer.subscription.deleted`)
+- Woovi → `https://ubtec.sbs/api/webhooks/woovi`
+
+**Duas regras governam a cobrança**, e valem para os dois provedores:
+
+1. **Quem diz que foi pago é o provedor, nunca o navegador.** O aluno voltar para a
+   página de sucesso não credita nada: credita o webhook, e mesmo ele é reconferido
+   contra a API antes de valer. Um POST forjado no nosso endpoint não vira crédito.
+2. **Todo crédito é idempotente por referência.** Provedor reenvia webhook de
+   propósito — é assim que se garante entrega — e reenvio não pode virar dinheiro.
+
+Assinatura só no cartão: Pix recorrente exigiria o aluno pagar na mão todo mês, e
+chamar isso de assinatura seria mentira. No Pix vão os pacotes avulsos.
+
 ## Stack de produção (VPS Docker + Traefik)
 
 O `ubtec.sbs` não roda na hospedagem compartilhada: roda num VPS Docker, atrás do

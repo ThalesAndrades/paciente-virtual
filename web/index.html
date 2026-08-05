@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f766e">
-<title>Paciente Virtual — Simulador de Consulta</title>
+<title>THM Simulados Inteligentes — Simulação clínica com paciente virtual</title>
 <link rel="stylesheet" href="/estilo.css">
 </head>
 <body>
@@ -14,8 +14,8 @@
 <div id="splash">
   <div class="splash-in">
     <div class="splash-selo">🩺</div>
-    <div class="splash-tit">Paciente Virtual</div>
-    <div class="splash-sub">Simulador de consulta clínica</div>
+    <div class="splash-tit">THM Simulados Inteligentes</div>
+    <div class="splash-sub">Simulação clínica com paciente virtual</div>
     <div class="splash-barra"><i></i></div>
   </div>
 </div>
@@ -24,12 +24,27 @@
   <div class="modal-box">
     <div class="modal-selo" id="modal-selo">🔒</div>
     <h2 id="modal-codigo-tit">Entrar</h2>
-    <p class="subtitulo" id="modal-codigo-sub" style="margin-bottom:16px">Use a sua matrícula e a sua senha.</p>
+    <p class="subtitulo" id="modal-codigo-sub" style="margin-bottom:14px">Use a sua matrícula ou o seu e-mail.</p>
+    <!-- Duas abas na mesma caixa: quem já tem conta entra, quem não tem cria na
+         hora e ganha créditos para experimentar. Separar em duas telas faria o
+         visitante perder o fio no momento em que ele mais desiste. -->
+    <div class="segmentos" id="abas-acesso" role="group" aria-label="Entrar ou criar conta" style="margin-bottom:14px">
+      <button type="button" class="seg ativo" data-acesso="entrar">Entrar</button>
+      <button type="button" class="seg" data-acesso="criar">Criar conta</button>
+    </div>
     <form id="form-login" class="campos-login" autocomplete="on">
-      <input id="campo-matricula" name="username" type="text" placeholder="Matrícula" maxlength="40"
-             autocomplete="username" autocapitalize="none" spellcheck="false" aria-label="Matrícula">
+      <input id="campo-matricula" name="username" type="text" placeholder="Matrícula ou e-mail" maxlength="160"
+             autocomplete="username" autocapitalize="none" spellcheck="false" aria-label="Matrícula ou e-mail">
       <input id="campo-senha" name="password" type="password" placeholder="Senha" maxlength="200"
              autocomplete="current-password" aria-label="Senha">
+    </form>
+    <form id="form-cadastro" class="campos-login oculto" autocomplete="on">
+      <input id="campo-nome" type="text" placeholder="Seu nome" maxlength="80" autocomplete="name" aria-label="Seu nome">
+      <input id="campo-email" type="email" placeholder="Seu melhor e-mail" maxlength="160"
+             autocomplete="email" autocapitalize="none" spellcheck="false" aria-label="E-mail">
+      <input id="campo-senha-nova" type="password" placeholder="Crie uma senha (mín. 8 caracteres)" maxlength="200"
+             autocomplete="new-password" aria-label="Senha">
+      <p class="pref-dica" id="dica-boas-vindas" style="margin:2px 0 0"></p>
     </form>
     <div class="modal-erro oculto" id="codigo-erro">Matrícula ou senha incorreta.</div>
     <div class="modal-acoes">
@@ -43,8 +58,8 @@
   <div class="marca">
     <div class="selo">🩺</div>
     <div>
-      <div class="tit">Paciente Virtual</div>
-      <div class="sub">Simulador de consulta clínica por voz — treino de anamnese e entrevista</div>
+      <div class="tit">THM Simulados Inteligentes</div>
+      <div class="sub">Simulação clínica com paciente virtual — treino de anamnese, entrevista e conduta</div>
     </div>
   </div>
 
@@ -58,6 +73,14 @@
   </div>
 
   <p class="pref-dica" id="quem-sou" style="margin:0 0 10px"></p>
+
+  <!-- Saldo em destaque na home: o aluno precisa saber quanto tem ANTES de
+       escolher o caso, não descobrir na hora de começar. -->
+  <div class="cartao-saldo oculto" id="cartao-saldo">
+    <div class="saldo-num"><strong id="saldo-valor">—</strong><span>créditos</span></div>
+    <div class="saldo-txt" id="saldo-texto"></div>
+    <button class="botao" id="abrir-loja" type="button">Comprar créditos</button>
+  </div>
 
   <label>Escolha a área</label>
   <!-- Preenchido por carregarCasos(): um card por categoria presente no acervo. -->
@@ -76,6 +99,32 @@
   <p class="subtitulo" id="cat-sub"></p>
   <div class="aleatorio-linha"><button class="btn-aleatorio" id="aleatorio-cat" type="button">🎲 Sortear caso desta área</button></div>
   <div id="lista-casos" class="cartoes"><p class="subtitulo">Carregando casos…</p></div>
+</section>
+
+<section id="tela-loja" class="tela">
+  <div class="topo-secao">
+    <button class="voltar" id="loja-voltar">← Início</button>
+    <h1 style="margin:0;font-size:1.3rem;flex:1">Créditos</h1>
+    <span class="chip-cat med" id="loja-saldo">—</span>
+  </div>
+  <p class="subtitulo" id="loja-explica"></p>
+
+  <div id="loja-assinaturas"></div>
+  <div id="loja-pacotes"></div>
+
+  <!-- O Pix acontece SEM sair da página: o aluno copia o código, paga no app do
+       banco e volta. Mandar para outra aba perde metade das compras no meio. -->
+  <div class="pix-caixa oculto" id="pix-caixa">
+    <h3 style="margin:0 0 4px">Pague com Pix para concluir</h3>
+    <p class="subtitulo" id="pix-info" style="margin:0 0 12px"></p>
+    <img id="pix-qr" alt="QR Code do Pix" class="pix-qr oculto">
+    <div class="pix-codigo"><code id="pix-brcode"></code></div>
+    <div class="modal-acoes" style="justify-content:flex-start">
+      <button class="botao" id="pix-copiar" type="button">Copiar código Pix</button>
+      <button class="botao secundario" id="pix-conferir" type="button">Já paguei</button>
+    </div>
+    <p class="pref-dica" id="pix-estado" style="margin:10px 0 0"></p>
+  </div>
 </section>
 
 <section id="tela-painel" class="tela">
@@ -199,6 +248,21 @@
   </div>
 </section>
 
+<!-- Aviso de crédito. Aparece ANTES de a consulta começar, quando o saldo não cobre
+     a experiência completa: o aluno decide se entra assim mesmo (sem voz ao vivo,
+     por exemplo) ou se recarrega. Nunca corta ninguém no meio de uma estação. -->
+<div id="modal-creditos" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="creditos-tit">
+  <div class="modal-box">
+    <div class="modal-selo">⚡</div>
+    <h2 id="creditos-tit">Seus créditos estão acabando</h2>
+    <p class="subtitulo" id="creditos-texto" style="margin-bottom:16px"></p>
+    <div class="modal-acoes">
+      <button class="botao secundario" id="creditos-seguir" type="button">Começar assim mesmo</button>
+      <button class="botao" id="creditos-comprar" type="button">Comprar créditos</button>
+    </div>
+  </div>
+</div>
+
 <div id="modal-fechamento" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="fecha-tit">
   <div class="modal-box largo">
     <h2 id="fecha-tit">Antes de encerrar: qual a sua conclusão?</h2>
@@ -284,6 +348,7 @@ const estado = {
   casos: [], categoriaAtual: null, casoSelecionado: null, consultaId: null,
   voz: "feminino", categoriaCaso: "psicologia", pacienteNome: "", instrumentos: null,
   falarRespostas: lerPreferenciaAudio(), avisoDemoExibido: false, ocupado: false,
+  creditos: null, loja: null,
   capacidades: { stt: false, tts: {} },
   inicioConsulta: null, perguntas: 0, exames: 0, timerEstacao: null,
 };
@@ -371,7 +436,12 @@ function abrirModal(papel, fn) {
   $("campo-senha").value = "";
   $("codigo-erro").classList.add("oculto");
   $("modal-codigo").classList.remove("oculto");
-  setTimeout(() => { try { $("campo-matricula").focus(); } catch {} }, 60);
+  // Professor entra; visitante sem conta encontra a aba de criar já visível.
+  trocarAbaAcesso(professor ? "entrar" : modoAcesso);
+  const boasVindas = (estado.loja && estado.loja.boas_vindas) || 0;
+  $("dica-boas-vindas").textContent = boasVindas
+    ? `Você começa com ${boasVindas} créditos — uma consulta completa, por nossa conta.`
+    : "";
 }
 
 function exigirCodigo(fn) {
@@ -380,6 +450,7 @@ function exigirCodigo(fn) {
 }
 
 async function confirmarCodigo() {
+  if (modoAcesso === "criar") return criarConta();
   const matricula = $("campo-matricula").value.trim();
   const senha = $("campo-senha").value;
   if (!matricula || !senha) {
@@ -389,19 +460,24 @@ async function confirmarCodigo() {
   }
   const botao = $("codigo-ok"); botao.disabled = true;
   try {
-    const r = await fetch("/api/auth/sign-in/username", {
+    // Quem se cadastrou sozinho conhece o próprio e-mail, não o apelido que o
+    // sistema derivou dele. Aceitar os dois é o mínimo para a pessoa conseguir
+    // voltar amanhã.
+    const porEmail = matricula.includes("@");
+    const r = await fetch(porEmail ? "/api/auth/sign-in/email" : "/api/auth/sign-in/username", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: matricula, password: senha }),
+      body: JSON.stringify(porEmail ? { email: matricula, password: senha } : { username: matricula, password: senha }),
     });
     if (!r.ok) {
       // Mensagem única de propósito: dizer "essa matrícula não existe" entregaria
       // a quem perguntasse a lista de matrículas válidas.
-      $("codigo-erro").textContent = "Matrícula ou senha incorreta.";
+      $("codigo-erro").textContent = "Matrícula, e-mail ou senha incorreta.";
       $("codigo-erro").classList.remove("oculto");
       try { $("campo-senha").select(); } catch {}
       return;
     }
     await carregarAcesso();
+    await carregarCreditos();
     $("modal-codigo").classList.add("oculto");
     const fn = acaoLiberacao; acaoLiberacao = null; if (fn) fn();
   } catch {
@@ -410,12 +486,220 @@ async function confirmarCodigo() {
   } finally { botao.disabled = false; }
 }
 function fecharCodigo() { $("modal-codigo").classList.add("oculto"); acaoLiberacao = null; }
+
+/* ---------- Cadastro, créditos e loja ---------- */
+
+let modoAcesso = "entrar";
+function trocarAbaAcesso(modo) {
+  modoAcesso = modo === "criar" ? "criar" : "entrar";
+  const criando = modoAcesso === "criar";
+  document.querySelectorAll("#abas-acesso .seg").forEach((s) => {
+    const ativo = s.dataset.acesso === modoAcesso;
+    s.classList.toggle("ativo", ativo);
+    s.setAttribute("aria-pressed", ativo ? "true" : "false");
+  });
+  $("form-login").classList.toggle("oculto", criando);
+  $("form-cadastro").classList.toggle("oculto", !criando);
+  $("codigo-erro").classList.add("oculto");
+  $("codigo-ok").textContent = criando ? "Criar conta" : "Entrar";
+  $("modal-codigo-tit").textContent = criando ? "Criar sua conta" : "Entrar";
+  $("modal-codigo-sub").textContent = criando
+    ? "Leva menos de um minuto — e você já começa com créditos para experimentar."
+    : "Use a sua matrícula ou o seu e-mail.";
+  setTimeout(() => { try { $(criando ? "campo-nome" : "campo-matricula").focus(); } catch {} }, 60);
+}
+
+async function criarConta() {
+  const nome = $("campo-nome").value.trim();
+  const email = $("campo-email").value.trim();
+  const senha = $("campo-senha-nova").value;
+  const erro = (t) => { $("codigo-erro").textContent = t; $("codigo-erro").classList.remove("oculto"); };
+  if (!nome || !email || !senha) return erro("Preencha nome, e-mail e senha.");
+  if (senha.length < 8) return erro("A senha precisa ter pelo menos 8 caracteres.");
+
+  const botao = $("codigo-ok"); botao.disabled = true;
+  try {
+    const r = await fetch("/api/cadastro", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, email, senha }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) return erro(d.erro || "Não foi possível criar a conta.");
+    // Cria e JÁ entra: pedir para a pessoa digitar de novo o que acabou de digitar
+    // é onde se perde quem estava com pressa.
+    const entrada = await fetch("/api/auth/sign-in/email", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: d.email || email, password: senha }),
+    });
+    if (!entrada.ok) { trocarAbaAcesso("entrar"); return erro("Conta criada. Entre com o seu e-mail e senha."); }
+    await carregarAcesso();
+    await carregarCreditos();
+    $("modal-codigo").classList.add("oculto");
+    torrada("Conta criada. Seus créditos de boas-vindas já estão na conta.");
+    const fn = acaoLiberacao; acaoLiberacao = null; if (fn) fn();
+  } catch {
+    erro("Falha de conexão. Tente de novo.");
+  } finally { botao.disabled = false; }
+}
+
+async function carregarCreditos() {
+  if (!acesso.autenticado) { estado.creditos = null; pintarSaldo(); return null; }
+  try {
+    estado.creditos = await (await fetch("/api/creditos")).json();
+  } catch { estado.creditos = null; }
+  pintarSaldo();
+  return estado.creditos;
+}
+
+function pintarSaldo() {
+  const c = estado.creditos;
+  const cartao = $("cartao-saldo");
+  if (!c || c.isento) { cartao.classList.add("oculto"); return; }
+  cartao.classList.remove("oculto");
+  $("saldo-valor").textContent = c.saldo;
+  $("loja-saldo").textContent = `${c.saldo} créditos`;
+  const consultas = Math.floor(c.saldo / (c.custo.consulta || 10));
+  $("saldo-texto").textContent = consultas > 0
+    ? `Dá para ${consultas} consulta${consultas > 1 ? "s" : ""} completa${consultas > 1 ? "s" : ""}.`
+    : "Não dá para uma consulta completa.";
+  cartao.classList.toggle("vazio", c.saldo < (c.custo.consulta || 10));
+}
+
+// Antes de começar: se o saldo não cobre a experiência completa, o aluno decide.
+// A regra é dele — nunca cortar no meio de uma estação, e nunca começar algo que
+// vai faltar sem ele saber disso antes.
+function comCreditosSuficientes(acao) {
+  const c = estado.creditos;
+  if (!c || c.isento) return acao();
+  const minimo = c.custo.consulta || 10;
+  const completa = c.experiencia_completa || minimo;
+  if (c.saldo >= completa) return acao();
+
+  const semNada = c.saldo < minimo;
+  $("creditos-tit").textContent = semNada ? "Você está sem créditos" : "Seus créditos estão acabando";
+  $("creditos-texto").textContent = semNada
+    ? `Uma consulta custa ${minimo} créditos e você tem ${c.saldo}. Recarregue para continuar treinando.`
+    : `Você tem ${c.saldo} créditos. A consulta custa ${minimo}, e a experiência completa — com conversa por voz — usa cerca de ${completa}. Dá para começar, mas a voz ao vivo pode acabar antes do fim.`;
+  $("creditos-seguir").classList.toggle("oculto", semNada);
+  $("modal-creditos").classList.remove("oculto");
+  acaoAposCredito = acao;
+}
+let acaoAposCredito = null;
+
+function montarLoja() {
+  const loja = estado.loja;
+  if (!loja) return;
+  $("loja-explica").textContent =
+    `Uma consulta completa custa ${loja.custo.consulta} créditos. A conversa por voz ao vivo custa ${loja.custo.minuto_voz} créditos por minuto.`;
+
+  const cartao = (item, tipo) => `
+    <button class="plano ${item.destaque ? "destaque" : ""}" data-item="${item.id}" data-tipo="${tipo}" type="button">
+      <span class="plano-rotulo">${esc(item.rotulo)}</span>
+      <span class="plano-preco">${esc(item.preco)}${tipo === "assinatura" ? "<i>/mês</i>" : ""}</span>
+      <span class="plano-nota">${esc(item.nota || "")}</span>
+    </button>`;
+
+  $("loja-assinaturas").innerHTML =
+    `<label>Assinatura mensal</label><div class="planos">${loja.assinaturas.map((a) => cartao(a, "assinatura")).join("")}</div>`;
+  $("loja-pacotes").innerHTML =
+    `<label>Comprar créditos avulsos</label><div class="planos">${loja.pacotes.map((p) => cartao(p, "pacote")).join("")}</div>`;
+
+  document.querySelectorAll("#tela-loja .plano").forEach((b) => {
+    b.addEventListener("click", () => escolherPagamento(b.dataset.item, b.dataset.tipo));
+  });
+}
+
+function escolherPagamento(item, tipo) {
+  const formas = (estado.loja && estado.loja.formas) || {};
+  // Assinatura só no cartão: Pix recorrente exigiria o aluno pagar na mão todo mês,
+  // e chamar isso de "assinatura" seria mentira.
+  if (tipo === "assinatura") {
+    if (!formas.cartao) return torrada("Pagamento por cartão indisponível no momento.", true);
+    return comprar(item, "cartao");
+  }
+  if (formas.pix && formas.cartao) {
+    if (confirm("Pagar com Pix?\n\nOK = Pix (aprovação na hora)\nCancelar = Cartão")) comprar(item, "pix");
+    else comprar(item, "cartao");
+    return;
+  }
+  if (formas.pix) return comprar(item, "pix");
+  if (formas.cartao) return comprar(item, "cartao");
+  torrada("Nenhuma forma de pagamento está configurada neste servidor.", true);
+}
+
+let pixEmAberto = null;
+let relogioPix = null;
+
+async function comprar(item, forma) {
+  try {
+    const r = await fetch("/api/pagamentos", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ item, forma }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) return torrada(d.erro || "Não consegui abrir a cobrança.", true);
+
+    if (forma === "cartao") { window.location.href = d.url; return; }
+
+    pixEmAberto = d.id;
+    $("pix-caixa").classList.remove("oculto");
+    $("pix-info").textContent = `${d.creditos} créditos · ${(d.valor_centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+    $("pix-brcode").textContent = d.brCode || "";
+    const qr = $("pix-qr");
+    if (d.qrCode) { qr.src = d.qrCode; qr.classList.remove("oculto"); } else qr.classList.add("oculto");
+    $("pix-estado").textContent = "Aguardando o pagamento…";
+    $("pix-caixa").scrollIntoView({ behavior: "smooth", block: "center" });
+    vigiarPix();
+  } catch { torrada("Falha de conexão ao abrir a cobrança.", true); }
+}
+
+// Confere sozinho de tempos em tempos: o aluno paga no app do banco e volta para
+// uma tela que já sabe. Quem confirma é sempre o servidor, contra o provedor.
+function vigiarPix() {
+  if (relogioPix) clearInterval(relogioPix);
+  let tentativas = 0;
+  relogioPix = setInterval(async () => {
+    tentativas += 1;
+    if (!pixEmAberto || tentativas > 60) { clearInterval(relogioPix); relogioPix = null; return; }
+    if (await conferirPagamento(true)) { clearInterval(relogioPix); relogioPix = null; }
+  }, 5000);
+}
+
+async function conferirPagamento(silencioso) {
+  if (!pixEmAberto) return false;
+  try {
+    const r = await fetch(`/api/pagamentos/${encodeURIComponent(pixEmAberto)}`);
+    const d = await r.json().catch(() => ({}));
+    if (d.pago) {
+      $("pix-estado").textContent = "Pagamento confirmado. Créditos na conta.";
+      $("pix-caixa").classList.add("oculto");
+      pixEmAberto = null;
+      await carregarCreditos();
+      torrada("Pagamento confirmado — seus créditos já estão disponíveis.");
+      return true;
+    }
+    if (!silencioso) $("pix-estado").textContent = "Ainda não caiu. Se você acabou de pagar, aguarde alguns segundos.";
+  } catch {
+    if (!silencioso) $("pix-estado").textContent = "Não consegui confirmar agora.";
+  }
+  return false;
+}
+
+async function abrirLoja() {
+  if (!acesso.autenticado) { abrirModal("aluno", abrirLoja); return; }
+  if (!estado.loja) {
+    try { estado.loja = await (await fetch("/api/loja")).json(); } catch { estado.loja = null; }
+  }
+  montarLoja();
+  await carregarCreditos();
+  mostrarTela("tela-loja");
+}
 // Modo aleatório: sorteia um caso (da categoria ou de todos) sem revelar qual.
 function iniciarAleatorio(categoria) {
   const pool = categoria ? estado.casos.filter((c) => c.categoria === categoria) : estado.casos;
   if (!pool.length) return;
   const c = pool[Math.floor(Math.random() * pool.length)];
-  exigirCodigo(() => iniciarConsulta(c.id, true));
+  exigirCodigo(() => comCreditosSuficientes(() => iniciarConsulta(c.id, true)));
 }
 
 /* ---------- Áudio: elemento <audio> destravado (mobile) + Web Speech fallback ---------- */
@@ -596,7 +880,7 @@ function abrirCategoria(cat) {
     const b = document.createElement("button");
     b.className = "cartao " + meta.chip;
     b.innerHTML = `<div class="av">${(caso.paciente.nome || "?").charAt(0)}</div><div><h3>${caso.titulo}</h3><p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao || ""}</p><p class="q">${caso.queixa}</p></div>`;
-    b.addEventListener("click", () => exigirCodigo(() => iniciarConsulta(caso.id, false)));
+    b.addEventListener("click", () => exigirCodigo(() => comCreditosSuficientes(() => iniciarConsulta(caso.id, false))));
     lista.appendChild(b);
   }
   mostrarTela("tela-categoria");
@@ -618,6 +902,9 @@ async function iniciarConsulta(casoId, aleatorio) {
       // Sessão caiu (cookie expirado, servidor reiniciado): em vez de um erro seco,
       // reabre o modal do código e retoma exatamente o que o aluno tentou fazer.
       if (r.status === 401) { acesso.autenticado = false; abrirModal("aluno", () => iniciarConsulta(casoId, aleatorio)); return; }
+      // 402: acabou o crédito entre a checagem e o clique (outra aba, outro
+      // aparelho). Manda direto para a recarga em vez de um erro seco.
+      if (r.status === 402) { await carregarCreditos(); torrada(d.erro || "Créditos insuficientes.", true); abrirLoja(); return; }
       torrada(d.erro || "Não foi possível iniciar a consulta.", true);
       return;
     }
@@ -1415,6 +1702,25 @@ function mostrarAvaliacao(d) {
 audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("botao-vivo").addEventListener("click", alternarVivo);
+document.querySelectorAll("#abas-acesso .seg").forEach((s) => s.addEventListener("click", () => trocarAbaAcesso(s.dataset.acesso)));
+$("abrir-loja").addEventListener("click", abrirLoja);
+$("loja-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
+$("pix-conferir").addEventListener("click", () => conferirPagamento(false));
+$("pix-copiar").addEventListener("click", async () => {
+  const codigo = $("pix-brcode").textContent || "";
+  try { await navigator.clipboard.writeText(codigo); torrada("Código Pix copiado."); }
+  catch { torrada("Copie o código manualmente.", true); }
+});
+$("creditos-seguir").addEventListener("click", () => {
+  $("modal-creditos").classList.add("oculto");
+  const fn = acaoAposCredito; acaoAposCredito = null; if (fn) fn();
+});
+$("creditos-comprar").addEventListener("click", () => {
+  $("modal-creditos").classList.add("oculto"); acaoAposCredito = null; abrirLoja();
+});
+$("modal-creditos").addEventListener("click", (e) => {
+  if (e.target === $("modal-creditos")) { $("modal-creditos").classList.add("oculto"); acaoAposCredito = null; }
+});
 $("botao-sala").addEventListener("click", alternarSala);
 $("fechar-sala").addEventListener("click", fecharSala);
 $("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
@@ -1605,7 +1911,25 @@ aplicarPreferenciaAudio(estado.falarRespostas);
 carregarCasos().finally(() => setTimeout(esconderSplash, 350));
 carregarCapacidades();
 carregarTempoReal();
-carregarAcesso();
+// A vitrine de preços é pública e a home mostra o saldo assim que há sessão.
+carregarAcesso().then(carregarCreditos);
+fetch("/api/loja").then((r) => r.json()).then((d) => { estado.loja = d; }).catch(() => {});
+
+// Volta do cartão: a Stripe devolve o aluno com `?pagamento=ok&id=...`. Quem
+// confirma continua sendo o servidor — isto aqui só pergunta e limpa a URL.
+(async () => {
+  const p = new URLSearchParams(location.search);
+  if (p.get("pagamento") === "ok" && p.get("id")) {
+    pixEmAberto = p.get("id");
+    const pago = await conferirPagamento(true);
+    pixEmAberto = null;
+    if (!pago) torrada("Pagamento em processamento. Os créditos entram assim que o banco confirmar.");
+  } else if (p.get("pagamento") === "cancelado") {
+    torrada("Pagamento cancelado. Nada foi cobrado.");
+  }
+  if (p.has("pagamento")) history.replaceState({}, "", location.pathname);
+})();
+
 setTimeout(esconderSplash, 2200); // rede de segurança
 </script>
 </body>

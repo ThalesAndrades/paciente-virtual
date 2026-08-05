@@ -36,6 +36,18 @@ await criarUsuario({ matricula: "limite002", senha: "senha-de-teste-lim2", nome:
 
 await criarUsuario({ matricula: "adm001", senha: "senha-de-teste-adm", nome: "Admin de Teste", papel: "admin" });
 
+// Aluno sem um tostão, para o caminho de crédito insuficiente ter dono próprio: se
+// fosse um dos outros, um teste de paywall deixaria os demais sem saldo.
+await criarUsuario({ matricula: "duro001", senha: "senha-de-teste-duro", nome: "Sem Créditos", papel: "aluno" });
+
+// Consulta e voz agora custam crédito. Os alunos dos testes começam com saldo
+// folgado para que o assunto testado continue sendo o que cada teste diz testar.
+const { creditar } = await import("../motor/creditos.js");
+const { listarUsuarios } = await import("../motor/auth.js");
+for (const u of await listarUsuarios()) {
+  if (u.papel === "aluno" && u.matricula !== "duro001") creditar(u.id, 5000, "ajuste", `teste:${u.id}`);
+}
+
 const SENHAS = {
   adm001: "senha-de-teste-adm",
   aluno001: "senha-de-teste-aluno",
@@ -43,6 +55,7 @@ const SENHAS = {
   prof001: "senha-de-teste-prof",
   limite001: "senha-de-teste-lim1",
   limite002: "senha-de-teste-lim2",
+  duro001: "senha-de-teste-duro",
 };
 
 // Entra como a matrícula pedida, pela MESMA rota que o navegador usa.
@@ -684,5 +697,133 @@ test("com provedor no ar, o token é cunhado e os minutos são debitados", async
       if (valor === undefined) delete process.env[chave];
       else process.env[chave] = valor;
     }
+  }
+});
+
+/* ---------- Créditos, cadastro e cobrança ---------- */
+
+test("sem crédito, a consulta não começa — e a mensagem diz quanto falta", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "duro001");
+    const r = await api("/api/consultas", { caso: "infarto" });
+    assert.equal(r.status, 402);
+    assert.equal(r.dados.saldo, 0);
+    assert.ok(r.dados.faltam > 0, "o aluno precisa saber quanto falta");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("a consulta debita uma vez, e o extrato mostra de onde saiu", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno002");
+    const antes = (await api("/api/creditos")).dados;
+    const { dados: consulta } = await api("/api/consultas", { caso: "infarto" });
+    assert.ok(consulta.id);
+    const depois = (await api("/api/creditos")).dados;
+
+    assert.equal(depois.saldo, antes.saldo - antes.custo.consulta);
+    const lancamento = depois.extrato.find((l) => l.referencia === consulta.id);
+    assert.ok(lancamento, "o débito precisa apontar para a consulta que o gerou");
+    assert.equal(lancamento.delta, -antes.custo.consulta);
+    assert.equal(lancamento.motivo, "consulta");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("professor não gasta crédito ao consultar", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "prof001");
+    const antes = (await api("/api/creditos")).dados;
+    assert.equal(antes.isento, true);
+    await api("/api/consultas", { caso: "infarto" });
+    const depois = (await api("/api/creditos")).dados;
+    assert.equal(depois.saldo, antes.saldo, "quem avalia a turma não paga pela avaliação");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("cadastro público cria conta com créditos e recusa e-mail repetido", async () => {
+  const { servidor, api } = await subir();
+  try {
+    const email = `novo${Date.now()}@exemplo.com`;
+    const criado = await api("/api/cadastro", { nome: "Aluna Nova", email, senha: "senha-boa-12345" });
+    assert.equal(criado.status, 200);
+
+    const repetido = await api("/api/cadastro", { nome: "Outra", email, senha: "senha-boa-12345" });
+    assert.equal(repetido.status, 400);
+    assert.match(repetido.dados.erro, /já existe/i);
+
+    const curta = await api("/api/cadastro", { nome: "X", email: `x${Date.now()}@exemplo.com`, senha: "curta" });
+    assert.equal(curta.status, 400);
+
+    // Entra com o e-mail e encontra os créditos de boas-vindas já na conta.
+    const entrada = await api("/api/auth/sign-in/email", { email, password: "senha-boa-12345" });
+    assert.equal(entrada.status, 200);
+    const { dados } = await api("/api/creditos");
+    assert.ok(dados.saldo > 0, "conta nova precisa nascer com créditos para experimentar");
+    assert.equal(dados.saldo, dados.experiencia_completa);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("a loja é pública e os preços batem com o catálogo", async () => {
+  const { servidor, api } = await subir();
+  try {
+    const { status, dados } = await api("/api/loja");
+    assert.equal(status, 200);
+    assert.ok(dados.pacotes.length >= 3 && dados.assinaturas.length >= 2);
+    for (const item of [...dados.pacotes, ...dados.assinaturas]) {
+      assert.ok(item.centavos > 0 && item.creditos > 0, `${item.id}: preço ou crédito zerado`);
+      assert.match(item.preco, /R\$/);
+    }
+    // O pacote maior tem que sair mais barato por crédito, senão não há motivo
+    // nenhum para comprá-lo.
+    const porCredito = dados.pacotes.map((p) => p.centavos / p.creditos);
+    assert.ok(porCredito[porCredito.length - 1] < porCredito[0], "falta desconto por volume");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("cobrança exige sessão e item conhecido; assinatura não vai por Pix", async () => {
+  const { servidor, api } = await subir();
+  try {
+    const semSessao = await api("/api/pagamentos", { item: "p60", forma: "pix" });
+    assert.equal(semSessao.status, 401);
+
+    await entrar(api, "aluno001");
+    const inexistente = await api("/api/pagamentos", { item: "nao-existe", forma: "pix" });
+    assert.equal(inexistente.status, 400);
+
+    const assinaturaPix = await api("/api/pagamentos", { item: "estudante", forma: "pix" });
+    assert.equal(assinaturaPix.status, 400);
+    assert.match(assinaturaPix.dados.erro, /cart[ãa]o/i);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("webhook da Stripe sem assinatura válida não credita nada", async () => {
+  const { servidor, api } = await subir();
+  const antes = process.env.STRIPE_WEBHOOK_SECRET;
+  process.env.STRIPE_WEBHOOK_SECRET = "whsec_de_teste";
+  try {
+    const forjado = await api("/api/webhooks/stripe", {
+      type: "checkout.session.completed",
+      data: { object: { client_reference_id: "thm_qualquer" } },
+    });
+    // Sem o cabeçalho `stripe-signature` correto, o evento é recusado na porta.
+    assert.equal(forjado.status, 400);
+  } finally {
+    if (antes === undefined) delete process.env.STRIPE_WEBHOOK_SECRET;
+    else process.env.STRIPE_WEBHOOK_SECRET = antes;
+    servidor.close();
   }
 });

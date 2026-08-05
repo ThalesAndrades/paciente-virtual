@@ -19,6 +19,7 @@ import {
   auth,
   contarUsuarios,
   criarUsuario,
+  criarUsuarioPublico,
   definirAtivo,
   definirPapel,
   definirSenha,
@@ -27,10 +28,35 @@ import {
   semearAdmin,
 } from "./motor/auth.js";
 import {
+  assinaturaDoUsuario,
+  darBoasVindas,
+  debitar,
+  estornar,
+  extrato,
+  migrarCreditos,
+  pagamentosDoUsuario,
+  // `saldo` já é o nome do que sobra de MINUTOS de voz em `orcamento.js`. Aqui é
+  // dinheiro do aluno; misturar os dois num arquivo de 1.100 linhas seria pedir
+  // para alguém debitar a coisa errada.
+  saldo as saldoDeCreditos,
+} from "./motor/creditos.js";
+import {
+  cobrarCartao,
+  cobrarPix,
+  conferirCartao,
+  conferirPix,
+  provedoresDisponiveis,
+  tratarEventoStripe,
+  tratarEventoWoovi,
+  verificarAssinaturaStripe,
+} from "./motor/pagamentos.js";
+import { CUSTO, EXPERIENCIA_COMPLETA, catalogo, itemPorId } from "./motor/planos.js";
+import {
   carregarSessao,
   ehAdmin,
   ehAluno,
   ehProfessor,
+  emailDe,
   estadoAcesso,
   matriculaDe,
   nomeDe,
@@ -96,6 +122,27 @@ const LIMITE_LOGIN = 20;
 // navegador — uma conversa fluida gera dezenas por consulta.
 const LIMITE_TEMPO_REAL = 30;
 const LIMITE_TURNO = 400;
+// Cadastro e cobrança são as portas que um script tentaria forçar: uma para farmar
+// crédito de boas-vindas, a outra para encher a conta de cobranças pendentes.
+const LIMITE_CADASTRO = 5;
+const LIMITE_PAGAMENTO = 12;
+
+// Professor e admin não gastam crédito: eles avaliam e demonstram a ferramenta, e
+// cobrar de quem administra a turma seria cobrar duas vezes pela mesma coisa.
+function gastaCredito(req) {
+  return ehAluno(req) && !ehProfessor(req);
+}
+
+// Identidade para a cobrança. O e-mail sintético (`@matricula.invalid`) de conta
+// criada pelo admin não vai para o provedor — não existe e recibo nenhum chega lá.
+function usuarioDaSessao(req) {
+  return {
+    id: sessaoDe(req),
+    nome: nomeDe(req),
+    matricula: matriculaDe(req),
+    email: emailDe(req),
+  };
+}
 
 // Áudio de uma fala do profissional. ~1 MB por minuto em webm/opus; o teto cobre
 // uma pergunta longa com folga e barra upload abusivo.
@@ -329,6 +376,26 @@ function lerCorpoBinario(req, maxBytes) {
   });
 }
 
+// Corpo cru, em texto. O webhook da Stripe assina os BYTES enviados: reserializar
+// o JSON mudaria espaços e ordem, e a assinatura deixaria de bater.
+function lerCorpoTexto(req, maxBytes = 512 * 1024) {
+  return new Promise((resolver, rejeitar) => {
+    const pedacos = [];
+    let tamanho = 0;
+    req.on("data", (pedaco) => {
+      tamanho += pedaco.length;
+      if (tamanho > maxBytes) {
+        rejeitar(new Error("Corpo grande demais."));
+        req.destroy();
+        return;
+      }
+      pedacos.push(pedaco);
+    });
+    req.on("end", () => resolver(Buffer.concat(pedacos).toString("utf-8")));
+    req.on("error", rejeitar);
+  });
+}
+
 function lerCorpo(req) {
   return new Promise((resolver, rejeitar) => {
     const pedacos = [];
@@ -375,6 +442,21 @@ async function iniciarConsulta(req, res) {
   do {
     id = crypto.randomUUID().slice(0, 8);
   } while (consultas.has(id));
+
+  // O crédito é debitado ANTES de a consulta existir, com o id dela como
+  // referência. Debitar depois abriria a janela clássica: duas abas começam
+  // consultas ao mesmo tempo e uma delas sai de graça.
+  if (gastaCredito(req)) {
+    const cobranca = debitar(sessaoDe(req), CUSTO.consulta, "consulta", id);
+    if (!cobranca.ok) {
+      return json(res, 402, {
+        erro: "Créditos insuficientes para iniciar a consulta.",
+        saldo: cobranca.saldo,
+        custo: CUSTO.consulta,
+        faltam: cobranca.faltam,
+      });
+    }
+  }
 
   // Poda de segurança: evita o Map crescer sem limite com consultas abandonadas.
   // Remove SÓ consultas encerradas — uma sessão em andamento nunca é despejada,
@@ -756,6 +838,125 @@ export function criarServidor() {
       // propósito: enquanto respondessem, seriam uma segunda porta para a mesma
       // casa — e a porta fraca é a que vale.
 
+      // ---- Créditos, loja e cobrança ------------------------------------------
+
+      // A vitrine de preços é pública: quem ainda não tem conta precisa saber
+      // quanto custa antes de criar uma.
+      if (req.method === "GET" && pathname === "/api/loja") {
+        return json(res, 200, { ...catalogo(), formas: provedoresDisponiveis() });
+      }
+
+      if (req.method === "GET" && pathname === "/api/creditos") {
+        if (!ehAluno(req)) return json(res, 401, { erro: "Sessão necessária." });
+        const id = sessaoDe(req);
+        return json(res, 200, {
+          saldo: saldoDeCreditos(id),
+          isento: !gastaCredito(req),
+          custo: CUSTO,
+          experiencia_completa: EXPERIENCIA_COMPLETA,
+          assinatura: assinaturaDoUsuario(id),
+          extrato: extrato(id, 20),
+          pagamentos: pagamentosDoUsuario(id, 5).map((p) => ({
+            id: p.id, status: p.status, creditos: p.creditos, provedor: p.provedor, criado_em: p.criado_em,
+          })),
+        });
+      }
+
+      // Cadastro público. A API do Better Auth continua com o `sign-up` fechado:
+      // quem cria conta é esta rota, que é onde as regras do produto vivem.
+      if (req.method === "POST" && pathname === "/api/cadastro") {
+        if (estourouLimite(req, res, "cadastro", LIMITE_CADASTRO)) return;
+        const dados = await lerCorpo(req);
+        try {
+          const usuario = await criarUsuarioPublico({
+            nome: dados.nome,
+            email: dados.email,
+            senha: String(dados.senha || ""),
+          });
+          darBoasVindas(usuario.id);
+          return json(res, 200, { ok: true, email: usuario.email });
+        } catch (erro) {
+          return json(res, 400, { erro: (erro && erro.message) || "Não foi possível criar a conta." });
+        }
+      }
+
+      if (req.method === "POST" && pathname === "/api/pagamentos") {
+        if (!ehAluno(req)) return json(res, 401, { erro: "Entre para comprar créditos." });
+        if (estourouLimite(req, res, "pagamento", LIMITE_PAGAMENTO)) return;
+        const dados = await lerCorpo(req);
+        const item = itemPorId(String(dados.item || ""));
+        if (!item) return json(res, 400, { erro: "Item indisponível." });
+        const forma = dados.forma === "cartao" ? "cartao" : "pix";
+        // Assinatura por Pix exigiria cobrança manual todo mês — melhor dizer isso
+        // na hora do que deixar o aluno achar que assinou e não renovar.
+        if (item.tipo === "assinatura" && forma === "pix") {
+          return json(res, 400, { erro: "Assinatura só no cartão. No Pix, escolha um pacote de créditos." });
+        }
+        try {
+          const usuario = usuarioDaSessao(req);
+          const cobranca = forma === "cartao"
+            ? await cobrarCartao({ usuario, item })
+            : await cobrarPix({ usuario, item });
+          return json(res, 200, { forma, ...cobranca });
+        } catch (erro) {
+          registrarFalhaIA("cobrança", erro);
+          return json(res, 502, { erro: "Não consegui abrir a cobrança agora. Tente de novo em instantes." });
+        }
+      }
+
+      // Estado de uma cobrança. Chamado pelo botão "já paguei" e pela volta do
+      // cartão — e em nenhum dos dois o navegador decide: quem confirma é a API do
+      // provedor, consultada aqui dentro.
+      const pagamento = pathname.match(/^\/api\/pagamentos\/([\w-]+)$/);
+      if (req.method === "GET" && pagamento) {
+        if (!ehAluno(req)) return json(res, 401, { erro: "Sessão necessária." });
+        try {
+          const registro = pagamentosDoUsuario(sessaoDe(req), 50).find((p) => p.id === pagamento[1]);
+          if (!registro) return json(res, 404, { erro: "Cobrança não encontrada." });
+          const estado = registro.provedor === "stripe"
+            ? await conferirCartao(registro.id)
+            : await conferirPix(registro.id);
+          return json(res, 200, { id: registro.id, pago: Boolean(estado.pago), saldo: saldoDeCreditos(sessaoDe(req)) });
+        } catch (erro) {
+          registrarFalhaIA("conferência de pagamento", erro);
+          return json(res, 502, { erro: "Não consegui confirmar agora." });
+        }
+      }
+
+      // ---- Webhooks. Sem sessão, por definição: quem chama é o provedor.
+      if (req.method === "POST" && pathname === "/api/webhooks/stripe") {
+        const bruto = await lerCorpoTexto(req);
+        const conferido = verificarAssinaturaStripe(bruto, req.headers["stripe-signature"]);
+        if (!conferido.ok) {
+          console.warn(`[pagamento] webhook stripe recusado: ${conferido.motivo}`);
+          return json(res, 400, { erro: "assinatura inválida" });
+        }
+        let evento = {};
+        try {
+          evento = JSON.parse(bruto);
+        } catch {}
+        try {
+          const r = await tratarEventoStripe(evento);
+          console.log(`[pagamento] stripe ${evento.type}: ${JSON.stringify(r)}`);
+        } catch (erro) {
+          registrarFalhaIA("webhook stripe", erro);
+        }
+        // 200 mesmo em falha nossa: o provedor reenviaria em loop, e a
+        // reconciliação já é feita por consulta à API.
+        return json(res, 200, { recebido: true });
+      }
+
+      if (req.method === "POST" && pathname === "/api/webhooks/woovi") {
+        const corpo = await lerCorpo(req);
+        try {
+          const r = await tratarEventoWoovi(corpo);
+          console.log(`[pagamento] woovi: ${JSON.stringify(r)}`);
+        } catch (erro) {
+          registrarFalhaIA("webhook woovi", erro);
+        }
+        return json(res, 200, { recebido: true });
+      }
+
       // ---- Gestão de contas. Só o ADMIN entra aqui; professor não abre conta.
       if (pathname === "/api/alunos" || pathname.startsWith("/api/alunos/")) {
         if (!ehAdmin(req)) {
@@ -783,6 +984,10 @@ export function criarServidor() {
           }
           try {
             const criado = await criarUsuario({ matricula, senha, nome, papel });
+            // Conta criada pelo admin também nasce com os créditos de boas-vindas:
+            // uma turma cadastrada na véspera da aula precisa conseguir usar a
+            // ferramenta na aula, não descobrir o paywall na frente do professor.
+            darBoasVindas(criado.id);
             return json(res, 200, { ok: true, id: criado.id, matricula });
           } catch (erro) {
             // Matrícula repetida é o erro comum aqui, e merece nome próprio em vez
@@ -978,6 +1183,23 @@ export function criarServidor() {
           return json(res, 429, { erro: concessao.motivo, orcamento: concessao.restante });
         }
 
+        // Minuto de voz custa crédito. A referência carrega o instante porque o
+        // mesmo aluno renova o bloco várias vezes na mesma consulta — sem ela, o
+        // índice de idempotência recusaria a segunda cobrança e a voz sairia de
+        // graça a partir do segundo bloco.
+        const custoVoz = concessao.minutos * CUSTO.minuto_voz;
+        if (gastaCredito(req)) {
+          const cobranca = debitar(sessaoDe(req), custoVoz, "voz", `${emTempoReal[1]}:${Date.now()}`);
+          if (!cobranca.ok) {
+            return json(res, 402, {
+              erro: `A conversa por voz custa ${CUSTO.minuto_voz} créditos por minuto. Você tem ${cobranca.saldo}.`,
+              saldo: cobranca.saldo,
+              custo: custoVoz,
+              faltam: cobranca.faltam,
+            });
+          }
+        }
+
         try {
           const token = await cunharToken({
             caso: consulta.caso,
@@ -1000,6 +1222,9 @@ export function criarServidor() {
           });
         } catch (erro) {
           registrarFalhaIA("token de tempo real", erro);
+          // Cobrou e não entregou: devolve na hora. Crédito retido por falha nossa
+          // é a reclamação mais cara que existe.
+          if (gastaCredito(req)) estornar(sessaoDe(req), custoVoz, `falha:${emTempoReal[1]}:${Date.now()}`);
           return json(res, 502, { erro: "Não consegui abrir a conversa por voz agora." });
         }
       }
@@ -1060,6 +1285,9 @@ export async function iniciar() {
   try {
     const pendentes = await migrar();
     if (pendentes) console.log(`[auth] ${pendentes} migração(ões) aplicada(s)`);
+    // As tabelas de crédito vivem no mesmo banco e sobem junto: um servidor no ar
+    // sem elas responderia 500 na primeira consulta de qualquer aluno.
+    migrarCreditos();
     const semeadura = await semearAdmin();
     if (semeadura.semeado) console.log(`[auth] administrador criado: ${semeadura.matricula}`);
     else if ((await contarUsuarios()) === 0) {
