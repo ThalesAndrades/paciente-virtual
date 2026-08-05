@@ -157,6 +157,24 @@ então a mesma frase é lida de um jeito por uma paciente em crise de pânico e 
 por uma senhora enlutada. Modelos que não aceitam `instructions` (como o `tts-1`)
 ignoram isso sem quebrar.
 
+### Sala de atendimento em 3D
+
+O aluno pode ver o paciente sentado à frente dele, em vez de uma lista de balões: a
+pessoa respira na frequência que o caso indica, pisca, desvia o olhar conforme a
+dinâmica de revelação e mexe a boca acompanhando a fala. Clicar nos instrumentos
+sobre a mesa chama o mesmo endpoint de exame do painel lateral.
+
+Não há nada para configurar. O que vale saber ao operar:
+
+- A biblioteca 3D (~750 kB, servida de `/vendor/`) **só é baixada quando o aluno
+  abre a sala** — no celular, dado é dinheiro. Ela é servida com cache de 7 dias.
+- Em telas pequenas e máquinas modestas a sala desliga sombras e reduz a resolução
+  sozinha; com `prefers-reduced-motion` ela abre parada.
+- Navegador sem WebGL: o botão avisa e a consulta segue como antes.
+- A expressão do paciente é calculada no servidor (`motor/expressao.js`) a partir do
+  `estado_emocional` do caso. A página recebe seis números e duas palavras — nenhum
+  texto do caso viaja para o navegador por causa da animação.
+
 ## Stack de produção (VPS Docker + Traefik)
 
 O `ubtec.sbs` não roda na hospedagem compartilhada: roda num VPS Docker, atrás do

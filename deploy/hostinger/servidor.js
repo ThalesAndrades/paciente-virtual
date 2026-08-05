@@ -40,6 +40,7 @@ import {
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
+import { expressaoDoCaso } from "./motor/expressao.js";
 import { consultarFicha } from "./motor/ficha.js";
 import { conceder, saldo, tetos } from "./motor/orcamento.js";
 import { cunharToken, infoTempoReal, tempoRealDisponivel, urlChamada } from "./motor/tempo-real.js";
@@ -60,11 +61,22 @@ const PAGINA = path.join(RAIZ, "web", "index.html");
 // Arquivos estáticos servidos por LISTA FIXA, não por caminho montado a partir do
 // pedido. É a diferença entre servir dois arquivos conhecidos e abrir um leitor de
 // disco para quem souber escrever `../`. O mesmo cuidado que o relatório já toma.
+const JS = "text/javascript; charset=utf-8";
 const ESTATICOS = new Map([
   ["/estilo.css", { arquivo: path.join(RAIZ, "web", "estilo.css"), tipo: "text/css; charset=utf-8" }],
+  ["/tempo-real.js", { arquivo: path.join(RAIZ, "web", "tempo-real.js"), tipo: JS }],
+  ["/sala3d.js", { arquivo: path.join(RAIZ, "web", "sala3d.js"), tipo: JS }],
+  // A biblioteca 3D sai de `node_modules` porque é dependência versionada no
+  // package-lock, não um blob copiado para dentro do repositório. Os dois arquivos
+  // são servidos lado a lado: o `module` importa o `core` por caminho relativo.
+  // A página só os baixa quando o aluno abre a sala — no celular, dado é dinheiro.
   [
-    "/tempo-real.js",
-    { arquivo: path.join(RAIZ, "web", "tempo-real.js"), tipo: "text/javascript; charset=utf-8" },
+    "/vendor/three.module.min.js",
+    { arquivo: path.join(RAIZ, "node_modules", "three", "build", "three.module.min.js"), tipo: JS, cache: true },
+  ],
+  [
+    "/vendor/three.core.min.js",
+    { arquivo: path.join(RAIZ, "node_modules", "three", "build", "three.core.min.js"), tipo: JS, cache: true },
   ],
 ]);
 
@@ -418,6 +430,9 @@ async function iniciarConsulta(req, res) {
       escolaridade: ident.escolaridade || "",
     },
     instrumentos: instrumentosDoCaso(caso),
+    // Como esta pessoa CHEGA: seis números e duas palavras, para a sala em 3D
+    // montar a postura, o olhar e a respiração. Nada de texto do caso vai junto.
+    expressao: expressaoDoCaso(caso),
   });
 }
 
@@ -728,9 +743,15 @@ export function criarServidor() {
       if (req.method === "GET" && ESTATICOS.has(pathname)) {
         // Mesma ordem da página: lê antes de responder, para que uma falha de
         // leitura vire 500 limpo em vez de cabeçalho enviado duas vezes.
-        const { arquivo, tipo } = ESTATICOS.get(pathname);
+        const { arquivo, tipo, cache } = ESTATICOS.get(pathname);
         const conteudo = fs.readFileSync(arquivo);
-        res.writeHead(200, { "Content-Type": tipo, "Cache-Control": "no-cache" });
+        res.writeHead(200, {
+          "Content-Type": tipo,
+          // A biblioteca 3D é imutável e pesa ~750 kB: baixar de novo a cada
+          // consulta seria cobrar a franquia de dados do aluno por nada. O resto
+          // é código nosso, que muda a cada deploy.
+          "Cache-Control": cache ? "public, max-age=604800, immutable" : "no-cache",
+        });
         return res.end(conteudo);
       }
 

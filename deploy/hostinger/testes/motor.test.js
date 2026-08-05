@@ -14,6 +14,7 @@ import {
 } from "../motor/avaliador.js";
 import { RESPOSTA_PADRAO, fatoSensivelDireto, responderDemo } from "../motor/demo.js";
 import { detectarExames } from "../motor/exames.js";
+import { expressaoDoCaso } from "../motor/expressao.js";
 import { consultarFicha } from "../motor/ficha.js";
 import { sistemaPaciente } from "../motor/humanizar.js";
 import { conceder, zerarOrcamento } from "../motor/orcamento.js";
@@ -561,4 +562,78 @@ test("transcript ao vivo: MODO sai da linha do tempo e a pergunta verificada fic
   assert.deepEqual(eventos.map((e) => e.tipo), ["profissional", "paciente", "profissional"]);
   assert.equal(eventos[2].verificada, true);
   assert.ok(!eventos.some((e) => /tempo real/.test(e.texto)), "MODO não é fala");
+});
+
+/* ---------- Como o paciente aparece na sala ---------- */
+
+test("a expressão traduz o estado emocional do caso em números", async () => {
+  const { expressaoDoCaso } = await import("../motor/expressao.js");
+
+  const luto = expressaoDoCaso(lerCaso("luto"));
+  assert.ok(luto.tristeza > 0.6, "luto deveria pesar tristeza");
+  assert.equal(luto.postura, "abatida");
+  assert.equal(luto.olhar, "baixo");
+
+  const infarto = expressaoDoCaso(lerCaso("infarto"));
+  assert.ok(infarto.dor > 0.6, "infarto deveria pesar dor");
+  // Dor forte vence o resto: quem infarta protege o peito, mesmo com medo.
+  assert.equal(infarto.postura, "protegida");
+  assert.ok(infarto.respiracao > luto.respiracao, "dor e tensão aceleram a respiração");
+
+  // Sintoma autonômico (suor, náusea, falta de ar) não é dor: sem essa separação,
+  // um caso de pânico aparecia encurvado como quem está infartando.
+  const panico = expressaoDoCaso(lerCaso("transtorno_de_panico"));
+  assert.ok(panico.dor < 0.5, "pânico não é dor");
+  assert.ok(panico.tensao > 0.6 && panico.respiracao >= 24);
+});
+
+test("todo caso gera uma expressão dentro da faixa, e nenhuma domina o acervo", () => {
+  const casos = fs.readdirSync(path.join(RAIZ, "casos")).filter((n) => n.endsWith(".json"));
+  const posturas = new Map();
+  for (const arquivo of casos) {
+    const e = expressaoDoCaso(lerCaso(arquivo.replace(/\.json$/, "")));
+    for (const dim of ["tensao", "tristeza", "dor", "medo", "agitacao", "retraimento"]) {
+      assert.ok(e[dim] >= 0 && e[dim] <= 1, `${arquivo}: ${dim} fora da faixa (${e[dim]})`);
+    }
+    assert.ok(e.respiracao >= 12 && e.respiracao <= 40, `${arquivo}: respiração implausível`);
+    posturas.set(e.postura, (posturas.get(e.postura) || 0) + 1);
+  }
+  // Se uma postura só cobrisse quase tudo, o mapeamento estaria decorativo, não
+  // descritivo — todos os pacientes chegariam iguais.
+  assert.ok(posturas.size >= 4, `pouca variedade de posturas: ${[...posturas.keys()].join(", ")}`);
+  const maior = Math.max(...posturas.values());
+  assert.ok(maior < casos.length * 0.75, "uma única postura domina o acervo");
+});
+
+test("a animação da sala: respiração, boca e olhar", async () => {
+  // O módulo da sala importa a biblioteca 3D só dentro de `abrir()`, então a
+  // matemática do movimento pode ser testada aqui, sem navegador nem WebGL.
+  const sala = await import("../../../web/sala3d.js");
+
+  // Respiração: oscila em torno de 1 e a amplitude cresce com a dor.
+  const semDor = [];
+  const comDor = [];
+  for (let t = 0; t < 6; t += 0.05) {
+    semDor.push(sala.respiracaoEm(t, 14, 0, 0));
+    comDor.push(sala.respiracaoEm(t, 26, 1, 1));
+  }
+  const faixa = (v) => Math.max(...v) - Math.min(...v);
+  assert.ok(faixa(comDor) > faixa(semDor), "dor deveria alargar a respiração");
+  assert.ok(Math.max(...semDor) < 1.05 && Math.min(...semDor) > 0.95, "respiração não pode inflar o tronco");
+
+  // A boca abre depressa e fecha devagar — o contrário parece dublagem ruim.
+  const abrindo = sala.proximaAbertura(0, 1, 1 / 60);
+  const fechando = 1 - sala.proximaAbertura(1, 0, 1 / 60);
+  assert.ok(abrindo > fechando, "a boca deveria abrir mais rápido do que fecha");
+  assert.ok(sala.proximaAbertura(0.5, 0.5, 1 / 60) === 0.5, "sem energia nova, sem movimento");
+
+  // Olhar: quem está retraído olha para baixo; quem encara, olha para a frente.
+  const meio = () => 0.5;
+  assert.ok(sala.alvoDeOlhar({ olhar: "baixo" }, meio).y < -0.3);
+  assert.equal(sala.alvoDeOlhar({ olhar: "direto" }, meio).y, 0);
+  assert.equal(sala.alvoDeOlhar({ olhar: "direto" }, meio).x, 0);
+
+  // Tensão pisca mais, mas nunca a ponto de virar tique.
+  assert.ok(sala.intervaloDePiscar(1, meio) < sala.intervaloDePiscar(0, meio));
+  assert.ok(sala.intervaloDePiscar(1, () => 0) >= 0.6);
 });

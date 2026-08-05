@@ -1,6 +1,24 @@
 # Sala de atendimento em 3D
 
-**Data:** 2026-08-05 · **Status:** design aprovado, implementação não iniciada
+**Data:** 2026-08-05 · **Status:** ✅ primeira versão implementada em 2026-08-05
+
+> **O que ficou de fora desta primeira versão, e por quê**
+>
+> - **Sem avatar glTF / Ready Player Me.** O paciente é montado com geometria
+>   primitiva no próprio Three.js. Um avatar externo exigiria hospedar (ou baixar) um
+>   modelo por identidade, e o alvo declarado aqui — realista-estilizado — se alcança
+>   sem isso. Trocar o boneco por um glTF depois não muda mais nada da arquitetura.
+> - **Lip-sync pela energia do áudio, como projetado** (`AnalyserNode` → abertura da
+>   boca), ligado tanto à fala por frase quanto ao áudio da conversa ao vivo.
+> - **Instrumentos clicáveis**: só viram objeto os que o caso oferece (pressão,
+>   estetoscópio, termômetro, oxímetro). Clicar chama o mesmo
+>   `POST /api/consultas/:id/exame` do painel lateral. Os demais exames continuam no
+>   painel — sala cheia de objeto que não faz nada ensina o aluno a não clicar.
+> - **A expressão vem do servidor** (`motor/expressao.js`): seis números e duas
+>   palavras derivados de `estado_emocional`. A página não recebe texto do caso só
+>   para animar um boneco.
+> - **Sem sombra e com menos pixels no celular**; nada de animação com
+>   `prefers-reduced-motion`; a biblioteca 3D só é baixada quando o aluno abre a sala.
 
 ## O problema
 

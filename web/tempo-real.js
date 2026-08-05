@@ -225,6 +225,13 @@
       document.body.appendChild(audio);
       pc.ontrack = (ev) => {
         audio.srcObject = ev.streams[0];
+        // `autoplay` não basta no Safari/iOS quando o elemento nasce depois do
+        // toque: sem este play() explícito, a consulta abre muda.
+        const tocando = audio.play();
+        if (tocando && tocando.catch) tocando.catch(() => {});
+        // Quem estiver desenhando o paciente precisa da voz para mover a boca. O
+        // stream é entregue, não interpretado: esta camada não sabe o que é sala 3D.
+        emitir({ tipo: "audio", stream: ev.streams[0] });
       };
 
       for (const trilha of fluxo.getTracks()) pc.addTrack(trilha, fluxo);

@@ -153,13 +153,24 @@
       <span><b id="med-exames">0</b> <span class="rotulo-longo">exames</span></span>
     </div>
     <div class="acoes">
-      <button id="abrir-instrumentos" title="Instrumentos e anotações" aria-expanded="false" aria-controls="painel-instrumentos">🩺 Instrumentos</button>
-      <button id="botao-som" class="ligado" title="Ler as respostas em voz alta">🔊 Voz</button>
+      <button id="abrir-instrumentos" title="Instrumentos e anotações" aria-label="Instrumentos e anotações" aria-expanded="false" aria-controls="painel-instrumentos">🩺<span class="rotulo-btn">Instrumentos</span></button>
+      <button id="botao-sala" class="oculto" title="Ver o paciente na sala de atendimento" aria-label="Ver o paciente na sala de atendimento" aria-pressed="false" aria-controls="sala">🎥<span class="rotulo-btn">Sala</span></button>
+      <button id="botao-som" class="ligado" title="Ler as respostas em voz alta" aria-label="Ler as respostas em voz alta">🔊<span class="rotulo-btn">Voz</span></button>
       <button id="botao-encerrar" class="encerrar">Encerrar e avaliar</button>
     </div>
   </div>
 
   <div class="palco">
+    <!-- A sala em 3D. Fica ao lado da conversa (e acima dela, no celular) porque a
+         transcrição continua sendo a prova do que foi dito: a sala acrescenta
+         presença, não substitui o registro. -->
+    <div id="sala" class="sala oculto">
+      <div id="sala-tela" class="sala-tela"></div>
+      <p class="sala-legenda">
+        <span id="sala-postura">Sala de atendimento</span>
+        <button type="button" id="fechar-sala" class="sala-fechar" aria-label="Fechar a sala">✕</button>
+      </p>
+    </div>
     <div class="coluna-chat">
       <div id="mensagens" class="fluxo-mensagens" role="log" aria-live="polite" aria-relevant="additions"></div>
     </div>
@@ -182,7 +193,7 @@
       <button id="botao-vivo" class="vivo oculto" aria-pressed="false" aria-label="Conversar ao vivo com o paciente">🔴<span class="mic-label">Ao vivo</span></button>
       <button id="botao-mic" aria-label="Segurar para falar">🎤<span class="mic-label">Segurar p/ falar</span></button>
       <input id="campo-mensagem" type="text" placeholder="Pergunte ao paciente…" autocomplete="off">
-      <button id="botao-enviar" class="enviar">Enviar</button>
+      <button id="botao-enviar" class="enviar" aria-label="Enviar a pergunta">Enviar</button>
     </div>
     <div id="dica-mic" class="dica-mic" aria-live="polite"><span class="ponto"></span><span id="dica-mic-texto"></span></div>
   </div>
@@ -517,6 +528,9 @@ function tocarClipe(url, item) {
       resolve();
     };
     p.onended = () => limpar(false); p.onerror = () => limpar(true);
+    // A boca do paciente na sala segue a ENERGIA deste áudio. Apresentar o
+    // elemento ao analisador é o que liga o lip-sync — e é idempotente.
+    naSala((s) => s.ouvirElemento(p));
     try { p.pause(); } catch {}
     p.src = url;
     const pr = p.play(); if (pr && pr.catch) pr.catch(() => limpar(true));
@@ -540,7 +554,11 @@ function falarComNavegador(texto) {
 function aplicarPreferenciaAudio(l) {
   estado.falarRespostas = l; salvarPreferenciaAudio(l); if (!l) pararFala();
   document.querySelectorAll("#pref-audio .seg").forEach((s) => { const a = (s.dataset.audio === "1") === l; s.classList.toggle("ativo", a); s.setAttribute("aria-pressed", a ? "true" : "false"); });
-  const b = $("botao-som"); b.classList.toggle("ligado", l); b.textContent = l ? "🔊 Voz" : "🔇 Voz"; b.setAttribute("aria-pressed", l ? "true" : "false");
+  const b = $("botao-som"); b.classList.toggle("ligado", l);
+  // Troca só o ícone: o rótulo vive num span que o celular esconde para caber.
+  b.innerHTML = `${l ? "🔊" : "🔇"}<span class="rotulo-btn">Voz</span>`;
+  b.setAttribute("aria-pressed", l ? "true" : "false");
+  b.setAttribute("aria-label", l ? "Desligar a leitura em voz alta" : "Ler as respostas em voz alta");
 }
 
 /* ---------- Casos ---------- */
@@ -608,6 +626,9 @@ async function iniciarConsulta(casoId, aleatorio) {
 
   estado.consultaId = dados.id; estado.voz = dados.voz; estado.avisoDemoExibido = false;
   estado.categoriaCaso = dados.categoria; estado.instrumentos = dados.instrumentos || null;
+  // Como esta pessoa chega: os números que a sala usa para montar postura, olhar e
+  // respiração. Vêm prontos do servidor — a página não interpreta o caso.
+  estado.expressao = dados.expressao || null; estado.pacienteInfo = dados.paciente || {};
   estado.pacienteNome = (dados.paciente.nome || "O paciente").trim().split(/\s+/)[0];
   const cor = catDe(dados.categoria).cor;
 
@@ -630,6 +651,9 @@ async function iniciarConsulta(casoId, aleatorio) {
     : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
   mostrarTela("tela-consulta");
   $("campo-mensagem").focus();
+  $("botao-sala").classList.remove("oculto");
+  // Reabre a sala se o aluno já a estava usando — sem perguntar de novo a cada caso.
+  if (lerPreferenciaSala()) alternarSala();
   } finally { estado.ocupado = false; }
 }
 
@@ -668,7 +692,12 @@ function montarInstrumentos() {
   // antes não tinham lugar nenhum na tela.
   painel.classList.remove("oculto");
   $("abrir-instrumentos").style.display = "";
-  $("abrir-instrumentos").textContent = ehMed ? "🩺 Instrumentos" : "📝 Anotações";
+  // Ícone + rótulo em span: no celular o rótulo some e sobra o alvo de toque, sem
+  // perder o nome acessível.
+  const rotuloInst = ehMed ? "Instrumentos" : "Anotações";
+  $("abrir-instrumentos").innerHTML = `${ehMed ? "🩺" : "📝"}<span class="rotulo-btn">${rotuloInst}</span>`;
+  $("abrir-instrumentos").setAttribute("aria-label", `${rotuloInst} da consulta`);
+  $("abrir-instrumentos").title = `${rotuloInst} da consulta`;
   $("titulo-painel-lateral").textContent = ehMed ? "🩺 Instrumentos" : "📝 Consulta";
   if (!ehMed) return;
   const grupo = (titulo, itens) => {
@@ -731,6 +760,7 @@ async function enviarMensagem() {
   pararFala(); pararDigitacao();
   campo.value = ""; adicionarBalao("aluno", texto);
   estado.perguntas++; atualizarMedidores();
+  naSala((s) => s.marcarInteracao()); // o silêncio só pesa quando ninguém pergunta nada
   const dig = adicionarBalao("digitando", "");
   dig.innerHTML = `<span class="quem">${estado.pacienteNome || "O paciente"} está pensando</span><span class="pontos-digita"><i></i><i></i><i></i></span>`;
   dig.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -838,6 +868,7 @@ async function iniciarGravacao() {
   pararFala();
   $("botao-mic").classList.add("gravando");
   definirDicaMic("Ouvindo… solte para enviar", true);
+  naSala((s) => s.ouvindo(true)); // ela ergue o rosto e escuta enquanto você fala
   try {
     const fluxo = await obterFluxo();
     if (!segurandoMic) return; // soltou antes da permissão sair
@@ -858,6 +889,7 @@ async function iniciarGravacao() {
 function pararGravacao() {
   if (!segurandoMic) return;
   segurandoMic = false;
+  naSala((s) => s.ouvindo(false));
   $("botao-mic").classList.remove("gravando");
   if (!gravador || gravador.state === "inactive") { definirDicaMic(DICA_PADRAO, false); return; }
   try { gravador.stop(); } catch { definirDicaMic(DICA_PADRAO, false); }
@@ -968,8 +1000,9 @@ function travarEntradaTexto(travar) {
 }
 
 function aoEventoVivo(ev) {
-  if (ev.tipo === "profissional") { adicionarBalao("aluno", ev.texto); estado.perguntas++; atualizarMedidores(); }
+  if (ev.tipo === "profissional") { adicionarBalao("aluno", ev.texto); estado.perguntas++; atualizarMedidores(); naSala((s) => s.marcarInteracao()); }
   else if (ev.tipo === "paciente") { adicionarBalao("paciente", ev.texto); }
+  else if (ev.tipo === "audio") { naSala((s) => s.ouvirStream(ev.stream)); }
   else if (ev.tipo === "exame") { adicionarBalao("exame", ev.resultado, { titulo: ev.titulo, nome: ev.nome }); estado.exames++; atualizarMedidores(); }
   else if (ev.tipo === "aviso") { definirDicaMic(ev.texto, false); }
   else if (ev.tipo === "estado") {
@@ -995,6 +1028,84 @@ async function alternarVivo() {
 }
 
 function pararVivo() { if (window.TempoReal && TempoReal.ativo()) TempoReal.parar(); travarEntradaTexto(false); }
+
+/* ---------- Sala de atendimento em 3D ----------
+   Carregada sob demanda: a biblioteca 3D pesa, e quem não abrir a sala não paga
+   por ela. Falhar aqui nunca pode travar a consulta — se o 3D não subir, o botão
+   avisa e a conversa segue exatamente como antes. */
+let Sala = null;
+const POSTURA_LEGENDA = {
+  tensa: "Chega tensa, no limite",
+  abatida: "Chega abatida, sem energia",
+  protegida: "Chega com dor, protegendo o corpo",
+  defensiva: "Chega assustada, na defensiva",
+  inquieta: "Chega inquieta, sem parar quieta",
+  encolhida: "Chega encolhida, fechada",
+  neutra: "Sentada, esperando você começar",
+};
+
+async function carregarSala() {
+  if (Sala) return Sala;
+  Sala = await import("/sala3d.js");
+  return Sala;
+}
+
+async function alternarSala() {
+  const botao = $("botao-sala");
+  if (Sala && Sala.aberta()) { fecharSala(); return; }
+  if (!estado.consultaId) return;
+  botao.disabled = true;
+  try {
+    const mod = await carregarSala();
+    if (!mod.suportada()) {
+      // Navegador sem WebGL: avisa uma vez e apaga a preferência, senão o aluno
+      // levaria o mesmo aviso na abertura de toda consulta.
+      salvarPreferenciaSala(false);
+      torrada("Este navegador não abre a sala em 3D. A consulta segue normalmente.", true);
+      return;
+    }
+    const lista = [...(estado.instrumentos?.vitais || []), ...(estado.instrumentos?.fisico || []), ...(estado.instrumentos?.exames || [])];
+    $("sala").classList.remove("oculto");
+    document.querySelector(".palco").classList.add("com-sala");
+    // Com a sala aberta a tela precisa de mais largura: sem isto, no desktop, a
+    // conversa era espremida a ~200 px entre a sala e os instrumentos.
+    $("tela-consulta").classList.add("largo");
+    const ok = await mod.abrir({
+      container: $("sala-tela"),
+      categoria: estado.categoriaCaso,
+      paciente: estado.pacienteInfo || {},
+      expressao: estado.expressao,
+      instrumentos: lista,
+      aoInstrumento: (chave) => solicitarExame(chave, null),
+    });
+    if (!ok) { fecharSala(); torrada("Não consegui abrir a sala em 3D. A consulta segue normalmente.", true); return; }
+    // O áudio já tocado antes da sala abrir continua saindo pelo mesmo elemento:
+    // basta apresentá-lo ao analisador para a boca acompanhar a fala.
+    try { mod.ouvirElemento($("player-voz")); } catch {}
+    $("sala-postura").textContent = POSTURA_LEGENDA[(estado.expressao || {}).postura] || POSTURA_LEGENDA.neutra;
+    botao.classList.add("ligado"); botao.setAttribute("aria-pressed", "true");
+    salvarPreferenciaSala(true);
+  } catch (erro) {
+    console.error("[sala3d]", erro);
+    fecharSala();
+    torrada("Não consegui abrir a sala em 3D. A consulta segue normalmente.", true);
+  } finally { botao.disabled = false; }
+}
+
+function fecharSala() {
+  if (Sala && Sala.aberta()) Sala.fechar();
+  $("sala").classList.add("oculto");
+  document.querySelector(".palco").classList.remove("com-sala"); $("tela-consulta").classList.remove("largo");
+  const b = $("botao-sala"); b.classList.remove("ligado"); b.setAttribute("aria-pressed", "false");
+  salvarPreferenciaSala(false);
+}
+
+// Quem gosta da sala não quer religá-la a cada caso; quem não gosta não quer ser
+// surpreendido por ela. A escolha do aluno vale para as próximas consultas.
+const PREF_SALA = "pv_sala_3d";
+function lerPreferenciaSala() { try { return localStorage.getItem(PREF_SALA) === "1"; } catch { return false; } }
+function salvarPreferenciaSala(v) { try { localStorage.setItem(PREF_SALA, v ? "1" : "0"); } catch {} }
+function naSala(fn) { if (Sala && Sala.aberta()) { try { fn(Sala); } catch {} } }
 
 /* ---------- Renderizadores ---------- */
 function formatarNota(n) { return n.toFixed(1).replace(".", ","); }
@@ -1259,6 +1370,9 @@ function renderizarFechamento(d) {
 function mostrarAvaliacao(d) {
   estado.consultaId = null; pararFala(); pararDigitacao(); pararCronometro();
   pararVivo(); // encerra a sessão ao vivo antes de soltar o id: sem isso ela seguiria custando por minuto
+  if (Sala && Sala.aberta()) Sala.fechar(); // libera a GPU; a preferência do aluno fica salva
+  $("sala").classList.add("oculto"); document.querySelector(".palco").classList.remove("com-sala"); $("tela-consulta").classList.remove("largo");
+  $("botao-sala").classList.add("oculto"); $("botao-sala").classList.remove("ligado");
   liberarMicrofone(); // consulta acabou: apaga o indicador de microfone aberto do navegador
   mostrarTela("tela-avaliacao");
   $("resumo-avaliacao").textContent = (estado.casoTitulo ? "Caso: " + estado.casoTitulo + " · " : "") + `transcrição salva em historico/${d.transcript}`;
@@ -1298,6 +1412,8 @@ function mostrarAvaliacao(d) {
 audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("botao-vivo").addEventListener("click", alternarVivo);
+$("botao-sala").addEventListener("click", alternarSala);
+$("fechar-sala").addEventListener("click", fecharSala);
 $("campo-mensagem").addEventListener("keydown", (e) => { if (e.key === "Enter") enviarMensagem(); });
 $("botao-encerrar").addEventListener("click", abrirFechamento);
 $("fecha-enviar").addEventListener("click", () => encerrarConsulta({

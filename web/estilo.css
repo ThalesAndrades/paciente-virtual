@@ -66,6 +66,10 @@
 html, body { height: 100%; }
 body {
   margin: 0;
+  /* Nada de dado que chega de fora — nome de arquivo de transcrição, matrícula,
+     laudo, hipótese digitada pelo aluno — pode esticar a página de lado. Quebra só
+     quando a palavra sozinha não cabe, então a tipografia normal fica intacta. */
+  overflow-wrap: break-word;
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   background:
     radial-gradient(1100px 520px at 78% -8%, color-mix(in srgb, var(--primaria) 12%, transparent), transparent 60%),
@@ -179,10 +183,19 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .acoes button.ligado { border-color: var(--primaria); color: var(--primaria); font-weight: 650; }
 .acoes .encerrar { color: var(--falha); border-color: color-mix(in srgb, var(--falha) 35%, var(--borda)); }
 
-.palco { display: flex; gap: 18px; align-items: flex-start; }
+.palco { display: flex; gap: 18px; align-items: flex-start; min-width: 0; }
 .coluna-chat { flex: 1; min-width: 0; }
-.fluxo-mensagens { display: flex; flex-direction: column; gap: 11px; padding-bottom: 8px; }
-.balao { max-width: 84%; padding: 11px 15px; border-radius: 16px; white-space: pre-wrap; box-shadow: var(--sombra); animation: entra .2s ease; }
+.fluxo-mensagens { display: flex; flex-direction: column; gap: 11px; padding-bottom: 8px; min-width: 0; }
+/* `overflow-wrap: anywhere` não é detalhe tipográfico: uma palavra sem espaço — um
+   nome de exame com sublinhados, um link colado, um laudo em CAPS — esticava o
+   balão, e com ele a coluna, o palco e a página inteira. No celular a consulta
+   inteira passava a rolar de lado. Quebrar a palavra é sempre melhor que quebrar
+   a tela. */
+.balao {
+  max-width: 84%; padding: 11px 15px; border-radius: 16px; white-space: pre-wrap;
+  overflow-wrap: anywhere; word-break: break-word; hyphens: auto;
+  box-shadow: var(--sombra); animation: entra .2s ease;
+}
 .balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 5px; }
 .balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 5px; }
 .balao.paciente.digitando-vivo::after { content: "▋"; margin-left: 1px; color: var(--texto-suave); animation: piscar 1s steps(1) infinite; }
@@ -200,6 +213,42 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .pontos-digita i:nth-child(2) { animation-delay: .18s; } .pontos-digita i:nth-child(3) { animation-delay: .36s; }
 @keyframes balancar { 0%,80%,100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-4px); opacity: 1; } }
 .rotulo-demo { font-size: .72rem; color: var(--texto-suave); margin-top: 4px; display: block; }
+
+/* Sala de atendimento em 3D.
+   No desktop ela é uma coluna à esquerda da conversa; no celular, uma faixa fixa no
+   alto — o paciente continua à vista enquanto o aluno rola a transcrição, que é
+   exatamente o que acontece numa consulta: a pessoa não some quando você anota. */
+.sala {
+  position: sticky; top: 78px; align-self: flex-start; flex: none;
+  width: min(400px, 38vw); border-radius: var(--raio); overflow: hidden;
+  border: 1px solid var(--borda); box-shadow: var(--sombra-forte);
+  background: linear-gradient(160deg, #e6e0d6, #cfc6ba);
+  animation: entra .25s ease;
+}
+.sala-tela { width: 100%; aspect-ratio: 4 / 5; max-height: 62vh; }
+.sala-tela canvas { display: block; width: 100% !important; height: 100% !important; }
+.sala-legenda {
+  position: absolute; inset: auto 0 0 0; margin: 0; padding: 9px 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  font-size: .8rem; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.55) 45%);
+  pointer-events: none;
+}
+.sala-legenda #sala-postura { text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.sala-fechar {
+  pointer-events: auto; border: none; background: rgba(0,0,0,.35); color: #fff;
+  width: 32px; height: 32px; min-width: 32px; border-radius: 50%; cursor: pointer; font-size: .9rem;
+}
+.sala-fechar:hover { background: rgba(0,0,0,.55); }
+#botao-sala.ligado { border-color: var(--primaria); color: var(--primaria); font-weight: 650; }
+
+@media (max-width: 860px) {
+  .palco.com-sala { flex-direction: column; }
+  .sala { width: 100%; top: 60px; z-index: 4; }
+  /* Altura curta de propósito: no celular a conversa é o que precisa de espaço, e
+     uma sala que come a tela inteira empurra os balões para fora do alcance. */
+  .sala-tela { aspect-ratio: auto; height: min(38vh, 300px); }
+}
+@media (max-width: 400px) { .sala-tela { height: min(32vh, 240px); } }
 
 /* Instrumentos (medicina) */
 .painel-instrumentos { width: 268px; flex: none; position: sticky; top: 78px; align-self: flex-start; }
@@ -235,7 +284,11 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 /* Barra de entrada */
 .entrada { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; background: color-mix(in srgb, var(--superficie) 92%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--borda); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
 .entrada .interno { max-width: 940px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
-.entrada input { flex: 1; }
+/* `min-width: 0` porque um input em flex tem largura mínima intrínseca: sem isso,
+   com o microfone e o botão "Ao vivo" na mesma linha, o campo de digitar era
+   espremido a 30 px no celular — dava para ver a caixa, mas não o que se escrevia. */
+.entrada input { flex: 1; min-width: 0; }
+.rotulo-btn { margin-left: 6px; }
 .entrada button.enviar { padding: 12px 18px; border: none; border-radius: var(--raio-sm); background: var(--primaria); color: var(--sobre-primaria); font-size: 1rem; font-weight: 650; cursor: pointer; box-shadow: var(--sombra); }
 #botao-mic { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 15px; min-width: 50px; min-height: 46px; background: var(--superficie); color: var(--texto); border: 1px solid var(--borda-forte); border-radius: 999px; font-size: 1.15rem; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: none; }
 #botao-mic .mic-label { font-size: .8rem; font-weight: 650; }
@@ -657,3 +710,42 @@ input, select, textarea {
 .chip-cat.odontologia, .cab-badge.odontologia { color: var(--odo); background: var(--odo-suave); }
 .chip-cat.farmacia, .cab-badge.farmacia { color: var(--far); background: var(--far-suave); }
 .chip-cat.fonoaudiologia, .cab-badge.fonoaudiologia { color: var(--fon); background: var(--fon-suave); }
+
+/* ── Celular ──────────────────────────────────────────────────────────────────
+   Fica no FIM da folha de propósito: são regras que sobrepõem as de cima, e
+   ordem é o que decide quando a especificidade empata.
+
+   A ideia é uma só: no telefone, texto de botão é luxo. Os botões viram ícone e
+   devolvem a largura a quem precisa dela — o campo de digitar (que chegava a 30 px
+   com o microfone e o "ao vivo" na mesma linha) e o nome do paciente no cabeçalho.
+   O nome acessível continua no `aria-label`, então leitor de tela não perde nada. */
+@media (max-width: 620px) {
+  .rotulo-btn { display: none; }
+  .acoes { flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+  .acoes button { padding: 9px 11px; min-width: 44px; }
+  .acoes .encerrar { padding: 9px 14px; }
+  #botao-mic .mic-label, #botao-vivo .mic-label { display: none; }
+  #botao-mic, #botao-vivo { padding: 11px 12px; min-width: 48px; }
+  .entrada { padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); }
+  .entrada .interno { gap: 6px; }
+  .entrada button.enviar { padding: 12px 15px; min-height: 44px; }
+  .cabecalho-consulta { gap: 9px; padding: 10px 14px; margin: -26px -14px 14px; }
+  .cab-info { min-width: 120px; }
+  .cab-info span { font-size: .78rem; }
+}
+
+/* Telefone pequeno (iPhone SE e afins): a palavra "Enviar" custa 40 px que fazem
+   falta ao campo de digitar. Vira seta; o nome acessível segue no aria-label, e
+   quem prefere o teclado continua enviando com Enter. */
+@media (max-width: 360px) {
+  .entrada button.enviar { font-size: 0; padding: 12px 14px; min-width: 46px; }
+  .entrada button.enviar::after { content: "➤"; font-size: 1.05rem; }
+}
+
+/* Desktop com a sala aberta: a tela cresce em vez de espremer a conversa entre a
+   sala e os instrumentos — a transcrição é a prova do que foi dito e não pode
+   virar uma coluna de duzentos pixels. */
+@media (min-width: 861px) {
+  .tela.largo { max-width: 1320px; }
+  .palco.com-sala .sala { width: min(420px, 34vw); }
+}

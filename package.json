@@ -13,6 +13,7 @@
     "test": "node --test deploy/hostinger/testes/*.test.js"
   },
   "dependencies": {
-    "better-auth": "^1.6.26"
+    "better-auth": "^1.6.26",
+    "three": "^0.185.1"
   }
 }

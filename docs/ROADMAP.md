@@ -94,7 +94,7 @@ direto sem passar por ele.
 ## Fase 2 — Produto (adoção)
 
 - **2.1 Design system + migração do frontend** (UX · L · alto) — sair do `index.html` único vanilla para componentes com build, tokens e tema claro/escuro (WCAG 2.2 AA).
-- **2.2 Avatar animado com lip-sync** (UX · L · alto) — rosto do paciente reagindo ao estado emocional do caso; salto de imersão.
+- **2.2 Avatar animado com lip-sync** (UX · L · alto) — 🟡 **primeira versão entregue (ago/2026)**: sala em 3D com paciente estilizado que respira na frequência do caso, pisca, desvia o olhar conforme a dinâmica de revelação e move a boca pela energia do áudio. Falta: avatar de maior fidelidade (glTF), mais mobília por área e medir o custo de bateria em celular de aluno. Ver [a spec](superpowers/specs/2026-08-05-sala-de-atendimento-3d-design.md).
 - **2.3 Painel de learning analytics** (Produto · M · alto) — evolução do aluno, pontos fracos por turma, comparativos para o professor.
 - **2.4 Integração LMS (LTI 1.3)** (Produto · M · alto) — Moodle/Canvas; porta de entrada para universidades.
 - **2.5 Mobile-first / PWA** (UX · M · médio) — instalável e utilizável offline.
