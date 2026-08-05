@@ -23,13 +23,18 @@
 <div id="modal-codigo" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modal-codigo-tit">
   <div class="modal-box">
     <div class="modal-selo" id="modal-selo">🔒</div>
-    <h2 id="modal-codigo-tit">Código de acesso</h2>
-    <p class="subtitulo" id="modal-codigo-sub" style="margin-bottom:16px">Digite o código para iniciar a simulação.</p>
-    <input id="campo-codigo" type="password" inputmode="numeric" placeholder="••••" maxlength="12" autocomplete="off" aria-label="Código de acesso">
-    <div class="modal-erro oculto" id="codigo-erro">Código incorreto. Tente novamente.</div>
+    <h2 id="modal-codigo-tit">Entrar</h2>
+    <p class="subtitulo" id="modal-codigo-sub" style="margin-bottom:16px">Use a sua matrícula e a sua senha.</p>
+    <form id="form-login" class="campos-login" autocomplete="on">
+      <input id="campo-matricula" name="username" type="text" placeholder="Matrícula" maxlength="40"
+             autocomplete="username" autocapitalize="none" spellcheck="false" aria-label="Matrícula">
+      <input id="campo-senha" name="password" type="password" placeholder="Senha" maxlength="200"
+             autocomplete="current-password" aria-label="Senha">
+    </form>
+    <div class="modal-erro oculto" id="codigo-erro">Matrícula ou senha incorreta.</div>
     <div class="modal-acoes">
       <button class="botao secundario" id="codigo-cancelar" type="button">Cancelar</button>
-      <button class="botao" id="codigo-ok" type="button">Liberar</button>
+      <button class="botao" id="codigo-ok" type="button">Entrar</button>
     </div>
   </div>
 </div>
@@ -52,8 +57,7 @@
     <p class="pref-dica">O paciente responde por escrito e, com voz ligada, o relato também é lido em voz alta (voz masculina/feminina conforme o caso). Você pode mudar durante a consulta.</p>
   </div>
 
-  <label for="campo-aluno">Seu nome (profissional)</label>
-  <input id="campo-aluno" type="text" placeholder="Ex.: Dra. Marina" autocomplete="name">
+  <p class="pref-dica" id="quem-sou" style="margin:0 0 10px"></p>
 
   <label>Escolha a área</label>
   <div class="categorias">
@@ -270,7 +274,7 @@ const CAT = { medicina: { nome: "Medicina", chip: "med", cor: "var(--med)" }, ps
    O código NÃO mora mais aqui: quem confere é o servidor, que devolve um cookie de
    sessão. Antes a checagem era neste script — dava para ler o código no ver-fonte e,
    pior, chamar a API direto sem passar por ela. */
-const acesso = { autenticado: false, professor: false, painelDisponivel: false };
+const acesso = { autenticado: false, professor: false, painelDisponivel: false, matricula: null, nome: null };
 let acaoLiberacao = null, papelPedido = "aluno";
 
 async function carregarAcesso() {
@@ -278,29 +282,31 @@ async function carregarAcesso() {
     const d = await (await fetch("/api/acesso")).json();
     acesso.autenticado = !!d.autenticado; acesso.professor = !!d.professor;
     acesso.painelDisponivel = !!d.painel_disponivel;
+    acesso.matricula = d.matricula || null; acesso.nome = d.nome || null;
   } catch { /* sem rede: o modal aparece e o servidor decide */ }
-  // Painel desligado no servidor (sem senha de professor configurada): não anuncia
-  // um botão que só levaria a um erro.
-  $("botao-painel").classList.toggle("oculto", !acesso.painelDisponivel);
+  // O painel só é anunciado a quem TEM o papel: botão que leva a 403 é ruído.
+  $("botao-painel").classList.toggle("oculto", !acesso.professor);
+  const quem = $("quem-sou");
+  if (quem) quem.textContent = acesso.matricula ? `Entrou como ${acesso.nome || acesso.matricula} (${acesso.matricula}).` : "";
 }
 
 function abrirModal(papel, fn) {
+  // Não há mais duas credenciais. Aluno e professor entram pela MESMA porta, com
+  // matrícula e senha; o que muda é o papel que a conta tem no servidor. Antes o
+  // professor tinha uma senha própria e compartilhada — uma segunda porta, e a
+  // porta fraca é a que vale.
   papelPedido = papel; acaoLiberacao = fn || null;
   const professor = papel === "professor";
-  $("modal-codigo-tit").textContent = professor ? "Senha do professor" : "Código de acesso";
+  $("modal-codigo-tit").textContent = "Entrar";
   $("modal-codigo-sub").textContent = professor
-    ? "O painel mostra transcrições de alunos. Informe a senha para abrir."
-    : "Digite o código para iniciar a simulação.";
+    ? "O painel mostra transcrições de alunos. Entre com a sua conta de professor."
+    : "Use a sua matrícula e a sua senha.";
   $("modal-selo").textContent = professor ? "🔑" : "🔒";
-  const campo = $("campo-codigo");
-  campo.value = ""; campo.maxLength = professor ? 64 : 12;
-  campo.style.letterSpacing = professor ? "normal" : ".5em";
-  campo.inputMode = professor ? "text" : "numeric";
-  campo.placeholder = professor ? "senha" : "••••";
-  campo.setAttribute("aria-label", professor ? "Senha do professor" : "Código de acesso");
+  $("campo-matricula").value = "";
+  $("campo-senha").value = "";
   $("codigo-erro").classList.add("oculto");
   $("modal-codigo").classList.remove("oculto");
-  setTimeout(() => { try { campo.focus(); } catch {} }, 60);
+  setTimeout(() => { try { $("campo-matricula").focus(); } catch {} }, 60);
 }
 
 function exigirCodigo(fn) {
@@ -309,23 +315,28 @@ function exigirCodigo(fn) {
 }
 
 async function confirmarCodigo() {
-  const valor = $("campo-codigo").value.trim();
-  if (!valor) return;
-  const professor = papelPedido === "professor";
+  const matricula = $("campo-matricula").value.trim();
+  const senha = $("campo-senha").value;
+  if (!matricula || !senha) {
+    $("codigo-erro").textContent = "Preencha a matrícula e a senha.";
+    $("codigo-erro").classList.remove("oculto");
+    return;
+  }
   const botao = $("codigo-ok"); botao.disabled = true;
   try {
-    const r = await fetch(professor ? "/api/acesso/professor" : "/api/acesso", {
+    const r = await fetch("/api/auth/sign-in/username", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(professor ? { senha: valor } : { codigo: valor }),
+      body: JSON.stringify({ username: matricula, password: senha }),
     });
     if (!r.ok) {
-      let d = {}; try { d = await r.json(); } catch {}
-      $("codigo-erro").textContent = d.erro || "Código incorreto. Tente novamente.";
+      // Mensagem única de propósito: dizer "essa matrícula não existe" entregaria
+      // a quem perguntasse a lista de matrículas válidas.
+      $("codigo-erro").textContent = "Matrícula ou senha incorreta.";
       $("codigo-erro").classList.remove("oculto");
-      try { $("campo-codigo").select(); } catch {}
+      try { $("campo-senha").select(); } catch {}
       return;
     }
-    acesso.autenticado = true; if (professor) acesso.professor = true;
+    await carregarAcesso();
     $("modal-codigo").classList.add("oculto");
     const fn = acaoLiberacao; acaoLiberacao = null; if (fn) fn();
   } catch {
@@ -511,10 +522,9 @@ async function iniciarConsulta(casoId, aleatorio) {
   estado.aleatorio = !!aleatorio;
   const info = estado.casos.find((c) => c.id === casoId);
   estado.casoTitulo = info ? info.titulo : "";
-  const aluno = $("campo-aluno").value.trim() || "aluno";
   let dados;
   try {
-    const r = await fetch("/api/consultas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caso: casoId, aluno }) });
+    const r = await fetch("/api/consultas", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caso: casoId }) });
     if (!r.ok) {
       let d = {}; try { d = await r.json(); } catch {}
       // Sessão caiu (cookie expirado, servidor reiniciado): em vez de um erro seco,
@@ -1180,7 +1190,7 @@ $("botao-painel-voltar").addEventListener("click", () => mostrarTela("tela-inici
 // Sem isto a sessão de professor — que dá acesso a transcrições com nome de aluno —
 // ficava aberta por 12h no computador do laboratório, sem jeito de encerrar.
 $("botao-sair").addEventListener("click", async () => {
-  try { await fetch("/api/sair", { method: "POST" }); } catch {}
+  try { await fetch("/api/auth/sign-out", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }); } catch {}
   acesso.autenticado = false; acesso.professor = false;
   torrada("Sessão encerrada neste computador.");
   mostrarTela("tela-inicio");
@@ -1188,13 +1198,16 @@ $("botao-sair").addEventListener("click", async () => {
 $("botao-detalhe-voltar").addEventListener("click", abrirPainel);
 $("codigo-ok").addEventListener("click", confirmarCodigo);
 $("codigo-cancelar").addEventListener("click", fecharCodigo);
-$("campo-codigo").addEventListener("keydown", (e) => { if (e.key === "Enter") confirmarCodigo(); });
+for (const id of ["campo-matricula", "campo-senha"]) {
+  $(id).addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); confirmarCodigo(); } });
+}
+$("form-login").addEventListener("submit", (e) => { e.preventDefault(); confirmarCodigo(); });
 $("modal-codigo").addEventListener("click", (e) => { if (e.target === $("modal-codigo")) fecharCodigo(); });
 // Modal: Esc fecha e Tab fica preso no diálogo (não vaza foco pra tela de fundo).
 $("modal-codigo").addEventListener("keydown", (e) => {
   if (e.key === "Escape") { fecharCodigo(); return; }
   if (e.key === "Tab") {
-    const f = [$("campo-codigo"), $("codigo-cancelar"), $("codigo-ok")];
+    const f = [$("campo-matricula"), $("campo-senha"), $("codigo-cancelar"), $("codigo-ok")];
     const i = f.indexOf(document.activeElement);
     e.preventDefault();
     f[e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1)].focus();

@@ -563,3 +563,14 @@ input, select, textarea {
   box-shadow: var(--elev-sobreposto);
   animation: subiModal var(--normal) var(--curva-entrada);
 }
+
+/* Login: dois campos empilhados. A regra genérica de `.modal-box input` foi feita
+   para o código numérico de 4 dígitos (centralizado, com espaçamento largo entre
+   caracteres) — aplicada a "matrícula" e "senha", vira ilegível. */
+.campos-login { display: grid; gap: 10px; margin-bottom: 14px; }
+.campos-login input {
+  text-align: left;
+  letter-spacing: normal;
+  font-size: 1rem;
+  min-height: var(--toque-min);
+}

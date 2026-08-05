@@ -11,5 +11,8 @@
   "scripts": {
     "start": "node app.js",
     "test": "node --test deploy/hostinger/testes/*.test.js"
+  },
+  "dependencies": {
+    "better-auth": "^1.6.26"
   }
 }

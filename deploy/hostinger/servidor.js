@@ -13,13 +13,16 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { toNodeHandler } from "better-auth/node";
+
+import { auth, contarUsuarios, migrar, semearAdmin } from "./motor/auth.js";
 import {
-  autenticar,
-  cabecalhoSaida,
-  cabecalhoSessao,
+  carregarSessao,
   ehAluno,
   ehProfessor,
   estadoAcesso,
+  matriculaDe,
+  nomeDe,
   painelDisponivel,
   sessaoDe,
 } from "./motor/acesso.js";
@@ -300,20 +303,6 @@ function lerCorpoBinario(req, maxBytes) {
   });
 }
 
-async function responderLogin(req, res, papelPedido, campo) {
-  if (estourouLimite(req, res, "login", LIMITE_LOGIN)) return;
-  const dados = await lerCorpo(req);
-  const papel = autenticar(papelPedido, dados[campo]);
-  if (!papel) {
-    const erro =
-      papelPedido === "professor" && !painelDisponivel()
-        ? "Painel do professor desativado neste servidor."
-        : "Código incorreto.";
-    return json(res, 401, { erro });
-  }
-  json(res, 200, { ok: true, papel }, { "Set-Cookie": cabecalhoSessao(papel, conexaoSegura(req)) });
-}
-
 function lerCorpo(req) {
   return new Promise((resolver, rejeitar) => {
     const pedacos = [];
@@ -342,7 +331,11 @@ function lerCorpo(req) {
 async function iniciarConsulta(req, res) {
   const dados = await lerCorpo(req);
   const casoId = String(dados.caso || "").trim();
-  const aluno = String(dados.aluno || "").trim() || "aluno";
+  // A identidade vem da SESSÃO, nunca do corpo da requisição. Antes o aluno
+  // digitava o próprio nome num campo livre — foi por ali que passou o XSS
+  // corrigido na v4, e além disso qualquer um podia assinar a consulta com o nome
+  // de outra pessoa. Agora a consulta é da matrícula que está logada, e ponto.
+  const aluno = matriculaDe(req) || "aluno";
 
   const disponiveis = new Set(listarCasos().map((caso) => caso.id));
   if (!disponiveis.has(casoId)) {
@@ -646,6 +639,18 @@ export function criarServidor() {
     const { pathname } = new URL(req.url, "http://localhost");
 
     try {
+      // Login, logout e gestão de contas ficam com o Better Auth. Vem ANTES de
+      // qualquer outra coisa e antes de resolver a sessão: estas rotas são
+      // justamente as que existem para quem ainda não tem sessão nenhuma.
+      if (pathname.startsWith("/api/auth/")) {
+        return await toNodeHandler(auth())(req, res);
+      }
+
+      // A sessão é resolvida UMA vez por requisição e fica no `req`. É o que
+      // permite `ehAluno(req)` e `sessaoDe(req)` continuarem síncronos no resto
+      // do arquivo, com uma única consulta ao banco.
+      await carregarSessao(req);
+
       // Verificação de saúde para o painel da Hostinger / monitoramento de uptime.
       if (req.method === "GET" && (pathname === "/healthz" || pathname === "/api/health")) {
         const backend = (process.env.OPENAI_API_KEY || "").trim()
@@ -709,15 +714,11 @@ export function criarServidor() {
       if (req.method === "GET" && pathname === "/api/acesso") {
         return json(res, 200, estadoAcesso(req));
       }
-      if (req.method === "POST" && pathname === "/api/acesso") {
-        return await responderLogin(req, res, "aluno", "codigo");
-      }
-      if (req.method === "POST" && pathname === "/api/acesso/professor") {
-        return await responderLogin(req, res, "professor", "senha");
-      }
-      if (req.method === "POST" && pathname === "/api/sair") {
-        return json(res, 200, { ok: true }, { "Set-Cookie": cabecalhoSaida() });
-      }
+      // Entrar e sair passaram a ser `/api/auth/sign-in/username` e
+      // `/api/auth/sign-out`, tratados acima pelo Better Auth. As rotas antigas
+      // (código compartilhado e senha de professor) deixaram de existir de
+      // propósito: enquanto respondessem, seriam uma segunda porta para a mesma
+      // casa — e a porta fraca é a que vale.
 
       // A vitrine (título, queixa, contagem por área) fica aberta: é o que a página
       // inicial mostra antes de pedir o código. O que custa dinheiro ou contém dado
@@ -796,7 +797,7 @@ export function criarServidor() {
 
       // Daqui para baixo, tudo mexe numa consulta: exige sessão de aluno.
       if (pathname.startsWith("/api/consultas") && !ehAluno(req)) {
-        return json(res, 401, { erro: "Sessão expirada. Informe o código de acesso de novo." });
+        return json(res, 401, { erro: "Sessão expirada. Entre de novo com a sua matrícula." });
       }
 
       if (req.method === "POST" && pathname === "/api/consultas") {
@@ -849,9 +850,25 @@ export function criarServidor() {
   });
 }
 
-export function iniciar() {
+export async function iniciar() {
   const bruto = process.env.PORT || process.env.PACIENTE_VIRTUAL_PORTA || 3000;
   const servidor = criarServidor();
+
+  // Banco e primeiro administrador ANTES de aceitar tráfego. Se falhar, o processo
+  // morre em vez de subir sem tabela: um servidor que responde 500 no login é pior
+  // que um que não sobe, porque o monitoramento o vê "no ar".
+  try {
+    const pendentes = await migrar();
+    if (pendentes) console.log(`[auth] ${pendentes} migração(ões) aplicada(s)`);
+    const semeadura = await semearAdmin();
+    if (semeadura.semeado) console.log(`[auth] administrador criado: ${semeadura.matricula}`);
+    else if ((await contarUsuarios()) === 0) {
+      console.warn(`[auth] NENHUM USUÁRIO CADASTRADO — ${semeadura.motivo}. Ninguém consegue entrar.`);
+    }
+  } catch (erro) {
+    console.error(`[auth] falha ao preparar o banco: ${(erro && erro.message) || erro}`);
+    process.exit(1);
+  }
 
   const anunciar = () => {
     const onde = servidor.address();

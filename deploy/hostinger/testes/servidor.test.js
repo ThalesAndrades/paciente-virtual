@@ -1,22 +1,66 @@
 // Teste ponta a ponta do servidor Node (node --test), em modo demonstração.
 
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import test from "node:test";
-
-import { criarServidor } from "../servidor.js";
 
 // Sem Ollama acessível, o paciente deve responder em modo demo.
 process.env.OLLAMA_URL = "http://127.0.0.1:9";
-process.env.PV_CODIGO_ACESSO = "9271";
-process.env.PV_SENHA_PROFESSOR = "senha-de-teste";
+process.env.PV_SEGREDO = "segredo-de-teste-com-tamanho-suficiente-1234567890";
 
-// Cliente que guarda o cookie de sessão, como o navegador faz.
+// Banco descartável, num diretório temporário. Import DINÂMICO logo abaixo porque
+// `import` estático é içado para antes destas linhas — e o módulo de autenticação
+// lê o caminho do banco no carregamento. Com import estático, os testes gravariam
+// no banco de produção.
+process.env.PV_BANCO = path.join(
+  fs.mkdtempSync(path.join(os.tmpdir(), "pv-teste-")),
+  "pv.sqlite"
+);
+
+const { criarServidor } = await import("../servidor.js");
+const { criarUsuario, migrar } = await import("../motor/auth.js");
+
+await migrar();
+await criarUsuario({ matricula: "aluno001", senha: "senha-de-teste-aluno", nome: "Aluno de Teste", papel: "aluno" });
+await criarUsuario({ matricula: "aluno002", senha: "senha-de-teste-dois", nome: "Outro Aluno", papel: "aluno" });
+await criarUsuario({ matricula: "prof001", senha: "senha-de-teste-prof", nome: "Professor de Teste", papel: "professor" });
+
+// Alunos exclusivos do teste de limite. Desde que a cota passou a ser POR ALUNO
+// (e não por sessão), esgotar a cota do `aluno001` num teste derrubaria os outros
+// testes que também entram como ele — os 429 apareceriam longe da causa.
+await criarUsuario({ matricula: "limite001", senha: "senha-de-teste-lim1", nome: "Limite Um", papel: "aluno" });
+await criarUsuario({ matricula: "limite002", senha: "senha-de-teste-lim2", nome: "Limite Dois", papel: "aluno" });
+
+const SENHAS = {
+  aluno001: "senha-de-teste-aluno",
+  aluno002: "senha-de-teste-dois",
+  prof001: "senha-de-teste-prof",
+  limite001: "senha-de-teste-lim1",
+  limite002: "senha-de-teste-lim2",
+};
+
+// Entra como a matrícula pedida, pela MESMA rota que o navegador usa.
+function entrar(api, matricula) {
+  return api("/api/auth/sign-in/username", { username: matricula, password: SENHAS[matricula] });
+}
+
+// Cliente que guarda o cookie de sessão e envia `Origin`, como o navegador faz.
+//
+// O `Origin` não é detalhe: com sessão aberta, o Better Auth recusa requisição de
+// origem desconhecida — é a defesa contra CSRF. Um cliente de teste que não manda
+// `Origin` testaria um caminho que navegador nenhum percorre.
 function criarCliente(base) {
   let cookie = "";
   return async function api(caminho, corpo, metodo) {
     const resposta = await fetch(`${base}${caminho}`, {
       method: metodo || (corpo === undefined ? "GET" : "POST"),
-      headers: { "Content-Type": "application/json", ...(cookie ? { Cookie: cookie } : {}) },
+      headers: {
+        "Content-Type": "application/json",
+        Origin: base,
+        ...(cookie ? { Cookie: cookie } : {}),
+      },
       body: corpo === undefined ? undefined : JSON.stringify(corpo),
     });
     const definido = resposta.headers.get("set-cookie");
@@ -69,9 +113,25 @@ test("sem sessão, consulta e painel ficam fechados", async () => {
     assert.equal((await api("/api/falar", { texto: "oi" })).status, 401);
     assert.equal((await api("/api/relatorio")).status, 403);
 
-    const errado = await api("/api/acesso", { codigo: "0000" });
-    assert.equal(errado.status, 401);
-    // Código errado não pode abrir porta nenhuma.
+    // Matrícula real com senha errada e matrícula que não existe precisam responder
+    // EXATAMENTE igual — senão a diferença conta a quem perguntar quais matrículas
+    // existem, e uma lista de matrículas válidas é meio caminho para invadir uma.
+    const senhaErrada = await api("/api/auth/sign-in/username", {
+      username: "aluno001",
+      password: "nao-e-a-senha",
+    });
+    // Matrícula com hífen, na forma que uma instituição usa de verdade — precisa
+    // ser aceita pelo validador, senão o erro sairia como "formato inválido" e
+    // matrículas assim nem poderiam ser cadastradas.
+    const naoExiste = await api("/api/auth/sign-in/username", {
+      username: "2026-999",
+      password: "nao-e-a-senha",
+    });
+    assert.equal(senhaErrada.status, 401);
+    assert.equal(naoExiste.status, senhaErrada.status);
+    assert.deepEqual(naoExiste.dados, senhaErrada.dados);
+
+    // Login recusado não pode abrir porta nenhuma.
     assert.equal((await api("/api/consultas", { caso: "infarto" })).status, 401);
   } finally {
     servidor.close();
@@ -81,23 +141,28 @@ test("sem sessão, consulta e painel ficam fechados", async () => {
 test("aluno autenticado não alcança o painel do professor", async () => {
   const { servidor, api } = await subir();
   try {
-    assert.equal((await api("/api/acesso", { codigo: "9271" })).status, 200);
+    assert.equal((await entrar(api, "aluno001")).status, 200);
     assert.equal((await api("/api/consultas", { caso: "infarto" })).status, 200);
 
     // Sessão de aluno não vira sessão de professor.
     assert.equal((await api("/api/relatorio")).status, 403);
 
-    assert.equal((await api("/api/acesso/professor", { senha: "errada" })).status, 401);
+    // Tentar entrar como professor com a senha errada não promove a sessão que já
+    // existe: o aluno continua aluno.
+    assert.equal(
+      (await api("/api/auth/sign-in/username", { username: "prof001", password: "errada" })).status,
+      401
+    );
     assert.equal((await api("/api/relatorio")).status, 403);
 
-    assert.equal((await api("/api/acesso/professor", { senha: "senha-de-teste" })).status, 200);
+    assert.equal((await entrar(api, "prof001")).status, 200);
     assert.equal((await api("/api/relatorio")).status, 200);
 
     const estado = await api("/api/acesso");
     assert.equal(estado.dados.professor, true);
     assert.equal(estado.dados.painel_disponivel, true);
 
-    await api("/api/sair", {});
+    await api("/api/auth/sign-out", {});
     assert.equal((await api("/api/relatorio")).status, 403);
   } finally {
     servidor.close();
@@ -118,10 +183,10 @@ test("rota de áudio exige sessão e recusa áudio inaproveitável", async () =>
   try {
     assert.equal((await enviarAudio(Buffer.from("abc"))).status, 401);
 
-    const login = await fetch(`${base}/api/acesso`, {
+    const login = await fetch(`${base}/api/auth/sign-in/username`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ codigo: "9271" }),
+      body: JSON.stringify({ username: "aluno001", password: SENHAS.aluno001 }),
     });
     cookie = login.headers.get("set-cookie").split(";")[0];
 
@@ -143,17 +208,21 @@ test("limite de uso conta por sessão, não pelo IP compartilhado da turma", asy
   const { servidor } = await subir();
   const base = `http://127.0.0.1:${servidor.address().port}`;
   try {
-    const entrar = async () => {
-      const r = await fetch(`${base}/api/acesso`, {
+    const entrarComo = async (matricula) => {
+      const r = await fetch(`${base}/api/auth/sign-in/username`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ codigo: "9271" }),
+        body: JSON.stringify({ username: matricula, password: SENHAS[matricula] }),
       });
       return r.headers.get("set-cookie").split(";")[0];
     };
-    const a = await entrar();
-    const b = await entrar();
-    assert.notEqual(a, b, "cada login deve abrir uma sessão própria");
+    // Duas PESSOAS diferentes, não dois logins da mesma: desde que a matrícula
+    // existe, a cota acompanha o aluno e não o navegador. Dois logins do mesmo
+    // aluno dividem a mesma cota de propósito — senão bastaria reentrar para
+    // zerar o teto.
+    const a = await entrarComo("limite001");
+    const b = await entrarComo("limite002");
+    assert.notEqual(a, b, "cada aluno deve abrir uma sessão própria");
 
     const consultar = (cookie) =>
       fetch(`${base}/api/consultas`, {
@@ -172,23 +241,42 @@ test("limite de uso conta por sessão, não pelo IP compartilhado da turma", asy
   }
 });
 
-test("sem senha configurada, o painel fica desligado e não aberto", async () => {
-  const original = process.env.PV_SENHA_PROFESSOR;
-  delete process.env.PV_SENHA_PROFESSOR;
+test("o painel é protegido por PAPEL, não por configuração lembrada", async () => {
+  // Antes, o painel dependia de alguém definir PV_SENHA_PROFESSOR — esquecer de
+  // configurar era esquecer de proteger. Agora a proteção é o papel do usuário, que
+  // não tem como ser esquecido: quem não é professor recebe 403, e pronto.
   const { servidor, api } = await subir();
   try {
-    const saude = await api("/healthz");
-    assert.equal(saude.dados.painel_professor, "desativado");
-
-    const estado = await api("/api/acesso");
-    assert.equal(estado.dados.painel_disponivel, false);
-
-    // Nem com a senha vazia, nem por engano: fechado é fechado.
-    assert.equal((await api("/api/acesso/professor", { senha: "" })).status, 401);
-    assert.equal((await api("/api/acesso/professor", { senha: "qualquer" })).status, 401);
     assert.equal((await api("/api/relatorio")).status, 403);
+
+    await entrar(api, "aluno001");
+    assert.equal((await api("/api/relatorio")).status, 403);
+    assert.equal((await api("/api/acesso")).dados.professor, false);
+
+    await entrar(api, "prof001");
+    assert.equal((await api("/api/relatorio")).status, 200);
+    assert.equal((await api("/api/acesso")).dados.professor, true);
   } finally {
-    process.env.PV_SENHA_PROFESSOR = original;
+    servidor.close();
+  }
+});
+
+test("a consulta é assinada pela matrícula da sessão, não pelo corpo do pedido", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    // O cliente tenta se passar por outra pessoa. O servidor ignora.
+    const consulta = await api("/api/consultas", { caso: "infarto", aluno: "prof001" });
+    assert.equal(consulta.status, 200);
+
+    await api(`/api/consultas/${consulta.dados.id}/encerrar`, { fechamento: "teste" });
+
+    await entrar(api, "prof001");
+    const relatorio = await api("/api/relatorio");
+    const nosso = relatorio.dados.find((c) => c.caso === "infarto");
+    assert.ok(nosso, "a consulta encerrada deveria aparecer no painel");
+    assert.equal(nosso.aluno, "aluno001", "a consulta tem de sair no nome de quem estava logado");
+  } finally {
     servidor.close();
   }
 });
@@ -196,7 +284,7 @@ test("sem senha configurada, o painel fica desligado e não aberto", async () =>
 test("gabarito do caso só sai depois de encerrar, com o fechamento do aluno", async () => {
   const { servidor, api } = await subir();
   try {
-    await api("/api/acesso", { codigo: "9271" });
+    await entrar(api, "aluno001");
     const c = await api("/api/consultas", { caso: "infarto", aluno: "Fechamento" });
     const id = c.dados.id;
 
@@ -223,7 +311,7 @@ test("gabarito do caso só sai depois de encerrar, com o fechamento do aluno", a
     const arquivo = fim.dados.transcript;
     if (arquivo && arquivo.endsWith(".txt")) {
       try {
-        await api("/api/acesso/professor", { senha: "senha-de-teste" });
+        await entrar(api, "prof001");
         const d = await api(`/api/relatorio/${encodeURIComponent(arquivo)}`);
         assert.equal(d.dados.hipotese, "Infarto agudo do miocárdio");
         assert.match(d.dados.conduta, /hemodin/i);
@@ -258,7 +346,7 @@ test("fluxo completo de consulta em modo demonstração", async () => {
     assert.deepEqual(voz.dados.tts, { feminino: false, masculino: false });
     assert.equal(voz.dados.provedor, "nenhum");
 
-    await api("/api/acesso", { codigo: "9271" });
+    await entrar(api, "aluno001");
 
     const invalido = await api("/api/consultas", { caso: "../etc/passwd" });
     assert.equal(invalido.status, 404);
@@ -292,12 +380,14 @@ test("fluxo completo de consulta em modo demonstração", async () => {
     const arquivo = fim.dados.transcript;
     if (arquivo && arquivo.endsWith(".txt")) {
       try {
-        await api("/api/acesso/professor", { senha: "senha-de-teste" });
+        await entrar(api, "prof001");
         const painel = await api("/api/relatorio");
         assert.equal(painel.status, 200);
         const item = painel.dados.find((consulta) => consulta.arquivo === arquivo);
         assert.ok(item, "consulta gravada deveria aparecer no painel");
-        assert.equal(item.aluno, "Node E2E");
+        // A consulta sai no nome de QUEM ESTAVA LOGADO. O nome que o cliente
+        // mandava no corpo do pedido deixou de ser considerado.
+        assert.equal(item.aluno, "aluno001");
         assert.ok(item.nota > 0);
 
         const detalhe = await api(`/api/relatorio/${encodeURIComponent(arquivo)}`);
