@@ -1182,3 +1182,12 @@ input, select, textarea {
 }
 .voltar-ao-fim.oculto { display: none; }
 #tela-consulta .coluna-chat { position: relative; }
+
+/* Aviso de que o relógio não parou enquanto o participante relê o comando. Na
+   estação de verdade, consultar o impresso na mesa não pausa nada — e quem se
+   acostuma a "pausar para reler" treina um ritmo que a prova não tem. */
+.estacao-correndo {
+  margin: 10px 0 0; padding: 9px 12px; border-radius: var(--raio-sm);
+  background: var(--exame); border: 1px solid var(--exame-borda); color: var(--exame-texto);
+  font-size: .88rem; font-weight: 600;
+}

@@ -330,6 +330,12 @@
     <div class="acoes">
       <button id="abrir-instrumentos" title="Instrumentos e anotações" aria-label="Instrumentos e anotações" aria-expanded="false" aria-controls="painel-instrumentos">🩺<span class="rotulo-btn">Instrumentos</span></button>
       <button id="botao-sala" class="oculto" title="Mostrar a presença do paciente" aria-label="Mostrar a presença do paciente" aria-pressed="false" aria-controls="sala">◉<span class="rotulo-btn">Presença</span></button>
+      <!-- Na prova o impresso da estação FICA com o candidato: ele relê o comando
+           quantas vezes quiser durante os dez minutos. Aqui ele era mostrado uma
+           vez e sumia, e quem esquecia uma das tarefas perdia ponto por algo que
+           a prova real não puniria. O relógio NÃO para enquanto se relê — como na
+           estação de verdade. -->
+      <button id="botao-impresso" class="oculto" title="Reler o comando da estação" aria-label="Reler o comando da estação">📋<span class="rotulo-btn">Comando</span></button>
       <button id="botao-som" class="ligado" title="Ler as respostas em voz alta" aria-label="Ler as respostas em voz alta">🔊<span class="rotulo-btn">Voz</span></button>
       <button id="botao-encerrar" class="encerrar">Encerrar e avaliar</button>
     </div>
@@ -408,9 +414,13 @@
       O tempo começa quando você entrar e não é prorrogável. Ao final, registre hipótese,
       diferenciais e conduta — é sobre isso que a avaliação do PEP acontece.
     </p>
+    <p class="estacao-correndo oculto" id="estacao-aviso-tempo">⏱ O tempo continua correndo enquanto você relê.</p>
     <div class="modal-acoes">
       <button class="botao secundario" id="estacao-desistir" type="button">Voltar</button>
       <button class="botao" id="estacao-entrar" type="button">Entrar na estação</button>
+      <!-- Relendo o comando no meio da estação: o relógio não parou, então a única
+           saída é voltar para a sala. -->
+      <button class="botao oculto" id="estacao-fechar-impresso" type="button">Voltar à estação</button>
     </div>
   </div>
 </div>
@@ -524,7 +534,7 @@ function lerPreferenciaAudio() { try { return localStorage.getItem(PREF_AUDIO) !
 function salvarPreferenciaAudio(l) { try { localStorage.setItem(PREF_AUDIO, l ? "1" : "0"); } catch { /* */ } }
 
 const estado = {
-  casos: [], categoriaAtual: null, casoSelecionado: null, consultaId: null,
+  casos: [], categoriaAtual: null, casoSelecionado: null, consultaId: null, avisosDados: new Set(),
   voz: "feminino", categoriaCaso: "psicologia", pacienteNome: "", instrumentos: null,
   falarRespostas: lerPreferenciaAudio(), avisoDemoExibido: false, ocupado: false,
   creditos: null, loja: null, estacao: null, estacaoEncerrando: false, prova: null, circuito: null,
@@ -1308,6 +1318,11 @@ function formatarDuracao(s) {
   const m = Math.floor(s / 60), r = s % 60;
   return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
 }
+// Marcos de aviso, do maior para o menor. Na prova há sinal sonoro faltando dois
+// minutos; o de um minuto e o de trinta segundos existem porque aqui não há fiscal
+// na sala avisando ninguém.
+const AVISOS_DE_TEMPO = [120, 60, 30];
+
 function atualizarMedidores() {
   if (!estado.inicioConsulta) return;
   const decorrido = Math.floor((Date.now() - estado.inicioConsulta) / 1000);
@@ -1322,7 +1337,17 @@ function atualizarMedidores() {
     medidor.textContent = formatarDuracao(restante);
     medidor.classList.toggle("apertado", restante <= 120 && restante > 30);
     medidor.classList.toggle("acabando", restante <= 30);
-    if (restante === 120) torrada("Dois minutos restantes.");
+    // Era `restante === 120`: igualdade exata dentro de um `setInterval` de 1 s.
+    // O navegador estrangula temporizadores de aba em segundo plano (chega a um
+    // disparo por minuto), então o tique que valia 120 simplesmente não
+    // acontecia e o aviso NUNCA aparecia — justamente para quem tinha saído da
+    // aba e mais precisava dele. Agora dispara ao CRUZAR o limiar, uma vez só.
+    for (const marco of AVISOS_DE_TEMPO) {
+      if (restante <= marco && !estado.avisosDados.has(marco)) {
+        estado.avisosDados.add(marco);
+        torrada(marco >= 60 ? `${marco / 60} ${marco === 60 ? "minuto restante" : "minutos restantes"}.` : `${marco} segundos.`, marco <= 60);
+      }
+    }
     if (restante <= 0 && !estado.estacaoEncerrando) {
       estado.estacaoEncerrando = true;
       torrada("Tempo esgotado. A estação foi encerrada.", true);
@@ -1573,7 +1598,7 @@ function mostrarBoletim(b) {
 
 /* ---------- Estação de Revalida ---------- */
 
-function mostrarImpressoDaEstacao(estacao) {
+function mostrarImpressoDaEstacao(estacao, relendo = false) {
   $("estacao-area").textContent = estacao.area_nome || "Clínica Médica";
   $("estacao-tempo").textContent = `${estacao.tempo_minutos || 10} minutos`;
   $("estacao-cenario").textContent = estacao.cenario || "";
@@ -1591,23 +1616,38 @@ function mostrarImpressoDaEstacao(estacao) {
   limites.textContent = partes.length ? `Limites desta estação: ${partes.join(" · ")}.` : "";
   limites.classList.toggle("oculto", !partes.length);
 
+  // Relendo: o cronômetro segue correndo e não há "entrar" nem "desistir" — a
+  // estação já começou. É a diferença entre consultar o impresso na mesa e sair
+  // da sala.
+  $("estacao-entrar").classList.toggle("oculto", relendo);
+  $("estacao-desistir").classList.toggle("oculto", relendo);
+  $("estacao-fechar-impresso").classList.toggle("oculto", !relendo);
+  $("estacao-aviso-tempo").classList.toggle("oculto", !relendo);
+
   $("modal-estacao").classList.remove("oculto");
 }
 
 function entrarNaEstacao() {
   $("modal-estacao").classList.add("oculto");
   iniciarCronometro();
+  // DEPOIS de iniciar: `iniciarCronometro` começa chamando `pararCronometro`, que
+  // esconde este botão. Mostrá-lo antes fazia o comando sumir no mesmo quadro em
+  // que aparecia — e a estação voltava a não ter impresso para reler.
+  $("botao-impresso").classList.toggle("oculto", !estado.estacao);
   $("campo-mensagem").focus();
 }
 
 function iniciarCronometro() {
   pararCronometro();
   estado.inicioConsulta = Date.now(); estado.perguntas = 0; estado.exames = 0;
+  estado.avisosDados = new Set();
   atualizarMedidores();
   estado.timerEstacao = setInterval(atualizarMedidores, 1000);
 }
 function pararCronometro() {
   if (estado.timerEstacao) { clearInterval(estado.timerEstacao); estado.timerEstacao = null; }
+  const b = $("botao-impresso");
+  if (b) b.classList.add("oculto");
 }
 
 /* ---------- Painel lateral: instrumentos (medicina) + anotações (todos) ---------- */
@@ -2816,6 +2856,15 @@ $("aba-alunos").addEventListener("click", () => trocarAba("alunos"));
 $("aba-cobranca").addEventListener("click", () => trocarAba("cobranca"));
 $("aba-diagnostico").addEventListener("click", () => trocarAba("diagnostico"));
 $("voltar-ao-fim").addEventListener("click", () => rolarParaOFim(true));
+// Reler o comando no meio da estação. O cronômetro segue: na prova, consultar o
+// impresso não pausa nada.
+$("botao-impresso").addEventListener("click", () => {
+  if (estado.estacao) mostrarImpressoDaEstacao(estado.estacao, true);
+});
+$("estacao-fechar-impresso").addEventListener("click", () => {
+  $("modal-estacao").classList.add("oculto");
+  $("campo-mensagem").focus();
+});
 $("form-cobranca").addEventListener("submit", salvarCobranca);
 $("sortear-senha").addEventListener("click", () => { $("nova-senha").value = senhaSorteada(); });
 $("form-conta").addEventListener("submit", async (e) => {
