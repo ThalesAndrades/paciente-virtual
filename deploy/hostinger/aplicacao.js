@@ -1303,6 +1303,15 @@ export function criarServidor() {
       }
 
       // ---- Modo prova: o circuito de 5 estações, como o dia da 2ª etapa.
+      //
+      // A guarda vem ANTES das rotas, e não dentro de cada uma: a de `/api/consultas`
+      // protege só aquele prefixo, e as provas nasceram fora dela — dava para
+      // rodar um circuito inteiro sem conta e sem crédito. Prefixo novo, guarda
+      // nova, na mesma linha em que ele é criado.
+      if (pathname.startsWith("/api/provas") && !ehAluno(req)) {
+        return json(res, 401, { erro: "Sessão expirada. Entre de novo com a sua matrícula." });
+      }
+
       if (req.method === "POST" && pathname === "/api/provas") {
         if (estourouLimite(req, res, "consultas", LIMITE_CONSULTAS)) return;
         const circuito = sortearCircuito(estacoesPorArea(), ESTACOES_POR_PROVA);

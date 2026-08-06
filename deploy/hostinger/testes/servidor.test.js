@@ -286,11 +286,14 @@ test("a consulta é assinada pela matrícula da sessão, não pelo corpo do pedi
     const consulta = await api("/api/consultas", { caso: "infarto", aluno: "prof001" });
     assert.equal(consulta.status, 200);
 
-    await api(`/api/consultas/${consulta.dados.id}/encerrar`, { fechamento: "teste" });
+    const fim = await api(`/api/consultas/${consulta.dados.id}/encerrar`, { fechamento: "teste" });
 
     await entrar(api, "prof001");
     const relatorio = await api("/api/relatorio");
-    const nosso = relatorio.dados.find((c) => c.caso === "infarto");
+    // Procura pelo ARQUIVO que esta consulta gerou, não pelo primeiro infarto da
+    // lista: o `historico/` acumula transcrições de execuções anteriores, e o
+    // teste passava a depender de qual aluno tinha rodado infarto por último.
+    const nosso = relatorio.dados.find((c) => c.arquivo === fim.dados.transcript);
     assert.ok(nosso, "a consulta encerrada deveria aparecer no painel");
     assert.equal(nosso.aluno, "aluno001", "a consulta tem de sair no nome de quem estava logado");
   } finally {
@@ -984,6 +987,20 @@ test("a prova de um aluno não é acessível por outro", async () => {
     assert.equal((await api(`/api/provas/${prova.id}`)).status, 403);
     assert.equal((await api(`/api/provas/${prova.id}/estacao`, {})).status, 403);
     assert.equal((await api("/api/provas/nao-existe")).status, 404);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("sem sessão, o modo prova fica fechado", async () => {
+  const { servidor, api } = await subir();
+  try {
+    // A guarda de `/api/consultas` protege só aquele prefixo. As provas nasceram
+    // fora dela e, por uma versão, deixavam rodar um circuito inteiro sem conta e
+    // sem crédito — o furo apareceu na verificação em produção, não no teste.
+    assert.equal((await api("/api/provas", {})).status, 401);
+    assert.equal((await api("/api/provas/qualquer")).status, 401);
+    assert.equal((await api("/api/provas/qualquer/estacao", {})).status, 401);
   } finally {
     servidor.close();
   }
