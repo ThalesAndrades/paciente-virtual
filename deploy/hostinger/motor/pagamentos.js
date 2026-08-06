@@ -58,7 +58,11 @@ export async function cobrarPix({ usuario, item }) {
   if (!chave) throw new Error("Pix indisponível: falta WOOVI_APP_ID.");
 
   const id = novoIdPagamento();
-  const resposta = await fetch(`${WOOVI_BASE}/api/v1/charge`, {
+  // `return_existing=true`: se a rede cair entre o nosso POST e a resposta, a
+  // tentativa seguinte com o mesmo `correlationID` devolve a cobrança que já
+  // existe em vez de abrir uma segunda. Duas cobranças vivas para o mesmo pedido
+  // é o caminho mais curto para uma reclamação de cobrança dupla.
+  const resposta = await fetch(`${WOOVI_BASE}/api/v1/charge?return_existing=true`, {
     method: "POST",
     headers: { Authorization: chave, "Content-Type": "application/json" },
     body: JSON.stringify({
