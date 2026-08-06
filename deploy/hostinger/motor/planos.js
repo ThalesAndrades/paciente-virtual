@@ -19,6 +19,10 @@
 export const CUSTO = {
   // Uma estação clínica inteira: entrevista, exames, fechamento e parecer.
   consulta: 10,
+  // O circuito completo sai mais barato que as cinco estações avulsas: é o
+  // formato que mais ensina — cinco áreas seguidas, com cansaço e giro — e
+  // encarecer o que ensina mais seria empurrar o aluno para o treino pior.
+  prova: 40,
   // Cobrado por MINUTO CONCEDIDO de conversa ao vivo, em blocos. O servidor não vê
   // o áudio (ele vai direto do navegador ao provedor), então erra para menos: o
   // bloco é debitado inteiro na concessão e o que sobra não é devolvido.

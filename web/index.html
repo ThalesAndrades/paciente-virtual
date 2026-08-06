@@ -92,6 +92,10 @@
     <div class="prova-texto">
       <strong>Simulado completo</strong>
       <span>5 estações sorteadas entre as áreas do Revalida, 10 minutos cada, com nota final de 0 a 50.</span>
+      <!-- Preenchido por pintarCartaoProva(): o preço do pacote e quanto ele
+           economiza contra as cinco estações avulsas. O aluno decide antes de
+           clicar, não no susto do confirm. -->
+      <span class="prova-preco oculto" id="prova-preco"></span>
     </div>
     <button class="botao" id="iniciar-prova" type="button">Começar simulado</button>
   </div>
@@ -1094,6 +1098,21 @@ function aplicarConsulta(dados) {
    O dia da 2ª etapa é um circuito: cinco estações seguidas, giro obrigatório e a
    soma no fim. Treinar solto ensina a estação; o circuito ensina a prova. */
 
+// Preço do circuito no próprio cartão. O número sai do catálogo do servidor —
+// preço escrito à mão no HTML é preço que diverge do que o servidor debita.
+function pintarCartaoProva() {
+  const linha = $("prova-preco");
+  const custo = estado.loja && estado.loja.custo;
+  if (!linha || !custo || !custo.prova) return;
+  const avulso = custo.consulta * 5;
+  const economia = avulso - custo.prova;
+  linha.textContent =
+    economia > 0
+      ? `${custo.prova} créditos pelo circuito inteiro — ${economia} a menos que as 5 estações avulsas.`
+      : `${custo.prova} créditos pelo circuito inteiro.`;
+  linha.classList.remove("oculto");
+}
+
 async function comecarProva() {
   if (!acesso.autenticado) { abrirModal("aluno", comecarProva); return; }
   const botao = $("iniciar-prova"); botao.disabled = true;
@@ -1104,11 +1123,17 @@ async function comecarProva() {
 
     estado.prova = { id: d.id, total: d.total, areas: d.areas, ordem: 0 };
     const custo = d.custo_total
-      ? `\n\nO simulado usa ${d.total} estações e consome ${d.custo_total} créditos no total.`
+      ? `\n\n${d.total} estações por ${d.custo_total} créditos — cobrados uma vez, agora.` +
+        (d.economia > 0 ? ` São ${d.economia} créditos a menos que fazer as estações soltas.` : "")
       : "";
     const areas = d.areas.map((a, i) => `${i + 1}. ${a}`).join("\n");
     if (!confirm(`Simulado completo — ${d.total} estações, 10 minutos cada.\n\n${areas}\n\nO giro é automático e não dá para voltar a uma estação anterior.${custo}\n\nComeçar agora?`)) {
       estado.prova = null;
+      // Desistiu antes de entrar na primeira sala: devolve o crédito. O circuito
+      // já foi cobrado na criação — o servidor precisa saber que ninguém entrou.
+      fetch(`/api/provas/${encodeURIComponent(d.id)}`, { method: "DELETE" })
+        .then(() => carregarCreditos())
+        .catch(() => {});
       return;
     }
     await proximaEstacaoDaProva();
@@ -1927,7 +1952,13 @@ function renderizarPEP(container, estacao) {
       `<div class="pep-topo"><span class="pep-nivel">${nivel.rotulo}</span>` +
       `<span class="pep-pontos">${formatarNota(item.pontos)} / ${formatarNota(item.peso)}</span></div>` +
       `<div class="pep-desc">${esc(item.descricao)}</div>` +
-      (item.comentario ? `<div class="pep-comentario">${esc(item.comentario)}</div>` : "");
+      (item.comentario ? `<div class="pep-comentario">${esc(item.comentario)}</div>` : "") +
+      // O gabarito do item só aparece onde ele ensina: quem já fez adequado não
+      // precisa ler o que era esperado — quem perdeu ponto precisa, e é aí que a
+      // nota vira estudo em vez de castigo.
+      (item.esperado && item.nivel !== "adequado"
+        ? `<div class="pep-esperado"><b>Esperado:</b> ${esc(item.esperado)}</div>`
+        : "");
     container.appendChild(linha);
   }
 }
@@ -2319,7 +2350,7 @@ carregarCapacidades();
 carregarTempoReal();
 // A vitrine de preços é pública e a home mostra o saldo assim que há sessão.
 carregarAcesso().then(carregarCreditos);
-fetch("/api/loja").then((r) => r.json()).then((d) => { estado.loja = d; }).catch(() => {});
+fetch("/api/loja").then((r) => r.json()).then((d) => { estado.loja = d; pintarCartaoProva(); }).catch(() => {});
 
 // Volta do cartão: a Stripe devolve o aluno com `?pagamento=ok&id=...`. Quem
 // confirma continua sendo o servidor — isto aqui só pergunta e limpa a URL.

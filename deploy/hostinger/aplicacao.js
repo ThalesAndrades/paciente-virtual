@@ -469,7 +469,10 @@ async function iniciarConsulta(req, res, deCircuito = null) {
   // O crédito é debitado ANTES de a consulta existir, com o id dela como
   // referência. Debitar depois abriria a janela clássica: duas abas começam
   // consultas ao mesmo tempo e uma delas sai de graça.
-  if (gastaCredito(req)) {
+  // Estação de um circuito JÁ PAGO não debita de novo: a prova foi cobrada
+  // inteira na abertura, com desconto. Sem esta guarda, o aluno pagava o pacote
+  // e as cinco estações por cima.
+  if (gastaCredito(req) && !(deCircuito && deCircuito.pago)) {
     const cobranca = debitar(sessaoDe(req), CUSTO.consulta, "consulta", id);
     if (!cobranca.ok) {
       return json(res, 402, {
@@ -1329,7 +1332,28 @@ export function criarServidor() {
         do {
           id = `p${crypto.randomUUID().slice(0, 7)}`;
         } while (provas.has(id));
-        provas.set(id, criarProva({ id, aluno: sessaoDe(req), circuito }));
+
+        // O circuito é cobrado UMA vez, com desconto sobre as cinco estações
+        // avulsas — e as estações dele não debitam de novo. Cobrar por estação
+        // encareceria justamente o formato que mais ensina.
+        const avulso = circuito.length * CUSTO.consulta;
+        const custo = circuito.length >= ESTACOES_POR_PROVA ? CUSTO.prova : avulso;
+        if (gastaCredito(req)) {
+          const cobranca = debitar(sessaoDe(req), custo, "prova", id);
+          if (!cobranca.ok) {
+            return json(res, 402, {
+              erro: "Créditos insuficientes para o simulado completo.",
+              saldo: cobranca.saldo,
+              custo,
+              faltam: cobranca.faltam,
+            });
+          }
+        }
+
+        provas.set(
+          id,
+          criarProva({ id, aluno: sessaoDe(req), circuito, pago: true, custo: gastaCredito(req) ? custo : 0 })
+        );
 
         return json(res, 200, {
           id,
@@ -1337,7 +1361,8 @@ export function criarServidor() {
           // As ÁREAS aparecem; os casos, não. Saber que a terceira é de pediatria
           // é o que o participante sabe na prova; saber qual caso é seria gabarito.
           areas: circuito.map((e) => AREAS[e.area] || e.area),
-          custo_total: gastaCredito(req) ? circuito.length * CUSTO.consulta : 0,
+          custo_total: gastaCredito(req) ? custo : 0,
+          economia: gastaCredito(req) ? avulso - custo : 0,
         });
       }
 
@@ -1350,9 +1375,44 @@ export function criarServidor() {
         }
         const proxima = proximaEstacao(prova);
         if (!proxima) return json(res, 409, { erro: "Circuito concluído.", boletim: boletim(prova) });
-        // A consulta é criada pelo mesmo caminho de sempre — inclusive o débito de
-        // crédito. Cada estação custa o que uma consulta custa.
-        return await iniciarConsulta(req, res, { casoId: proxima.id, prova: prova.id, ordem: proxima.ordem, total: proxima.total });
+        // A consulta é criada pelo mesmo caminho de sempre. `pago` diz a ela que o
+        // circuito já foi cobrado inteiro na abertura — sem isso, o aluno pagaria
+        // o pacote e cada estação por cima.
+        const saida = await iniciarConsulta(req, res, {
+          casoId: proxima.id, prova: prova.id, ordem: proxima.ordem, total: proxima.total, pago: prova.pago,
+        });
+        // Entrou na sala: acabou o direito de estorno. `atual` só sobe quando a
+        // estação é ENCERRADA — sem esta marca, abrir uma estação e pedir o
+        // dinheiro de volta devolveria tudo com o caso já na tela.
+        if (res.statusCode < 400) prova.entrouEmEstacao = true;
+        return saida;
+      }
+
+      // Desistir ANTES da primeira estação devolve o crédito. O circuito é cobrado
+      // na abertura, mas a página só mostra as áreas sorteadas depois de criá-lo —
+      // quem lê "cirurgia" e decide que hoje não é o dia não pode sair 40 créditos
+      // mais pobre sem ter atendido ninguém.
+      const provaDesistir = pathname.match(/^\/api\/provas\/([\w-]+)$/);
+      if (req.method === "DELETE" && provaDesistir) {
+        const prova = provas.get(provaDesistir[1]);
+        if (!prova) return json(res, 404, { erro: "Prova não encontrada." });
+        if (prova.aluno && prova.aluno !== sessaoDe(req)) {
+          return json(res, 403, { erro: "Esta prova é de outra pessoa." });
+        }
+        if (prova.entrouEmEstacao || prova.atual > 0 || prova.resultados.length) {
+          // Estação começada é estação consumida: o caso foi gerado e o paciente,
+          // atendido. Devolver aqui seria pagar o aluno para usar a ferramenta.
+          return json(res, 409, { erro: "O circuito já começou e não pode ser estornado." });
+        }
+        provas.delete(prova.id);
+        let saldo = null;
+        if (gastaCredito(req) && prova.pago && prova.custo > 0) {
+          // Mesma referência do débito, motivo próprio: o razão fica com as duas
+          // pernas visíveis, e o UNIQUE(motivo, referencia) impede estorno dobrado.
+          const volta = creditar(sessaoDe(req), prova.custo, "estorno_prova", prova.id);
+          saldo = volta.saldo;
+        }
+        return json(res, 200, { estornado: true, creditos: prova.custo || 0, saldo });
       }
 
       const provaBoletim = pathname.match(/^\/api\/provas\/([\w-]+)$/);

@@ -64,12 +64,20 @@ export function sortearCircuito(estacoesPorArea, quantidade = ESTACOES_POR_PROVA
 
 // Uma prova viva. Fica em memória, como as consultas: o que precisa sobreviver a
 // um restart é o transcript de cada estação, que já é gravado em disco.
-export function criarProva({ id, aluno, circuito }) {
+export function criarProva({ id, aluno, circuito, pago = false, custo = 0 }) {
   return {
     id,
     aluno,
     circuito,
+    // Circuito pago na abertura: as estações dele não cobram de novo.
+    pago,
+    // Quanto custou. Fica guardado porque a desistência antes da primeira estação
+    // estorna, e estorno tem que devolver o que foi cobrado — não o preço de hoje.
+    custo,
     atual: 0,
+    // Vira true na primeira estação ABERTA. É o que separa "desistiu na porta"
+    // (estorna) de "entrou e saiu" (não estorna) — `atual` só conta as encerradas.
+    entrouEmEstacao: false,
     resultados: [],
     iniciadaEm: Date.now(),
     encerradaEm: null,

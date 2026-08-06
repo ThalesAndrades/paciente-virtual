@@ -851,6 +851,18 @@ input, select, textarea {
 .pep-desc { font-weight: 600; line-height: 1.45; }
 .pep-comentario { font-size: .88rem; color: var(--texto-suave); margin-top: 5px; line-height: 1.5; }
 
+/* O que a banca esperava naquele item. Fica com barra à esquerda e fundo próprio
+   porque é citação do PEP, não opinião do avaliador — e é o texto que o aluno
+   volta para reler antes da prova. */
+.pep-esperado {
+  font-size: .88rem; line-height: 1.5; margin-top: 8px;
+  padding: 8px 10px; border-radius: 8px;
+  border-left: 3px solid var(--borda-forte, rgba(255,255,255,.22));
+  background: rgba(255,255,255,.04); color: var(--texto);
+}
+.pep-esperado b { color: var(--texto-suave); font-weight: 700; letter-spacing: .01em; }
+@media (prefers-color-scheme: light) { .pep-esperado { background: rgba(0,0,0,.035); } }
+
 /* ── Modais que cabem na tela ──────────────────────────────────────────────
    O cartão da estação tem cenário, cinco linhas de tarefa, limites e aviso: no
    celular passava de 900 px numa tela de 844, e o botão "Entrar na estação"

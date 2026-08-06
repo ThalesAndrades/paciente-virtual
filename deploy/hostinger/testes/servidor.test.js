@@ -40,12 +40,19 @@ await criarUsuario({ matricula: "adm001", senha: "senha-de-teste-adm", nome: "Ad
 // fosse um dos outros, um teste de paywall deixaria os demais sem saldo.
 await criarUsuario({ matricula: "duro001", senha: "senha-de-teste-duro", nome: "Sem Créditos", papel: "aluno" });
 
+// Segunda conta sem saldo, para o paywall do CIRCUITO. A `duro001` termina o teste
+// do razão do admin com 500 créditos na conta — reusá-la aqui faria o paywall passar
+// por acidente, dependendo da ordem em que os testes rodam.
+await criarUsuario({ matricula: "duro002", senha: "senha-de-teste-duro2", nome: "Sem Créditos Dois", papel: "aluno" });
+
 // Consulta e voz agora custam crédito. Os alunos dos testes começam com saldo
 // folgado para que o assunto testado continue sendo o que cada teste diz testar.
 const { creditar } = await import("../motor/creditos.js");
 const { listarUsuarios } = await import("../motor/auth.js");
 for (const u of await listarUsuarios()) {
-  if (u.papel === "aluno" && u.matricula !== "duro001") creditar(u.id, 5000, "ajuste", `teste:${u.id}`);
+  if (u.papel === "aluno" && !["duro001", "duro002"].includes(u.matricula)) {
+    creditar(u.id, 5000, "ajuste", `teste:${u.id}`);
+  }
 }
 
 const SENHAS = {
@@ -56,6 +63,7 @@ const SENHAS = {
   limite001: "senha-de-teste-lim1",
   limite002: "senha-de-teste-lim2",
   duro001: "senha-de-teste-duro",
+  duro002: "senha-de-teste-duro2",
 };
 
 // Entra como a matrícula pedida, pela MESMA rota que o navegador usa.
@@ -1001,6 +1009,113 @@ test("sem sessão, o modo prova fica fechado", async () => {
     assert.equal((await api("/api/provas", {})).status, 401);
     assert.equal((await api("/api/provas/qualquer")).status, 401);
     assert.equal((await api("/api/provas/qualquer/estacao", {})).status, 401);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o simulado completo é cobrado uma vez, com desconto, e as estações não repetem a cobrança", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const antes = (await api("/api/creditos")).dados;
+
+    const { dados: prova } = await api("/api/provas", {});
+    // Cinco estações avulsas custariam 50; o circuito sai por 40.
+    assert.equal(prova.custo_total, 40);
+    assert.equal(prova.economia, 10);
+
+    const depoisDaAbertura = (await api("/api/creditos")).dados;
+    assert.equal(depoisDaAbertura.saldo, antes.saldo - 40, "o circuito debita na abertura");
+
+    // Abrir e encerrar duas estações não pode tirar mais nada.
+    for (let i = 0; i < 2; i++) {
+      const abertura = await api(`/api/provas/${prova.id}/estacao`, {});
+      assert.equal(abertura.status, 200);
+      await api(`/api/consultas/${abertura.dados.id}/encerrar`, { hipotese: "h" });
+    }
+    const depoisDasEstacoes = (await api("/api/creditos")).dados;
+    assert.equal(depoisDasEstacoes.saldo, depoisDaAbertura.saldo, "estação de circuito pago não debita de novo");
+
+    // E o lançamento aparece no razão com o motivo certo.
+    const lancamento = depoisDasEstacoes.extrato.find((l) => l.referencia === prova.id);
+    assert.ok(lancamento, "o débito do circuito precisa apontar para a prova");
+    assert.equal(lancamento.motivo, "prova");
+    assert.equal(lancamento.delta, -40);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("sem crédito para o circuito, a prova não abre", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "duro002");
+    const r = await api("/api/provas", {});
+    assert.equal(r.status, 402);
+    assert.equal(r.dados.custo, 40);
+    assert.ok(r.dados.faltam > 0);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o resultado da estação diz o que era esperado em cada item", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: consulta } = await api("/api/consultas", { caso: "infarto" });
+    const { dados } = await api(`/api/consultas/${consulta.id}/encerrar`, { hipotese: "h" });
+    // Sem modelo de avaliação no ambiente de teste a estação cai no piso, sem
+    // itens — o que importa aqui é que o campo exista no formato do PEP.
+    const { pontuarPEP } = await import("../motor/revalida.js");
+    const rubrica = {
+      revalida: { area: "clinica_medica", pep: [{ id: "a", descricao: "d", peso: 10, adequado: "Faz X e Y.", inadequado: "i" }] },
+    };
+    const nota = pontuarPEP(rubrica, { itens: [{ id: "a", nivel: "inadequado", comentario: "não fez" }] });
+    assert.equal(nota.itens[0].esperado, "Faz X e Y.", "nota sem gabarito não é estudo");
+    assert.ok(dados.estacao, "a estação precisa devolver resultado mesmo sem avaliador");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("desistir do circuito antes da primeira estação devolve o crédito", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno002");
+    const antes = (await api("/api/creditos")).dados.saldo;
+
+    const { dados: prova } = await api("/api/provas", {});
+    assert.equal((await api("/api/creditos")).dados.saldo, antes - 40);
+
+    const estorno = await api(`/api/provas/${prova.id}`, undefined, "DELETE");
+    assert.equal(estorno.status, 200);
+    assert.equal(estorno.dados.creditos, 40);
+    assert.equal((await api("/api/creditos")).dados.saldo, antes, "cancelar não pode custar nada");
+
+    // Prova estornada some: não dá para entrar nela depois de pedir o dinheiro de volta.
+    assert.equal((await api(`/api/provas/${prova.id}/estacao`, {})).status, 404);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("circuito começado não é estornável, e prova alheia não se cancela", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: prova } = await api("/api/provas", {});
+    await api(`/api/provas/${prova.id}/estacao`, {});
+
+    const tarde = await api(`/api/provas/${prova.id}`, undefined, "DELETE");
+    assert.equal(tarde.status, 409, "estação usada não volta para a carteira");
+
+    // Outro aluno não cancela (nem se credita com) a prova de ninguém.
+    const { dados: minha } = await api("/api/provas", {});
+    await entrar(api, "aluno002");
+    const alheia = await api(`/api/provas/${minha.id}`, undefined, "DELETE");
+    assert.equal(alheia.status, 403);
   } finally {
     servidor.close();
   }

@@ -156,6 +156,9 @@ export function pontuarPEP(rubrica, resposta) {
     return {
       id,
       descricao: item.descricao,
+      // O que a banca esperava. Sem isto o aluno lê "inadequado" e fica sem saber
+      // o que deveria ter feito — nota sem gabarito não é estudo, é castigo.
+      esperado: item.adequado || "",
       peso: Number(pesos[i].toFixed(2)),
       nivel,
       pontos: Number(pontos.toFixed(2)),
