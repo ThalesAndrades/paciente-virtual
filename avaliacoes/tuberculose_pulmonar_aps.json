@@ -1,0 +1,144 @@
+{
+  "nome_caso": "Tosse Crônica na Atenção Primária",
+  "revalida": {
+    "area": "medicina_familia",
+    "cenario": "Unidade Básica de Saúde de área urbana com alta densidade populacional. Homem de 46 anos procura a unidade por tosse de longa duração e escarro com sangue.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) da equipe de Saúde da Família e vai atender um homem de 46 anos em demanda espontânea.",
+      "Realize a anamnese dirigida e o exame físico pertinente.",
+      "Solicite no máximo 4 exames complementares — os resultados serão fornecidos pelo Chefe de Estação.",
+      "Comunique ao paciente a hipótese e a conduta, incluindo as medidas de saúde coletiva cabíveis, em linguagem acessível.",
+      "Registre no fechamento a hipótese principal, os diagnósticos diferenciais e a conduta."
+    ],
+    "limites": { "exames": 4, "hipoteses": 1, "condutas": 6 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica o paciente e acolhe sem julgamento",
+        "peso": 0.5,
+        "adequado": "Apresenta-se pelo nome e função, confirma o nome do paciente, usa linguagem acessível e não repreende o paciente pelo tabagismo ou pela automedicação.",
+        "parcial": "Apresenta-se, mas adota tom de repreensão ou linguagem técnica que o paciente não acompanha.",
+        "inadequado": "Não se apresenta ou culpabiliza o paciente."
+      },
+      {
+        "id": "sintomatico_respiratorio",
+        "descricao": "Caracteriza a tosse e reconhece o sintomático respiratório",
+        "peso": 1.5,
+        "adequado": "Caracteriza duração, tipo e evolução da tosse, identifica a hemoptise e reconhece que tosse por três semanas ou mais define sintomático respiratório, indicando investigação para tuberculose.",
+        "parcial": "Caracteriza a tosse, mas não relaciona a duração à investigação obrigatória.",
+        "inadequado": "Não caracteriza a tosse nem sua duração."
+      },
+      {
+        "id": "sintomas_consumptivos",
+        "descricao": "Investiga os sintomas sistêmicos associados",
+        "peso": 1,
+        "adequado": "Investiga febre vespertina, sudorese noturna, perda de peso quantificada, astenia e inapetência.",
+        "parcial": "Investiga apenas parte desses sintomas, sem quantificar a perda de peso.",
+        "inadequado": "Não investiga sintomas sistêmicos."
+      },
+      {
+        "id": "epidemiologia_e_risco",
+        "descricao": "Investiga contato, condições de moradia e fatores de risco individuais",
+        "peso": 1.5,
+        "adequado": "Investiga contato com pessoa tossidora ou com tuberculose, aglomeração domiciliar, quem convive na casa e a presença de crianças, além de tabagismo, etilismo, diabetes e situação sorológica para HIV.",
+        "parcial": "Investiga o contato ou os fatores individuais, mas não as condições de moradia e os conviventes.",
+        "inadequado": "Não investiga epidemiologia nem fatores de risco."
+      },
+      {
+        "id": "exame_dirigido",
+        "descricao": "Realiza exame físico dirigido, incluindo dados objetivos de repercussão",
+        "peso": 1,
+        "adequado": "Afere sinais vitais, pesa o paciente ou registra a perda ponderal objetivamente, ausculta os pulmões e pesquisa linfonodomegalias.",
+        "parcial": "Realiza apenas a ausculta pulmonar, sem sinais vitais nem avaliação nutricional.",
+        "inadequado": "Não examina o paciente."
+      },
+      {
+        "id": "diagnostico_laboratorial",
+        "descricao": "Solicita a investigação diagnóstica correta para tuberculose",
+        "peso": 2,
+        "adequado": "Solicita o teste rápido molecular para tuberculose em escarro como exame inicial, com cultura e teste de sensibilidade, e radiografia de tórax; oferece testagem para HIV.",
+        "parcial": "Solicita a radiografia e a baciloscopia, mas não o teste rápido molecular nem a cultura, ou não oferece a testagem para HIV.",
+        "inadequado": "Não solicita investigação para tuberculose."
+      },
+      {
+        "id": "tratamento",
+        "descricao": "Institui o tratamento e organiza o acompanhamento",
+        "peso": 1.5,
+        "adequado": "Indica o esquema básico com rifampicina, isoniazida, pirazinamida e etambutol por dois meses, seguido de rifampicina e isoniazida por quatro meses, explica a duração total, propõe o tratamento diretamente observado e programa o acompanhamento com baciloscopias mensais de controle.",
+        "parcial": "Indica o tratamento, mas não explica a duração, não propõe o tratamento observado ou não programa o controle.",
+        "inadequado": "Não institui tratamento nem encaminha para ele."
+      },
+      {
+        "id": "notificacao_e_contatos",
+        "descricao": "Cumpre as medidas de saúde coletiva",
+        "peso": 1,
+        "adequado": "Informa que a tuberculose é de notificação compulsória e realiza a notificação, e organiza a avaliação de todos os contatos domiciliares, com atenção às crianças menores de cinco anos e à investigação de infecção latente.",
+        "parcial": "Cita a notificação ou os contatos, mas não os dois, ou não menciona as crianças expostas.",
+        "inadequado": "Não notifica nem investiga contatos — o caso se encerra no indivíduo."
+      },
+      {
+        "id": "comunicacao_e_vinculo",
+        "descricao": "Comunica o diagnóstico e responde ao que o paciente teme",
+        "peso": 0.5,
+        "adequado": "Explica o diagnóstico em linguagem acessível, esclarece que o tratamento é gratuito e curável, aborda a preocupação do paciente com o trabalho e com o risco aos conviventes e verifica o entendimento.",
+        "parcial": "Explica o diagnóstico, mas não checa o entendimento nem acolhe as preocupações trazidas.",
+        "inadequado": "Não comunica o diagnóstico ao paciente."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Caracterização do sintomático respiratório",
+      "objetivo": "Reconhecer quem precisa ser investigado.",
+      "peso": 2,
+      "itens": [
+        { "nome": "duração da tosse", "termos": ["há quanto tempo", "quantas semanas", "desde quando", "quanto tempo de tosse"] },
+        { "nome": "hemoptise", "termos": ["sangue", "sanguinolento", "raiado de sangue", "hemoptise", "escarro com sangue"] },
+        { "nome": "escarro", "termos": ["catarro", "escarro", "expectoração", "cor do catarro"] }
+      ]
+    },
+    {
+      "nome": "Sintomas sistêmicos",
+      "objetivo": "Fechar o quadro consumptivo.",
+      "peso": 2,
+      "itens": [
+        { "nome": "febre vespertina", "termos": ["febre", "febre no fim da tarde", "temperatura", "calor no corpo"] },
+        { "nome": "sudorese noturna", "termos": ["suor", "sudorese", "suando a noite", "molha a roupa"] },
+        { "nome": "perda de peso", "termos": ["emagreceu", "perdeu peso", "quantos quilos", "roupa larga"] }
+      ]
+    },
+    {
+      "nome": "Epidemiologia e vulnerabilidade",
+      "objetivo": "Ver a casa, não só o pulmão.",
+      "peso": 2,
+      "itens": [
+        { "nome": "contato prévio", "termos": ["alguém com tuberculose", "contato", "alguém tossindo", "conviveu com"] },
+        { "nome": "moradia e conviventes", "termos": ["quem mora", "quantas pessoas", "crianças", "onde você dorme", "casa"] },
+        { "nome": "comorbidades e hábitos", "termos": ["hiv", "diabetes", "fuma", "bebe", "tabagismo", "álcool"] }
+      ]
+    },
+    {
+      "nome": "Investigação e tratamento",
+      "objetivo": "Diagnóstico correto e esquema certo.",
+      "peso": 2,
+      "itens": [
+        { "nome": "teste rápido molecular", "termos": ["teste rápido molecular", "trm", "genexpert", "molecular", "pcr"] },
+        { "nome": "baciloscopia e cultura", "termos": ["baciloscopia", "baar", "escarro", "cultura", "teste de sensibilidade"] },
+        { "nome": "radiografia", "termos": ["raio x", "radiografia", "rx de tórax"] },
+        { "nome": "esquema básico", "termos": ["rifampicina", "isoniazida", "pirazinamida", "etambutol", "esquema básico", "seis meses"] }
+      ]
+    },
+    {
+      "nome": "Saúde coletiva",
+      "objetivo": "O caso não termina no paciente.",
+      "peso": 2,
+      "itens": [
+        { "nome": "notificação compulsória", "termos": ["notificação", "notificar", "sinan", "doença de notificação", "vigilância"] },
+        { "nome": "avaliação de contatos", "termos": ["contatos", "avaliar quem mora", "trazer a família", "examinar os contatos", "crianças da casa"] },
+        { "nome": "tratamento observado", "termos": ["tratamento diretamente observado", "tdo", "agente de saúde", "acompanhar a tomada"] },
+        { "nome": "testagem para hiv", "termos": ["teste de hiv", "hiv", "oferecer o teste", "sorologia"] }
+      ]
+    }
+  ]
+}

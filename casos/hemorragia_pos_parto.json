@@ -1,0 +1,211 @@
+{
+  "categoria": "medicina",
+  "titulo": "Hemorragia Pós-Parto Imediata",
+  "identificacao": {
+    "nome": "Danielle Cristina Moraes",
+    "idade": 29,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Casada",
+    "escolaridade": "Ensino superior incompleto",
+    "profissao": "Manicure em salão próprio, em casa",
+    "naturalidade": "Campo Grande, MS",
+    "moradia": "Casa própria em bairro periférico, com o marido e três filhos"
+  },
+  "queixa_principal": "Doutor, eu tô sentindo um sangramento quente descendo, e minha cabeça tá rodando.",
+  "historia_doenca_atual": {
+    "inicio": "Começou cerca de vinte minutos após o parto",
+    "localizacao": "Sangramento vaginal",
+    "irradiacao": "Não se aplica",
+    "intensidade": "Aumentando; encharcou os campos e escorre pela maca",
+    "duracao": "Contínuo desde então",
+    "caracter": "Sangue vivo, com coágulos grandes",
+    "fatores_piora": "Piora quando ela se mexe",
+    "fatores_melhora": "Nada até agora",
+    "sintomas_associados": "Tontura, visão escurecendo ao levantar a cabeça, calafrio, sede, boca seca",
+    "evolucao": "Vem piorando desde que a acompanhante avisou a equipe",
+    "parto": "Parto vaginal há quarenta minutos, recém-nascido de 4.180 g, sem intercorrências no nascimento",
+    "trabalho_de_parto": "Trabalho de parto prolongado, cerca de 16 horas, com uso de ocitocina para condução"
+  },
+  "antecedentes_pessoais": {
+    "gestacoes": "G4 P4 A0 — três partos vaginais anteriores, todos a termo",
+    "hemorragia_anterior": "No terceiro parto disseram que ela 'sangrou bastante' e recebeu soro por dois dias, mas ninguém explicou o motivo",
+    "hipertensao": false,
+    "diabetes": "Diabetes gestacional nesta gestação, controlada com dieta",
+    "cirurgias": "Nenhuma",
+    "alergias": "Nega",
+    "medicacoes_em_uso": "Sulfato ferroso e ácido fólico do pré-natal",
+    "pre_natal": "Oito consultas na Unidade Básica de Saúde, sem intercorrências registradas",
+    "hemoglobina_pre_natal": "Última hemoglobina do terceiro trimestre: 10,2 g/dL"
+  },
+  "antecedentes_familiares": {
+    "mae": "Hipertensão",
+    "pai": "Diabetes tipo 2",
+    "observacoes": "Nenhum distúrbio de coagulação conhecido na família"
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nunca fumou",
+    "alcool": "Não bebe",
+    "drogas": "Nega",
+    "atividade_fisica": "Nenhuma; trabalha sentada o dia todo",
+    "alimentacao": "Come pouco desde o fim da gestação por azia",
+    "sono": "Dormiu pouco nas últimas 24 horas por causa do trabalho de parto"
+  },
+  "informacoes_iniciais": {
+    "sangramento": "Sente um sangramento quente descendo, que aumentou nos últimos minutos",
+    "tontura": "A cabeça está rodando e a vista escurece quando ela tenta se levantar",
+    "parto": "O bebê nasceu há pouco e é grande, quase 4 quilos e 200",
+    "frio": "Está sentindo frio e muita sede"
+  },
+  "informacoes_intermediarias": {
+    "trabalho_de_parto_longo": "O trabalho de parto durou o dia inteiro e ela recebeu soro com medicação para 'apressar'",
+    "multiparidade": "É o quarto parto; os outros três foram normais",
+    "sangramento_anterior": "No terceiro parto ela sangrou bastante e ficou dois dias no soro, mas ninguém explicou por quê",
+    "bebe_grande": "O bebê é bem maior que os outros; ela ganhou 18 quilos nesta gestação",
+    "diabetes_gestacional": "Teve diabetes na gravidez, controlada só com dieta",
+    "coagulos": "Está saindo coágulo grande, do tamanho da mão dela"
+  },
+  "informacoes_sensiveis": {
+    "medo_de_morrer": "Desde que viu o sangue escorrendo pela maca ela pensa que vai morrer e não vai conhecer o filho",
+    "trauma_do_parto_anterior": "No terceiro parto se sentiu abandonada em uma sala sozinha e ninguém explicou nada; teve pesadelos por meses",
+    "culpa_pelo_peso": "Acha que a culpa é dela por ter engordado demais e não ter seguido a dieta direito",
+    "medo_de_perder_o_utero": "Ouviu de uma vizinha que 'quando sangra assim tiram o útero' e teme não poder mais engravidar"
+  },
+  "gatilhos_sensiveis": {
+    "medo_de_morrer": ["medo", "o que te assusta", "morrer", "está com medo", "o que passa pela sua cabeça"],
+    "trauma_do_parto_anterior": ["outro parto", "parto anterior", "da outra vez", "já aconteceu antes", "como foi antes"],
+    "culpa_pelo_peso": ["culpa", "peso", "engordou", "dieta", "diabetes", "se cobra"],
+    "medo_de_perder_o_utero": ["útero", "utero", "cirurgia", "tirar", "ter mais filhos", "engravidar de novo"]
+  },
+  "rede_apoio": {
+    "familia": "Marido na sala de espera com a sogra; os três filhos ficaram com a mãe dela",
+    "amigos": "Clientes do salão que viraram amigas",
+    "servicos": "Unidade Básica de Saúde onde fez o pré-natal, com equipe conhecida",
+    "observacoes": "Quer o marido junto, mas não pediu porque acha que vai atrapalhar"
+  },
+  "persona": {
+    "resumo": "Mulher decidida e acostumada a resolver tudo sozinha, que agora está assustada e sem forças",
+    "temperamento": ["prática", "orgulhosa", "cuidadora dos outros", "pouco afeita a pedir ajuda"],
+    "postura_na_consulta": "Deitada, pálida, fala pausadamente e tenta minimizar para não assustar ninguém"
+  },
+  "estilo_de_fala": {
+    "registro": "Informal, direto, do Centro-Oeste",
+    "caracteristicas": ["frases curtas por cansaço", "minimiza", "pergunta pelo bebê", "pede desculpa por dar trabalho"],
+    "bordoes_e_expressoes": ["nossa", "sei lá", "deve ser normal, né", "desculpa"],
+    "exemplos_de_fala": [
+      "Desculpa dar trabalho, doutor, mas tá descendo muito sangue.",
+      "Nossa, minha cabeça tá rodando quando eu levanto.",
+      "O bebê tá bem? Ele nasceu bem grandão."
+    ],
+    "nunca_faz": ["usa termo técnico", "nomeia atonia ou hemorragia", "fala em pressão ou hemoglobina"]
+  },
+  "contexto_de_vida": {
+    "biografia": "Montou o salão em casa aos 22 anos para poder cuidar dos filhos e trabalhar",
+    "rotina": "Atende clientes entre as tarefas de casa; parou de atender no oitavo mês",
+    "trabalho": "Autônoma, sem licença-maternidade remunerada",
+    "familia_e_relacoes": "Marido motorista de aplicativo, presente; três filhos de 8, 5 e 2 anos",
+    "estressores_atuais": ["renda parada", "quatro crianças para cuidar", "medo do que está acontecendo agora"]
+  },
+  "estado_emocional": {
+    "agora": "Assustada e enfraquecida, tentando manter a compostura, com a voz baixa e a respiração curta",
+    "manifestacoes": ["fala pausada", "aperta o lençol", "pergunta pelo bebê", "fecha os olhos entre as frases"],
+    "o_que_teme": "Morrer sem conhecer o filho e deixar as crianças sem mãe",
+    "o_que_espera": "Que alguém pare o sangramento e diga que ela vai ficar bem"
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": ["alguém explica o que está sendo feito", "sente que estão ao lado dela", "é chamada pelo nome"],
+    "fecha_se_quando": ["ouve cochichos da equipe", "ninguém explica nada", "percebe pressa sem palavra"],
+    "trava_do_sensivel": "Só fala do medo de morrer e do parto anterior se perguntarem diretamente sobre medo ou sobre como foram os outros partos",
+    "sinais_de_confianca": "Aperta a mão de quem está atendendo e passa a fazer perguntas"
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Hemorragia pós-parto precoce por atonia uterina, em multípara com trabalho de parto prolongado, uso de ocitocina e recém-nascido macrossômico, com choque hipovolêmico compensado",
+    "manter_coerente": "A paciente não nomeia a causa nem cita números; o tônus uterino, a pressão e o volume de sangue só aparecem quando o profissional examina ou pede os dados. As respostas ficam mais curtas conforme a estação avança.",
+    "diferenciais_a_respeitar": [
+      "Laceração de trajeto (colo, vagina ou períneo)",
+      "Retenção de restos placentários",
+      "Inversão uterina",
+      "Coagulopatia",
+      "Rotura uterina"
+    ]
+  },
+  "exame_fisico": {
+    "estado_geral": {
+      "nome": "Estado geral, nível de consciência e perfusão",
+      "sinonimos": ["estado geral", "consciência", "consciencia", "perfusão", "perfusao", "palidez", "extremidades"],
+      "resultado": "Pálida (+++/4+), sudoreica, lúcida e orientada, extremidades frias, enchimento capilar 4 segundos"
+    },
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": ["pressão", "pressao", "pa", "medir pressão"],
+      "resultado": "88/54 mmHg"
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": ["frequência cardíaca", "fc", "pulso", "batimentos"],
+      "resultado": "126 bpm, filiforme"
+    },
+    "frequencia_respiratoria": {
+      "nome": "Frequência respiratória",
+      "sinonimos": ["frequência respiratória", "fr", "respiração"],
+      "resultado": "26 irpm"
+    },
+    "saturacao": {
+      "nome": "Oximetria de pulso",
+      "sinonimos": ["saturação", "saturacao", "oxímetro", "spo2"],
+      "resultado": "96% em ar ambiente, com curva de má perfusão"
+    },
+    "tonus_uterino": {
+      "nome": "Palpação do tônus uterino",
+      "sinonimos": ["tônus", "tonus", "útero", "utero", "palpar o útero", "fundo uterino", "massagem uterina", "globo de segurança"],
+      "resultado": "Útero amolecido, acima da cicatriz umbilical, sem formação do globo de segurança de Pinard; à massagem endurece transitoriamente e volta a amolecer, com saída de coágulos"
+    },
+    "sangramento": {
+      "nome": "Quantificação do sangramento",
+      "sinonimos": ["sangramento", "quanto sangue", "quantificar", "perda sanguínea", "compressas", "campos"],
+      "resultado": "Perda estimada em 1.200 mL: campos e compressas encharcados, sangue vivo escorrendo continuamente pelo períneo"
+    },
+    "canal_de_parto": {
+      "nome": "Inspeção do canal de parto",
+      "sinonimos": ["canal de parto", "laceração", "laceracao", "colo", "vagina", "períneo", "revisão do canal", "espéculo"],
+      "resultado": "Períneo íntegro, sem lacerações de vagina ou colo à revisão sob visualização direta"
+    },
+    "placenta": {
+      "nome": "Revisão da placenta e da cavidade uterina",
+      "sinonimos": ["placenta", "restos placentários", "cavidade uterina", "curagem", "dequitação", "revisão da cavidade"],
+      "resultado": "Placenta dequitada há 25 minutos, íntegra, com membranas completas; cavidade sem restos à revisão manual"
+    },
+    "bexiga": {
+      "nome": "Avaliação de globo vesical",
+      "sinonimos": ["bexiga", "globo vesical", "sondagem", "urina", "sonda vesical"],
+      "resultado": "Bexiga distendida à palpação; após sondagem, drenagem de 400 mL de urina concentrada"
+    }
+  },
+  "exames_disponiveis": {
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": ["hemograma", "sangue", "hemoglobina", "hematócrito", "plaquetas"],
+      "resultado": "Hemoglobina 6,8 g/dL; hematócrito 21%; plaquetas 142.000/mm³"
+    },
+    "coagulograma": {
+      "nome": "Coagulograma",
+      "sinonimos": ["coagulograma", "coagulação", "tap", "ttpa", "inr", "fibrinogênio"],
+      "resultado": "TAP com INR 1,2; TTPA normal; fibrinogênio 240 mg/dL"
+    },
+    "tipagem": {
+      "nome": "Tipagem sanguínea e prova cruzada",
+      "sinonimos": ["tipagem", "tipo sanguíneo", "prova cruzada", "reserva de sangue", "hemocomponentes", "transfusão"],
+      "resultado": "O positivo; prova cruzada compatível — hemocomponentes disponíveis no banco de sangue do hospital"
+    },
+    "gasometria": {
+      "nome": "Gasometria arterial com lactato",
+      "sinonimos": ["gasometria", "lactato", "ph", "bic"],
+      "resultado": "pH 7,31; lactato 3,8 mmol/L; bicarbonato 18 mEq/L"
+    },
+    "ultrassonografia": {
+      "nome": "Ultrassonografia pélvica à beira do leito",
+      "sinonimos": ["ultrassom", "ultrassonografia", "usg", "eco", "imagem"],
+      "resultado": "Útero aumentado, cavidade com pequena quantidade de coágulos, sem imagem sugestiva de restos placentários"
+    }
+  }
+}

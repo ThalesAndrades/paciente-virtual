@@ -1,0 +1,143 @@
+{
+  "nome_caso": "Crise Asmática em Escolar",
+  "revalida": {
+    "area": "pediatria",
+    "cenario": "Unidade de pronto atendimento pediátrico. Criança de 6 anos trazida pela mãe por chiado no peito e cansaço com piora nas últimas 24 horas.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) plantonista do pronto atendimento pediátrico e vai atender uma criança de 6 anos acompanhada da mãe.",
+      "Realize a anamnese com a acompanhante e o exame físico dirigido da criança.",
+      "Solicite no máximo 3 exames complementares — os resultados serão fornecidos pelo Chefe de Estação.",
+      "Institua a conduta imediata e oriente a mãe quanto ao manejo em casa, em linguagem acessível.",
+      "Registre no fechamento a hipótese principal, os diagnósticos diferenciais e a conduta."
+    ],
+    "limites": { "exames": 3, "hipoteses": 1, "condutas": 5 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a criança e a acompanhante e usa linguagem acessível",
+        "peso": 0.5,
+        "adequado": "Apresenta-se pelo nome e função, confirma o nome e a idade da criança, dirige-se também à criança e mantém linguagem acessível durante todo o atendimento.",
+        "parcial": "Apresenta-se, mas ignora a criança ou mantém linguagem técnica que a mãe não acompanha.",
+        "inadequado": "Não se apresenta nem identifica a criança."
+      },
+      {
+        "id": "gravidade_agora",
+        "descricao": "Caracteriza a crise atual e sua gravidade pela anamnese",
+        "peso": 1.5,
+        "adequado": "Investiga início e duração, fator desencadeante, dificuldade para falar ou alimentar-se, sono interrompido, limitação da atividade e a resposta ao broncodilatador já usado em casa.",
+        "parcial": "Investiga o início e o chiado, mas não avalia a repercussão funcional (fala, sono, atividade) nem a resposta ao resgate.",
+        "inadequado": "Não caracteriza a crise atual."
+      },
+      {
+        "id": "controle_e_manutencao",
+        "descricao": "Investiga o controle da asma e o uso da medicação de manutenção",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre sintomas noturnos, frequência do uso de resgate, crises e internações prévias, e verifica se a medicação de manutenção está em uso, identificando que ela está suspensa há semanas.",
+        "parcial": "Pergunta sobre crises anteriores, mas não verifica a medicação de manutenção nem a frequência do resgate.",
+        "inadequado": "Não investiga o controle da doença — sem isso a alta repete a crise."
+      },
+      {
+        "id": "tecnica_inalatoria",
+        "descricao": "Verifica e corrige a técnica inalatória com espaçador",
+        "peso": 1,
+        "adequado": "Pede que a mãe demonstre como aplica a medicação, identifica o uso sem espaçador e ensina a técnica correta com espaçador.",
+        "parcial": "Pergunta como usa a bombinha, mas não pede demonstração nem ensina a técnica.",
+        "inadequado": "Não aborda a técnica inalatória."
+      },
+      {
+        "id": "gatilhos_ambientais",
+        "descricao": "Identifica gatilhos ambientais e domiciliares",
+        "peso": 0.5,
+        "adequado": "Investiga tabagismo domiciliar, mofo e umidade, animais e infecções recentes, e orienta o afastamento do que for modificável.",
+        "parcial": "Investiga apenas um dos gatilhos, sem orientar mudança.",
+        "inadequado": "Não investiga o ambiente."
+      },
+      {
+        "id": "exame_respiratorio",
+        "descricao": "Realiza exame físico respiratório dirigido, com sinais objetivos de gravidade",
+        "peso": 2,
+        "adequado": "Avalia estado geral e capacidade de falar, frequência respiratória, oximetria de pulso, esforço respiratório (tiragem, musculatura acessória) e ausculta pulmonar.",
+        "parcial": "Realiza apenas a ausculta e a frequência respiratória, sem oximetria ou sem avaliar o esforço.",
+        "inadequado": "Não examina a criança ou não afere sinais objetivos de gravidade."
+      },
+      {
+        "id": "conduta_imediata",
+        "descricao": "Institui o tratamento inicial da crise",
+        "peso": 2,
+        "adequado": "Indica oxigênio suplementar para manter saturação adequada, beta-2 agonista inalatório de curta duração em séries com espaçador ou nebulização, associa brometo de ipratrópio na crise moderada a grave e prescreve corticoide sistêmico precocemente.",
+        "parcial": "Prescreve broncodilatador, mas omite o corticoide sistêmico ou o oxigênio quando indicado.",
+        "inadequado": "Não institui tratamento ou prescreve apenas sintomático sem broncodilatador."
+      },
+      {
+        "id": "reavaliacao",
+        "descricao": "Reavalia a resposta ao tratamento antes de decidir o destino",
+        "peso": 0.5,
+        "adequado": "Reavalia após as séries iniciais com parâmetros objetivos (saturação, frequência respiratória, esforço, fala) e decide alta ou permanência com base nessa reavaliação.",
+        "parcial": "Reavalia de forma vaga, sem parâmetros objetivos.",
+        "inadequado": "Decide o destino sem reavaliar."
+      },
+      {
+        "id": "orientacao_alta",
+        "descricao": "Orienta o manejo em casa, o retorno e os sinais de alarme",
+        "peso": 0.5,
+        "adequado": "Prescreve a manutenção e o resgate por escrito, orienta a retomada do corticoide inalatório, marca o retorno na atenção primária e ensina os sinais de alarme que exigem voltar imediatamente.",
+        "parcial": "Dá orientações verbais genéricas, sem plano escrito ou sem sinais de alarme.",
+        "inadequado": "Não orienta o manejo após a alta."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Anamnese da crise",
+      "objetivo": "Caracterizar a crise atual e sua gravidade.",
+      "peso": 2,
+      "itens": [
+        { "nome": "início e desencadeante", "termos": ["quando começou", "desde quando", "o que aconteceu antes", "teve resfriado", "gripe"] },
+        { "nome": "repercussão funcional", "termos": ["consegue falar", "consegue brincar", "dormiu", "acordou", "comeu", "cansaço"] },
+        { "nome": "resposta ao resgate", "termos": ["bombinha", "quantas vezes usou", "melhorou depois", "resgate", "salbutamol"] }
+      ]
+    },
+    {
+      "nome": "Controle da asma e medicação",
+      "objetivo": "Identificar a asma mal controlada por trás da crise.",
+      "peso": 2,
+      "itens": [
+        { "nome": "sintomas noturnos e crises prévias", "termos": ["acorda a noite", "sintoma a noite", "outras crises", "já internou", "internação"] },
+        { "nome": "medicação de manutenção", "termos": ["usa todo dia", "bombinha de manutenção", "corticoide inalatório", "preventiva", "remédio de uso contínuo"] },
+        { "nome": "técnica inalatória", "termos": ["me mostra como faz", "espaçador", "espacador", "como usa a bombinha", "demonstra"] }
+      ]
+    },
+    {
+      "nome": "Ambiente e gatilhos",
+      "objetivo": "Reconhecer o que mantém a doença ativa em casa.",
+      "peso": 1,
+      "itens": [
+        { "nome": "tabagismo domiciliar", "termos": ["alguém fuma", "cigarro", "fuma em casa", "fumante"] },
+        { "nome": "mofo, poeira e animais", "termos": ["mofo", "umidade", "poeira", "animal", "bicho de pelúcia", "colchão"] }
+      ]
+    },
+    {
+      "nome": "Exame físico dirigido",
+      "objetivo": "Medir a gravidade com sinais objetivos.",
+      "peso": 3,
+      "itens": [
+        { "nome": "oximetria", "termos": ["saturação", "saturacao", "oxímetro", "spo2", "oximetria"] },
+        { "nome": "frequência respiratória", "termos": ["frequência respiratória", "fr", "quantas respirações", "respiração por minuto"] },
+        { "nome": "esforço respiratório", "termos": ["tiragem", "esforço", "retração", "musculatura acessória", "batimento de asa"] },
+        { "nome": "ausculta pulmonar", "termos": ["ausculta", "auscultar", "sibilos", "pulmão", "estetoscópio"] }
+      ]
+    },
+    {
+      "nome": "Conduta e orientação",
+      "objetivo": "Tratar a crise e evitar a próxima.",
+      "peso": 2,
+      "itens": [
+        { "nome": "broncodilatador inalatório", "termos": ["salbutamol", "beta 2", "broncodilatador", "inalação", "nebulização", "aerossol"] },
+        { "nome": "corticoide sistêmico", "termos": ["prednisolona", "corticoide", "corticoide oral", "prednisona"] },
+        { "nome": "oxigênio", "termos": ["oxigênio", "oxigenio", "cateter", "máscara"] },
+        { "nome": "plano de alta e sinais de alarme", "termos": ["sinais de alarme", "voltar se", "retorno", "unidade básica", "plano por escrito", "receita"] }
+      ]
+    }
+  ]
+}

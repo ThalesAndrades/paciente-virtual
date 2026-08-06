@@ -1,0 +1,126 @@
+{
+  "nome_caso": "Hemorragia Pós-Parto Imediata",
+  "revalida": {
+    "area": "ginecologia_obstetricia",
+    "cenario": "Sala de parto de maternidade de referência. Puérpera de 29 anos, quarenta minutos após parto vaginal, com sangramento vaginal aumentado e tontura.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) plantonista da maternidade e é chamado(a) à sala de parto para avaliar uma puérpera com sangramento aumentado.",
+      "Realize a anamnese dirigida e o exame físico pertinente.",
+      "Solicite no máximo 3 exames complementares — os resultados serão fornecidos pelo Chefe de Estação.",
+      "Institua a conduta imediata e comunique à paciente o que está acontecendo e o que será feito.",
+      "Registre no fechamento a hipótese principal, os diagnósticos diferenciais e a conduta."
+    ],
+    "limites": { "exames": 3, "hipoteses": 1, "condutas": 6 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a paciente e comunica-se com ela durante o atendimento",
+        "peso": 0.5,
+        "adequado": "Apresenta-se pelo nome e função, chama a paciente pelo nome e informa, em linguagem acessível, o que está acontecendo e o que vai fazer.",
+        "parcial": "Apresenta-se, mas conduz o atendimento em silêncio ou só fala com a equipe.",
+        "inadequado": "Não se apresenta nem comunica nada à paciente."
+      },
+      {
+        "id": "reconhecimento_gravidade",
+        "descricao": "Reconhece a emergência e avalia a repercussão hemodinâmica",
+        "peso": 2,
+        "adequado": "Afere pressão arterial, frequência cardíaca e avalia perfusão e nível de consciência, reconhecendo o choque hipovolêmico, e quantifica objetivamente a perda sanguínea.",
+        "parcial": "Afere sinais vitais, mas não quantifica a perda ou não reconhece a repercussão hemodinâmica.",
+        "inadequado": "Não avalia sinais vitais nem a perda sanguínea — trata a hemorragia como sangramento comum."
+      },
+      {
+        "id": "causa_atonia",
+        "descricao": "Avalia o tônus uterino e identifica a atonia",
+        "peso": 2,
+        "adequado": "Palpa o fundo uterino, constata a ausência do globo de segurança e o útero amolecido, e realiza massagem uterina.",
+        "parcial": "Palpa o útero, mas não realiza a massagem ou não relaciona o achado à causa do sangramento.",
+        "inadequado": "Não avalia o tônus uterino."
+      },
+      {
+        "id": "quatro_ts",
+        "descricao": "Investiga sistematicamente as demais causas de hemorragia pós-parto",
+        "peso": 1.5,
+        "adequado": "Revisa o canal de parto em busca de lacerações, verifica a integridade da placenta e a cavidade uterina, avalia globo vesical e considera coagulopatia — percorrendo tônus, trauma, tecido e trombina.",
+        "parcial": "Investiga uma ou duas dessas causas, deixando as outras de fora.",
+        "inadequado": "Atribui a causa sem investigar as demais."
+      },
+      {
+        "id": "fatores_risco",
+        "descricao": "Identifica os fatores de risco pela história",
+        "peso": 0.5,
+        "adequado": "Investiga paridade, duração do trabalho de parto, uso de ocitocina, peso do recém-nascido e hemorragia em parto anterior.",
+        "parcial": "Investiga apenas parte dos fatores de risco.",
+        "inadequado": "Não investiga fatores de risco."
+      },
+      {
+        "id": "medidas_iniciais",
+        "descricao": "Institui as medidas de suporte imediatas",
+        "peso": 1.5,
+        "adequado": "Pede ajuda e aciona a equipe, garante dois acessos venosos calibrosos, inicia reposição volêmica com cristaloide aquecido, oferece oxigênio, monitoriza, colhe exames com tipagem e prova cruzada e aciona a reserva de hemocomponentes.",
+        "parcial": "Inicia acesso e volume, mas não aciona a equipe nem prepara hemocomponentes.",
+        "inadequado": "Não institui suporte hemodinâmico."
+      },
+      {
+        "id": "uterotonicos",
+        "descricao": "Prescreve os uterotônicos na sequência correta",
+        "peso": 1.5,
+        "adequado": "Prescreve ocitocina endovenosa e, mantida a atonia, escala para os uterotônicos de segunda linha disponíveis (metilergometrina, quando não contraindicada, e misoprostol), associando ácido tranexâmico precocemente.",
+        "parcial": "Prescreve apenas ocitocina, sem escalonar nem associar o ácido tranexâmico.",
+        "inadequado": "Não prescreve uterotônico."
+      },
+      {
+        "id": "escalonamento",
+        "descricao": "Prevê o escalonamento diante de refratariedade",
+        "peso": 0.5,
+        "adequado": "Indica as medidas mecânicas e o encaminhamento cirúrgico se o sangramento persistir — compressão bimanual, tamponamento com balão intrauterino e comunicação com o centro cirúrgico e a anestesia.",
+        "parcial": "Cita apenas uma medida de escalonamento, sem acionar o centro cirúrgico.",
+        "inadequado": "Não prevê o que fazer se o sangramento não parar."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Reconhecimento da emergência",
+      "objetivo": "Ver o choque antes que ele descompense.",
+      "peso": 3,
+      "itens": [
+        { "nome": "sinais vitais", "termos": ["pressão", "pressao", "frequência cardíaca", "pulso", "saturação"] },
+        { "nome": "perfusão e consciência", "termos": ["perfusão", "extremidades", "enchimento capilar", "palidez", "consciente", "orientada"] },
+        { "nome": "quantificação da perda", "termos": ["quanto sangrou", "quantificar", "compressas", "campos", "perda sanguínea", "quantos ml"] }
+      ]
+    },
+    {
+      "nome": "Causa do sangramento",
+      "objetivo": "Percorrer tônus, trauma, tecido e trombina.",
+      "peso": 3,
+      "itens": [
+        { "nome": "tônus uterino", "termos": ["tônus", "tonus", "palpar o útero", "fundo uterino", "globo de segurança", "massagem uterina"] },
+        { "nome": "revisão do canal", "termos": ["laceração", "laceracao", "canal de parto", "colo", "revisar a vagina", "espéculo"] },
+        { "nome": "placenta e cavidade", "termos": ["placenta", "restos", "cavidade", "curagem", "dequitação"] },
+        { "nome": "coagulação", "termos": ["coagulograma", "coagulação", "plaquetas", "fibrinogênio"] }
+      ]
+    },
+    {
+      "nome": "Suporte e reposição",
+      "objetivo": "Estabilizar enquanto trata a causa.",
+      "peso": 2,
+      "itens": [
+        { "nome": "acesso e volume", "termos": ["acesso venoso", "dois acessos", "cristaloide", "soro fisiológico", "ringer", "volume"] },
+        { "nome": "hemocomponentes", "termos": ["tipagem", "prova cruzada", "transfusão", "concentrado de hemácias", "banco de sangue", "reserva"] },
+        { "nome": "pedido de ajuda", "termos": ["chamar ajuda", "acionar a equipe", "pedir ajuda", "avisar o plantão", "anestesista"] }
+      ]
+    },
+    {
+      "nome": "Tratamento da atonia",
+      "objetivo": "Uterotônico na hora certa, escalonamento previsto.",
+      "peso": 2,
+      "itens": [
+        { "nome": "ocitocina", "termos": ["ocitocina", "ocitocina endovenosa", "uterotônico"] },
+        { "nome": "segunda linha", "termos": ["metilergometrina", "misoprostol", "ergometrina", "segunda linha"] },
+        { "nome": "ácido tranexâmico", "termos": ["tranexâmico", "tranexamico", "transamin"] },
+        { "nome": "medidas mecânicas e cirurgia", "termos": ["compressão bimanual", "balão", "tamponamento", "centro cirúrgico", "laparotomia", "histerectomia"] }
+      ]
+    }
+  ]
+}

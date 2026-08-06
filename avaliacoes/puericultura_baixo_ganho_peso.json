@@ -1,0 +1,144 @@
+{
+  "nome_caso": "Consulta de Puericultura com Baixo Ganho de Peso",
+  "revalida": {
+    "area": "pediatria",
+    "cenario": "Unidade Básica de Saúde. Consulta de puericultura de rotina de uma lactente de 1 mês e 10 dias, trazida pela mãe, de 19 anos, que relata choro frequente e dúvida sobre o próprio leite.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) da equipe de Saúde da Família e vai realizar a consulta de puericultura de uma lactente de 1 mês, acompanhada da mãe.",
+      "Realize a anamnese com a acompanhante e o exame físico pertinente da criança.",
+      "Solicite no máximo 2 exames complementares — os resultados serão fornecidos pelo Chefe de Estação.",
+      "Oriente a mãe quanto à conduta, em linguagem acessível.",
+      "Registre no fechamento a hipótese principal, os diagnósticos diferenciais e a conduta."
+    ],
+    "limites": { "exames": 2, "hipoteses": 1, "condutas": 5 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a criança e a mãe e acolhe a queixa sem julgamento",
+        "peso": 0.5,
+        "adequado": "Apresenta-se pelo nome e função, confirma o nome e a idade da criança, usa linguagem acessível e acolhe a preocupação da mãe sem culpabilizá-la.",
+        "parcial": "Apresenta-se, mas responde à queixa com correção seca ou linguagem técnica.",
+        "inadequado": "Não se apresenta ou culpabiliza a mãe."
+      },
+      {
+        "id": "historia_alimentar",
+        "descricao": "Colhe a história alimentar detalhada",
+        "peso": 1.5,
+        "adequado": "Investiga frequência e duração das mamadas, alternância e esvaziamento das mamas, mamadas noturnas, dor ao amamentar e identifica a oferta de chá e de fórmula fora de indicação.",
+        "parcial": "Pergunta quantas vezes mama, mas não investiga duração, esvaziamento ou o uso de complementos.",
+        "inadequado": "Não colhe a história alimentar."
+      },
+      {
+        "id": "sinais_de_alarme",
+        "descricao": "Investiga sinais de alarme e causas orgânicas de baixo ganho",
+        "peso": 1,
+        "adequado": "Investiga diurese e evacuações, vômitos, febre, letargia, dificuldade de sucção e cansaço às mamadas, afastando desidratação e doença orgânica.",
+        "parcial": "Investiga apenas parte desses sinais.",
+        "inadequado": "Não investiga sinais de alarme — o baixo ganho é assumido como de técnica sem descartar doença."
+      },
+      {
+        "id": "antropometria",
+        "descricao": "Realiza a antropometria e interpreta na curva de crescimento",
+        "peso": 2,
+        "adequado": "Pesa a criança, mede comprimento e perímetro cefálico, marca os valores na caderneta e interpreta a evolução do peso em relação ao nascimento e à alta, calculando o ganho.",
+        "parcial": "Pesa a criança, mas não marca na curva nem interpreta a evolução.",
+        "inadequado": "Não realiza antropometria."
+      },
+      {
+        "id": "exame_lactente",
+        "descricao": "Realiza o exame físico do lactente",
+        "peso": 1,
+        "adequado": "Avalia estado geral, hidratação, fontanela, ausculta cardiopulmonar, abdome, e examina a cavidade oral incluindo o frênulo lingual e a sucção.",
+        "parcial": "Realiza um exame parcial, sem avaliar hidratação ou sem examinar a cavidade oral.",
+        "inadequado": "Não examina a criança."
+      },
+      {
+        "id": "observacao_mamada",
+        "descricao": "Observa a mamada e avalia pega e posicionamento",
+        "peso": 2,
+        "adequado": "Solicita que a mãe amamente durante a consulta, observa posicionamento e pega, identifica os sinais de pega inadequada e examina as mamas, reconhecendo a fissura.",
+        "parcial": "Pergunta sobre a pega ou examina as mamas, mas não observa a mamada.",
+        "inadequado": "Não observa a mamada — sem isso a causa do baixo ganho não é identificada."
+      },
+      {
+        "id": "conduta_amamentacao",
+        "descricao": "Corrige a técnica e orienta a manutenção do aleitamento materno exclusivo",
+        "peso": 1.5,
+        "adequado": "Ensina o posicionamento e a pega correta, orienta livre demanda com esvaziamento de uma mama antes de oferecer a outra, orienta o cuidado da fissura, desaconselha o chá e a fórmula sem indicação e reforça o aleitamento materno exclusivo até os seis meses.",
+        "parcial": "Orienta manter o aleitamento, mas não corrige a técnica nem aborda os complementos.",
+        "inadequado": "Indica fórmula como conduta inicial ou não orienta a amamentação."
+      },
+      {
+        "id": "saude_materna",
+        "descricao": "Avalia a saúde mental e a rede de apoio da mãe",
+        "peso": 0.5,
+        "adequado": "Pergunta como a mãe está se sentindo, rastreia sintomas depressivos no pós-parto, investiga a rede de apoio e encaminha ou agenda seguimento para ela.",
+        "parcial": "Pergunta como ela está, mas não aprofunda nem oferece seguimento.",
+        "inadequado": "Não aborda a mãe — a consulta trata só da criança."
+      },
+      {
+        "id": "seguimento",
+        "descricao": "Programa o retorno e as medidas preventivas",
+        "peso": 0.5,
+        "adequado": "Agenda retorno próximo para nova pesagem, retoma a suplementação de vitamina D com a dose explicada, confere a caderneta de vacinação e ensina os sinais de alarme para retorno imediato.",
+        "parcial": "Agenda retorno, mas sem prazo definido ou sem as demais medidas.",
+        "inadequado": "Não programa seguimento."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "História alimentar",
+      "objetivo": "Descrever a mamada como ela realmente acontece.",
+      "peso": 2,
+      "itens": [
+        { "nome": "frequência e duração", "termos": ["quantas vezes mama", "quanto tempo", "duração da mamada", "de quanto em quanto tempo"] },
+        { "nome": "esvaziamento e alternância", "termos": ["esvazia", "troca de peito", "os dois peitos", "solta sozinha", "um peito só"] },
+        { "nome": "complementos", "termos": ["chá", "cha", "mamadeira", "fórmula", "leite de lata", "água", "outra coisa além do peito"] }
+      ]
+    },
+    {
+      "nome": "Sinais de alarme",
+      "objetivo": "Afastar desidratação e doença orgânica.",
+      "peso": 2,
+      "itens": [
+        { "nome": "diurese e evacuações", "termos": ["fraldas", "xixi", "urina", "evacuação", "cocô", "quantas fraldas"] },
+        { "nome": "vômitos e febre", "termos": ["vômito", "vomita", "golfa", "febre", "temperatura"] },
+        { "nome": "atividade e sucção", "termos": ["ativa", "sonolenta", "letárgica", "cansa para mamar", "força para sugar"] }
+      ]
+    },
+    {
+      "nome": "Antropometria e exame",
+      "objetivo": "Medir e interpretar, não só olhar.",
+      "peso": 3,
+      "itens": [
+        { "nome": "peso", "termos": ["pesar", "peso", "balança", "quanto ela pesa"] },
+        { "nome": "comprimento e perímetro cefálico", "termos": ["comprimento", "medir", "perímetro cefálico", "cabeça"] },
+        { "nome": "curva de crescimento", "termos": ["curva", "caderneta", "gráfico", "percentil", "escore z"] },
+        { "nome": "exame do lactente", "termos": ["examinar o bebê", "ausculta", "fontanela", "hidratação", "frênulo", "boca do bebê"] }
+      ]
+    },
+    {
+      "nome": "Mamada e conduta",
+      "objetivo": "Ver mamar e corrigir o que está errado.",
+      "peso": 3,
+      "itens": [
+        { "nome": "observar a mamada", "termos": ["pode dar o peito", "quero ver ela mamar", "observar a mamada", "amamentar aqui"] },
+        { "nome": "pega e posicionamento", "termos": ["pega", "posicionamento", "aréola", "boca bem aberta", "queixo", "barriga com barriga"] },
+        { "nome": "exame das mamas e fissura", "termos": ["examinar o peito", "mamilo", "fissura", "rachadura", "ingurgitamento"] },
+        { "nome": "aleitamento exclusivo", "termos": ["aleitamento exclusivo", "só o peito", "até seis meses", "livre demanda", "não precisa de chá"] }
+      ]
+    },
+    {
+      "nome": "Mãe e seguimento",
+      "objetivo": "Quem amamenta também é paciente.",
+      "peso": 2,
+      "itens": [
+        { "nome": "saúde mental materna", "termos": ["como você está", "como você se sente", "triste", "chorando", "seu humor", "dormindo"] },
+        { "nome": "rede de apoio", "termos": ["quem te ajuda", "quem mora", "apoio", "sua mãe", "pai do bebê"] },
+        { "nome": "retorno e prevenção", "termos": ["retorno", "voltar em", "nova pesagem", "vitamina d", "vacina", "sinais de alarme"] }
+      ]
+    }
+  ]
+}

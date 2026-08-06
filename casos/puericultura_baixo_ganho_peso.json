@@ -1,0 +1,195 @@
+{
+  "categoria": "medicina",
+  "titulo": "Consulta de Puericultura com Baixo Ganho de Peso",
+  "identificacao": {
+    "nome": "Amanda Ribeiro da Silva",
+    "idade": 19,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Solteira",
+    "escolaridade": "Ensino médio incompleto, parou no segundo ano",
+    "profissao": "Não trabalha fora; cuida do bebê em tempo integral",
+    "naturalidade": "Duque de Caxias, RJ",
+    "moradia": "Casa da mãe, com a mãe, a avó e um irmão adolescente"
+  },
+  "interlocutor": "MÃE do paciente. Quem está sendo avaliado é a filha dela, Sofia, de 1 mês e 10 dias, que está no colo dela, acordada e chorando de tempos em tempos. O bebê não fala; quem conversa com o profissional é a mãe.",
+  "queixa_principal": "Doutora, vim na consulta do mês, mas a Sofia chora muito e eu acho que meu leite é fraco, ela não engorda.",
+  "historia_doenca_atual": {
+    "inicio": "Desde a segunda semana de vida",
+    "localizacao": "Não se aplica",
+    "irradiacao": "Não se aplica",
+    "intensidade": "Chora bastante, principalmente à noite",
+    "duracao": "Todos os dias",
+    "caracter": "Chora depois de mamar e quer mamar de novo em pouco tempo",
+    "fatores_piora": "Fim da tarde e madrugada",
+    "fatores_melhora": "Melhora um pouco no colo e quando recebe o complemento que a avó dá",
+    "sintomas_associados": "Mama muitas vezes ao dia, solta o peito e chora; a mãe sente dor forte no mamilo ao início da mamada",
+    "evolucao": "Ganho de peso abaixo do esperado na pesagem de hoje",
+    "peso_nascimento": "Nasceu com 3.150 g, a termo, parto vaginal, alta com 3.010 g",
+    "amamentacao": "Mama de dez a doze vezes por dia, entre cinco e sete minutos em cada peito, sem esvaziar",
+    "complemento": "Há uma semana a avó começou a dar chá de erva-doce e, à noite, uma mamadeira de fórmula 'para ela dormir'"
+  },
+  "antecedentes_pessoais": {
+    "gestacao": "Pré-natal com sete consultas, sem intercorrências; sorologias sem alterações",
+    "parto": "Parto vaginal a termo, sem intercorrências; contato pele a pele não realizado por rotina do serviço",
+    "alta": "Alta em 48 horas, sem orientação sobre pega ou posicionamento",
+    "teste_do_pezinho": "Coletado no quinto dia, resultado normal",
+    "vacinacao": "BCG e hepatite B na maternidade; não recebeu as vacinas de dois meses ainda, que não estão indicadas nesta idade",
+    "eliminacoes": "Cinco a seis fraldas de urina por dia e evacuações amareladas, três a quatro vezes ao dia",
+    "medicacoes_em_uso": "Vitamina D em gotas, prescrita na alta, mas a mãe não entendeu a dose e parou"
+  },
+  "antecedentes_familiares": {
+    "mae": "A avó materna teve dificuldade para amamentar os três filhos e diz que 'na família o leite é fraco'",
+    "pai": "O pai do bebê não convive; não presta apoio",
+    "observacoes": "Nenhuma doença hereditária conhecida"
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nenhum fumante na casa",
+    "alcool": "Não bebe",
+    "alimentacao_da_mae": "Come pouco e sem horário; passou a evitar vários alimentos porque disseram que dão cólica no bebê",
+    "sono": "Dorme no máximo três horas seguidas há um mês",
+    "apoio": "A avó decide muita coisa e discorda das orientações da unidade"
+  },
+  "informacoes_iniciais": {
+    "choro": "A bebê chora muito, principalmente à noite, e quer mamar quase o tempo todo",
+    "leite_fraco": "Ela acha que o leite dela é fraco porque a filha não sacia",
+    "peso": "Na balança de hoje a menina não ganhou o que a enfermeira esperava",
+    "dor": "Sente dor no bico do peito quando a bebê pega"
+  },
+  "informacoes_intermediarias": {
+    "pega": "A bebê pega só o bico do peito, faz barulho de estalo ao mamar e solta várias vezes",
+    "fissura": "Tem rachadura no mamilo direito que sangrou anteontem",
+    "mamadas_curtas": "As mamadas duram cinco a sete minutos e ela troca de peito porque acha que já acabou",
+    "complemento_da_avo": "A avó dá chá de erva-doce durante o dia e uma mamadeira de fórmula à noite, sem ela conseguir impedir",
+    "eliminacoes": "Ainda molha cinco a seis fraldas por dia e evacua bem",
+    "vitamina_d": "Parou a vitamina D porque não entendeu quantas gotas dar"
+  },
+  "informacoes_sensiveis": {
+    "sentimento_de_fracasso": "Sente que fracassou como mãe e chora escondida no banheiro depois das mamadas",
+    "tristeza_persistente": "Há duas semanas sente tristeza quase todos os dias, chora sem motivo aparente, perdeu o interesse pelas coisas e dorme mal mesmo quando a bebê dorme",
+    "pressao_da_avo": "A avó a chama de incapaz na frente dos outros e diz que ela 'não tem jeito para mãe'",
+    "abandono_do_pai": "O pai do bebê sumiu quando soube da gravidez e ela não contou isso a ninguém da unidade"
+  },
+  "gatilhos_sensiveis": {
+    "sentimento_de_fracasso": ["como você está", "como você se sente", "e você", "está difícil", "culpa"],
+    "tristeza_persistente": ["triste", "tristeza", "chorou", "ânimo", "vontade de fazer as coisas", "está dormindo", "seu humor"],
+    "pressao_da_avo": ["quem te ajuda", "sua mãe", "avó", "em casa", "o que falam", "apoio"],
+    "abandono_do_pai": ["pai do bebê", "companheiro", "parceiro", "está sozinha", "quem mais ajuda"]
+  },
+  "rede_apoio": {
+    "familia": "Mora com a mãe, a avó e o irmão; a mãe trabalha o dia todo fora",
+    "amigos": "Perdeu contato com as amigas da escola depois da gravidez",
+    "servicos": "Unidade Básica de Saúde perto de casa; foi bem acolhida no pré-natal",
+    "observacoes": "Não conhece o grupo de apoio à amamentação da unidade"
+  },
+  "persona": {
+    "resumo": "Mãe muito jovem, dedicada e insegura, que aceita qualquer explicação sobre estar fazendo errado",
+    "temperamento": ["dócil", "insegura", "atenta", "envergonhada de perguntar"],
+    "postura_na_consulta": "Segura a bebê com firmeza, fala baixo, olha para a filha e responde com meia frase"
+  },
+  "estilo_de_fala": {
+    "registro": "Informal, carioca, hesitante",
+    "caracteristicas": ["fala baixo", "usa 'né'", "pede confirmação do que diz", "se desculpa por perguntar"],
+    "bordoes_e_expressoes": ["ai", "sei lá", "será que é isso", "desculpa perguntar"],
+    "exemplos_de_fala": [
+      "Ai, doutora, será que meu leite é fraco mesmo?",
+      "Ela mama e daqui a pouco tá chorando de novo, né.",
+      "Desculpa perguntar, mas dói muito quando ela pega."
+    ],
+    "nunca_faz": ["usa termo técnico", "fala em percentil ou curva", "nomeia depressão pós-parto"]
+  },
+  "contexto_de_vida": {
+    "biografia": "Engravidou aos 18 anos, no segundo ano do ensino médio, e parou de estudar",
+    "rotina": "Passa o dia inteiro com a bebê; a avó comanda a casa",
+    "trabalho": "Sem renda própria; depende da mãe",
+    "familia_e_relacoes": "Convive com a mãe, a avó e o irmão de 15 anos; o pai da bebê não aparece",
+    "estressores_atuais": ["choro da filha", "críticas da avó", "sono fragmentado", "falta de dinheiro próprio"]
+  },
+  "estado_emocional": {
+    "agora": "Cansada e ansiosa, à beira do choro, tentando mostrar que está dando conta",
+    "manifestacoes": ["olhos marejados", "voz baixa", "balança a bebê sem parar", "evita olhar nos olhos"],
+    "o_que_teme": "Que digam que ela não é capaz de cuidar da filha e que a bebê adoeça por culpa dela",
+    "o_que_espera": "Que alguém diga se ela pode continuar amamentando ou se precisa dar leite de lata"
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": ["é elogiada por algo que faz bem", "o profissional pergunta como ELA está", "percebe que não vai ser julgada"],
+    "fecha_se_quando": ["é corrigida com dureza", "sente pressa", "ouve que está fazendo tudo errado"],
+    "trava_do_sensivel": "Só fala da tristeza persistente e da pressão da avó se perguntarem diretamente sobre como ela está se sentindo ou sobre quem a ajuda em casa",
+    "sinais_de_confianca": "Levanta o olhar, chora e conta o que não contou a ninguém"
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Baixo ganho ponderal por técnica inadequada de amamentação, com pega incorreta, fissura mamilar e mamadas curtas, agravado por introdução de chá e fórmula sem indicação; mãe adolescente com sintomas depressivos no pós-parto e rede de apoio adversa",
+    "manter_coerente": "A mãe nunca nomeia pega, fissura ou depressão; ela descreve dor, choro e cansaço. O peso, a curva e os achados do exame só aparecem quando o profissional pesa a criança ou examina. A bebê chora e se acalma no colo, sem sinais de gravidade.",
+    "diferenciais_a_respeitar": [
+      "Doença orgânica com repercussão no ganho de peso (cardiopatia, infecção urinária, doença metabólica)",
+      "Refluxo gastroesofágico patológico",
+      "Alergia à proteína do leite de vaca",
+      "Hipogalactia verdadeira",
+      "Baixo ganho por privação alimentar"
+    ]
+  },
+  "exame_fisico": {
+    "peso": {
+      "nome": "Peso e cálculo do ganho ponderal diário",
+      "sinonimos": ["peso", "pesar", "balança", "quanto ela está pesando", "ganho de peso"],
+      "resultado": "3.290 g hoje. Nasceu com 3.150 g e teve alta com 3.010 g — ganho médio de cerca de 8 g por dia desde a alta, abaixo do esperado para a idade"
+    },
+    "comprimento_pc": {
+      "nome": "Comprimento e perímetro cefálico",
+      "sinonimos": ["comprimento", "altura", "perímetro cefálico", "pc", "medir a cabeça"],
+      "resultado": "Comprimento 51,5 cm; perímetro cefálico 36,5 cm — ambos adequados para a idade"
+    },
+    "curva_crescimento": {
+      "nome": "Marcação na curva de crescimento da caderneta",
+      "sinonimos": ["curva", "caderneta", "gráfico", "percentil", "escore z", "marcar na curva"],
+      "resultado": "Peso cruzando para baixo entre os escores z 0 e −2; comprimento e perímetro cefálico mantendo o canal de crescimento"
+    },
+    "estado_geral_bebe": {
+      "nome": "Estado geral, hidratação e atividade do lactente",
+      "sinonimos": ["estado geral", "hidratação", "mucosas", "fontanela", "ativa", "reativa", "como ela está"],
+      "resultado": "Ativa e reativa, choro forte e consolável, mucosas úmidas, fontanela normotensa, sem icterícia visível, enchimento capilar imediato"
+    },
+    "exame_segmentar": {
+      "nome": "Exame físico segmentar do lactente",
+      "sinonimos": ["exame físico", "ausculta", "coração", "pulmão", "abdome", "genitália", "quadril", "reflexos"],
+      "resultado": "Ausculta cardíaca e pulmonar sem alterações, abdome sem visceromegalias, genitália sem alterações, manobras de quadril normais, reflexos primitivos presentes e simétricos"
+    },
+    "cavidade_oral_bebe": {
+      "nome": "Exame da cavidade oral e do frênulo lingual",
+      "sinonimos": ["boca do bebê", "frênulo", "freio da língua", "língua", "sucção", "monilíase"],
+      "resultado": "Frênulo lingual sem alterações, sucção presente e coordenada, sem placas de monilíase"
+    },
+    "mamas": {
+      "nome": "Exame das mamas da mãe",
+      "sinonimos": ["mama", "peito", "mamilo", "fissura", "rachadura", "ingurgitamento", "examinar o peito"],
+      "resultado": "Mamas cheias, sem sinais flogísticos; fissura em mamilo direito com crosta recente; mamilos protrusos"
+    },
+    "observacao_mamada": {
+      "nome": "Observação da mamada",
+      "sinonimos": ["observar a mamada", "ver ela mamar", "pega", "posicionamento", "avaliar a mamada", "como ela mama"],
+      "resultado": "Bebê com corpo afastado do da mãe e cabeça desalinhada; abocanha apenas o mamilo, lábios invertidos, bochechas encovadas, estalos audíveis; a mãe retira do peito em cerca de cinco minutos"
+    }
+  },
+  "exames_disponiveis": {
+    "urina": {
+      "nome": "Urina rotina e urocultura",
+      "sinonimos": ["urina", "urocultura", "exame de urina", "infecção urinária"],
+      "resultado": "Sem leucocitúria ou nitrito; urocultura negativa"
+    },
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": ["hemograma", "sangue", "anemia"],
+      "resultado": "Sem alterações; hemoglobina 13,4 g/dL"
+    },
+    "teste_do_pezinho": {
+      "nome": "Resultado da triagem neonatal",
+      "sinonimos": ["teste do pezinho", "triagem neonatal", "resultado do pezinho"],
+      "resultado": "Normal, sem alterações para as doenças triadas"
+    },
+    "reavaliacao_peso": {
+      "nome": "Reavaliação de peso após mamada assistida",
+      "sinonimos": ["pesar de novo", "reavaliação", "reavaliacao", "peso depois da mamada", "dupla pesagem"],
+      "resultado": "Após correção da pega, a bebê mama por 22 minutos em um único peito, com deglutição audível; solta o peito espontaneamente e adormece"
+    }
+  }
+}
