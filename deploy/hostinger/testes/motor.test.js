@@ -796,3 +796,48 @@ test("caso com acompanhante deixa claro que o interlocutor NÃO é o paciente", 
   const ocorrencias = (prompt.match(/Você NÃO é uma IA/g) || []).length;
   assert.equal(ocorrencias, 1, "instrução duplicada no prompt");
 });
+
+test("o sorteio do circuito cobre áreas e degrada com acervo raso", async () => {
+  const { sortearCircuito, boletim, criarProva, registrarResultado, proximaEstacao } = await import("../motor/prova.js");
+  const fixo = () => 0; // sorteio determinístico: sempre o primeiro disponível
+
+  const acervo = {
+    clinica_medica: ["cm1", "cm2", "cm3"],
+    cirurgia: ["cir1"],
+    ginecologia_obstetricia: ["go1"],
+    pediatria: ["ped1"],
+    medicina_familia: ["mfc1"],
+  };
+  const circuito = sortearCircuito(acervo, 5, fixo);
+  assert.equal(circuito.length, 5);
+  assert.equal(new Set(circuito.map((e) => e.area)).size, 5, "uma estação por área do edital");
+  assert.equal(new Set(circuito.map((e) => e.id)).size, 5, "nenhum caso repetido");
+
+  // Acervo raso numa área: o circuito não pode encolher por isso — completa com
+  // o que houver, sem repetir.
+  const rasa = sortearCircuito({ clinica_medica: ["a", "b", "c", "d"], cirurgia: ["e"] }, 5, fixo);
+  assert.equal(rasa.length, 5);
+  assert.equal(new Set(rasa.map((e) => e.id)).size, 5);
+
+  // Acervo menor que o circuito: devolve o que existe, sem inventar.
+  assert.equal(sortearCircuito({ clinica_medica: ["a", "b"] }, 5, fixo).length, 2);
+
+  // Giro e boletim.
+  const prova = criarProva({ id: "p1", aluno: "u1", circuito });
+  assert.equal(proximaEstacao(prova).ordem, 1);
+  registrarResultado(prova, { caso: "cm1", area: "clinica_medica", nota: 7.5, nota_maxima: 10 });
+  assert.equal(proximaEstacao(prova).ordem, 2, "o giro avança e não volta");
+  registrarResultado(prova, { caso: "cir1", area: "cirurgia", nota: 5, nota_maxima: 10 });
+
+  const parcial = boletim(prova);
+  assert.equal(parcial.nota, 12.5);
+  assert.equal(parcial.media, 6.25);
+  assert.equal(parcial.concluida, false);
+  assert.equal(parcial.nota_maxima, 50);
+
+  for (let i = 0; i < 3; i++) registrarResultado(prova, { caso: `x${i}`, area: "pediatria", nota: 10, nota_maxima: 10 });
+  const final = boletim(prova);
+  assert.equal(final.concluida, true);
+  assert.equal(final.nota, 42.5);
+  assert.equal(proximaEstacao(prova), null, "circuito concluído não abre mais estação");
+});

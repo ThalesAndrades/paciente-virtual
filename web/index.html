@@ -86,6 +86,16 @@
   <!-- Preenchido por carregarCasos(): um card por categoria presente no acervo. -->
   <div class="categorias" id="categorias"></div>
 
+  <!-- O circuito completo, como o dia da 2ª etapa acontece: cinco estações
+       sorteadas entre as áreas, giro obrigatório e nota somada. -->
+  <div class="cartao-prova" id="cartao-prova">
+    <div class="prova-texto">
+      <strong>Simulado completo</strong>
+      <span>5 estações sorteadas entre as áreas do Revalida, 10 minutos cada, com nota final de 0 a 50.</span>
+    </div>
+    <button class="botao" id="iniciar-prova" type="button">Começar simulado</button>
+  </div>
+
   <div class="aleatorio-linha aleatorio-home"><button class="btn-aleatorio" id="aleatorio-geral" type="button">🎲 Caso clínico aleatório</button></div>
   <button id="botao-painel" class="botao secundario oculto">📊 Painel do professor</button>
 </section>
@@ -388,7 +398,29 @@
   </h2>
   <div id="revisao-consulta" class="fluxo-mensagens oculto"></div>
 
+  <!-- No circuito, a tela de resultado vira a porta da próxima estação. -->
+  <div class="barra-circuito oculto" id="barra-circuito">
+    <div class="circuito-progresso" id="circuito-progresso"></div>
+    <button class="botao" id="proxima-estacao" type="button">Próxima estação</button>
+  </div>
   <button id="botao-nova" class="botao">Nova consulta</button>
+</section>
+
+<section id="tela-boletim" class="tela">
+  <div class="topo-secao">
+    <button class="voltar" id="boletim-voltar">← Início</button>
+    <h1 style="margin:0;font-size:1.3rem;flex:1">Boletim do simulado</h1>
+  </div>
+  <div class="boletim-topo">
+    <div class="boletim-nota"><strong id="boletim-nota">—</strong><span id="boletim-maxima">/ 50</span></div>
+    <div class="boletim-resumo">
+      <div id="boletim-media"></div>
+      <div class="subtitulo" id="boletim-duracao"></div>
+    </div>
+  </div>
+  <p class="subtitulo" id="boletim-leitura"></p>
+  <div id="boletim-estacoes"></div>
+  <button class="botao" id="boletim-nova-prova" type="button">Fazer outro simulado</button>
 </section>
 
 <!-- A camada WebRTC da conversa ao vivo. Fora da página porque é a única parte que
@@ -404,7 +436,7 @@ const estado = {
   casos: [], categoriaAtual: null, casoSelecionado: null, consultaId: null,
   voz: "feminino", categoriaCaso: "psicologia", pacienteNome: "", instrumentos: null,
   falarRespostas: lerPreferenciaAudio(), avisoDemoExibido: false, ocupado: false,
-  creditos: null, loja: null, estacao: null, estacaoEncerrando: false,
+  creditos: null, loja: null, estacao: null, estacaoEncerrando: false, prova: null, circuito: null,
   capacidades: { stt: false, tts: {} },
   inicioConsulta: null, perguntas: 0, exames: 0, timerEstacao: null,
 };
@@ -968,46 +1000,7 @@ async function iniciarConsulta(casoId, aleatorio) {
     dados = await r.json();
   } catch { torrada("Falha de conexão ao iniciar a consulta.", true); return; }
 
-  estado.consultaId = dados.id; estado.voz = dados.voz; estado.avisoDemoExibido = false;
-  estado.categoriaCaso = dados.categoria; estado.instrumentos = dados.instrumentos || null;
-  // Como esta pessoa chega: os números que a sala usa para montar postura, olhar e
-  // respiração. Vêm prontos do servidor — a página não interpreta o caso.
-  estado.expressao = dados.expressao || null; estado.pacienteInfo = dados.paciente || {};
-  estado.pacienteNome = (dados.paciente.nome || "O paciente").trim().split(/\s+/)[0];
-  const cor = catDe(dados.categoria).cor;
-
-  $("mensagens").innerHTML = "";
-  const av = $("avatar-paciente"); av.textContent = (dados.paciente.nome || "?").charAt(0); av.style.setProperty("--cor", cor);
-  $("nome-paciente").textContent = dados.paciente.nome;
-  const p = dados.paciente;
-  $("dados-paciente").textContent = `${p.idade} anos · ${p.sexo}${p.profissao ? " · " + p.profissao : ""}`;
-  const badge = $("cab-badge"); const mc = catDe(dados.categoria); badge.textContent = mc.nome; badge.className = "cab-badge " + mc.chip;
-
-  montarInstrumentos();
-  $("campo-anotacoes").value = "";
-  iniciarCronometro();
-  const i = dados.instrumentos || {};
-  const temInstrumentos = ((i.vitais||[]).length + (i.fisico||[]).length + (i.exames||[]).length) > 0;
-  // O aviso segue os INSTRUMENTOS do caso, não o nome da área: enfermagem e
-  // odontologia também examinam, e área nova não pode cair num texto errado.
-  adicionarBalao("aviso", temInstrumentos
-    ? "Consulta iniciada. Faça a anamnese, use os instrumentos (🩺) para sinais vitais e exames, e clique em “Encerrar e avaliar” ao final."
-    : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
-  // Estação de Revalida: o impresso vem ANTES, e o cronômetro só começa quando o
-  // participante diz que entrou. Ler a tarefa faz parte da prova — na sala real,
-  // ele lê na porta, com o tempo ainda parado.
-  estado.estacao = dados.estacao || null;
-  estado.estacaoEncerrando = false;
-  if (estado.estacao) {
-    pararCronometro();
-    mostrarImpressoDaEstacao(estado.estacao);
-  }
-
-  mostrarTela("tela-consulta");
-  $("campo-mensagem").focus();
-  $("botao-sala").classList.remove("oculto");
-  // Reabre a sala se o aluno já a estava usando — sem perguntar de novo a cada caso.
-  if (lerPreferenciaSala()) alternarSala();
+  aplicarConsulta(dados);
   } finally { estado.ocupado = false; }
 }
 
@@ -1048,6 +1041,133 @@ function atualizarMedidores() {
   $("med-perguntas").textContent = estado.perguntas;
   $("med-exames").textContent = estado.exames;
 }
+// Aplica na tela o que o servidor devolveu ao abrir uma consulta. Vive separado
+// porque o modo prova entra por outra porta — a estação vem sorteada pelo
+// servidor — e as duas precisam montar exatamente a mesma tela.
+function aplicarConsulta(dados) {
+  estado.consultaId = dados.id; estado.voz = dados.voz; estado.avisoDemoExibido = false;
+  estado.categoriaCaso = dados.categoria; estado.instrumentos = dados.instrumentos || null;
+  // Como esta pessoa chega: os números que a sala usa para montar postura, olhar e
+  // respiração. Vêm prontos do servidor — a página não interpreta o caso.
+  estado.expressao = dados.expressao || null; estado.pacienteInfo = dados.paciente || {};
+  estado.pacienteNome = (dados.paciente.nome || "O paciente").trim().split(/\s+/)[0];
+  const cor = catDe(dados.categoria).cor;
+
+  $("mensagens").innerHTML = "";
+  const av = $("avatar-paciente"); av.textContent = (dados.paciente.nome || "?").charAt(0); av.style.setProperty("--cor", cor);
+  $("nome-paciente").textContent = dados.paciente.nome;
+  const p = dados.paciente;
+  $("dados-paciente").textContent = `${p.idade} anos · ${p.sexo}${p.profissao ? " · " + p.profissao : ""}`;
+  const badge = $("cab-badge"); const mc = catDe(dados.categoria); badge.textContent = mc.nome; badge.className = "cab-badge " + mc.chip;
+
+  montarInstrumentos();
+  $("campo-anotacoes").value = "";
+  iniciarCronometro();
+  const i = dados.instrumentos || {};
+  const temInstrumentos = ((i.vitais||[]).length + (i.fisico||[]).length + (i.exames||[]).length) > 0;
+  // O aviso segue os INSTRUMENTOS do caso, não o nome da área: enfermagem e
+  // odontologia também examinam, e área nova não pode cair num texto errado.
+  adicionarBalao("aviso", temInstrumentos
+    ? "Consulta iniciada. Faça a anamnese, use os instrumentos (🩺) para sinais vitais e exames, e clique em “Encerrar e avaliar” ao final."
+    : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
+  // Estação de Revalida: o impresso vem ANTES, e o cronômetro só começa quando o
+  // participante diz que entrou. Ler a tarefa faz parte da prova — na sala real,
+  // ele lê na porta, com o tempo ainda parado.
+  estado.estacao = dados.estacao || null;
+  estado.estacaoEncerrando = false;
+  if (estado.estacao) {
+    pararCronometro();
+    mostrarImpressoDaEstacao(estado.estacao);
+  }
+
+  mostrarTela("tela-consulta");
+  $("campo-mensagem").focus();
+  $("botao-sala").classList.remove("oculto");
+  // Reabre a sala se o aluno já a estava usando — sem perguntar de novo a cada caso.
+  if (lerPreferenciaSala()) alternarSala();
+  // Posição no circuito, quando esta estação faz parte de um simulado.
+  estado.circuito = dados.circuito || null;
+  pintarCircuito();
+}
+
+/* ---------- Modo prova: o circuito de 5 estações ----------
+   O dia da 2ª etapa é um circuito: cinco estações seguidas, giro obrigatório e a
+   soma no fim. Treinar solto ensina a estação; o circuito ensina a prova. */
+
+async function comecarProva() {
+  if (!acesso.autenticado) { abrirModal("aluno", comecarProva); return; }
+  const botao = $("iniciar-prova"); botao.disabled = true;
+  try {
+    const r = await fetch("/api/provas", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) { torrada(d.erro || "Não consegui montar o simulado.", true); return; }
+
+    estado.prova = { id: d.id, total: d.total, areas: d.areas, ordem: 0 };
+    const custo = d.custo_total
+      ? `\n\nO simulado usa ${d.total} estações e consome ${d.custo_total} créditos no total.`
+      : "";
+    const areas = d.areas.map((a, i) => `${i + 1}. ${a}`).join("\n");
+    if (!confirm(`Simulado completo — ${d.total} estações, 10 minutos cada.\n\n${areas}\n\nO giro é automático e não dá para voltar a uma estação anterior.${custo}\n\nComeçar agora?`)) {
+      estado.prova = null;
+      return;
+    }
+    await proximaEstacaoDaProva();
+  } catch {
+    torrada("Falha de conexão ao montar o simulado.", true);
+  } finally { botao.disabled = false; }
+}
+
+async function proximaEstacaoDaProva() {
+  if (!estado.prova) return;
+  try {
+    const r = await fetch(`/api/provas/${encodeURIComponent(estado.prova.id)}/estacao`, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: "{}",
+    });
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 409) { mostrarBoletim(d.boletim); return; }
+    if (r.status === 402) { await carregarCreditos(); torrada(d.erro || "Créditos insuficientes.", true); abrirLoja(); return; }
+    if (!r.ok) { torrada(d.erro || "Não consegui abrir a próxima estação.", true); return; }
+    aplicarConsulta(d);
+  } catch { torrada("Falha de conexão ao abrir a estação.", true); }
+}
+
+// A posição no circuito fica visível durante a estação: saber que é a terceira de
+// cinco muda o jeito de administrar o tempo e o cansaço — que é parte do que a
+// prova cobra.
+function pintarCircuito() {
+  const c = estado.circuito;
+  const badge = $("cab-badge");
+  if (!c) return;
+  badge.textContent = `${badge.textContent} · Estação ${c.ordem}/${c.total}`;
+}
+
+function mostrarBoletim(b) {
+  estado.prova = null;
+  $("boletim-nota").textContent = formatarNota(b.nota);
+  $("boletim-maxima").textContent = `/ ${b.nota_maxima}`;
+  $("boletim-media").innerHTML = `Média por estação: <strong>${formatarNota(b.media)}</strong> / 10`;
+  $("boletim-duracao").textContent =
+    `${b.estacoes_feitas} de ${b.estacoes_total} estações · ${formatarDuracao(b.duracao_s)} no total`;
+  // A média é o número que se compara com a nota de corte, publicada por edição.
+  $("boletim-leitura").textContent = b.media >= 6
+    ? "Média acima de 6 por estação. A nota de corte varia a cada edição, mas esta é uma faixa de aprovação plausível."
+    : "Média abaixo de 6 por estação. Veja abaixo em que áreas a perda se concentrou.";
+
+  const cont = $("boletim-estacoes");
+  cont.innerHTML = "";
+  for (const r of b.resultados) {
+    const pct = (r.nota / (r.nota_maxima || 10)) * 100;
+    const linha = document.createElement("div");
+    linha.className = "linha-boletim";
+    linha.innerHTML =
+      `<div class="bol-ordem">${r.ordem}</div>` +
+      `<div class="bol-info"><strong>${esc(r.titulo)}</strong><span>${esc(r.area_nome || r.area || "")}</span></div>` +
+      `<div class="bol-nota" style="--cor-bol:${corDaFaixaTexto(pct)}">${formatarNota(r.nota)}<i>/${r.nota_maxima}</i></div>`;
+    cont.appendChild(linha);
+  }
+  mostrarTela("tela-boletim");
+}
+
 /* ---------- Estação de Revalida ---------- */
 
 function mostrarImpressoDaEstacao(estacao) {
@@ -1828,6 +1948,7 @@ function mostrarAvaliacao(d) {
   $("ind-exames").textContent = est.exames != null ? est.exames : "—";
 
   renderizarFechamento(d);
+  pintarBarraDoCircuito(d);
 
   // Revisão: o aluno revê a própria consulta. Antes só o professor tinha acesso
   // à transcrição, então quem mais precisava aprender com ela nunca a via.
@@ -1869,11 +1990,36 @@ function mostrarAvaliacao(d) {
   const tp = Boolean(d.parecer); $("titulo-parecer").classList.toggle("oculto", !tp); $("parecer").classList.toggle("oculto", !tp); if (tp) $("parecer").textContent = d.parecer;
 }
 
+// No circuito, a tela de resultado é a porta da próxima estação — e o botão de
+// "nova consulta" sai de cena, porque no meio de uma prova ele não faz sentido.
+function pintarBarraDoCircuito(d) {
+  const b = d && d.circuito;
+  const barra = $("barra-circuito");
+  const temCircuito = Boolean(b && !b.concluida);
+  barra.classList.toggle("oculto", !temCircuito);
+  $("botao-nova").classList.toggle("oculto", Boolean(b));
+  if (b && b.concluida) {
+    // Última estação: o boletim substitui o resultado isolado depois de um
+    // instante, para o aluno ainda ver a nota da estação que acabou de fazer.
+    setTimeout(() => mostrarBoletim(b), 2500);
+    torrada("Circuito concluído. Abrindo o boletim…");
+    return;
+  }
+  if (!temCircuito) return;
+  $("circuito-progresso").innerHTML =
+    `<strong>Estação ${b.estacoes_feitas} de ${b.estacoes_total}</strong>` +
+    `<span>Parcial: ${formatarNota(b.nota)} de ${b.estacoes_feitas * 10} pontos</span>`;
+}
+
 /* ---------- Ligações ---------- */
 audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("botao-vivo").addEventListener("click", alternarVivo);
 $("estacao-entrar").addEventListener("click", entrarNaEstacao);
+$("iniciar-prova").addEventListener("click", comecarProva);
+$("proxima-estacao").addEventListener("click", () => { $("barra-circuito").classList.add("oculto"); proximaEstacaoDaProva(); });
+$("boletim-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
+$("boletim-nova-prova").addEventListener("click", comecarProva);
 $("estacao-desistir").addEventListener("click", () => { $("modal-estacao").classList.add("oculto"); estado.estacao = null; mostrarTela("tela-inicio"); });
 document.querySelectorAll("#abas-acesso .seg").forEach((s) => s.addEventListener("click", () => trocarAbaAcesso(s.dataset.acesso)));
 $("abrir-loja").addEventListener("click", abrirLoja);

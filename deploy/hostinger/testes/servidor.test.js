@@ -908,3 +908,83 @@ test("chaves de cobrança: só o admin instala, e elas nunca voltam para a tela"
     servidor.close();
   }
 });
+
+/* ---------- Modo prova: o circuito de estações ---------- */
+
+test("o circuito sorteia áreas diferentes e não repete caso", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { status, dados } = await api("/api/provas", {});
+    assert.equal(status, 200);
+    assert.equal(dados.total, 5);
+    // A prova cobre ÁREAS, não casos: cinco de clínica médica seria simular o
+    // conforto, não o exame (item 3.3.1 do edital).
+    assert.equal(new Set(dados.areas).size, dados.areas.length, `áreas repetidas: ${dados.areas.join(", ")}`);
+    // E as áreas aparecem; os casos, não — saber qual caso cai seria gabarito.
+    assert.ok(!JSON.stringify(dados).includes("infarto"));
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o giro é obrigatório: cada estação registra a nota e o boletim soma", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno002");
+    const { dados: prova } = await api("/api/provas", {});
+
+    const feitas = [];
+    for (let i = 0; i < prova.total; i++) {
+      const abertura = await api(`/api/provas/${prova.id}/estacao`, {});
+      assert.equal(abertura.status, 200, `estação ${i + 1} não abriu`);
+      assert.equal(abertura.dados.circuito.ordem, i + 1);
+      assert.equal(abertura.dados.circuito.total, prova.total);
+      // O impresso da estação vem junto, como numa estação avulsa.
+      assert.ok(abertura.dados.estacao, "estação sem impresso de tarefa");
+      feitas.push(abertura.dados.caso);
+
+      const fim = await api(`/api/consultas/${abertura.dados.id}/encerrar`, {
+        hipotese: "hipótese de teste", diferenciais: "d", conduta: "c",
+      });
+      assert.equal(fim.status, 200);
+      assert.ok(fim.dados.circuito, "o encerramento precisa devolver o estado do circuito");
+      assert.equal(fim.dados.circuito.estacoes_feitas, i + 1);
+    }
+
+    // Nenhum caso se repete dentro do mesmo circuito.
+    assert.equal(new Set(feitas).size, feitas.length, `caso repetido: ${feitas.join(", ")}`);
+
+    // Concluído: não abre mais estação e devolve o boletim.
+    const depois = await api(`/api/provas/${prova.id}/estacao`, {});
+    assert.equal(depois.status, 409);
+    assert.ok(depois.dados.boletim.concluida);
+
+    const { dados: boletim } = await api(`/api/provas/${prova.id}`);
+    assert.equal(boletim.estacoes_feitas, prova.total);
+    assert.equal(boletim.nota_maxima, prova.total * 10);
+    assert.equal(boletim.resultados.length, prova.total);
+    // A soma tem que bater com as parciais — é a nota que o participante compara
+    // com a nota de corte.
+    const soma = boletim.resultados.reduce((t, r) => t + r.nota, 0);
+    assert.ok(Math.abs(soma - boletim.nota) < 0.01);
+    assert.ok(boletim.media >= 0 && boletim.media <= 10);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("a prova de um aluno não é acessível por outro", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const { dados: prova } = await api("/api/provas", {});
+
+    await entrar(api, "aluno002");
+    assert.equal((await api(`/api/provas/${prova.id}`)).status, 403);
+    assert.equal((await api(`/api/provas/${prova.id}/estacao`, {})).status, 403);
+    assert.equal((await api("/api/provas/nao-existe")).status, 404);
+  } finally {
+    servidor.close();
+  }
+});

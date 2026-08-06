@@ -898,3 +898,47 @@ input, select, textarea {
 }
 .anel-valor span, .veredito-badge { color: var(--cor-nota-texto, var(--cor-nota, var(--primaria))); }
 .veredito-badge { background: color-mix(in srgb, var(--cor-nota, var(--primaria)) 16%, transparent); }
+
+/* ── Modo prova ────────────────────────────────────────────────────────────── */
+.cartao-prova {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--med) 10%, var(--superficie)), var(--superficie));
+  border: 1px solid color-mix(in srgb, var(--med) 30%, var(--borda));
+  border-radius: var(--raio); padding: 18px 20px; margin: 0 0 16px; box-shadow: var(--sombra);
+}
+.cartao-prova .prova-texto { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 3px; }
+.cartao-prova strong { font-size: 1.05rem; }
+.cartao-prova span { color: var(--texto-suave); font-size: .9rem; line-height: 1.45; }
+
+.barra-circuito {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  border: 1px solid color-mix(in srgb, var(--med) 35%, var(--borda)); border-radius: var(--raio);
+  background: var(--superficie); padding: 14px 16px; margin: 18px 0 10px; box-shadow: var(--sombra);
+}
+.circuito-progresso { display: flex; flex-direction: column; gap: 2px; }
+.circuito-progresso strong { font-size: 1rem; }
+.circuito-progresso span { color: var(--texto-suave); font-size: .86rem; }
+
+.boletim-topo { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 6px 0 14px; }
+.boletim-nota { display: flex; align-items: baseline; gap: 5px; }
+.boletim-nota strong { font-size: 3rem; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.boletim-nota span { color: var(--texto-suave); font-weight: 650; }
+.boletim-resumo { flex: 1; min-width: 180px; }
+.linha-boletim {
+  display: flex; align-items: center; gap: 14px;
+  border: 1px solid var(--borda); border-radius: var(--raio-sm);
+  background: var(--superficie); padding: 12px 14px; margin-bottom: 9px;
+}
+.bol-ordem {
+  width: 30px; height: 30px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  background: var(--superficie-2); color: var(--texto-suave); font-weight: 750; font-size: .85rem;
+}
+.bol-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bol-info strong { font-size: .96rem; }
+.bol-info span { color: var(--texto-suave); font-size: .82rem; }
+.bol-nota { font-size: 1.3rem; font-weight: 800; color: var(--cor-bol, var(--texto)); white-space: nowrap; }
+.bol-nota i { font-size: .8rem; font-weight: 600; color: var(--texto-suave); font-style: normal; }
+@media (max-width: 620px) {
+  .cartao-prova .botao, .barra-circuito .botao { width: 100%; }
+  .boletim-nota strong { font-size: 2.4rem; }
+}

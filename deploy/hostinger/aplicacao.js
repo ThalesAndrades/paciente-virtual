@@ -53,7 +53,8 @@ import {
 } from "./motor/pagamentos.js";
 import { CUSTO, EXPERIENCIA_COMPLETA, catalogo, itemPorId } from "./motor/planos.js";
 import { CHAVES, definirSegredo, estadoDosSegredos } from "./motor/configuracao.js";
-import { ehEstacao, lerVeredito, montarPromptPEP, notaDePiso, pontuarPEP, tarefaDaEstacao } from "./motor/revalida.js";
+import { AREAS, ehEstacao, lerVeredito, montarPromptPEP, notaDePiso, pontuarPEP, tarefaDaEstacao } from "./motor/revalida.js";
+import { ESTACOES_POR_PROVA, boletim, criarProva, proximaEstacao, registrarResultado, sortearCircuito } from "./motor/prova.js";
 import {
   carregarSessao,
   ehAdmin,
@@ -152,6 +153,9 @@ function usuarioDaSessao(req) {
 const MAX_BYTES_AUDIO = 12 * 1024 * 1024;
 
 const consultas = new Map();
+// Provas em andamento. Mesma natureza do mapa de consultas: o que precisa
+// sobreviver a um restart é o transcript de cada estação, que já vai para o disco.
+const provas = new Map();
 
 // Quando o modelo falha, o aluno só vê "modo demonstração" — e quem administra não
 // tem como saber se foi chave errada, cota estourada ou modelo sem acesso. Sem este
@@ -206,6 +210,20 @@ function instrumentosDoCaso(caso) {
     grupos.exames.push({ chave, nome: dados.nome || chave.replaceAll("_", " ") });
   }
   return grupos;
+}
+
+// Casos de medicina agrupados por área do edital. É a matéria-prima do sorteio
+// do circuito: a prova cobre ÁREAS, não casos.
+function estacoesPorArea() {
+  const porArea = {};
+  for (const caso of listarCasos()) {
+    if (caso.categoria !== "medicina") continue;
+    const rubrica = carregarRubrica(caso.id);
+    if (!ehEstacao(rubrica)) continue;
+    const area = rubrica.revalida.area;
+    (porArea[area] = porArea[area] || []).push(caso.id);
+  }
+  return porArea;
 }
 
 function carregarRubrica(casoId) {
@@ -424,9 +442,11 @@ function lerCorpo(req) {
   });
 }
 
-async function iniciarConsulta(req, res) {
-  const dados = await lerCorpo(req);
-  const casoId = String(dados.caso || "").trim();
+// `deCircuito` só chega quando a consulta é uma estação do modo prova: aí o caso
+// vem sorteado pelo servidor, e não escolhido no corpo do pedido.
+async function iniciarConsulta(req, res, deCircuito = null) {
+  const dados = deCircuito ? {} : await lerCorpo(req);
+  const casoId = deCircuito ? deCircuito.casoId : String(dados.caso || "").trim();
   // A identidade vem da SESSÃO, nunca do corpo da requisição. Antes o aluno
   // digitava o próprio nome num campo livre — foi por ali que passou o XSS
   // corrigido na v4, e além disso qualquer um podia assinar a consulta com o nome
@@ -490,6 +510,8 @@ async function iniciarConsulta(req, res) {
     // Memória da conversa: sem ela o paciente repetia a fala anterior e não tinha
     // como "contar mais" sobre nada.
     historico: [],
+    // Vínculo com o circuito, quando esta estação faz parte de uma prova.
+    prova: deCircuito ? deCircuito.prova : null,
   });
 
   json(res, 200, {
@@ -510,6 +532,7 @@ async function iniciarConsulta(req, res) {
     // tarefa e o tempo — e mostra os dois ANTES de o cronômetro começar, como o
     // participante recebe na porta da sala.
     estacao: tarefaDaEstacao(carregarRubrica(casoId)),
+    circuito: deCircuito ? { prova: deCircuito.prova, ordem: deCircuito.ordem, total: deCircuito.total } : null,
     // Como esta pessoa CHEGA: seis números e duas palavras, para a sala em 3D
     // montar a postura, o olhar e a respiração. Nada de texto do caso vai junto.
     expressao: expressaoDoCaso(caso),
@@ -762,6 +785,21 @@ async function encerrarConsulta(req, res, id) {
       resultado.parecer = null;
       resultado.aviso = AVISO_SEM_PARECER;
     }
+
+    // Estação de um circuito: registra a nota e faz o GIRO. Sem volta — no
+    // circuito real o participante muda de sala e não retorna (item 3.6.3).
+    const prova = consulta.prova ? provas.get(consulta.prova) : null;
+    if (prova) {
+      registrarResultado(prova, {
+        caso: consulta.casoId,
+        titulo: rubrica.nome_caso || consulta.casoId,
+        area: resultado.estacao.area,
+        nota: resultado.estacao.nota,
+        nota_maxima: resultado.estacao.nota_maxima,
+      });
+      resultado.circuito = boletim(prova);
+    }
+
     consultas.delete(id);
     return json(res, 200, resultado);
   }
@@ -1262,6 +1300,60 @@ export function criarServidor() {
         return json(res, 200, {
           eventos: [{ tipo: "exame", titulo, nome: item.nome, resultado: item.resultado }],
         });
+      }
+
+      // ---- Modo prova: o circuito de 5 estações, como o dia da 2ª etapa.
+      if (req.method === "POST" && pathname === "/api/provas") {
+        if (estourouLimite(req, res, "consultas", LIMITE_CONSULTAS)) return;
+        const circuito = sortearCircuito(estacoesPorArea(), ESTACOES_POR_PROVA);
+        if (circuito.length < 2) {
+          return json(res, 503, { erro: "Acervo insuficiente para montar um circuito de prova." });
+        }
+        // Poda igual à das consultas: prova abandonada não pode encher a memória.
+        if (provas.size >= 300) {
+          for (const [k, p] of provas) {
+            if (p.encerradaEm) provas.delete(k);
+            if (provas.size < 200) break;
+          }
+        }
+        let id;
+        do {
+          id = `p${crypto.randomUUID().slice(0, 7)}`;
+        } while (provas.has(id));
+        provas.set(id, criarProva({ id, aluno: sessaoDe(req), circuito }));
+
+        return json(res, 200, {
+          id,
+          total: circuito.length,
+          // As ÁREAS aparecem; os casos, não. Saber que a terceira é de pediatria
+          // é o que o participante sabe na prova; saber qual caso é seria gabarito.
+          areas: circuito.map((e) => AREAS[e.area] || e.area),
+          custo_total: gastaCredito(req) ? circuito.length * CUSTO.consulta : 0,
+        });
+      }
+
+      const provaEstacao = pathname.match(/^\/api\/provas\/([\w-]+)\/estacao$/);
+      if (req.method === "POST" && provaEstacao) {
+        const prova = provas.get(provaEstacao[1]);
+        if (!prova) return json(res, 404, { erro: "Prova não encontrada." });
+        if (prova.aluno && prova.aluno !== sessaoDe(req)) {
+          return json(res, 403, { erro: "Esta prova é de outra pessoa." });
+        }
+        const proxima = proximaEstacao(prova);
+        if (!proxima) return json(res, 409, { erro: "Circuito concluído.", boletim: boletim(prova) });
+        // A consulta é criada pelo mesmo caminho de sempre — inclusive o débito de
+        // crédito. Cada estação custa o que uma consulta custa.
+        return await iniciarConsulta(req, res, { casoId: proxima.id, prova: prova.id, ordem: proxima.ordem, total: proxima.total });
+      }
+
+      const provaBoletim = pathname.match(/^\/api\/provas\/([\w-]+)$/);
+      if (req.method === "GET" && provaBoletim) {
+        const prova = provas.get(provaBoletim[1]);
+        if (!prova) return json(res, 404, { erro: "Prova não encontrada." });
+        if (prova.aluno && prova.aluno !== sessaoDe(req)) {
+          return json(res, 403, { erro: "Esta prova é de outra pessoa." });
+        }
+        return json(res, 200, boletim(prova));
       }
 
       // ---- Conversa por voz em tempo real (WebRTC direto navegador ↔ provedor).

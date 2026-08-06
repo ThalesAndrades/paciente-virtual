@@ -58,3 +58,22 @@ existiam — o trabalho clínico não se perdeu, mudou de forma. Distribuição 
 - **Modo prova**: 5 estações em sequência com giro automático e nota /50.
 - **PEP escrito à mão** para os casos de maior peso — o derivado dos critérios é
   bom, mas o do INEP é mais específico ("ausculta os focos", "calcula o escore").
+
+## Modo prova (2026-08-06)
+
+Treinar uma estação por vez ensina a estação. O dia da prova é outra coisa: cinco
+seguidas, com **giro obrigatório** entre elas (item 3.6.2), sem voltar atrás, e a
+nota que importa é a soma — 0 a 50 no dia, 0 a 100 no exame (itens 3.4 e 3.5).
+
+- **O sorteio cobre ÁREAS, não casos.** Uma estação por área do edital, na ordem
+  do item 3.3.1. Sortear cinco de Clínica Médica seria simular o conforto.
+- **As áreas aparecem antes de começar; os casos, não.** Saber que a terceira é de
+  pediatria é o que o participante sabe na prova; saber qual caso seria gabarito.
+- **Sem volta.** Encerrada a estação, o resultado vira a porta da próxima e o botão
+  de "nova consulta" sai de cena.
+- **Boletim** com a soma, a média por estação — que é o número comparável com a
+  nota de corte publicada por edição — e a nota de cada estação com sua área.
+- Cada estação debita crédito como uma consulta; o total é avisado antes de começar.
+
+`motor/prova.js` guarda o circuito em memória, como as consultas: o que precisa
+sobreviver a um restart é o transcript de cada estação, que já vai para o disco.
