@@ -66,6 +66,7 @@ import {
   matriculaDe,
   nomeDe,
   painelDisponivel,
+  papelDe,
   sessaoDe,
 } from "./motor/acesso.js";
 import { categoriaNaMarca, circuitoNaMarca, marcaDoPedido, vitrine } from "./motor/marca.js";
@@ -89,6 +90,8 @@ const DIR_CASOS = path.join(RAIZ, "casos");
 const DIR_AVALIACOES = path.join(RAIZ, "avaliacoes");
 const DIR_HISTORICO = path.join(RAIZ, "historico");
 const PAGINA = path.join(RAIZ, "web", "index.html");
+// A apresentação do produto, servida na raiz para quem ainda não entrou.
+const LANDING = path.join(RAIZ, "web", "landing.html");
 
 // Arquivos estáticos servidos por LISTA FIXA, não por caminho montado a partir do
 // pedido. É a diferença entre servir dois arquivos conhecidos e abrir um leitor de
@@ -1002,11 +1005,32 @@ export function criarServidor() {
       }
 
       if (req.method === "GET" && (pathname === "/" || pathname === "/index.html")) {
+        // A raiz é a APRESENTAÇÃO para quem chega de fora e a FERRAMENTA para quem
+        // já entrou. Quem tem sessão não deve topar com a vitrine todo dia; quem
+        // não tem precisa entender o que é isto antes de ver uma lista de casos.
+        //
+        // `/app` (abaixo) serve a ferramenta sempre, para link direto e para quem
+        // quiser pular a apresentação.
+        const paginaDaVez = papelDe(req) !== null ? PAGINA : LANDING;
         // Lê ANTES de enviar cabeçalhos: se o arquivo falhar, o erro cai no catch
         // com headers ainda não enviados → 500 limpo, em vez de writeHead duplo
         // (que viraria unhandledRejection e derrubaria o processo p/ todos).
+        const html = fs.readFileSync(paginaDaVez);
+        res.writeHead(200, {
+          "Content-Type": "text/html; charset=utf-8",
+          // A resposta depende do cookie de sessão: sem isto, um proxy poderia
+          // servir a vitrine a quem já entrou (ou o contrário, pior).
+          "Cache-Control": "no-store",
+          Vary: "Cookie",
+        });
+        return res.end(html);
+      }
+
+      // A ferramenta, sempre. Existe para o link direto e para quem já conhece o
+      // produto e não quer passar pela apresentação.
+      if (req.method === "GET" && (pathname === "/app" || pathname === "/app/")) {
         const html = fs.readFileSync(PAGINA);
-        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
         return res.end(html);
       }
 

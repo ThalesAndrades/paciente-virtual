@@ -270,3 +270,78 @@ test("a carteira é a mesma nas duas plataformas — a conta não se parte por d
     servidor.close();
   }
 });
+
+/* ---------------------------------------------------------------------------
+   A raiz: apresentação para quem chega, ferramenta para quem já entrou.
+
+   Este teste existe porque a rota `/` não tinha nenhum, e por isso um
+   `ReferenceError` (papelDe usada sem importar) passou por 96 testes verdes: a
+   suíte inteira exercitava a API e nunca abria a página.
+   --------------------------------------------------------------------------- */
+
+test("visitante vê a apresentação; quem entrou vê a ferramenta", async () => {
+  const { servidor, med, porta } = await subir();
+
+  try {
+    // Sem sessão: a página de entrada.
+    const visitante = await med("/");
+    assert.equal(visitante.status, 200);
+    assert.match(visitante.dados, /<title>Revalida AI/, "a raiz não serviu a apresentação");
+    assert.ok(!visitante.dados.includes('id="tela-consulta"'), "a ferramenta vazou para quem não entrou");
+
+    // Com sessão: a ferramenta, direto.
+    const aluno = clienteCom(porta, "revalidaai.med.br");
+    await entrar(aluno, "marca001");
+    const dentro = await aluno("/");
+    assert.equal(dentro.status, 200);
+    assert.ok(dentro.dados.includes('id="tela-consulta"'), "quem entrou não recebeu a ferramenta");
+
+    // `/app` serve a ferramenta sempre — é o link direto de quem já conhece.
+    const direto = await med("/app");
+    assert.equal(direto.status, 200);
+    assert.ok(direto.dados.includes('id="tela-consulta"'), "/app não serviu a ferramenta");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("a apresentação não é guardada em cache por engano", async () => {
+  // A resposta da raiz DEPENDE do cookie. Sem `Vary: Cookie` e `no-store`, um
+  // proxy no caminho pode servir a vitrine a quem já entrou — ou, muito pior,
+  // servir a página autenticada de um aluno a um visitante qualquer.
+  const { servidor, porta } = await subir();
+  try {
+    const resposta = await new Promise((ok, falha) => {
+      const p = http.request(
+        { host: "127.0.0.1", port: porta, path: "/", method: "GET", headers: { Host: "revalidaai.med.br" } },
+        (r) => { r.resume(); r.on("end", () => ok(r.headers)); }
+      );
+      p.on("error", falha);
+      p.end();
+    });
+    assert.match(String(resposta["cache-control"] || ""), /no-store/, "a raiz pode ser cacheada");
+    assert.match(String(resposta.vary || ""), /Cookie/i, "a raiz não varia por cookie");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("a apresentação carrega tudo o que pede, e nada de fora", async () => {
+  const { servidor, med } = await subir();
+  try {
+    const { dados: html } = await med("/");
+
+    // O rosto do ator é um módulo ES importado pela página: se não for servido,
+    // a sala aparece vazia e o erro só sai no console do visitante.
+    assert.match(html, /from "\/rosto\.js"/, "a apresentação não importa o rosto");
+    const rosto = await med("/rosto.js");
+    assert.equal(rosto.status, 200, "/rosto.js não é servido");
+
+    // Nenhuma requisição a servidor de terceiro: a página tem de abrir inteira no
+    // 3G de quem estuda no ônibus, e sem entregar o visitante a uma CDN.
+    const externos = html.match(/(?:src|href)\s*=\s*["']https?:\/\/[^"']+/gi) || [];
+    assert.deepEqual(externos, [], `a apresentação busca recurso externo: ${externos.join(", ")}`);
+  } finally {
+    servidor.close();
+  }
+});
