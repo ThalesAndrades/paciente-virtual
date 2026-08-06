@@ -345,3 +345,77 @@ test("a apresentação carrega tudo o que pede, e nada de fora", async () => {
     servidor.close();
   }
 });
+
+/* ---------------------------------------------------------------------------
+   O caminho de quem chega: criar conta e entrar.
+
+   Este teste existe porque a página de entrada nasceu mandando `matricula` para
+   uma rota que espera `email`. O servidor respondia 400 "E-mail inválido", a
+   pessoa não tinha como adivinhar o que estava errado, e NENHUM teste falhou:
+   a suíte cobria o cadastro chamando a rota com o contrato certo, nunca com o
+   que a página realmente enviava.
+   --------------------------------------------------------------------------- */
+
+test("o contrato do cadastro é {nome, email, senha} — e a página precisa respeitá-lo", async () => {
+  const { servidor, med } = await subir();
+
+  try {
+    // O que a página de entrada manda hoje.
+    const bom = await med("/api/cadastro", {
+      nome: "Marina Duarte",
+      email: "marina.fluxo@exemplo.com",
+      senha: "senha-boa-12345",
+    });
+    assert.equal(bom.status, 200, `cadastro recusou o contrato correto: ${JSON.stringify(bom.dados)}`);
+    assert.ok(bom.dados.email, "o cadastro precisa devolver o e-mail para o login logo em seguida");
+
+    // O que ela mandava antes. Continua sendo recusado — o teste guarda a forma
+    // do contrato, não só o caminho feliz.
+    const errado = await med("/api/cadastro", { matricula: "semarroba", senha: "senha-boa-12345" });
+    assert.equal(errado.status, 400, "cadastro sem e-mail deveria ser recusado");
+
+    // Senha curta não passa: a página valida antes, mas a fronteira é aqui.
+    const curta = await med("/api/cadastro", { nome: "X", email: "curta@exemplo.com", senha: "1234" });
+    assert.equal(curta.status, 400, "senha curta deveria ser recusada");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("quem cria conta consegue entrar e já tem crédito para a primeira consulta", async () => {
+  // O funil inteiro num teste: criar → entrar → ter saldo → conseguir abrir UMA
+  // consulta. Se qualquer elo quebrar, a pessoa que acabou de se cadastrar bate
+  // num paywall — e essa é a impressão que fica do produto.
+  // Este teste é sobre o FUNIL, não sobre a marca — e por isso o cliente precisa
+  // de Host e Origin COERENTES. Com Host forjado, o login por e-mail cai na
+  // defesa contra CSRF do Better Auth (403), e o teste passaria a medir o CSRF
+  // em vez do cadastro.
+  const { servidor, porta } = await subir();
+  const med = clienteCom(porta, `127.0.0.1:${porta}`);
+
+  try {
+    const email = "novato.fluxo@exemplo.com";
+    const senha = "senha-boa-12345";
+
+    const criado = await med("/api/cadastro", { nome: "Novato", email, senha });
+    assert.equal(criado.status, 200);
+
+    const entrada = await med("/api/auth/sign-in/email", { email: criado.dados.email || email, password: senha });
+    assert.equal(entrada.status, 200, "quem acabou de criar conta não conseguiu entrar");
+
+    const creditos = await med("/api/creditos");
+    assert.equal(creditos.status, 200);
+    assert.ok(creditos.dados.saldo > 0, "conta nova sem créditos de boas-vindas");
+    assert.ok(
+      creditos.dados.saldo >= creditos.dados.custo.consulta,
+      `boas-vindas (${creditos.dados.saldo}) não cobrem nem uma consulta (${creditos.dados.custo.consulta})`
+    );
+
+    const casos = await med("/api/casos");
+    const primeiro = casos.dados[0].id;
+    const consulta = await med("/api/consultas", { caso: primeiro });
+    assert.equal(consulta.status, 200, "conta recém-criada não conseguiu abrir a primeira consulta");
+  } finally {
+    servidor.close();
+  }
+});

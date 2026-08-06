@@ -831,10 +831,21 @@ function pintarSaldo() {
   cartao.classList.remove("oculto");
   $("saldo-valor").textContent = c.saldo;
   $("loja-saldo").textContent = `${c.saldo} créditos`;
-  const consultas = Math.floor(c.saldo / (c.custo.consulta || 10));
-  $("saldo-texto").textContent = consultas > 0
-    ? `Dá para ${consultas} consulta${consultas > 1 ? "s" : ""} completa${consultas > 1 ? "s" : ""}.`
-    : "Não dá para uma consulta completa.";
+  // "Completa" tem um preço próprio (`experiencia_completa`: a consulta MAIS a
+  // conversa por voz). A conta antiga dividia pelo custo da consulta simples e
+  // chamava o resultado de "completa" — com 20 créditos dizia "dá para 2
+  // consultas completas" quando dava para UMA. Prometer o dobro do que se
+  // entrega, logo na primeira tela depois do cadastro, é o pior lugar possível
+  // para uma imprecisão.
+  const simples = Math.floor(c.saldo / (c.custo.consulta || 10));
+  const completas = Math.floor(c.saldo / (c.experiencia_completa || c.custo.consulta || 10));
+  $("saldo-texto").textContent = simples <= 0
+    ? "Não dá para uma consulta."
+    : completas >= simples
+      ? `Dá para ${simples} consulta${simples > 1 ? "s" : ""} completa${simples > 1 ? "s" : ""}.`
+      : completas >= 1
+        ? `Dá para ${simples} consultas — ${completas} delas com voz.`
+        : `Dá para ${simples} consulta${simples > 1 ? "s" : ""} por escrito.`;
   cartao.classList.toggle("vazio", c.saldo < (c.custo.consulta || 10));
   pintarCarteira();
 }

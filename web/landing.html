@@ -418,16 +418,18 @@ footer.rodape a:hover { color: var(--papel); }
     <h2 id="painel-tit">Entrar</h2>
     <p class="dica" id="painel-dica">Use a sua matrícula ou o seu e-mail.</p>
     <div class="erro" id="erro"></div>
+    <!-- Ordem invertida no modo "criar": o nome vem primeiro porque é o que a
+         pessoa responde sem pensar, e começar por ele reduz o abandono. -->
+    <label class="campo" id="campo-nome" hidden>
+      <span>Seu nome</span>
+      <input id="nome" name="name" autocomplete="name" autocapitalize="words">
+    </label>
     <label class="campo">
       <span id="rot-usuario">Matrícula ou e-mail</span>
       <input id="usuario" name="username" autocomplete="username" required autocapitalize="none" spellcheck="false">
     </label>
-    <label class="campo" id="campo-nome" hidden>
-      <span>Seu nome</span>
-      <input id="nome" name="name" autocomplete="name">
-    </label>
     <label class="campo">
-      <span>Senha</span>
+      <span id="rot-senha">Senha</span>
       <input id="senha" name="password" type="password" autocomplete="current-password" required>
     </label>
     <button class="cta" type="submit" id="enviar">Entrar</button>
@@ -606,6 +608,10 @@ const CENAS = {
 
 const $ = (id) => document.getElementById(id);
 let marcaAtual = "med";
+// Quantos créditos a conta nova ganha. Vem da loja, medido — escrever "20" à mão
+// aqui faria a promessa da página divergir do que a conta recebe no dia em que
+// esse número mudar, e a primeira impressão do produto seria uma mentira pequena.
+let boasVindas = 20;
 let cenaAtual = null;
 let animacao = null;
 
@@ -711,9 +717,18 @@ function abrirPainel(qual) {
   const criando = qual === "criar";
   $("painel-tit").textContent = criando ? "Criar conta" : "Entrar";
   $("painel-dica").textContent = criando
-    ? "Escolha uma matrícula (ou use o seu e-mail) e uma senha."
+    ? `Leva um minuto. Você começa com ${boasVindas} créditos para experimentar.`
     : "Use a sua matrícula ou o seu e-mail.";
   $("campo-nome").hidden = !criando;
+  $("nome").required = criando;
+  // Conta nova é criada por E-MAIL: o servidor deriva a matrícula dele. Pedir
+  // "matrícula" aqui era o que quebrava o cadastro — a rota respondia "E-mail
+  // inválido" e a pessoa não tinha como adivinhar o que estava errado.
+  $("rot-usuario").textContent = criando ? "Seu e-mail" : "Matrícula ou e-mail";
+  $("usuario").type = criando ? "email" : "text";
+  $("usuario").autocomplete = criando ? "email" : "username";
+  $("rot-senha").textContent = criando ? "Senha (mínimo 8 caracteres)" : "Senha";
+  $("senha").minLength = criando ? 8 : 0;
   $("enviar").textContent = criando ? "Criar conta e entrar" : "Entrar";
   $("senha").autocomplete = criando ? "new-password" : "current-password";
   $("alternar-modo").innerHTML = criando
@@ -747,17 +762,38 @@ $("form-acesso").addEventListener("submit", async (ev) => {
 
   try {
     if (modo === "criar") {
+      const nome = $("nome").value.trim();
+      if (!nome) return falhar("Diga como quer ser chamado.");
+      if (!usuario.includes("@")) return falhar("Para criar a conta, use um e-mail válido.");
+      // O servidor exige 8; validar aqui evita uma ida ao servidor para ouvir isso.
+      if (senha.length < 8) return falhar("A senha precisa ter pelo menos 8 caracteres.");
+
+      // O contrato da rota é {nome, email, senha} — ela deriva a matrícula do
+      // e-mail. Mandar `matricula` fazia o servidor responder "E-mail inválido",
+      // e a pessoa não tinha como adivinhar o que estava errado.
       const r = await fetch("/api/cadastro", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matricula: usuario, senha, nome: $("nome").value.trim() || usuario }),
+        body: JSON.stringify({ nome, email: usuario, senha }),
       });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) return falhar(d.erro || "Não consegui criar a conta.");
-      // O cadastro já devolve sessão; se não devolver, o login abaixo resolve.
+
+      // O cadastro NÃO devolve sessão. Entrar aqui, com o que a pessoa acabou de
+      // digitar, evita pedir de novo — é onde se perde quem estava com pressa.
+      const entrada = await fetch("/api/auth/sign-in/email", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: d.email || usuario, password: senha }),
+      });
+      if (!entrada.ok) {
+        abrirPainel("entrar");
+        return falhar("Conta criada. Agora entre com o seu e-mail e a sua senha.");
+      }
+      location.href = "/";
+      return;
     }
 
-    // Quem se cadastrou pelo e-mail conhece o e-mail, não o apelido derivado dele:
-    // a rota muda conforme o que a pessoa digitou. Mesma regra do app.
+    // Quem se cadastrou pelo e-mail conhece o e-mail, não a matrícula derivada
+    // dele: a rota muda conforme o que a pessoa digitou. Mesma regra do app.
     const porEmail = usuario.includes("@");
     const r = await fetch(porEmail ? "/api/auth/sign-in/email" : "/api/auth/sign-in/username", {
       method: "POST", headers: { "Content-Type": "application/json" },
@@ -822,12 +858,22 @@ addEventListener("scroll", () => {
   montarPilares(c);
   montarAreas(c);
 
-  // O número real do acervo, medido — não um número escrito à mão que envelhece.
+  // Números reais, medidos — não escritos à mão, que envelhecem em silêncio.
   try {
     const casos = await (await fetch("/api/casos")).json();
     const n = $("n-estacoes");
     if (n && Array.isArray(casos) && casos.length) n.textContent = String(casos.length);
   } catch { /* fica o número do HTML */ }
+
+  try {
+    const loja = await (await fetch("/api/loja")).json();
+    if (Number.isFinite(loja.boas_vindas) && loja.boas_vindas > 0) {
+      boasVindas = loja.boas_vindas;
+      // A oferta entra no botão: "criar conta" é custo, "ganhar créditos" é ganho.
+      $("cta-conta").textContent = `Criar conta — ${boasVindas} créditos grátis`;
+      $("abrir-criar").textContent = "Criar conta";
+    }
+  } catch { /* a página funciona sem isto */ }
 
   dimensionar();
   addEventListener("resize", dimensionar, { passive: true });
