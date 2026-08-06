@@ -68,6 +68,7 @@ import {
   painelDisponivel,
   sessaoDe,
 } from "./motor/acesso.js";
+import { categoriaNaMarca, circuitoNaMarca, marcaDoPedido, vitrine } from "./motor/marca.js";
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
@@ -95,6 +96,11 @@ const PAGINA = path.join(RAIZ, "web", "index.html");
 const JS = "text/javascript; charset=utf-8";
 const ESTATICOS = new Map([
   ["/estilo.css", { arquivo: path.join(RAIZ, "web", "estilo.css"), tipo: "text/css; charset=utf-8" }],
+  // A pele da plataforma Med. Carregada DEPOIS do estilo base, e só quando a marca
+  // é `med` — em ubtec.sbs este arquivo nunca é pedido, então a página geral não
+  // paga por ele. Serve como estático fixo pelo mesmo motivo dos outros: lista
+  // conhecida, não caminho montado a partir do pedido.
+  ["/med.css", { arquivo: path.join(RAIZ, "web", "med.css"), tipo: "text/css; charset=utf-8" }],
   ["/tempo-real.js", { arquivo: path.join(RAIZ, "web", "tempo-real.js"), tipo: JS }],
   // A presença do paciente. Já foi uma sala em 3D com boneco humano e 750 kB de
   // biblioteca; o boneco caiu no vale da estranheza e a biblioteca cobrava a
@@ -172,8 +178,33 @@ function lerJson(caminho) {
   return JSON.parse(fs.readFileSync(caminho, "utf-8"));
 }
 
-function listarCasos() {
-  return fs
+// O acervo lido do disco, uma vez.
+//
+// Antes esta função abria os 64 casos A CADA chamada — e ela é chamada em
+// /api/casos, ao iniciar consulta e ao montar circuito. São ~2 MB de JSON lidos e
+// parseados por requisição, para devolver 64 linhas de vitrine.
+//
+// O acervo é imutável na vida do container: a imagem clona a `main` no start e
+// ninguém edita caso em produção. A chave por mtime dos diretórios existe para o
+// desenvolvimento, onde casos entram e saem — ela pega arquivo criado ou removido.
+// Editar o CONTEÚDO de um caso já existente não muda o mtime do diretório: em
+// desenvolvimento, reinicie o servidor (é o mesmo que fazer em produção).
+let acervoCache = null;
+let acervoChave = "";
+
+function chaveDoAcervo() {
+  try {
+    return `${fs.statSync(DIR_CASOS).mtimeMs}:${fs.statSync(DIR_AVALIACOES).mtimeMs}`;
+  } catch {
+    return "";
+  }
+}
+
+function acervo() {
+  const chave = chaveDoAcervo();
+  if (acervoCache && acervoChave === chave) return acervoCache;
+
+  const lista = fs
     .readdirSync(DIR_CASOS)
     .filter((nome) => nome.endsWith(".json"))
     .sort()
@@ -181,6 +212,11 @@ function listarCasos() {
       const id = nome.replace(/\.json$/, "");
       const caso = lerJson(path.join(DIR_CASOS, nome));
       const ident = caso.identificacao || {};
+      // A área do edital vem da rubrica, não do caso: é a estação que tem área.
+      // Sem ela, a plataforma Med não teria como agrupar por Clínica, Cirurgia,
+      // GO, Pediatria e Medicina de Família — que é como o participante estuda.
+      const rubrica = carregarRubrica(id);
+      const estacao = ehEstacao(rubrica) ? rubrica.revalida : null;
       return {
         id,
         categoria: String(caso.categoria || "psicologia"),
@@ -193,8 +229,25 @@ function listarCasos() {
           profissao: ident.profissao || "",
         },
         voz: ident.voz || "feminino",
+        // `null` quando o caso não é estação do Revalida. A página usa isto para
+        // agrupar por área na plataforma Med e para dizer "estação" em vez de
+        // "caso" onde a palavra importa.
+        area: estacao ? estacao.area : null,
+        estacao: Boolean(estacao),
       };
     });
+
+  acervoCache = lista;
+  acervoChave = chave;
+  return lista;
+}
+
+// A lista depende da PORTA por onde o aluno entrou: `revalidaai.med.br` mostra só
+// medicina, `ubtec.sbs` mostra todo o resto. Sem `marca`, devolve o acervo inteiro
+// — é o que o painel do professor e o relatório precisam ver.
+function listarCasos(marca = null) {
+  const lista = acervo();
+  return marca ? lista.filter((caso) => categoriaNaMarca(marca, caso.categoria)) : lista;
 }
 
 // Instrumentos que o profissional pode acionar por clique (só faz sentido pleno na
@@ -484,7 +537,13 @@ async function iniciarConsulta(req, res, deCircuito = null) {
   // de outra pessoa. Agora a consulta é da matrícula que está logada, e ponto.
   const aluno = matriculaDe(req) || "aluno";
 
-  const disponiveis = new Set(listarCasos().map((caso) => caso.id));
+  // O acervo visível é o da PORTA por onde o aluno entrou. Filtrar só a lista da
+  // home não bastaria: bastaria um POST com o id de um caso de outra plataforma
+  // para abrir a consulta assim mesmo. Aqui a lista é a fronteira, não a vitrine.
+  //
+  // Estação de circuito é exceção: o caso vem do sorteio do próprio servidor,
+  // dentro de medicina, e o circuito só existe na plataforma Med (guarda na rota).
+  const disponiveis = new Set(listarCasos(deCircuito ? null : marcaDoPedido(req)).map((caso) => caso.id));
   if (!disponiveis.has(casoId)) {
     return json(res, 404, { erro: "Caso não encontrado." });
   }
@@ -965,7 +1024,10 @@ export function criarServidor() {
 
       // ---- Acesso: a página pergunta o que já pode fazer, e troca credencial por sessão.
       if (req.method === "GET" && pathname === "/api/acesso") {
-        return json(res, 200, estadoAcesso(req));
+        // A página descobre AQUI em qual plataforma está. É a primeira chamada que
+        // ela faz, então a marca chega antes de qualquer tela ser desenhada — sem
+        // piscar o visual errado no primeiro quadro.
+        return json(res, 200, { ...estadoAcesso(req), marca: vitrine(marcaDoPedido(req)) });
       }
       // Entrar e sair passaram a ser `/api/auth/sign-in/username` e
       // `/api/auth/sign-out`, tratados acima pelo Better Auth. As rotas antigas
@@ -1232,7 +1294,7 @@ export function criarServidor() {
       // inicial mostra antes de pedir o código. O que custa dinheiro ou contém dado
       // pessoal — consulta, voz e transcrições — exige sessão.
       if (req.method === "GET" && pathname === "/api/casos") {
-        return json(res, 200, listarCasos());
+        return json(res, 200, listarCasos(marcaDoPedido(req)));
       }
 
       if (req.method === "GET" && pathname === "/api/relatorio") {
@@ -1372,6 +1434,16 @@ export function criarServidor() {
       // nova, na mesma linha em que ele é criado.
       if (pathname.startsWith("/api/provas") && !ehAluno(req)) {
         return json(res, 401, { erro: "Sessão expirada. Entre de novo com a sua matrícula." });
+      }
+
+      // O circuito É a prova do Revalida: cinco estações médicas, cronometradas,
+      // nas áreas do edital. Fora da plataforma Med ele não tem sentido — e, pior,
+      // sortearia casos de medicina para quem entrou por uma porta que não mostra
+      // medicina. Fechado na fronteira, não escondido na interface.
+      if (pathname.startsWith("/api/provas") && !circuitoNaMarca(marcaDoPedido(req))) {
+        return json(res, 404, {
+          erro: "O circuito de estações é exclusivo da plataforma de Medicina.",
+        });
       }
 
       if (req.method === "POST" && pathname === "/api/provas") {

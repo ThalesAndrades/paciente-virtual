@@ -1,0 +1,267 @@
+/* Revalida AI — a pele da plataforma de Medicina.
+ *
+ * Carregado DEPOIS de estilo.css e SÓ quando a marca é `med` (ver aplicarMarca()
+ * no index.html). Tudo aqui vive sob [data-marca="med"]: nada vaza para ubtec.sbs,
+ * mesmo que o arquivo seja pedido por engano.
+ *
+ * A intenção do desenho é a diferença entre um app de estudo e uma BANCA. Quem
+ * abre isto está a semanas de uma prova que decide se vai exercer a profissão no
+ * país. O visual não anima nem comemora: ele informa, cronometra e avalia.
+ *
+ * As decisões, e o porquê de cada uma:
+ *
+ *  - Paleta fria e fechada. Azul institucional em vez do verde-água do produto
+ *    geral, e um único acento (âmbar) reservado para TEMPO. Cor com significado
+ *    fixo: se o âmbar aparece, é o relógio falando.
+ *  - Cantos menos arredondados (10px contra 16px). Raio grande lê como consumo;
+ *    raio curto lê como documento.
+ *  - Tipografia mais pesada e apertada nos títulos, e rótulos em caixa alta com
+ *    tracking — a gramática visual de impresso de prova.
+ *  - Números tabulares em nota, saldo e cronômetro: dígito que não dança quando o
+ *    valor muda. Num contador regressivo, o pulo de largura é ruído puro.
+ */
+
+[data-marca="med"] {
+  --fundo: #eff2f6;
+  --fundo-2: #e6ebf1;
+  --superficie: #ffffff;
+  --superficie-2: #f5f7fa;
+  --borda: #d8dfe8;
+  --borda-forte: #b9c5d3;
+  --texto: #101a25;
+  --texto-suave: #51637a;
+  --texto-fraco: #7d8da0;
+
+  /* Azul de instituição, não de aplicativo: escuro o bastante para carregar texto
+     branco com contraste folgado (WCAG AA em corpo e em botão). */
+  --primaria: #1b4d8f;
+  --primaria-escura: #143a6d;
+  --primaria-suave: #e3ebf6;
+  --sobre-primaria: #ffffff;
+
+  --med: #1b4d8f;
+  --med-suave: #e3ebf6;
+
+  /* O acento do tempo. Só o cronômetro e os avisos de prazo usam. */
+  --tempo: #9a6412;
+  --tempo-suave: #fbf0da;
+  --tempo-borda: #e6cf9e;
+
+  --aluno: #1b4d8f;
+  --paciente: #f1f4f8;
+
+  --raio: 10px;
+  --raio-sm: 6px;
+
+  /* Sombra mais curta e mais dura: papel sobre mesa, não cartão flutuante. */
+  --sombra: 0 1px 2px rgba(16, 26, 37, .05), 0 4px 14px rgba(16, 26, 37, .05);
+  --sombra-forte: 0 2px 6px rgba(16, 26, 37, .09), 0 14px 32px rgba(16, 26, 37, .12);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-marca="med"] {
+    --fundo: #0a0e14;
+    --fundo-2: #070a0f;
+    --superficie: #121821;
+    --superficie-2: #182029;
+    --borda: #232e3b;
+    --borda-forte: #33414f;
+    --texto: #e8eef6;
+    --texto-suave: #9dafc3;
+    --texto-fraco: #6d8095;
+
+    --primaria: #5da2f5;
+    --primaria-escura: #8bc0ff;
+    --primaria-suave: #10243c;
+    --sobre-primaria: #04121f;
+
+    --med: #5da2f5;
+    --med-suave: #10243c;
+
+    --tempo: #e5b45e;
+    --tempo-suave: #2a2214;
+    --tempo-borda: #55452a;
+
+    --aluno: #1d5290;
+    --paciente: #1a222c;
+  }
+}
+
+/* ---------- Cabeçalho: identidade de banca ---------- */
+
+[data-marca="med"] .marca {
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 18px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--borda);
+}
+
+[data-marca="med"] .marca .selo {
+  border-radius: var(--raio-sm);
+  background: var(--primaria);
+  color: #fff;
+  box-shadow: none;
+}
+
+[data-marca="med"] .marca .tit {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+/* A linha que diz de que prova se trata. Pequena, em caixa alta: é referência,
+   não manchete. */
+[data-marca="med"] .marca .sub {
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+/* ---------- Rótulos de seção ---------- */
+
+[data-marca="med"] label {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+  margin: 26px 0 10px;
+}
+
+/* ---------- Catálogo por área do edital ---------- */
+
+[data-marca="med"] .cat-card {
+  border-radius: var(--raio);
+  padding: 18px;
+}
+
+/* A faixa lateral colorida do produto geral vira uma régua superior: menos
+   decoração, mais separador de bloco. */
+[data-marca="med"] .cat-card::before {
+  inset: 0 0 auto 0;
+  width: auto;
+  height: 3px;
+  background: var(--primaria);
+}
+
+[data-marca="med"] .cat-card:hover {
+  transform: none;                      /* banca não pula quando você passa o mouse */
+  border-color: var(--primaria);
+  box-shadow: var(--sombra-forte);
+}
+
+[data-marca="med"] .cat-card .ic {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--raio-sm);
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+[data-marca="med"] .cat-card h3 {
+  font-size: 1.05rem;
+  font-weight: 750;
+  letter-spacing: -.015em;
+}
+
+[data-marca="med"] .cat-card .qtd {
+  border-radius: var(--raio-sm);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: .72rem;
+}
+
+/* ---------- O simulado completo: o produto da casa ---------- */
+
+[data-marca="med"] .cartao-prova {
+  border: 1px solid var(--borda-forte);
+  border-left: 4px solid var(--primaria);
+  border-radius: var(--raio);
+  background:
+    linear-gradient(180deg, var(--primaria-suave) 0%, transparent 60%),
+    var(--superficie);
+}
+
+[data-marca="med"] .cartao-prova strong {
+  letter-spacing: -.015em;
+}
+
+[data-marca="med"] .prova-preco {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Cartão de caso: linha de impresso ---------- */
+
+[data-marca="med"] .cartao {
+  border-radius: var(--raio-sm);
+}
+
+/* A inicial do paciente em círculo é linguagem de rede social. Numa banca, o que
+   identifica a estação é um selo quadrado e sóbrio. */
+[data-marca="med"] .cartao .av {
+  border-radius: var(--raio-sm);
+  background: var(--primaria-suave);
+  color: var(--primaria);
+  font-weight: 800;
+}
+
+[data-marca="med"] .chip-cat {
+  border-radius: var(--raio-sm);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .7rem;
+}
+
+/* ---------- Números que não dançam ----------
+   Cronômetro, nota e saldo mudam de valor com a tela parada. Com dígitos de
+   largura variável, o texto ao redor treme a cada segundo — e num contador
+   regressivo isso vira desconforto sem que a pessoa saiba de onde vem. */
+[data-marca="med"] .saldo-num,
+[data-marca="med"] .saldo-num strong,
+[data-marca="med"] [id*="cronometro"],
+[data-marca="med"] [id*="tempo"],
+[data-marca="med"] [class*="nota"],
+[data-marca="med"] [class*="cronometro"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* O relógio da estação: o único lugar onde o âmbar aparece. */
+[data-marca="med"] [class*="cronometro"],
+[data-marca="med"] [id*="cronometro"] {
+  color: var(--tempo);
+  letter-spacing: .02em;
+  font-weight: 750;
+}
+
+/* ---------- Botões: comando, não convite ---------- */
+
+[data-marca="med"] .botao {
+  border-radius: var(--raio-sm);
+  letter-spacing: .01em;
+}
+
+[data-marca="med"] .btn-aleatorio {
+  border-radius: var(--raio-sm);
+}
+
+/* ---------- Movimento contido ----------
+   A entrada de tela do produto geral desliza e cresce. Aqui, só um fade curto:
+   entre uma estação e outra, movimento grande é distração — e quem faz simulado
+   cronometrado troca de tela dezenas de vezes por sessão. */
+[data-marca="med"] .tela.ativa {
+  animation: med-entra .16s ease-out;
+}
+
+@keyframes med-entra {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-marca="med"] .tela.ativa { animation: none; }
+}

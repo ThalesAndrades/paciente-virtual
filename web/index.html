@@ -82,8 +82,9 @@
     <button class="botao" id="abrir-loja" type="button">Comprar créditos</button>
   </div>
 
-  <label>Escolha a área</label>
-  <!-- Preenchido por carregarCasos(): um card por categoria presente no acervo. -->
+  <label id="rotulo-area">Escolha a área</label>
+  <!-- Preenchido por carregarCasos(): um card por categoria presente no acervo.
+       Na plataforma Med há uma área só — o catálogo some por aplicarMarca(). -->
   <div class="categorias" id="categorias"></div>
 
   <!-- O circuito completo, como o dia da 2ª etapa acontece: cinco estações
@@ -549,12 +550,83 @@ function catDe(cat) {
 const acesso = { autenticado: false, professor: false, admin: false, painelDisponivel: false, matricula: null, nome: null };
 let acaoLiberacao = null, papelPedido = "aluno";
 
+/* ---------- Marca: duas plataformas, uma página ----------
+   `revalidaai.med.br` é a plataforma de Medicina (estações do Revalida) e
+   `ubtec.sbs` é a das demais profissões. Quem decide é o SERVIDOR, pelo host — a
+   página só obedece ao que veio em /api/acesso. Fazer o contrário (a página
+   adivinhar pelo location.host) daria duas fontes de verdade, e elas divergem.
+
+   Identidade de cada porta. O texto é o que o visitante lê antes de qualquer
+   clique: é a promessa da plataforma, e as duas prometem coisas diferentes. */
+const MARCAS = {
+  med: {
+    selo: "🩺",
+    titulo: "Revalida AI",
+    sub: "Estações de habilidades clínicas no formato do INEP — 10 minutos, PEP e nota de 0 a 10",
+    aba: "Revalida AI — Simulação de estações",
+    // O catálogo existe nas duas, com EIXOS diferentes: aqui, as áreas do edital;
+    // em ubtec.sbs, as profissões. Ver eixoDoCatalogo().
+    rotuloCatalogo: "Treinar por área do edital",
+    circuito: true,    // o simulado de 5 estações é o produto daqui
+    aleatorio: "🎲 Estação aleatória",
+  },
+  geral: {
+    selo: "🧠",
+    titulo: "THM Simulados Inteligentes",
+    sub: "Simulação clínica com paciente virtual — treino de anamnese, entrevista e conduta",
+    aba: "Paciente Virtual — Simulação clínica",
+    rotuloCatalogo: "Escolha a área",
+    // O circuito É a prova do Revalida. Oferecê-lo a quem estuda Nutrição ou
+    // Fonoaudiologia vende uma prova que essa pessoa não vai prestar — e o
+    // servidor responde 404 de qualquer forma.
+    circuito: false,
+    aleatorio: "🎲 Caso clínico aleatório",
+  },
+};
+const marca = { id: "geral", ...MARCAS.geral };
+
+function aplicarMarca(vinda) {
+  const id = (vinda && MARCAS[vinda.id]) ? vinda.id : "geral";
+  Object.assign(marca, MARCAS[id], { id });
+
+  // O atributo no <html> é o gancho do CSS: `med.css` inteiro vive sob
+  // [data-marca="med"], então nada dele vaza para a plataforma geral.
+  document.documentElement.dataset.marca = id;
+
+  if (id === "med" && !document.getElementById("css-med")) {
+    // Depois do estilo base, para sobrescrever — e só aqui: em ubtec.sbs este
+    // arquivo nunca chega a ser pedido.
+    const link = document.createElement("link");
+    link.id = "css-med"; link.rel = "stylesheet"; link.href = "/med.css";
+    document.head.appendChild(link);
+  }
+
+  document.title = marca.aba;
+  const selo = document.querySelector("#tela-inicio .selo");
+  const tit = document.querySelector("#tela-inicio .tit");
+  const sub = document.querySelector("#tela-inicio .sub");
+  if (selo) selo.textContent = marca.selo;
+  if (tit) tit.textContent = marca.titulo;
+  if (sub) sub.textContent = marca.sub;
+
+  const rotuloArea = document.getElementById("rotulo-area");
+  if (rotuloArea) rotuloArea.textContent = marca.rotuloCatalogo;
+
+  const cartaoProva = document.getElementById("cartao-prova");
+  if (cartaoProva) cartaoProva.classList.toggle("oculto", !marca.circuito);
+
+  // O botão de caso avulso muda de nome conforme o que ele sorteia.
+  const aleatorio = document.getElementById("aleatorio-geral");
+  if (aleatorio) aleatorio.textContent = marca.aleatorio;
+}
+
 async function carregarAcesso() {
   try {
     const d = await (await fetch("/api/acesso")).json();
     acesso.autenticado = !!d.autenticado; acesso.professor = !!d.professor;
     acesso.painelDisponivel = !!d.painel_disponivel;
     acesso.matricula = d.matricula || null; acesso.nome = d.nome || null; acesso.admin = !!d.admin;
+    aplicarMarca(d.marca);
   } catch { /* sem rede: o modal aparece e o servidor decide */ }
   // O painel só é anunciado a quem TEM o papel: botão que leva a 403 é ruído.
   $("botao-painel").classList.toggle("oculto", !acesso.professor);
@@ -993,39 +1065,76 @@ function aplicarPreferenciaAudio(l) {
 }
 
 /* ---------- Casos ---------- */
+/* As cinco áreas do edital do Revalida (item 3.3.1). Na plataforma Med, o
+   catálogo é por ÁREA, não por profissão: é assim que o participante organiza o
+   estudo, e é assim que a prova sorteia as cinco estações. Em ubtec.sbs isto nem
+   é carregado — lá o catálogo continua sendo por profissão. */
+const AREA_EDITAL = {
+  clinica_medica: { nome: "Clínica Médica", ic: "🫀", desc: "Emergência e enfermaria: o maior bloco da prova." },
+  cirurgia: { nome: "Cirurgia", ic: "🔪", desc: "Abdome agudo, trauma e o que chega pelo pronto-socorro." },
+  ginecologia_obstetricia: { nome: "Ginecologia e Obstetrícia", ic: "🤰", desc: "Pré-natal, urgência obstétrica e ginecologia ambulatorial." },
+  pediatria: { nome: "Pediatria", ic: "👶", desc: "Da puericultura à urgência — e quem fala é o acompanhante." },
+  medicina_familia: { nome: "Medicina da Família", ic: "🏠", desc: "Atenção primária: o vínculo, o programa e a longitudinalidade." },
+  saude_coletiva: { nome: "Saúde Coletiva", ic: "📋", desc: "Vigilância, notificação e o olhar sobre a população." },
+  saude_mental: { nome: "Saúde Mental", ic: "🧩", desc: "Sofrimento psíquico na porta de entrada do sistema." },
+};
+function areaDe(area) {
+  return AREA_EDITAL[area] || {
+    nome: String(area || "Outras").replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase()),
+    ic: "🩺", desc: "Estações desta área.",
+  };
+}
+
+/* Como o acervo se divide nesta plataforma. Med agrupa por área do edital; a
+   plataforma geral, por profissão. É a única diferença entre os dois catálogos —
+   o resto do desenho é o mesmo, e por isso não há duas funções. */
+function eixoDoCatalogo() {
+  return marca.id === "med"
+    ? { campo: "area", meta: areaDe, rotulo: (n) => `${n} ${n === 1 ? "estação" : "estações"}`, classe: "med" }
+    : { campo: "categoria", meta: catDe, rotulo: (n) => `${n} ${n === 1 ? "caso" : "casos"}`, classe: null };
+}
+
 async function carregarCasos() {
   try { estado.casos = await (await fetch("/api/casos")).json(); } catch { estado.casos = []; }
 
-  // Um card por categoria que EXISTE no acervo, na ordem do catálogo (desconhecidas
-  // vão para o fim). Categoria sem caso não vira card — botão para lista vazia é ruído.
+  // Um card por grupo que EXISTE no acervo (desconhecidos vão para o fim). Grupo
+  // sem caso não vira card — botão para lista vazia é ruído.
+  const eixo = eixoDoCatalogo();
   const grupos = {};
-  for (const c of estado.casos) grupos[c.categoria] = (grupos[c.categoria] || 0) + 1;
-  const ordem = [...Object.keys(CAT).filter((c) => grupos[c]), ...Object.keys(grupos).filter((c) => !CAT[c])];
+  for (const c of estado.casos) {
+    const chave = c[eixo.campo] || "outros";
+    grupos[chave] = (grupos[chave] || 0) + 1;
+  }
+  const conhecidas = eixo.campo === "area" ? Object.keys(AREA_EDITAL) : Object.keys(CAT);
+  const ordem = [...conhecidas.filter((c) => grupos[c]), ...Object.keys(grupos).filter((c) => !conhecidas.includes(c))];
 
   const alvo = $("categorias"); alvo.innerHTML = "";
-  for (const cat of ordem) {
-    const m = catDe(cat);
+  for (const chave of ordem) {
+    const m = eixo.meta(chave);
     const b = document.createElement("button");
     b.type = "button";
-    b.className = "cat-card " + m.chip;
-    b.dataset.cat = cat;
-    b.innerHTML = `<div class="ic">${m.ic}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${grupos[cat]} ${grupos[cat] === 1 ? "caso" : "casos"}</span>`;
-    b.addEventListener("click", () => abrirCategoria(cat));
+    b.className = "cat-card " + (eixo.classe || m.chip);
+    b.dataset.cat = chave;
+    b.innerHTML = `<div class="ic">${m.ic}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${eixo.rotulo(grupos[chave])}</span>`;
+    b.addEventListener("click", () => abrirCategoria(chave));
     alvo.appendChild(b);
   }
+
 }
 function abrirCategoria(cat) {
   estado.categoriaAtual = cat;
-  const meta = catDe(cat);
+  const eixo = eixoDoCatalogo();
+  const meta = eixo.meta(cat);
+  const chip = eixo.classe || meta.chip;
   $("cat-titulo").textContent = meta.nome;
-  $("cat-chip").textContent = meta.nome; $("cat-chip").className = "chip-cat " + meta.chip;
+  $("cat-chip").textContent = meta.nome; $("cat-chip").className = "chip-cat " + chip;
   $("cat-sub").textContent = meta.desc;
   const lista = $("lista-casos"); lista.innerHTML = "";
-  const doCat = estado.casos.filter((c) => c.categoria === cat);
+  const doCat = estado.casos.filter((c) => (c[eixo.campo] || "outros") === cat);
   if (!doCat.length) { lista.innerHTML = "<p class='subtitulo'>Nenhum caso nesta área ainda.</p>"; }
   for (const caso of doCat) {
     const b = document.createElement("button");
-    b.className = "cartao " + meta.chip;
+    b.className = "cartao " + chip;
     b.innerHTML = `<div class="av">${(caso.paciente.nome || "?").charAt(0)}</div><div><h3>${caso.titulo}</h3><p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao || ""}</p><p class="q">${caso.queixa}</p></div>`;
     b.addEventListener("click", () => exigirCodigo(() => comCreditosSuficientes(() => iniciarConsulta(caso.id, false))));
     lista.appendChild(b);
@@ -2488,11 +2597,20 @@ if (window.speechSynthesis) { carregarVozesTTS(); speechSynthesis.onvoiceschange
 function esconderSplash() { const s = $("splash"); if (s && !s.classList.contains("sai")) { s.classList.add("sai"); setTimeout(() => s.remove(), 650); } }
 
 aplicarPreferenciaAudio(estado.falarRespostas);
-carregarCasos().finally(() => setTimeout(esconderSplash, 350));
 carregarCapacidades();
 carregarTempoReal();
-// A vitrine de preços é pública e a home mostra o saldo assim que há sessão.
-carregarAcesso().then(carregarCreditos);
+
+// A MARCA VEM PRIMEIRO. Ela decide como o catálogo se agrupa — por área do edital
+// em revalidaai.med.br, por profissão em ubtec.sbs — então precisa ter chegado
+// antes de desenhá-lo. Antes as duas chamadas corriam soltas e o eixo do catálogo
+// dependia de qual resposta voltasse primeiro: uma corrida que acertava na máquina
+// de quem programou e errava na rede do aluno.
+//
+// O saldo continua vindo logo atrás, em paralelo com os casos: um não depende do
+// outro, e serializar os três só atrasaria o splash.
+carregarAcesso()
+  .then(() => Promise.all([carregarCasos(), carregarCreditos()]))
+  .finally(() => setTimeout(esconderSplash, 350));
 fetch("/api/loja").then((r) => r.json()).then((d) => { estado.loja = d; pintarCartaoProva(); }).catch(() => {});
 
 // Volta do cartão: a Stripe devolve o aluno com `?pagamento=ok&id=...`. Quem
