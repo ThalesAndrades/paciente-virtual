@@ -692,12 +692,15 @@ test("toda estação médica tem PEP fechando 10 e nunca entrega o diagnóstico"
         "direita", "esquerda", "primaria", "secundaria", "adquirida", "provavel", "quadro",
         "sinais", "alarme", "comunidade", "sistemica", "arterial", "profunda",
       ]);
-      const nucleo = diagnostico
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[̀-ͯ]/g, "")
+      // A QUEIXA pode (e deve) estar no impresso: na prova real o cenário diz
+      // "trazido por diarreia há 30 horas". O que não pode vazar é o que o
+      // participante tem que deduzir — o diagnóstico, não o sintoma que a pessoa
+      // relata ao chegar.
+      const semAcento = (t) => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      const daQueixa = new Set(semAcento(String(caso.queixa_principal || "")).split(/[^a-z]+/));
+      const nucleo = semAcento(diagnostico)
         .split(/[^a-z]+/)
-        .filter((p) => p.length > 5 && !comuns.has(p));
+        .filter((p) => p.length > 5 && !comuns.has(p) && !daQueixa.has(p));
       for (const palavra of nucleo.slice(0, 3)) {
         assert.ok(!impresso.includes(palavra), `${id}: o impresso da estação entrega "${palavra}"`);
       }
@@ -748,4 +751,20 @@ test("o PEP pontua na escala do edital, e o que não foi avaliado não pontua", 
   assert.deepEqual(lerVeredito('```json\n{"itens":[],"parecer":"x"}\n```'), { itens: [], parecer: "x" });
   assert.deepEqual(lerVeredito("Segue a avaliação: {\"itens\":[]} pronto"), { itens: [] });
   assert.equal(lerVeredito("não é json"), null);
+});
+
+test("as cinco áreas do edital estão no acervo", async () => {
+  const { tarefaDaEstacao } = await import("../motor/revalida.js");
+  const areas = new Set();
+  for (const arquivo of fs.readdirSync(path.join(RAIZ, "avaliacoes")).filter((n) => n.endsWith(".json"))) {
+    const caso = lerCaso(arquivo.replace(/\.json$/, ""));
+    if (caso.categoria !== "medicina") continue;
+    const rubrica = JSON.parse(fs.readFileSync(path.join(RAIZ, "avaliacoes", arquivo), "utf-8"));
+    areas.add(tarefaDaEstacao(rubrica).area);
+  }
+  // Item 3.3.1 do edital. Faltando uma delas, o simulado treina para uma prova
+  // que não é a que o participante vai prestar.
+  for (const exigida of ["clinica_medica", "cirurgia", "ginecologia_obstetricia", "pediatria", "medicina_familia"]) {
+    assert.ok(areas.has(exigida), `nenhuma estação de ${exigida} — o edital cobra as cinco áreas`);
+  }
 });

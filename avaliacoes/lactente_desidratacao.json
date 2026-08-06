@@ -1,0 +1,158 @@
+{
+  "nome_caso": "Diarreia Aguda com Desidratação em Lactente",
+  "revalida": {
+    "area": "pediatria",
+    "cenario": "Unidade Básica de Saúde. Lactente de 8 meses trazido pela mãe por diarreia iniciada há cerca de 30 horas. Quem presta as informações é a mãe.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) da Unidade Básica de Saúde e vai atender um lactente de 8 meses trazido pela mãe.",
+      "A criança não fala: todas as informações vêm da mãe, que está presente na estação.",
+      "Realize a anamnese dirigida e o exame físico da criança, solicitando ao Chefe de Estação os achados que desejar examinar.",
+      "Classifique o estado de hidratação e defina o plano de tratamento correspondente.",
+      "Oriente a mãe sobre o manejo em casa e os sinais de alarme para retorno imediato.",
+      "Registre no fechamento a hipótese, os diferenciais e a conduta."
+    ],
+    "limites": { "exames": 2, "hipoteses": 1, "condutas": 4 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a criança e o acompanhante e acolhe a preocupação da mãe",
+        "peso": 0.5,
+        "adequado": "Apresenta-se, confirma o nome e a idade da criança, e acolhe a preocupação da mãe sem julgá-la.",
+        "parcial": "Identifica a criança, mas conduz o atendimento ignorando a mãe como interlocutora.",
+        "inadequado": "Não se apresenta ou repreende a mãe pelos cuidados que ela prestou."
+      },
+      {
+        "id": "caracterizacao_diarreia",
+        "descricao": "Caracteriza a diarreia: tempo, número de evacuações, aspecto e presença de sangue ou muco",
+        "peso": 1.5,
+        "adequado": "Investiga início, número de evacuações nas últimas 24 horas, aspecto das fezes e presença de sangue ou muco.",
+        "parcial": "Caracteriza a diarreia de forma incompleta, sem quantificar ou sem perguntar por sangue.",
+        "inadequado": "Não caracteriza a diarreia."
+      },
+      {
+        "id": "sinais_desidratacao_anamnese",
+        "descricao": "Investiga os marcadores de desidratação na história",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre diurese (fraldas molhadas), presença de lágrimas, sede, aceitação de líquidos, vômitos e nível de atividade da criança.",
+        "parcial": "Investiga apenas parte desses marcadores — por exemplo, pergunta por vômitos mas não por diurese.",
+        "inadequado": "Não investiga sinais de desidratação na anamnese."
+      },
+      {
+        "id": "antecedentes_pediatricos",
+        "descricao": "Investiga alimentação, aleitamento, vacinação e contexto epidemiológico",
+        "peso": 1,
+        "adequado": "Pergunta sobre aleitamento e alimentação atual, situação vacinal (inclusive rotavírus), frequência a creche, fonte de água e casos semelhantes em casa ou na creche.",
+        "parcial": "Investiga parte desses itens, deixando de fora vacinação ou contexto epidemiológico.",
+        "inadequado": "Não investiga antecedentes nem contexto."
+      },
+      {
+        "id": "medicacoes_caseiras",
+        "descricao": "Investiga uso de medicamentos e práticas caseiras antes da consulta",
+        "peso": 0.5,
+        "adequado": "Pergunta o que foi oferecido à criança (chás, xaropes, antidiarreicos) sem repreender a família.",
+        "inadequado": "Não pergunta o que já foi administrado à criança."
+      },
+      {
+        "id": "exame_hidratacao",
+        "descricao": "Examina a criança buscando os sinais que classificam a desidratação",
+        "peso": 2,
+        "adequado": "Avalia estado geral, olhos, lágrimas, mucosas, turgor cutâneo, fontanela, sede e perfusão, além de peso e sinais vitais.",
+        "parcial": "Avalia apenas parte dos sinais, insuficiente para classificar com segurança o grau de desidratação.",
+        "inadequado": "Não examina a criança ou examina sem buscar sinais de desidratação."
+      },
+      {
+        "id": "classificacao",
+        "descricao": "Classifica corretamente o grau de desidratação",
+        "peso": 1,
+        "adequado": "Classifica como desidratação (algum grau/moderada), coerente com os achados encontrados, e afasta desidratação grave com choque.",
+        "parcial": "Reconhece que há desidratação, mas não a classifica ou classifica de modo incoerente com os achados.",
+        "inadequado": "Não classifica o estado de hidratação."
+      },
+      {
+        "id": "plano_hidratacao",
+        "descricao": "Indica o plano de hidratação correspondente, com terapia de reidratação oral supervisionada",
+        "peso": 1.5,
+        "adequado": "Indica Plano B: terapia de reidratação oral com sais de reidratação na própria unidade, sob supervisão, com reavaliação periódica, mantendo o aleitamento materno.",
+        "parcial": "Indica reidratação oral, mas libera para casa sem supervisão ou não mantém o aleitamento.",
+        "inadequado": "Indica apenas antibiótico, antidiarreico, jejum ou hidratação venosa sem indicação."
+      },
+      {
+        "id": "orientacoes",
+        "descricao": "Orienta a mãe sobre alimentação, higiene e prevenção",
+        "peso": 0.5,
+        "adequado": "Orienta manter aleitamento e alimentação habitual, oferecer líquidos após cada evacuação, ferver ou tratar a água e reforçar higiene das mãos.",
+        "parcial": "Dá orientações incompletas ou genéricas.",
+        "inadequado": "Não orienta a mãe ou orienta jejum e dieta restritiva."
+      },
+      {
+        "id": "sinais_de_alarme",
+        "descricao": "Explica os sinais de alarme que exigem retorno imediato",
+        "peso": 1,
+        "adequado": "Explica em linguagem acessível sinais como recusa de líquidos, vômitos persistentes, sonolência excessiva, sangue nas fezes, ausência de urina e piora do estado geral, e confirma o entendimento da mãe.",
+        "parcial": "Cita sinais de alarme sem explicar ou sem checar se a mãe entendeu.",
+        "inadequado": "Não orienta sinais de alarme — o que devolve a criança para casa sem rede de segurança."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Identificação e queixa",
+      "objetivo": "Situar a criança e o motivo da consulta.",
+      "peso": 1,
+      "itens": [
+        { "nome": "idade da criança", "termos": ["quantos meses", "idade", "quantos anos"] },
+        { "nome": "início da diarreia", "termos": ["quando comecou", "desde quando", "ha quanto tempo"] },
+        { "nome": "número de evacuações", "termos": ["quantas vezes", "quantas evacuacoes", "quantas ideias", "quantas fezes"] }
+      ]
+    },
+    {
+      "nome": "Sinais de desidratação (anamnese)",
+      "objetivo": "Reconhecer a perda de líquidos pela história.",
+      "peso": 3,
+      "itens": [
+        { "nome": "diurese", "termos": ["fralda", "urina", "xixi", "molhou"] },
+        { "nome": "lágrimas", "termos": ["lagrima", "chora com lagrima", "sem lagrima"] },
+        { "nome": "vômitos", "termos": ["vomito", "vomitou", "golfa"] },
+        { "nome": "aceitação/sede", "termos": ["mamando", "mama", "aceita", "sede", "bebendo"] },
+        { "nome": "atividade", "termos": ["molinho", "ativo", "sonolento", "prostrado", "brincando"] }
+      ]
+    },
+    {
+      "nome": "Antecedentes e contexto",
+      "objetivo": "Investigar alimentação, vacina e epidemiologia.",
+      "peso": 2,
+      "itens": [
+        { "nome": "aleitamento", "termos": ["mama no peito", "aleitamento", "amamenta", "leite materno"] },
+        { "nome": "vacinas", "termos": ["vacina", "caderneta", "rotavirus"] },
+        { "nome": "creche/contatos", "termos": ["creche", "outras criancas", "alguem mais", "irma"] },
+        { "nome": "água", "termos": ["agua", "poco", "ferve", "tratada", "filtro"] },
+        { "nome": "medicação caseira", "termos": ["deu algum remedio", "cha", "xarope", "tomou algo"] }
+      ]
+    },
+    {
+      "nome": "Exame físico da criança",
+      "objetivo": "Classificar a hidratação pelos sinais.",
+      "peso": 3,
+      "itens": [
+        { "nome": "estado geral", "termos": ["estado geral", "consciencia", "letargico", "irritado", "ativo"] },
+        { "nome": "turgor", "termos": ["turgor", "prega", "pele"] },
+        { "nome": "mucosas/olhos", "termos": ["mucosa", "boca", "olhos", "encovados", "lagrima"] },
+        { "nome": "fontanela", "termos": ["fontanela", "moleira"] },
+        { "nome": "peso", "termos": ["peso", "pesar", "balanca"] },
+        { "nome": "sinais vitais", "termos": ["sinais vitais", "frequencia", "temperatura", "perfusao", "enchimento"] }
+      ]
+    },
+    {
+      "nome": "Conduta e orientações",
+      "objetivo": "Tratar a desidratação e proteger o retorno.",
+      "peso": 1,
+      "itens": [
+        { "nome": "soro de reidratação oral", "termos": ["soro", "sro", "reidratacao oral", "sais de reidratacao"] },
+        { "nome": "plano B/supervisão", "termos": ["plano b", "na unidade", "aqui mesmo", "supervisionada", "reavaliar"] },
+        { "nome": "manter aleitamento", "termos": ["continuar mamando", "manter o peito", "aleitamento", "nao suspender"] },
+        { "nome": "sinais de alarme", "termos": ["sinais de alarme", "voltar se", "procurar o servico", "retornar imediatamente", "piorar"] }
+      ]
+    }
+  ]
+}

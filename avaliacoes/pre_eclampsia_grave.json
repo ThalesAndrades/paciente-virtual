@@ -1,0 +1,163 @@
+{
+  "nome_caso": "Pré-eclâmpsia com Sinais de Gravidade",
+  "revalida": {
+    "area": "ginecologia_obstetricia",
+    "cenario": "Unidade de emergência obstétrica de hospital de referência. Gestante de 24 anos, 34 semanas, procura atendimento por conta própria.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) plantonista da emergência obstétrica e vai atender uma gestante de 34 semanas.",
+      "Realize a anamnese dirigida à queixa e ao pré-natal, e o exame físico obstétrico pertinente.",
+      "Solicite no máximo 4 exames complementares — os resultados serão fornecidos pelo Chefe de Estação.",
+      "Informe à paciente a sua hipótese diagnóstica e a conduta, em linguagem acessível.",
+      "Registre no fechamento a hipótese principal, os diagnósticos diferenciais e a conduta imediata."
+    ],
+    "limites": { "exames": 4, "hipoteses": 1, "condutas": 4 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a gestante e estabelece comunicação acolhedora",
+        "peso": 0.5,
+        "adequado": "Apresenta-se pelo nome e função, confirma o nome da paciente e usa linguagem acessível durante todo o atendimento.",
+        "parcial": "Apresenta-se, mas mantém linguagem técnica que a paciente não acompanha.",
+        "inadequado": "Não se apresenta ou conduz o atendimento sem qualquer acolhimento."
+      },
+      {
+        "id": "idade_gestacional",
+        "descricao": "Estabelece a idade gestacional e a história do pré-natal",
+        "peso": 1,
+        "adequado": "Pergunta a idade gestacional e como foi calculada, número de consultas de pré-natal e intercorrências relatadas.",
+        "parcial": "Pergunta apenas a idade gestacional, sem investigar o pré-natal.",
+        "inadequado": "Não estabelece a idade gestacional."
+      },
+      {
+        "id": "sintomas_gravidade",
+        "descricao": "Investiga ativamente os sintomas de gravidade da pré-eclâmpsia",
+        "peso": 2,
+        "adequado": "Investiga cefaleia refratária, alterações visuais (escotomas, turvação), dor epigástrica ou em hipocôndrio direito, náuseas/vômitos e edema de instalação rápida.",
+        "parcial": "Investiga apenas parte desses sintomas, deixando de fora epigastralgia ou alterações visuais.",
+        "inadequado": "Não investiga sintomas de gravidade — o que impede reconhecer a iminência de eclâmpsia."
+      },
+      {
+        "id": "vitalidade_fetal_anamnese",
+        "descricao": "Pergunta sobre movimentação fetal, perdas vaginais e contrações",
+        "peso": 0.5,
+        "adequado": "Pergunta sobre movimentação fetal, perda de líquido, sangramento e contrações.",
+        "parcial": "Pergunta apenas sobre movimentação fetal.",
+        "inadequado": "Não investiga a vitalidade fetal nem perdas vaginais."
+      },
+      {
+        "id": "fatores_risco",
+        "descricao": "Investiga fatores de risco e antecedentes para doença hipertensiva da gestação",
+        "peso": 1,
+        "adequado": "Investiga hipertensão prévia ou em gestação anterior, história familiar de pré-eclâmpsia/eclâmpsia, paridade e uso de medicações.",
+        "parcial": "Investiga parte dos antecedentes, sem a história familiar ou obstétrica anterior.",
+        "inadequado": "Não investiga antecedentes."
+      },
+      {
+        "id": "pressao_arterial",
+        "descricao": "Afere a pressão arterial e a reavalia conforme a técnica preconizada",
+        "peso": 1.5,
+        "adequado": "Afere a pressão arterial e confirma o valor em nova medida após intervalo, reconhecendo o nível de gravidade (≥ 160/110 mmHg).",
+        "parcial": "Afere a pressão uma única vez, sem confirmação ou sem reconhecer a gravidade do valor.",
+        "inadequado": "Não afere a pressão arterial."
+      },
+      {
+        "id": "exame_obstetrico",
+        "descricao": "Realiza exame físico obstétrico dirigido",
+        "peso": 1,
+        "adequado": "Avalia edema, altura uterina, batimentos cardiofetais e pesquisa reflexos tendinosos.",
+        "parcial": "Realiza parte do exame, sem BCF ou sem pesquisa de reflexos.",
+        "inadequado": "Não examina a gestante."
+      },
+      {
+        "id": "exames_complementares",
+        "descricao": "Solicita os exames que confirmam o diagnóstico e afastam HELLP",
+        "peso": 1,
+        "adequado": "Solicita proteinúria e exames que rastreiam gravidade e HELLP (hemograma com plaquetas, transaminases, função renal) e avalia a vitalidade fetal.",
+        "parcial": "Solicita proteinúria ou parte dos exames, sem rastrear hemólise, plaquetopenia ou lesão hepática.",
+        "inadequado": "Não solicita exames ou solicita exames sem relação com o quadro."
+      },
+      {
+        "id": "hipotese",
+        "descricao": "Formula a hipótese de pré-eclâmpsia com sinais de gravidade",
+        "peso": 1,
+        "adequado": "Enuncia pré-eclâmpsia com sinais de gravidade (ou critérios de gravidade), compatível com PA, proteinúria e sintomas.",
+        "parcial": "Enuncia doença hipertensiva da gestação sem caracterizar a gravidade.",
+        "inadequado": "Não enuncia hipótese ou enuncia hipótese incompatível."
+      },
+      {
+        "id": "conduta",
+        "descricao": "Define a conduta imediata: sulfato de magnésio, anti-hipertensivo e resolução programada",
+        "peso": 1.5,
+        "adequado": "Indica internação, sulfato de magnésio para prevenção de eclâmpsia, anti-hipertensivo de ação rápida para crise hipertensiva, corticoide para maturação pulmonar quando cabível e resolução da gestação em serviço com suporte neonatal.",
+        "parcial": "Indica parte da conduta — por exemplo, interna e trata a pressão, mas não prescreve sulfato de magnésio.",
+        "inadequado": "Libera a paciente, prescreve apenas analgésico ou não define conduta."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Identificação e pré-natal",
+      "objetivo": "Situar a gestação e o acompanhamento.",
+      "peso": 1,
+      "itens": [
+        { "nome": "idade gestacional", "termos": ["quantas semanas", "idade gestacional", "de quanto tempo", "quantos meses"] },
+        { "nome": "pré-natal", "termos": ["pre natal", "pré-natal", "fez acompanhamento", "quantas consultas"] }
+      ]
+    },
+    {
+      "nome": "Sintomas de gravidade (HDA)",
+      "objetivo": "Reconhecer a iminência de eclâmpsia.",
+      "peso": 3,
+      "itens": [
+        { "nome": "cefaleia", "termos": ["dor de cabeca", "cefaleia", "dor na cabeca"] },
+        { "nome": "alterações visuais", "termos": ["vista", "enxergando", "visao", "embacada", "pontos brilhantes", "escotoma"] },
+        { "nome": "epigastralgia", "termos": ["estomago", "epigastrio", "boca do estomago", "dor em barra", "hipocondrio"] },
+        { "nome": "edema", "termos": ["inchaco", "inchada", "edema", "incharam"] },
+        { "nome": "movimentos fetais", "termos": ["bebe mexe", "mexendo", "movimento do bebe", "mexeu"] }
+      ]
+    },
+    {
+      "nome": "Antecedentes e fatores de risco",
+      "objetivo": "Estratificar o risco.",
+      "peso": 1,
+      "itens": [
+        { "nome": "hipertensão prévia", "termos": ["pressao alta antes", "hipertensao", "pressao alta"] },
+        { "nome": "gestação anterior", "termos": ["gestacao anterior", "outra gravidez", "primeiro filho", "quantos filhos"] },
+        { "nome": "história familiar", "termos": ["na familia", "sua mae", "irma", "familiar"] }
+      ]
+    },
+    {
+      "nome": "Exame físico obstétrico",
+      "objetivo": "Documentar gravidade materna e vitalidade fetal.",
+      "peso": 3,
+      "itens": [
+        { "nome": "pressão arterial", "termos": ["pressao", "pa", "aferir"] },
+        { "nome": "edema", "termos": ["edema", "cacifo", "inchaco"] },
+        { "nome": "BCF", "termos": ["bcf", "batimento", "coracao do bebe", "sonar", "ausculta fetal"] },
+        { "nome": "reflexos", "termos": ["reflexo", "reflexos", "patelar"] },
+        { "nome": "altura uterina", "termos": ["altura uterina", "fundo de utero", "leopold"] }
+      ]
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Confirmar o diagnóstico e afastar HELLP.",
+      "peso": 1,
+      "itens": [
+        { "nome": "proteinúria", "termos": ["proteinuria", "proteina na urina", "fita", "urina"] },
+        { "nome": "plaquetas", "termos": ["hemograma", "plaquetas"] },
+        { "nome": "transaminases", "termos": ["transaminases", "tgo", "tgp", "figado"] }
+      ]
+    },
+    {
+      "nome": "Conduta",
+      "objetivo": "Prevenir eclâmpsia e programar a resolução.",
+      "peso": 1,
+      "itens": [
+        { "nome": "sulfato de magnésio", "termos": ["sulfato de magnesio", "magnesio", "mgso4"] },
+        { "nome": "anti-hipertensivo", "termos": ["hidralazina", "nifedipino", "anti-hipertensivo", "baixar a pressao"] },
+        { "nome": "internação/resolução", "termos": ["internar", "internacao", "resolucao", "parto", "cesarea", "referencia"] }
+      ]
+    }
+  ]
+}

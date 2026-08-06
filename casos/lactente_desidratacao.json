@@ -1,0 +1,204 @@
+{
+  "categoria": "medicina",
+  "titulo": "Diarreia Aguda com Desidratação em Lactente",
+  "identificacao": {
+    "nome": "Cláudia Ferreira Lima",
+    "idade": 27,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Solteira",
+    "escolaridade": "Ensino fundamental completo",
+    "profissao": "Diarista, três dias por semana",
+    "naturalidade": "Teresina, PI",
+    "moradia": "Casa de dois cômodos na periferia, com água de poço",
+    "papel_na_estacao": "MÃE do paciente. Quem está doente é o filho dela, Miguel, de 8 meses. Ela é a única pessoa com quem o profissional pode conversar — o bebê está no colo dela e não fala."
+  },
+  "queixa_principal": "Doutor, meu filho tá com diarreia desde ontem e hoje ele tá muito molinho, quase não quer mamar.",
+  "historia_doenca_atual": {
+    "paciente_real": "Miguel Ferreira Lima, 8 meses, sexo masculino, previamente hígido",
+    "inicio": "Há cerca de 30 horas",
+    "localizacao": "Diarreia; sem dor localizada que a mãe consiga apontar",
+    "caracter": "Fezes líquidas, amareladas, sem sangue e sem muco",
+    "frequencia": "Contou 9 evacuações líquidas nas últimas 24 horas; três só desde que acordou",
+    "vomitos": "Vomitou quatro vezes desde ontem à noite, logo depois de mamar",
+    "febre": "Mediu 38,2 °C ontem à noite com o termômetro da vizinha; hoje não mediu",
+    "diurese": "A última fralda molhada foi de manhã cedo, faz mais de seis horas — 'ela tá seca desde que a gente saiu de casa'",
+    "aceitacao": "Mama pouco, larga o peito rápido e chora",
+    "estado_geral": "Está mais quieto que o normal, dorme mais, chora sem lágrima",
+    "fatores_piora": "Piorou depois que a mãe passou a oferecer só água e chá",
+    "evolucao": "Piora progressiva nas últimas 12 horas"
+  },
+  "antecedentes_pessoais": {
+    "gestacao_e_parto": "Pré-natal com seis consultas; parto vaginal a termo, 3.150 g, sem intercorrências",
+    "aleitamento": "Mamou no peito exclusivo até os 6 meses; hoje mama no peito e come papa duas vezes ao dia",
+    "vacinas": "Caderneta em dia até 6 meses; a mãe não sabe informar se tomou a segunda dose de rotavírus e não trouxe a caderneta",
+    "internacoes": "Nunca internou",
+    "alergias": "Nega",
+    "medicacoes_em_uso": "A avó deu um chá de erva-doce e meia colher de um xarope 'que ela tinha em casa' para diarreia — a mãe não sabe o nome",
+    "crescimento": "Peso de hoje na balança da unidade: 7,8 kg; na consulta de 6 meses pesava 8,3 kg"
+  },
+  "antecedentes_familiares": {
+    "mae": "Saudável",
+    "irmaos": "Irmã de 4 anos teve diarreia parecida na semana passada e melhorou sozinha",
+    "observacoes": "Duas crianças da creche com o mesmo quadro"
+  },
+  "habitos_de_vida": {
+    "agua": "Água de poço, não fervida; a mãe diz que 'sempre foi assim e ninguém adoeceu'",
+    "creche": "Frequenta creche comunitária desde os 6 meses",
+    "saneamento": "Fossa; rua sem esgoto tratado",
+    "alimentacao": "Papa de legumes amassada, mingau de fubá, leite materno",
+    "cuidadores": "A avó cuida do bebê nos dias em que a mãe trabalha"
+  },
+  "informacoes_iniciais": {
+    "diarreia": "A diarreia começou ontem de manhã e não parou",
+    "molinho": "Hoje ele está 'molinho', mais quieto, dorme demais",
+    "mama_pouco": "Larga o peito rápido e chora",
+    "vomito": "Vomitou algumas vezes depois de mamar"
+  },
+  "informacoes_intermediarias": {
+    "fralda_seca": "A fralda está seca desde cedo — mais de seis horas sem urinar",
+    "sem_lagrima": "Ela reparou que ele chora sem lágrima desde a madrugada",
+    "creche": "Tem outras crianças na creche com o mesmo quadro",
+    "agua_do_poco": "A água de casa vem de poço e não é fervida nem tratada",
+    "chas_e_xarope": "A avó deu chá e um xarope de nome desconhecido, achando que ajudaria",
+    "caderneta": "Não trouxe a caderneta de vacinação e não lembra se ele tomou a segunda dose contra rotavírus"
+  },
+  "informacoes_sensiveis": {
+    "medo_de_perder_o_filho": "Ela perdeu um sobrinho de 1 ano por diarreia há dois anos, no interior, e desde ontem pensa que pode acontecer o mesmo — não contou isso a ninguém",
+    "culpa_pela_agua": "Sente culpa por saber que a água não é tratada e nunca ter fervido",
+    "medo_de_ser_julgada": "Teme que a equipe a considere uma mãe negligente e chame o conselho tutelar",
+    "sem_dinheiro": "Não tem dinheiro para comprar soro na farmácia nem para voltar ao serviço amanhã se for preciso"
+  },
+  "gatilhos_sensiveis": {
+    "medo_de_perder_o_filho": ["medo", "preocupada", "assusta", "o que a senhora pensa", "aconteceu antes", "sobrinho", "alguem na familia"],
+    "culpa_pela_agua": ["agua", "poco", "ferver", "tratada", "culpa", "se cobra"],
+    "medo_de_ser_julgada": ["julgada", "conselho", "negligente", "medo do que eu vou achar", "esta com vergonha"],
+    "sem_dinheiro": ["dinheiro", "comprar", "condicoes", "voltar aqui", "transporte", "farmacia"]
+  },
+  "rede_apoio": {
+    "familia": "Mãe (avó do bebê) mora junto e ajuda nos cuidados",
+    "amigos": "Vizinhas da mesma rua",
+    "vizinhanca": "Agente comunitária de saúde visita a casa uma vez por mês",
+    "observacoes": "Pai do bebê não participa"
+  },
+  "persona": {
+    "resumo": "Mãe jovem, atenta e observadora, com pouca escolaridade formal e muita experiência prática de cuidado",
+    "temperamento": ["preocupada", "cooperativa", "observadora", "envergonhada quando se sente julgada"],
+    "postura_na_consulta": "Chega com o bebê no colo, embalando; responde tudo o que é perguntado e observa a reação do profissional"
+  },
+  "estilo_de_fala": {
+    "registro": "Informal, nordestino, afetuoso ao falar do filho",
+    "caracteristicas": ["chama o bebê pelo nome", "usa diminutivo", "conta detalhes concretos", "não usa termo técnico"],
+    "bordoes_e_expressoes": ["ó", "num sei", "coitadinho", "tá vendo?"],
+    "exemplos_de_fala": [
+      "Ó, ele tá molinho assim desde de manhã, doutor.",
+      "A fraldinha tá seca, num molhou nada desde cedo.",
+      "Coitadinho, ele chora e num sai lágrima nenhuma."
+    ],
+    "nunca_faz": ["nomeia diagnóstico", "diz grau de desidratação", "usa termo técnico", "fala em nome do bebê como se ele respondesse"]
+  },
+  "contexto_de_vida": {
+    "biografia": "Veio do interior do Piauí aos 22 anos; tem dois filhos e cria sozinha",
+    "rotina": "Trabalha como diarista três dias por semana; a avó cuida das crianças",
+    "trabalho": "Diarista; se faltar, não recebe",
+    "familia_e_relacoes": "Mora com a mãe e os dois filhos; pai do bebê ausente",
+    "estressores_atuais": ["medo pelo filho", "dinheiro curto", "faltar ao trabalho"]
+  },
+  "estado_emocional": {
+    "agora": "Assustada e vigilante, embalando o bebê no colo, atenta a cada reação do profissional",
+    "manifestacoes": ["embala o bebê", "olha para o filho o tempo todo", "voz baixa", "responde rápido"],
+    "o_que_teme": "Que o filho piore e que ela seja culpada por isso",
+    "o_que_espera": "Que alguém diga o que fazer e que o filho volte a mamar"
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": ["percebe que o profissional se importa com o bebê", "é tratada sem julgamento", "o profissional explica o que está fazendo"],
+    "fecha_se_quando": ["é repreendida pela água ou pelo chá", "sente pressa", "o profissional fala só com o computador"],
+    "trava_do_sensivel": "Só fala do sobrinho que morreu se perguntarem sobre medo ou sobre algo parecido na família",
+    "sinais_de_confianca": "Passa a fazer perguntas próprias e mostra a fralda seca"
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Diarreia aguda aquosa, provavelmente viral (rotavírus), com desidratação de algum grau (moderada) em lactente de 8 meses — indicação de Plano B com soro de reidratação oral na unidade",
+    "manter_coerente": "Quem responde é a MÃE; o bebê não fala. Os sinais de desidratação só aparecem quando o profissional examina a criança. A mãe nunca nomeia o diagnóstico nem classifica a desidratação.",
+    "diferenciais_a_respeitar": [
+      "Diarreia aguda sem desidratação (Plano A)",
+      "Desidratação grave com choque (Plano C)",
+      "Diarreia invasiva bacteriana (disenteria)",
+      "Sepse com foco não identificado",
+      "Intolerância à lactose pós-infecciosa"
+    ]
+  },
+  "exame_fisico": {
+    "estado_geral": {
+      "nome": "Estado geral e nível de consciência",
+      "sinonimos": ["estado geral", "consciencia", "ativo", "reativo", "irritado", "letargico", "sonolento", "olhar"],
+      "resultado": "Irritado ao manuseio, chora sem lágrimas, acalma no colo; não está letárgico nem inconsciente"
+    },
+    "peso": {
+      "nome": "Peso atual",
+      "sinonimos": ["peso", "pesar", "balanca", "quanto pesa"],
+      "resultado": "7,8 kg (era 8,3 kg na consulta de 6 meses — perda aproximada de 6%)"
+    },
+    "sinais_vitais": {
+      "nome": "Sinais vitais",
+      "sinonimos": ["sinais vitais", "frequencia cardiaca", "fc", "frequencia respiratoria", "fr", "temperatura", "saturacao", "pressao"],
+      "resultado": "FC 158 bpm, FR 38 irpm, temperatura axilar 37,8 °C, saturação 97% em ar ambiente, PA não aferida por indisponibilidade de manguito adequado"
+    },
+    "turgor": {
+      "nome": "Turgor cutâneo (sinal da prega)",
+      "sinonimos": ["turgor", "prega", "sinal da prega", "elasticidade da pele", "pele"],
+      "resultado": "Prega cutânea desfaz lentamente (entre 1 e 2 segundos)"
+    },
+    "mucosas_e_olhos": {
+      "nome": "Mucosas, olhos e lágrimas",
+      "sinonimos": ["mucosa", "boca", "lingua", "olhos", "olhos fundos", "lagrima", "encovados"],
+      "resultado": "Mucosas secas, olhos encovados, ausência de lágrimas ao choro"
+    },
+    "fontanela": {
+      "nome": "Fontanela anterior",
+      "sinonimos": ["fontanela", "moleira"],
+      "resultado": "Fontanela anterior deprimida"
+    },
+    "perfusao": {
+      "nome": "Perfusão periférica",
+      "sinonimos": ["perfusao", "enchimento capilar", "tempo de enchimento", "extremidades"],
+      "resultado": "Tempo de enchimento capilar 3 segundos, extremidades levemente frias"
+    },
+    "abdome": {
+      "nome": "Exame do abdome",
+      "sinonimos": ["abdome", "barriga", "palpar a barriga", "ruidos", "peristalse"],
+      "resultado": "Abdome flácido, ruídos hidroaéreos aumentados, sem massas e sem sinais de irritação peritoneal"
+    },
+    "sede": {
+      "nome": "Avaliação da sede e da aceitação de líquidos",
+      "sinonimos": ["sede", "aceita liquido", "oferecer agua", "quer beber", "aceitacao"],
+      "resultado": "Bebe avidamente quando se oferece o copo, com sofreguidão"
+    }
+  },
+  "exames_disponiveis": {
+    "glicemia_capilar": {
+      "nome": "Glicemia capilar",
+      "sinonimos": ["glicemia", "dextro", "glicose", "hgt"],
+      "resultado": "74 mg/dL"
+    },
+    "eletrolitos": {
+      "nome": "Sódio, potássio e gasometria venosa",
+      "sinonimos": ["eletrolitos", "sodio", "potassio", "gasometria", "bicarbonato"],
+      "resultado": "Na 138 mEq/L; K 3,4 mEq/L; pH 7,32; bicarbonato 17 mEq/L (acidose metabólica leve)"
+    },
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": ["hemograma", "sangue", "leucograma"],
+      "resultado": "Hemoglobina 11,2 g/dL; leucócitos 9.400/mm³ sem desvio; plaquetas normais"
+    },
+    "exame_de_fezes": {
+      "nome": "Exame de fezes (leucócitos fecais e pesquisa de rotavírus)",
+      "sinonimos": ["fezes", "coprocultura", "parasitologico", "rotavirus", "leucocitos fecais"],
+      "resultado": "Sem leucócitos fecais e sem sangue oculto; pesquisa de antígeno de rotavírus positiva"
+    },
+    "funcao_renal": {
+      "nome": "Ureia e creatinina",
+      "sinonimos": ["ureia", "creatinina", "funcao renal"],
+      "resultado": "Ureia 42 mg/dL; creatinina 0,4 mg/dL"
+    }
+  }
+}
