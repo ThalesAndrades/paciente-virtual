@@ -6,7 +6,13 @@ interpretado por um modelo de linguagem, solicita exame físico e exames
 complementares, assume uma hipótese diagnóstica e recebe ao final uma nota
 objetiva por rubrica e um parecer pedagógico.
 
-**40 casos** prontos: 20 de medicina e 20 de psicologia.
+**55 casos** prontos: 29 de medicina — todos no formato de estação do Revalida,
+com Padrão Esperado de Procedimentos —, 20 de psicologia e um caso-piloto em
+cada uma das demais áreas (enfermagem, odontologia, farmácia, fisioterapia,
+fonoaudiologia e nutrição).
+
+> Retomando o trabalho? [`docs/ESTADO-ATUAL.md`](docs/ESTADO-ATUAL.md) diz o que
+> está no ar hoje, por que cada decisão foi tomada e o que ficou pendente.
 
 ## O que torna a estação diferente de um chatbot
 
