@@ -29,6 +29,7 @@ import {
 } from "./motor/auth.js";
 import {
   assinaturaDoUsuario,
+  creditar,
   darBoasVindas,
   debitar,
   estornar,
@@ -964,7 +965,34 @@ export function criarServidor() {
         }
 
         if (req.method === "GET" && pathname === "/api/alunos") {
-          return json(res, 200, { alunos: await listarUsuarios() });
+          // O saldo vem junto da lista: administrar conta e administrar crédito
+          // viraram a mesma conversa, e abrir duas telas para responder "quanto
+          // essa pessoa tem?" seria trabalho manual sem motivo.
+          const alunos = (await listarUsuarios()).map((a) => ({ ...a, creditos: saldoDeCreditos(a.id) }));
+          return json(res, 200, { alunos });
+        }
+
+        // Lançamento manual de crédito. É o caminho para cortesia, suporte,
+        // reembolso e turma institucional — e cada lançamento vira uma linha no
+        // razão, com quem recebeu e quando. Nada de mexer no saldo por fora.
+        const creditosDe = pathname.match(/^\/api\/alunos\/([\w-]+)\/creditos$/);
+        if (req.method === "POST" && creditosDe) {
+          const dados = await lerCorpo(req);
+          const quantidade = Math.trunc(Number(dados.creditos) || 0);
+          if (!quantidade || Math.abs(quantidade) > 100000) {
+            return json(res, 400, { erro: "Informe quantos créditos lançar (positivo para dar, negativo para tirar)." });
+          }
+          // A referência carrega o instante: dois lançamentos iguais para a mesma
+          // pessoa são intencionais, e o índice de idempotência recusaria o segundo
+          // se a referência fosse só o id.
+          const referencia = `admin:${creditosDe[1]}:${Date.now()}`;
+          const resultado = quantidade > 0
+            ? creditar(creditosDe[1], quantidade, "ajuste", referencia)
+            : debitar(creditosDe[1], -quantidade, "ajuste", referencia);
+          if (!resultado.ok) {
+            return json(res, 400, { erro: "Saldo insuficiente para retirar essa quantidade.", saldo: resultado.saldo });
+          }
+          return json(res, 200, { ok: true, saldo: resultado.saldo });
         }
 
         if (req.method === "POST" && pathname === "/api/alunos") {

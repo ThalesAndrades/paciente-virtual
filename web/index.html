@@ -1781,9 +1781,14 @@ async function carregarAlunos() {
         `<div style="flex:1">` +
         `<h3><span>${esc(a.matricula)}</span> <span class="chip-papel">${esc(a.papel)}</span>` +
         (a.ativo ? "" : ` <span class="chip-papel inativo">desativada</span>`) + `</h3>` +
-        `<p>${esc(a.nome) || "—"}</p></div>`;
+        `<p>${esc(a.nome) || "—"} · <strong>${a.creditos ?? 0}</strong> créditos</p></div>`;
       const acoes = document.createElement("div");
       acoes.className = "acoes-conta";
+
+      const bCredito = document.createElement("button");
+      bCredito.className = "botao secundario"; bCredito.type = "button"; bCredito.textContent = "+ Créditos";
+      bCredito.addEventListener("click", () => lancarCreditos(a));
+      acoes.appendChild(bCredito);
 
       const bSenha = document.createElement("button");
       bSenha.className = "botao secundario"; bSenha.type = "button"; bSenha.textContent = "Nova senha";
@@ -1800,6 +1805,28 @@ async function carregarAlunos() {
       alvo.appendChild(cartao);
     }
   } catch { alvo.innerHTML = "<p class='subtitulo'>Erro ao carregar as contas.</p>"; }
+}
+
+// Lançamento manual de crédito: cortesia, suporte, reembolso, turma institucional.
+// Aceita número negativo para retirar — é o mesmo razão, e tirar sem registrar
+// seria pior do que não poder tirar.
+async function lancarCreditos(a) {
+  const bruto = prompt(
+    `Quantos créditos lançar para ${a.matricula}?\n\nSaldo atual: ${a.creditos ?? 0}\nUse número negativo para retirar.`,
+    "1000"
+  );
+  if (bruto === null) return;
+  const quantidade = parseInt(String(bruto).replace(/[^\d-]/g, ""), 10);
+  if (!quantidade) { torrada("Informe um número diferente de zero.", true); return; }
+
+  const r = await fetch(`/api/alunos/${encodeURIComponent(a.id)}/creditos`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ creditos: quantidade }),
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) { torrada(d.erro || "Não foi possível lançar os créditos.", true); return; }
+  torrada(`${a.matricula} agora tem ${d.saldo} créditos.`);
+  carregarAlunos();
+  if (a.matricula === acesso.matricula) carregarCreditos();
 }
 
 async function resetarSenha(a) {

@@ -827,3 +827,45 @@ test("webhook da Stripe sem assinatura válida não credita nada", async () => {
     servidor.close();
   }
 });
+
+test("o admin lança e retira crédito, e cada lançamento fica no razão", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "adm001");
+    const { dados: lista } = await api("/api/alunos");
+    const alvo = lista.alunos.find((a) => a.matricula === "duro001");
+    assert.equal(alvo.creditos, 0, "a listagem precisa trazer o saldo de cada conta");
+
+    const dado = await api(`/api/alunos/${alvo.id}/creditos`, { creditos: 1000 });
+    assert.equal(dado.status, 200);
+    assert.equal(dado.dados.saldo, 1000);
+
+    // Dois lançamentos iguais são intencionais (duas cortesias), e ambos valem.
+    const denovo = await api(`/api/alunos/${alvo.id}/creditos`, { creditos: 1000 });
+    assert.equal(denovo.dados.saldo, 2000);
+
+    const retirada = await api(`/api/alunos/${alvo.id}/creditos`, { creditos: -1500 });
+    assert.equal(retirada.dados.saldo, 500);
+
+    // Não dá para tirar o que não existe.
+    const demais = await api(`/api/alunos/${alvo.id}/creditos`, { creditos: -99999 });
+    assert.equal(demais.status, 400);
+
+    const zero = await api(`/api/alunos/${alvo.id}/creditos`, { creditos: 0 });
+    assert.equal(zero.status, 400);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("professor não lança crédito para ninguém", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "prof001");
+    const r = await api("/api/alunos/qualquer/creditos", { creditos: 1000 });
+    // Crédito é dinheiro: quem acompanha a turma não emite dinheiro.
+    assert.equal(r.status, 403);
+  } finally {
+    servidor.close();
+  }
+});
