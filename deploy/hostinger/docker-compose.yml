@@ -57,7 +57,13 @@ services:
       PV_SEGREDO: ${PV_SEGREDO:-}
       # Base pública do Better Auth. Sem ela o servidor deduz a origem da requisição
       # e avisa a cada start ("Base URL is not set").
-      PV_URL: https://ubtec.sbs
+      #
+      # OS DOIS hosts, separados por vírgula, porque os `labels` abaixo publicam os
+      # dois: `baseURL` usa só o primeiro (o apex, canônico), mas `trustedOrigins`
+      # usa a lista inteira. Com apenas o apex aqui, quem entrasse por `www` teria
+      # a requisição barrada pela defesa contra CSRF — e o erro chega na tela do
+      # aluno como "senha errada", que é o diagnóstico mais caro possível.
+      PV_URL: https://ubtec.sbs,https://www.ubtec.sbs
       # O banco de contas mora no volume (via symlink /app/historico), então
       # sobrevive ao re-clone. Explícito para não depender do symlink resolver.
       PV_BANCO: /dados/historico/pv.sqlite
