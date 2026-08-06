@@ -127,6 +127,16 @@
   <p class="subtitulo" id="desemp-vazio">Nenhuma estação encerrada ainda. Faça uma e volte aqui.</p>
 
   <div id="desemp-conteudo" class="oculto">
+    <!-- A sugestão vem antes dos números porque é o que o aluno faz DEPOIS de
+         olhar: quem estuda sozinho escolhe o que já sabe. -->
+    <div class="desemp-sugestao oculto" id="desemp-sugestao">
+      <div class="desemp-sug-txt">
+        <strong id="desemp-sug-titulo"></strong>
+        <span id="desemp-sug-nota"></span>
+      </div>
+      <button class="botao" id="desemp-sug-botao" type="button">Treinar agora</button>
+    </div>
+
     <label>Média por área</label>
     <p class="pref-dica" style="margin:2px 0 10px">Da área mais fraca para a mais forte — é por onde vale começar a estudar.</p>
     <div id="desemp-areas" class="desemp-areas"></div>
@@ -1164,6 +1174,17 @@ function pintarDesempenho(d) {
   $("desemp-conteudo").classList.toggle("oculto", d.estacoes === 0);
   if (!d.estacoes) return;
 
+  const sug = $("desemp-sugestao");
+  sug.classList.toggle("oculto", !d.sugestao);
+  if (d.sugestao) {
+    $("desemp-sug-titulo").textContent = `Treine ${d.sugestao.area_nome}`;
+    $("desemp-sug-nota").textContent =
+      `Sua média nesta área é ${formatarNota(d.sugestao.media)} de 10 — é onde você mais tem a ganhar.`;
+    // O caso fica no dataset e não no texto: dizer QUAL estação vem seria
+    // entregar o diagnóstico antes de o aluno entrar na sala.
+    $("desemp-sug-botao").dataset.caso = d.sugestao.caso;
+  }
+
   const areas = $("desemp-areas");
   areas.innerHTML = "";
   for (const a of d.por_area) {
@@ -2170,6 +2191,12 @@ $("abrir-loja").addEventListener("click", abrirLoja);
 $("abrir-desempenho").addEventListener("click", abrirDesempenho);
 $("desempenho-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("boletim-desempenho").addEventListener("click", abrirDesempenho);
+$("desemp-sug-botao").addEventListener("click", (e) => {
+  const caso = e.currentTarget.dataset.caso;
+  // `true` = entrar sem revelar o caso, o mesmo caminho do sorteio: a estação
+  // sugerida é treino, e treino com gabarito na porta não treina nada.
+  if (caso) comCreditosSuficientes(() => iniciarConsulta(caso, true));
+});
 $("loja-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("pix-conferir").addEventListener("click", () => conferirPagamento(false));
 $("pix-copiar").addEventListener("click", async () => {

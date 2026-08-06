@@ -1177,3 +1177,31 @@ test("estação de simulado entra no histórico marcada como simulado", async ()
     servidor.close();
   }
 });
+
+test("o desempenho sugere treino na área mais fraca, sem entregar o caso", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "hist001");
+    // Sem histórico não há sugestão: sugerir área fraca a quem nunca atendeu
+    // seria inventar um diagnóstico de estudo a partir de nada.
+    const vazio = (await api("/api/desempenho")).dados;
+    if (!vazio.estacoes) assert.equal(vazio.sugestao, null);
+
+    // Duas estações da mesma área dão média suficiente para a sugestão nascer.
+    for (const caso of ["infarto", "pneumonia"]) {
+      const { dados: c } = await api("/api/consultas", { caso });
+      await api(`/api/consultas/${c.id}/encerrar`, { hipotese: "h" });
+    }
+
+    const d = (await api("/api/desempenho")).dados;
+    assert.ok(d.sugestao, "com histórico, a sugestão precisa existir");
+    assert.equal(d.sugestao.area, d.por_area[0].area, "a sugestão sai da área de pior média");
+    assert.ok(d.sugestao.caso, "a sugestão aponta uma estação para treinar");
+    // O TÍTULO nomeia o diagnóstico. Ele não pode viajar junto: o aluno escolhe a
+    // área, e descobre o caso na sala.
+    assert.equal(d.sugestao.titulo, undefined);
+    assert.ok(!JSON.stringify(d.sugestao).toLowerCase().includes("infarto agudo"));
+  } finally {
+    servidor.close();
+  }
+});

@@ -1025,3 +1025,16 @@ input, select, textarea {
    pequeno demais para o polegar. */
 .boletim-acoes { display: flex; gap: 10px; flex-wrap: wrap; }
 .boletim-acoes .botao { flex: 1; min-width: 200px; }
+
+/* A sugestão de treino. Tem a cor de ação da plataforma porque é o único elemento
+   desta tela que leva a algum lugar — o resto é diagnóstico, isto é conduta. */
+.desemp-sugestao {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 16px 18px; margin: 0 0 22px; border-radius: var(--raio);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primaria) 12%, var(--superficie)), var(--superficie));
+  border: 1px solid color-mix(in srgb, var(--primaria) 35%, var(--borda));
+  box-shadow: var(--sombra);
+}
+.desemp-sug-txt { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 3px; }
+.desemp-sug-txt strong { font-size: 1.05rem; }
+.desemp-sug-txt span { color: var(--texto-suave); font-size: .9rem; line-height: 1.45; }

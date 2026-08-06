@@ -227,6 +227,36 @@ function estacoesPorArea() {
   return porArea;
 }
 
+// Qual estação treinar em seguida. Sai da área de PIOR média do aluno — quem
+// estuda sozinho escolhe o que já sabe, e a média por área existe justamente para
+// desfazer isso. Evita os casos que ele acabou de fazer: repetir o mesmo caso
+// mede memória, não competência.
+function sugerirTreino(resumo) {
+  if (!resumo || !resumo.estacoes || !resumo.por_area.length) return null;
+  // `por_area` já vem da pior média para a melhor. Duas estações é o mínimo para
+  // a média significar alguma coisa; abaixo disso, um dia ruim viraria "sua área
+  // fraca é cirurgia".
+  const alvo = resumo.por_area.find((a) => a.estacoes >= 2) || resumo.por_area[0];
+  const disponiveis = estacoesPorArea()[alvo.area] || [];
+  if (!disponiveis.length) return null;
+
+  const recentes = new Set(resumo.recentes.slice(0, 5).map((r) => r.caso));
+  const frescos = disponiveis.filter((id) => !recentes.has(id));
+  const pool = frescos.length ? frescos : disponiveis;
+  const casoId = pool[Math.floor(Math.random() * pool.length)];
+  const rubrica = carregarRubrica(casoId);
+
+  return {
+    area: alvo.area,
+    area_nome: alvo.area_nome,
+    media: alvo.media,
+    caso: casoId,
+    // O TÍTULO da estação não vai: ele nomeia o diagnóstico. O aluno escolhe a
+    // área, e o caso ele descobre na sala, como na prova.
+    itens: rubrica && rubrica.revalida ? rubrica.revalida.pep.length : 0,
+  };
+}
+
 function carregarRubrica(casoId) {
   const caminho = path.join(DIR_AVALIACOES, `${casoId}.json`);
   if (!fs.existsSync(caminho)) return null;
@@ -1332,7 +1362,8 @@ export function criarServidor() {
         if (!ehAluno(req)) {
           return json(res, 401, { erro: "Sessão expirada. Entre de novo com a sua matrícula." });
         }
-        return json(res, 200, resumoDoAluno(sessaoDe(req)));
+        const resumo = resumoDoAluno(sessaoDe(req));
+        return json(res, 200, { ...resumo, sugestao: sugerirTreino(resumo) });
       }
 
       // A guarda vem ANTES das rotas, e não dentro de cada uma: a de `/api/consultas`
