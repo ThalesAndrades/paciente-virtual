@@ -45,6 +45,12 @@ await criarUsuario({ matricula: "duro001", senha: "senha-de-teste-duro", nome: "
 // por acidente, dependendo da ordem em que os testes rodam.
 await criarUsuario({ matricula: "duro002", senha: "senha-de-teste-duro2", nome: "Sem Créditos Dois", papel: "aluno" });
 
+// Contas próprias para os testes de HISTÓRICO. O histórico é acumulativo por
+// natureza: reusar um aluno de outro teste faria "quantas estações ele já fez"
+// depender da ordem em que os testes rodam.
+await criarUsuario({ matricula: "hist001", senha: "senha-de-teste-hist1", nome: "Histórico Um", papel: "aluno" });
+await criarUsuario({ matricula: "hist002", senha: "senha-de-teste-hist2", nome: "Histórico Dois", papel: "aluno" });
+
 // Consulta e voz agora custam crédito. Os alunos dos testes começam com saldo
 // folgado para que o assunto testado continue sendo o que cada teste diz testar.
 const { creditar } = await import("../motor/creditos.js");
@@ -64,6 +70,8 @@ const SENHAS = {
   limite002: "senha-de-teste-lim2",
   duro001: "senha-de-teste-duro",
   duro002: "senha-de-teste-duro2",
+  hist001: "senha-de-teste-hist1",
+  hist002: "senha-de-teste-hist2",
 };
 
 // Entra como a matrícula pedida, pela MESMA rota que o navegador usa.
@@ -1116,6 +1124,55 @@ test("circuito começado não é estornável, e prova alheia não se cancela", a
     await entrar(api, "aluno002");
     const alheia = await api(`/api/provas/${minha.id}`, undefined, "DELETE");
     assert.equal(alheia.status, 403);
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o desempenho do aluno acumula estação por estação e é privado", async () => {
+  const { servidor, api } = await subir();
+  try {
+    // Sem sessão não existe histórico para ler.
+    assert.equal((await api("/api/desempenho")).status, 401);
+
+    await entrar(api, "hist001");
+    const inicio = (await api("/api/desempenho")).dados;
+    assert.equal(inicio.estacoes, 0, "quem nunca atendeu não tem histórico");
+    assert.deepEqual(inicio.recentes, []);
+
+    const { dados: c } = await api("/api/consultas", { caso: "infarto" });
+    await api(`/api/consultas/${c.id}/encerrar`, { hipotese: "IAM" });
+
+    const depois = (await api("/api/desempenho")).dados;
+    assert.equal(depois.estacoes, 1);
+    assert.equal(depois.recentes.length, 1);
+    assert.equal(depois.recentes[0].caso, "infarto");
+    assert.equal(depois.recentes[0].simulado, false, "treino solto não conta como simulado");
+    assert.ok(depois.por_area.length >= 1, "a média por área é o que aponta onde estudar");
+
+    // O histórico é por conta: o colega não vê nada disto.
+    await entrar(api, "aluno002");
+    const outro = (await api("/api/desempenho")).dados;
+    assert.ok(
+      !outro.recentes.some((r) => r.caso === "infarto" && r.quando === depois.recentes[0].quando),
+      "o desempenho de um aluno não pode aparecer na conta de outro"
+    );
+  } finally {
+    servidor.close();
+  }
+});
+
+test("estação de simulado entra no histórico marcada como simulado", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "hist002");
+    const { dados: prova } = await api("/api/provas", {});
+    const { dados: estacao } = await api(`/api/provas/${prova.id}/estacao`, {});
+    await api(`/api/consultas/${estacao.id}/encerrar`, { hipotese: "h" });
+
+    const d = (await api("/api/desempenho")).dados;
+    assert.equal(d.recentes[0].simulado, true);
+    assert.equal(d.simulados, 1);
   } finally {
     servidor.close();
   }

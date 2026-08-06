@@ -41,6 +41,7 @@ import {
   // para alguém debitar a coisa errada.
   saldo as saldoDeCreditos,
 } from "./motor/creditos.js";
+import { migrarDesempenho, registrarEstacao, resumoDoAluno } from "./motor/desempenho.js";
 import {
   cobrarCartao,
   cobrarPix,
@@ -797,11 +798,28 @@ async function encerrarConsulta(req, res, id) {
         caso: consulta.casoId,
         titulo: rubrica.nome_caso || consulta.casoId,
         area: resultado.estacao.area,
+        area_nome: resultado.estacao.area_nome,
         nota: resultado.estacao.nota,
         nota_maxima: resultado.estacao.nota_maxima,
       });
       resultado.circuito = boletim(prova);
     }
+
+    // E vai para o histórico do aluno, com os itens perdidos. É o que permite
+    // dizer, dez estações depois, em que área ele está pior e o que ele sempre
+    // esquece — coisa que nota isolada não conta.
+    registrarEstacao({
+      usuarioId: sessaoDe(req),
+      caso: consulta.casoId,
+      titulo: rubrica.nome_caso || consulta.casoId,
+      area: resultado.estacao.area,
+      areaNome: resultado.estacao.area_nome,
+      nota: resultado.estacao.nota,
+      notaMaxima: resultado.estacao.nota_maxima,
+      prova: consulta.prova || null,
+      duracao: resultado.estatisticas.duracao_s,
+      itens: resultado.estacao.itens || [],
+    });
 
     consultas.delete(id);
     return json(res, 200, resultado);
@@ -1307,6 +1325,16 @@ export function criarServidor() {
 
       // ---- Modo prova: o circuito de 5 estações, como o dia da 2ª etapa.
       //
+      // O histórico do próprio aluno. Sem parâmetro de usuário na URL de
+      // propósito: quem responde é a sessão, e assim não existe o caminho em que
+      // alguém troca o id e lê o desempenho do colega.
+      if (req.method === "GET" && pathname === "/api/desempenho") {
+        if (!ehAluno(req)) {
+          return json(res, 401, { erro: "Sessão expirada. Entre de novo com a sua matrícula." });
+        }
+        return json(res, 200, resumoDoAluno(sessaoDe(req)));
+      }
+
       // A guarda vem ANTES das rotas, e não dentro de cada uma: a de `/api/consultas`
       // protege só aquele prefixo, e as provas nasceram fora dela — dava para
       // rodar um circuito inteiro sem conta e sem crédito. Prefixo novo, guarda
@@ -1552,6 +1580,8 @@ export async function iniciar() {
     // As tabelas de crédito vivem no mesmo banco e sobem junto: um servidor no ar
     // sem elas responderia 500 na primeira consulta de qualquer aluno.
     migrarCreditos();
+    // Histórico de desempenho: mesma regra, mesmo banco.
+    migrarDesempenho();
 
     // Quem já tinha conta antes de a ferramenta passar a cobrar não pode acordar
     // sem poder usá-la. Cada conta existente ganha os créditos de boas-vindas uma

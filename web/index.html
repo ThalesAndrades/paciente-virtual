@@ -101,7 +101,43 @@
   </div>
 
   <div class="aleatorio-linha aleatorio-home"><button class="btn-aleatorio" id="aleatorio-geral" type="button">🎲 Caso clínico aleatório</button></div>
+  <!-- Aparece para quem entrou. Quem ainda não fez estação encontra a tela
+       explicando isso — melhor que um botão que existe e some sem motivo. -->
+  <button id="abrir-desempenho" class="botao secundario oculto" type="button">📈 Meu desempenho</button>
+
   <button id="botao-painel" class="botao secundario oculto">📊 Painel do professor</button>
+</section>
+
+<!-- Meu desempenho: a nota isolada diz como foi a estação; isto diz como vai a
+     PREPARAÇÃO. Média por área aponta onde estudar, e o item que se repete é o
+     que o aluno esquece sempre — a pergunta que ele faria a um professor. -->
+<section id="tela-desempenho" class="tela">
+  <div class="topo-secao">
+    <button class="voltar" id="desempenho-voltar">← Início</button>
+    <h1 style="margin:0;font-size:1.3rem;flex:1">Meu desempenho</h1>
+  </div>
+
+  <div class="desemp-numeros">
+    <div class="desemp-card"><strong id="desemp-estacoes">—</strong><span>estações feitas</span></div>
+    <div class="desemp-card"><strong id="desemp-media">—</strong><span>média por estação</span></div>
+    <div class="desemp-card"><strong id="desemp-melhor">—</strong><span>melhor nota</span></div>
+    <div class="desemp-card"><strong id="desemp-simulados">—</strong><span>simulados completos</span></div>
+  </div>
+
+  <p class="subtitulo" id="desemp-vazio">Nenhuma estação encerrada ainda. Faça uma e volte aqui.</p>
+
+  <div id="desemp-conteudo" class="oculto">
+    <label>Média por área</label>
+    <p class="pref-dica" style="margin:2px 0 10px">Da área mais fraca para a mais forte — é por onde vale começar a estudar.</p>
+    <div id="desemp-areas" class="desemp-areas"></div>
+
+    <label style="margin-top:18px;display:block">O que você mais deixa passar</label>
+    <p class="pref-dica" style="margin:2px 0 10px">Itens do PEP em que você não foi adequado em pelo menos duas estações.</p>
+    <div id="desemp-fracos" class="desemp-fracos"></div>
+
+    <label style="margin-top:18px;display:block">Últimas estações</label>
+    <div id="desemp-recentes" class="desemp-recentes"></div>
+  </div>
 </section>
 
 <section id="tela-categoria" class="tela">
@@ -424,7 +460,12 @@
   </div>
   <p class="subtitulo" id="boletim-leitura"></p>
   <div id="boletim-estacoes"></div>
-  <button class="botao" id="boletim-nova-prova" type="button">Fazer outro simulado</button>
+  <div class="boletim-acoes">
+    <button class="botao" id="boletim-nova-prova" type="button">Fazer outro simulado</button>
+    <!-- O boletim conta este dia; o desempenho conta a preparação. É aqui que o
+         aluno acabou de ver uma nota e quer saber se está melhorando. -->
+    <button class="botao secundario" id="boletim-desempenho" type="button">📈 Meu desempenho</button>
+  </div>
 </section>
 
 <!-- A camada WebRTC da conversa ao vivo. Fora da página porque é a única parte que
@@ -507,6 +548,9 @@ async function carregarAcesso() {
   } catch { /* sem rede: o modal aparece e o servidor decide */ }
   // O painel só é anunciado a quem TEM o papel: botão que leva a 403 é ruído.
   $("botao-painel").classList.toggle("oculto", !acesso.professor);
+  // Desempenho é do aluno: aparece para quem entrou. Quem ainda não fez estação
+  // encontra a tela explicando isso, e não um botão que some sem motivo visível.
+  $("abrir-desempenho").classList.toggle("oculto", !acesso.autenticado);
   $("aba-alunos").classList.toggle("oculto", !acesso.admin);
   $("aba-cobranca").classList.toggle("oculto", !acesso.admin);
   const quem = $("quem-sou");
@@ -1097,6 +1141,75 @@ function aplicarConsulta(dados) {
 /* ---------- Modo prova: o circuito de 5 estações ----------
    O dia da 2ª etapa é um circuito: cinco estações seguidas, giro obrigatório e a
    soma no fim. Treinar solto ensina a estação; o circuito ensina a prova. */
+
+/* ---------- Meu desempenho ----------
+   Tudo vem de /api/desempenho, que responde pela SESSÃO — a página não manda id
+   de aluno nenhum, e por isso não existe URL que leia o histórico do colega. */
+async function abrirDesempenho() {
+  if (!acesso.autenticado) { abrirModal("aluno", abrirDesempenho); return; }
+  mostrarTela("tela-desempenho");
+  let d = null;
+  try { d = await (await fetch("/api/desempenho")).json(); } catch {}
+  if (!d) { torrada("Não consegui carregar seu desempenho agora.", true); return; }
+  pintarDesempenho(d);
+}
+
+function pintarDesempenho(d) {
+  $("desemp-estacoes").textContent = d.estacoes;
+  $("desemp-media").textContent = d.estacoes ? formatarNota(d.media) : "—";
+  $("desemp-melhor").textContent = d.estacoes ? formatarNota(d.melhor) : "—";
+  $("desemp-simulados").textContent = d.simulados;
+
+  $("desemp-vazio").classList.toggle("oculto", d.estacoes > 0);
+  $("desemp-conteudo").classList.toggle("oculto", d.estacoes === 0);
+  if (!d.estacoes) return;
+
+  const areas = $("desemp-areas");
+  areas.innerHTML = "";
+  for (const a of d.por_area) {
+    const pct = Math.max(0, Math.min(100, (a.media / 10) * 100));
+    const linha = document.createElement("div");
+    linha.className = "desemp-area";
+    linha.innerHTML =
+      `<div class="desemp-area-topo"><span>${esc(a.area_nome)}</span>` +
+      `<b style="color:${corDaFaixaTexto(pct)}">${formatarNota(a.media)}<i>/10</i></b></div>` +
+      `<div class="desemp-barra"><span style="width:${pct.toFixed(0)}%;background:${corDaFaixa(pct)}"></span></div>` +
+      `<div class="desemp-area-pe">${a.estacoes} ${a.estacoes === 1 ? "estação" : "estações"}</div>`;
+    areas.appendChild(linha);
+  }
+
+  const fracos = $("desemp-fracos");
+  fracos.innerHTML = "";
+  if (!d.fracos.length) {
+    fracos.innerHTML = '<p class="pref-dica">Nenhum item se repetiu ainda — faça mais estações e o padrão aparece aqui.</p>';
+  } else {
+    for (const f of d.fracos) {
+      const item = document.createElement("div");
+      item.className = "desemp-fraco";
+      item.innerHTML = `<span class="desemp-vezes">${f.vezes}×</span><span>${esc(f.descricao)}</span>`;
+      fracos.appendChild(item);
+    }
+  }
+
+  const recentes = $("desemp-recentes");
+  recentes.innerHTML = "";
+  for (const r of d.recentes) {
+    const pct = r.nota_maxima > 0 ? (r.nota / r.nota_maxima) * 100 : 0;
+    const linha = document.createElement("div");
+    linha.className = "desemp-recente";
+    linha.innerHTML =
+      `<div class="desemp-rec-txt"><strong>${esc(r.titulo)}</strong>` +
+      `<span>${esc(r.area_nome)}${r.simulado ? " · simulado" : ""} · ${dataCurta(r.quando)}</span></div>` +
+      `<div class="desemp-rec-nota" style="color:${corDaFaixaTexto(pct)}">${formatarNota(r.nota)}<i>/${r.nota_maxima}</i></div>`;
+    recentes.appendChild(linha);
+  }
+}
+
+function dataCurta(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+}
 
 // Preço do circuito no próprio cartão. O número sai do catálogo do servidor —
 // preço escrito à mão no HTML é preço que diverge do que o servidor debita.
@@ -2054,6 +2167,9 @@ $("boletim-nova-prova").addEventListener("click", comecarProva);
 $("estacao-desistir").addEventListener("click", () => { $("modal-estacao").classList.add("oculto"); estado.estacao = null; mostrarTela("tela-inicio"); });
 document.querySelectorAll("#abas-acesso .seg").forEach((s) => s.addEventListener("click", () => trocarAbaAcesso(s.dataset.acesso)));
 $("abrir-loja").addEventListener("click", abrirLoja);
+$("abrir-desempenho").addEventListener("click", abrirDesempenho);
+$("desempenho-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
+$("boletim-desempenho").addEventListener("click", abrirDesempenho);
 $("loja-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));
 $("pix-conferir").addEventListener("click", () => conferirPagamento(false));
 $("pix-copiar").addEventListener("click", async () => {

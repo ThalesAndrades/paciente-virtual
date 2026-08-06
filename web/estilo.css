@@ -954,3 +954,74 @@ input, select, textarea {
   .cartao-prova .botao, .barra-circuito .botao { width: 100%; }
   .boletim-nota strong { font-size: 2.4rem; }
 }
+
+/* ── Meu desempenho ────────────────────────────────────────────────────────
+   A nota de uma estação cabe num número; a preparação, não. Esta tela responde
+   três perguntas em ordem: como estou, onde estou pior, o que sempre esqueço.
+   Por isso os números vêm primeiro, a média por área depois (da pior para a
+   melhor) e o histórico por último — é a ordem em que o aluno decide o que
+   estudar hoje. */
+.prova-preco { color: var(--med) !important; font-weight: 600; }
+
+.desemp-numeros {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px; margin: 0 0 20px;
+}
+.desemp-card {
+  display: flex; flex-direction: column; gap: 2px; padding: 14px 16px;
+  background: var(--superficie); border: 1px solid var(--borda);
+  border-radius: var(--raio); box-shadow: var(--sombra);
+}
+.desemp-card strong { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.desemp-card span { color: var(--texto-suave); font-size: .82rem; }
+
+.desemp-areas { display: flex; flex-direction: column; gap: 12px; }
+.desemp-area {
+  padding: 12px 14px; background: var(--superficie);
+  border: 1px solid var(--borda); border-radius: var(--raio);
+}
+.desemp-area-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.desemp-area-topo b { font-size: 1.05rem; font-weight: 800; white-space: nowrap; }
+.desemp-area-topo b i { font-style: normal; font-size: .78rem; opacity: .65; }
+.desemp-area-pe { color: var(--texto-suave); font-size: .8rem; margin-top: 6px; }
+/* A barra repete o que o número já diz. É redundância de propósito: comparar
+   cinco áreas em texto exige ler cinco vezes; em barra, é um olhar. */
+.desemp-barra {
+  height: 8px; border-radius: 999px; margin-top: 8px; overflow: hidden;
+  background: color-mix(in srgb, var(--texto) 10%, transparent);
+}
+.desemp-barra span { display: block; height: 100%; border-radius: 999px; transition: width .4s ease; }
+
+.desemp-fracos { display: flex; flex-direction: column; gap: 8px; }
+.desemp-fraco {
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
+  background: var(--superficie); border: 1px solid var(--borda);
+  border-left: 3px solid var(--sev-atencao); border-radius: var(--raio);
+  font-size: .9rem; line-height: 1.45;
+}
+.desemp-vezes {
+  flex: none; font-weight: 800; font-size: .8rem; color: var(--sev-atencao-texto);
+  padding-top: 1px;
+}
+
+.desemp-recentes { display: flex; flex-direction: column; gap: 8px; }
+.desemp-recente {
+  display: flex; align-items: center; gap: 12px; padding: 11px 14px;
+  background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio);
+}
+.desemp-rec-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.desemp-rec-txt strong { font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.desemp-rec-txt span { color: var(--texto-suave); font-size: .8rem; }
+.desemp-rec-nota { font-weight: 800; font-size: 1.05rem; white-space: nowrap; }
+.desemp-rec-nota i { font-style: normal; font-size: .75rem; opacity: .65; }
+
+@media (max-width: 480px) {
+  .desemp-card strong { font-size: 1.4rem; }
+  .desemp-numeros { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+/* Duas ações no fim do boletim: repetir o circuito ou olhar a evolução. No
+   celular elas empilham — botão de 50% de largura em tela de 375px vira alvo
+   pequeno demais para o polegar. */
+.boletim-acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+.boletim-acoes .botao { flex: 1; min-width: 200px; }
