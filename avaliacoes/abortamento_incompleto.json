@@ -1,0 +1,150 @@
+{
+  "nome_caso": "Abortamento Incompleto",
+  "revalida": {
+    "area": "ginecologia_obstetricia",
+    "cenario": "Pronto-socorro de ginecologia e obstetrícia. Mulher de 31 anos, gestante de 10 semanas, com sangramento vaginal e cólicas iniciados há cerca de 18 horas.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) plantonista da emergência ginecológica e vai atender uma gestante de 10 semanas.",
+      "Realize a anamnese dirigida e o exame físico ginecológico pertinente.",
+      "Solicite no máximo 4 exames complementares — os resultados serão fornecidos pelo Chefe de Estação.",
+      "Comunique o diagnóstico à paciente e conduza o caso, considerando a tipagem sanguínea dela.",
+      "Registre no fechamento a hipótese, os diferenciais e a conduta."
+    ],
+    "limites": { "exames": 4, "hipoteses": 1, "condutas": 4 },
+    "pep": [
+      {
+        "id": "acolhimento",
+        "descricao": "Acolhe a paciente e conduz a estação com privacidade e cuidado",
+        "peso": 1,
+        "adequado": "Apresenta-se, garante privacidade, pergunta como ela está e dá espaço para a reação emocional antes de prosseguir.",
+        "parcial": "Apresenta-se, mas conduz a estação apenas tecnicamente, sem reconhecer a perda em curso.",
+        "inadequado": "Não acolhe, usa frase feita ('isso é comum') ou ignora o sofrimento da paciente."
+      },
+      {
+        "id": "caracterizacao_sangramento",
+        "descricao": "Caracteriza o sangramento e a dor de forma quantificada",
+        "peso": 1.5,
+        "adequado": "Investiga início, quantidade (absorventes por período), coágulos, eliminação de material, e caracteriza a cólica.",
+        "parcial": "Investiga o sangramento sem quantificá-lo ou sem perguntar por eliminação de material.",
+        "inadequado": "Não caracteriza o sangramento."
+      },
+      {
+        "id": "historia_obstetrica",
+        "descricao": "Estabelece idade gestacional, história obstétrica e exames prévios da gestação",
+        "peso": 1,
+        "adequado": "Confirma idade gestacional e como foi calculada, número de gestações e desfechos anteriores, e resultados de ultrassonografia já realizada.",
+        "parcial": "Estabelece apenas a idade gestacional.",
+        "inadequado": "Não investiga a história obstétrica."
+      },
+      {
+        "id": "sinais_gravidade",
+        "descricao": "Investiga sinais de instabilidade e de infecção",
+        "peso": 1,
+        "adequado": "Pergunta por tontura, síncope, febre, calafrios e secreção com odor, afastando abortamento infectado e repercussão hemodinâmica.",
+        "parcial": "Investiga apenas parte desses sinais.",
+        "inadequado": "Não investiga sinais de gravidade."
+      },
+      {
+        "id": "tipagem",
+        "descricao": "Pergunta a tipagem sanguínea e o fator Rh",
+        "peso": 1,
+        "adequado": "Pergunta ativamente a tipagem e o fator Rh da paciente — dado que muda a conduta neste caso.",
+        "inadequado": "Não pergunta a tipagem sanguínea."
+      },
+      {
+        "id": "exame_fisico",
+        "descricao": "Realiza exame físico com sinais vitais, exame abdominal e avaliação ginecológica",
+        "peso": 1.5,
+        "adequado": "Afere sinais vitais, examina o abdome e realiza exame especular e toque, avaliando o colo uterino.",
+        "parcial": "Realiza parte do exame — por exemplo, examina o abdome mas não avalia o colo.",
+        "inadequado": "Não examina a paciente."
+      },
+      {
+        "id": "exames",
+        "descricao": "Solicita os exames que definem o diagnóstico e a conduta",
+        "peso": 1,
+        "adequado": "Solicita ultrassonografia transvaginal, hemograma e tipagem sanguínea com fator Rh.",
+        "parcial": "Solicita a ultrassonografia, mas não avalia sangramento por hemograma nem a tipagem.",
+        "inadequado": "Não solicita exames ou solicita exames sem relação com o quadro."
+      },
+      {
+        "id": "hipotese",
+        "descricao": "Formula a hipótese de abortamento incompleto e a diferencia das demais",
+        "peso": 1,
+        "adequado": "Enuncia abortamento incompleto, coerente com colo entreaberto, restos ovulares e queda do beta-hCG, e afasta ectópica e abortamento completo.",
+        "parcial": "Enuncia abortamento sem caracterizar o tipo.",
+        "inadequado": "Não enuncia hipótese ou enuncia hipótese incompatível."
+      },
+      {
+        "id": "conduta_esvaziamento",
+        "descricao": "Indica o esvaziamento uterino e a imunoglobulina anti-D",
+        "peso": 1,
+        "adequado": "Indica esvaziamento uterino (AMIU ou curetagem, ou manejo medicamentoso conforme disponibilidade) e prescreve imunoglobulina anti-D por ser Rh negativo com Coombs indireto negativo.",
+        "parcial": "Indica o esvaziamento, mas esquece a imunoglobulina anti-D — ou o contrário.",
+        "inadequado": "Libera a paciente sem conduta ou indica apenas analgesia e observação domiciliar."
+      },
+      {
+        "id": "comunicacao",
+        "descricao": "Comunica a perda gestacional de forma clara, empática e sem jargão",
+        "peso": 1,
+        "adequado": "Informa a perda com clareza e delicadeza, explica o que será feito, abre espaço para perguntas e não atribui culpa à paciente.",
+        "parcial": "Informa o diagnóstico de forma técnica ou apressada, sem verificar o entendimento.",
+        "inadequado": "Não comunica o diagnóstico à paciente ou o faz de forma que reforce culpa."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Caracterização do sangramento",
+      "objetivo": "Quantificar a perda e a dor.",
+      "peso": 3,
+      "itens": [
+        { "nome": "início", "termos": ["quando comecou", "desde quando", "ha quanto tempo"] },
+        { "nome": "quantidade", "termos": ["quantos absorventes", "quantidade", "encharcou", "quanto sangue"] },
+        { "nome": "coágulos/material", "termos": ["coagulo", "eliminou", "saiu alguma coisa", "material"] },
+        { "nome": "cólica", "termos": ["colica", "dor", "contracao"] }
+      ]
+    },
+    {
+      "nome": "História obstétrica",
+      "objetivo": "Situar a gestação.",
+      "peso": 2,
+      "itens": [
+        { "nome": "idade gestacional", "termos": ["quantas semanas", "idade gestacional", "de quanto tempo"] },
+        { "nome": "gestações anteriores", "termos": ["outras gestacoes", "ja engravidou", "quantos filhos", "aborto anterior"] },
+        { "nome": "ultrassom prévio", "termos": ["ultrassom", "usg", "ecografia", "ja fez exame"] },
+        { "nome": "tipagem/Rh", "termos": ["tipo sanguineo", "tipagem", "rh", "fator rh"] }
+      ]
+    },
+    {
+      "nome": "Sinais de gravidade",
+      "objetivo": "Afastar instabilidade e infecção.",
+      "peso": 2,
+      "itens": [
+        { "nome": "tontura/síncope", "termos": ["tontura", "desmaio", "fraqueza", "escureceu a vista"] },
+        { "nome": "febre", "termos": ["febre", "calafrio", "temperatura"] },
+        { "nome": "odor/secreção", "termos": ["odor", "cheiro", "secrecao", "corrimento"] }
+      ]
+    },
+    {
+      "nome": "Exame físico",
+      "objetivo": "Documentar colo e repercussão.",
+      "peso": 2,
+      "itens": [
+        { "nome": "sinais vitais", "termos": ["pressao", "sinais vitais", "frequencia", "pa"] },
+        { "nome": "especular", "termos": ["especular", "especulo", "colo"] },
+        { "nome": "toque", "termos": ["toque", "toque vaginal", "bimanual"] }
+      ]
+    },
+    {
+      "nome": "Conduta",
+      "objetivo": "Esvaziar e proteger a aloimunização.",
+      "peso": 1,
+      "itens": [
+        { "nome": "esvaziamento", "termos": ["amiu", "curetagem", "esvaziamento", "aspiracao", "misoprostol"] },
+        { "nome": "imunoglobulina anti-D", "termos": ["anti-d", "anti d", "imunoglobulina", "rhogam", "matergam"] }
+      ]
+    }
+  ]
+}

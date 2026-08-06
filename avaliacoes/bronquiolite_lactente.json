@@ -1,0 +1,147 @@
+{
+  "nome_caso": "Bronquiolite Viral Aguda em Lactente",
+  "revalida": {
+    "area": "pediatria",
+    "cenario": "Unidade de Pronto Atendimento. Lactente de 4 meses trazido pela mãe por coriza há três dias e dificuldade para respirar iniciada hoje. Quem presta as informações é a mãe.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) da Unidade de Pronto Atendimento e vai atender um lactente de 4 meses trazido pela mãe.",
+      "A criança não fala: todas as informações vêm da mãe, que está presente na estação.",
+      "Realize a anamnese dirigida e o exame físico da criança, solicitando ao Chefe de Estação os achados que desejar examinar.",
+      "Decida sobre a necessidade de exames complementares — no máximo 2, se julgar necessário.",
+      "Defina a conduta e oriente a mãe sobre o cuidado domiciliar e os sinais de alarme.",
+      "Registre no fechamento a hipótese, os diferenciais e a conduta."
+    ],
+    "limites": { "exames": 2, "hipoteses": 1, "condutas": 4 },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a criança e acolhe a mãe como informante",
+        "peso": 0.5,
+        "adequado": "Apresenta-se, confirma nome e idade da criança e reconhece a mãe como quem observou o quadro.",
+        "parcial": "Identifica a criança, mas trata a mãe como obstáculo ou a repreende.",
+        "inadequado": "Não se apresenta nem estabelece com quem está falando."
+      },
+      {
+        "id": "historia_respiratoria",
+        "descricao": "Caracteriza a evolução do quadro respiratório",
+        "peso": 1.5,
+        "adequado": "Investiga início e evolução da coriza, tosse, chiado e desconforto respiratório, e a febre.",
+        "parcial": "Caracteriza parcialmente, sem estabelecer a sequência coriza → desconforto.",
+        "inadequado": "Não caracteriza o quadro respiratório."
+      },
+      {
+        "id": "sinais_gravidade_anamnese",
+        "descricao": "Investiga sinais de gravidade na história",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre apneia, cianose, aceitação alimentar, diurese e nível de atividade — os dados que definem internação.",
+        "parcial": "Investiga apenas parte desses sinais.",
+        "inadequado": "Não investiga sinais de gravidade."
+      },
+      {
+        "id": "fatores_risco",
+        "descricao": "Investiga fatores de risco para doença grave",
+        "peso": 1,
+        "adequado": "Pergunta sobre prematuridade, cardiopatia ou pneumopatia prévia, idade, aleitamento, vacinação e tabagismo domiciliar.",
+        "parcial": "Investiga parte dos fatores, sem prematuridade ou sem comorbidade prévia.",
+        "inadequado": "Não investiga fatores de risco."
+      },
+      {
+        "id": "exame_respiratorio",
+        "descricao": "Examina a criança avaliando esforço respiratório, ausculta e saturação",
+        "peso": 2,
+        "adequado": "Avalia estado geral, frequência respiratória, sinais de esforço (tiragem, batimento de asa, gemido), ausculta pulmonar e saturação de oxigênio.",
+        "parcial": "Realiza parte do exame — por exemplo, ausculta sem avaliar esforço ou sem oximetria.",
+        "inadequado": "Não examina a criança."
+      },
+      {
+        "id": "hidratacao",
+        "descricao": "Avalia o estado de hidratação da criança",
+        "peso": 0.5,
+        "adequado": "Avalia mucosas, turgor, fontanela, lágrimas ou diurese relatada.",
+        "inadequado": "Não avalia hidratação."
+      },
+      {
+        "id": "hipotese",
+        "descricao": "Formula a hipótese de bronquiolite viral aguda",
+        "peso": 1,
+        "adequado": "Enuncia bronquiolite viral aguda, coerente com a idade, o pródromo catarral e a ausculta, e considera os diferenciais pertinentes.",
+        "parcial": "Enuncia quadro respiratório viral sem caracterizar a bronquiolite.",
+        "inadequado": "Não enuncia hipótese ou enuncia pneumonia bacteriana sem sustentação."
+      },
+      {
+        "id": "nao_intervencao",
+        "descricao": "Evita intervenções sem indicação",
+        "peso": 1,
+        "adequado": "NÃO prescreve antibiótico, corticoide, broncodilatador ou xarope de rotina, e explica à mãe por que não são indicados.",
+        "parcial": "Não prescreve, mas também não explica à mãe o motivo.",
+        "inadequado": "Prescreve antibiótico, corticoide ou broncodilatador de rotina, ou solicita radiografia sem indicação."
+      },
+      {
+        "id": "conduta_suporte",
+        "descricao": "Define o manejo de suporte e o local de tratamento",
+        "peso": 1,
+        "adequado": "Indica lavagem nasal com soro fisiológico, fracionamento das mamadas com manutenção do aleitamento, hidratação, antitérmico se febre, e tratamento domiciliar com reavaliação — justificando a ausência de critérios de internação.",
+        "parcial": "Define parte do suporte ou interna sem critérios que a justifiquem.",
+        "inadequado": "Não define conduta."
+      },
+      {
+        "id": "sinais_de_alarme",
+        "descricao": "Orienta sinais de alarme e o retorno, e aborda o tabagismo domiciliar",
+        "peso": 1,
+        "adequado": "Explica sinais de alarme (piora do esforço, recusa alimentar, sonolência, cianose, apneia), confirma o entendimento da mãe e orienta sobre a exposição ao tabaco em casa.",
+        "parcial": "Orienta sinais de alarme sem checar entendimento, ou não aborda o tabagismo.",
+        "inadequado": "Libera a criança sem orientar sinais de alarme."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "História do quadro respiratório",
+      "objetivo": "Estabelecer a evolução típica.",
+      "peso": 3,
+      "itens": [
+        { "nome": "início/coriza", "termos": ["quando comecou", "coriza", "nariz", "resfriado", "ha quanto tempo"] },
+        { "nome": "tosse", "termos": ["tosse", "tossindo"] },
+        { "nome": "chiado", "termos": ["chiado", "chia", "sibilo", "assobio"] },
+        { "nome": "esforço", "termos": ["puxando", "cansaco", "dificuldade para respirar", "respiracao", "afunda"] },
+        { "nome": "febre", "termos": ["febre", "temperatura", "quente"] }
+      ]
+    },
+    {
+      "nome": "Sinais de gravidade e fatores de risco",
+      "objetivo": "Decidir sobre internação.",
+      "peso": 3,
+      "itens": [
+        { "nome": "apneia/cianose", "termos": ["parou de respirar", "apneia", "roxo", "cianose", "arroxeou"] },
+        { "nome": "aceitação alimentar", "termos": ["mamando", "mama", "aceita", "alimentacao", "largou o peito"] },
+        { "nome": "diurese", "termos": ["fralda", "xixi", "urina", "molhou"] },
+        { "nome": "prematuridade", "termos": ["prematuro", "nasceu de quantas semanas", "a termo", "parto"] },
+        { "nome": "comorbidade", "termos": ["coracao", "cardiopatia", "pulmao", "doenca previa", "internou"] },
+        { "nome": "tabagismo domiciliar", "termos": ["fuma", "cigarro", "fumante", "em casa"] }
+      ]
+    },
+    {
+      "nome": "Exame físico da criança",
+      "objetivo": "Graduar o desconforto respiratório.",
+      "peso": 3,
+      "itens": [
+        { "nome": "frequência respiratória", "termos": ["frequencia respiratoria", "fr", "quantas respiracoes"] },
+        { "nome": "saturação", "termos": ["saturacao", "oximetria", "oximetro", "spo2"] },
+        { "nome": "esforço/tiragem", "termos": ["tiragem", "retracao", "esforco", "asa nasal", "gemido"] },
+        { "nome": "ausculta", "termos": ["ausculta", "auscultar", "estetoscopio", "pulmao"] },
+        { "nome": "hidratação", "termos": ["hidratacao", "mucosa", "turgor", "fontanela"] }
+      ]
+    },
+    {
+      "nome": "Conduta e orientações",
+      "objetivo": "Tratar com suporte e proteger o retorno.",
+      "peso": 1,
+      "itens": [
+        { "nome": "lavagem nasal", "termos": ["soro fisiologico", "lavagem nasal", "soro no nariz", "narinas"] },
+        { "nome": "manter aleitamento", "termos": ["continuar mamando", "aleitamento", "fracionar", "mamadas menores"] },
+        { "nome": "sinais de alarme", "termos": ["sinais de alarme", "voltar se", "retornar", "piorar", "procurar"] }
+      ]
+    }
+  ]
+}

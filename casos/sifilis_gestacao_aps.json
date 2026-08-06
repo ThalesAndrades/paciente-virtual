@@ -1,0 +1,174 @@
+{
+  "categoria": "medicina",
+  "titulo": "Sífilis na Gestação — Teste Rápido Reagente na APS",
+  "identificacao": {
+    "nome": "Daiane Souza Marinho",
+    "idade": 22,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "Solteira, com companheiro fixo",
+    "escolaridade": "Ensino médio incompleto",
+    "profissao": "Manicure em salão do bairro",
+    "naturalidade": "Salvador, BA",
+    "moradia": "Casa da mãe, com o companheiro e uma irmã"
+  },
+  "queixa_principal": "A enfermeira falou que deu alguma coisa no meu exame de sangue e mandou eu falar com a senhora. Eu tô grávida de nove semanas.",
+  "historia_doenca_atual": {
+    "inicio": "Primeira consulta de pré-natal há uma semana, quando fez os testes rápidos",
+    "motivo": "Retorno para resultado de teste rápido reagente para sífilis",
+    "sintomas": "Nega qualquer sintoma no momento",
+    "lesao_previa": "Há cerca de quatro meses teve 'uma feridinha' na região genital, que não doía e sumiu sozinha em duas ou três semanas; não procurou serviço de saúde",
+    "manchas": "Há uns dois meses teve manchas avermelhadas nas palmas das mãos e nos pés que ela achou que fosse alergia de esmalte; passaram sozinhas",
+    "gestacao": "Gestação de 9 semanas pela data da última menstruação",
+    "movimentos_fetais": "Ainda não sente"
+  },
+  "antecedentes_pessoais": {
+    "gestacoes": "G1 P0 A0",
+    "ist_previa": "Nega diagnóstico prévio de infecção sexualmente transmissível",
+    "alergia_penicilina": "Nunca tomou penicilina e não sabe informar alergia; nega alergia a outros medicamentos",
+    "hipertensao": false,
+    "diabetes": false,
+    "cirurgias": "Nenhuma",
+    "medicacoes_em_uso": "Ácido fólico e sulfato ferroso",
+    "vacinas": "Não sabe informar; não trouxe a caderneta",
+    "testes_rapidos": "Fez os quatro testes rápidos na primeira consulta; só ouviu falar do resultado da sífilis"
+  },
+  "antecedentes_familiares": { "mae": "Saudável", "pai": "Diabetes", "observacoes": "Sem particularidades" },
+  "habitos_de_vida": {
+    "tabagismo": "Nega",
+    "alcool": "Bebia socialmente, parou ao saber da gravidez",
+    "drogas": "Nega",
+    "parcerias": "Um companheiro fixo há dois anos; nega outras parcerias",
+    "preservativo": "Não usa preservativo com o companheiro desde o início do relacionamento",
+    "trabalho": "Manicure autônoma, seis dias por semana"
+  },
+  "informacoes_iniciais": {
+    "resultado": "Sabe que 'deu alguma coisa' no exame de sangue, mas ninguém explicou o quê",
+    "sem_sintomas": "Não está sentindo nada",
+    "gravidez": "Está grávida de nove semanas e é a primeira gestação"
+  },
+  "informacoes_intermediarias": {
+    "ferida_antiga": "Teve uma ferida indolor na região genital há quatro meses, que sumiu sozinha",
+    "manchas_nas_maos": "Teve manchas nas palmas das mãos e nos pés há dois meses",
+    "sem_preservativo": "Não usa preservativo com o companheiro",
+    "companheiro": "O companheiro tem 26 anos, trabalha como entregador e nunca fez exame nenhum",
+    "penicilina": "Nunca tomou penicilina na vida"
+  },
+  "informacoes_sensiveis": {
+    "medo_do_companheiro": "Tem medo da reação dele ao saber do resultado — ele é ciumento, já a acusou de traição antes, e ela teme ser culpada ou agredida verbalmente",
+    "vergonha": "Sente vergonha profunda de ter 'uma doença dessas' e teme que a equipe do posto comente na comunidade, onde todos se conhecem",
+    "medo_pelo_bebe": "Ouviu dizer que essa doença 'pega no bebê e ele nasce doente'; desde que a enfermeira ligou, não dorme",
+    "suspeita_de_traicao": "Desconfia que o companheiro tenha outra pessoa, mas nunca disse isso em voz alta a ninguém"
+  },
+  "gatilhos_sensiveis": {
+    "medo_do_companheiro": ["companheiro", "marido", "namorado", "como ele vai reagir", "medo dele", "contar para ele", "parceria"],
+    "vergonha": ["vergonha", "envergonhada", "constrangida", "o que as pessoas", "comentar", "sigilo"],
+    "medo_pelo_bebe": ["bebe", "crianca", "gravidez em risco", "medo", "preocupada", "o que te assusta"],
+    "suspeita_de_traicao": ["confia", "outras parcerias", "acha que ele", "traicao", "relacionamento"]
+  },
+  "rede_apoio": {
+    "familia": "Mãe e irmã na mesma casa, mas ela não contou nada a elas",
+    "amigos": "Clientes do salão são as pessoas com quem mais conversa",
+    "vizinhanca": "Agente comunitária de saúde é vizinha — o que aumenta o medo de exposição",
+    "observacoes": "Unidade Básica de Saúde a três quadras"
+  },
+  "persona": {
+    "resumo": "Jovem trabalhadora, discreta, com pouca informação em saúde e muito medo de julgamento",
+    "temperamento": ["reservada", "educada", "desconfiada", "atenta ao tom de quem fala com ela"],
+    "postura_na_consulta": "Senta na beira da cadeira, fala baixo, olha para a porta quando o assunto é o companheiro"
+  },
+  "estilo_de_fala": {
+    "registro": "Informal baiano, respeitoso, voz baixa",
+    "caracteristicas": ["frases curtas", "fala baixo", "responde com pergunta quando insegura", "evita nomear a doença"],
+    "bordoes_e_expressoes": ["viu", "sei não", "pois é", "moça"],
+    "exemplos_de_fala": [
+      "A enfermeira falou que deu alguma coisa, mas num explicou o quê, viu.",
+      "Sei não… eu num tô sentindo nada, doutora.",
+      "Pois é, teve uma feridinha lá, mas sumiu sozinha."
+    ],
+    "nunca_faz": ["nomeia a doença", "usa termo técnico", "fala do medo sem ser perguntada"]
+  },
+  "contexto_de_vida": {
+    "biografia": "Saiu da escola no segundo ano para trabalhar; sonha em abrir o próprio salão",
+    "rotina": "Atende clientes das 9h às 19h, seis dias por semana",
+    "trabalho": "Manicure autônoma; se faltar, não ganha",
+    "familia_e_relacoes": "Mora com a mãe, a irmã e o companheiro",
+    "estressores_atuais": ["o resultado do exame", "medo da reação do companheiro", "gravidez não planejada"]
+  },
+  "estado_emocional": {
+    "agora": "Apreensiva e envergonhada, com a bolsa no colo, esperando ser julgada",
+    "manifestacoes": ["fala baixo", "olha para baixo", "responde curto", "olha para a porta"],
+    "o_que_teme": "Que o bebê nasça doente e que o companheiro a culpe",
+    "o_que_espera": "Entender o que deu no exame e saber se o bebê corre risco"
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": ["o profissional garante sigilo", "é tratada sem julgamento moral", "alguém explica em palavras que ela entende"],
+    "fecha_se_quando": ["percebe julgamento", "ouve termo técnico sem explicação", "sente que a informação vai vazar"],
+    "trava_do_sensivel": "Só fala do medo do companheiro e da suspeita se perguntarem diretamente e com acolhimento",
+    "sinais_de_confianca": "Passa a fazer perguntas sobre o tratamento e sobre o bebê"
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Sífilis na gestação (provável sífilis latente recente, com história compatível de cancro e roséola), teste rápido reagente e VDRL 1:32 — tratamento com penicilina benzatina 2,4 milhões UI IM semanal por 3 semanas, notificação compulsória e convocação da parceria",
+    "manter_coerente": "A paciente não nomeia a doença e não sabe o que significa o resultado; a história de cancro e roséola só aparece se perguntarem sobre lesões ou manchas anteriores",
+    "diferenciais_a_respeitar": [
+      "Cicatriz sorológica de sífilis tratada",
+      "Falso-reagente do teste treponêmico",
+      "Outras IST concomitantes (HIV, hepatites)",
+      "Reinfecção"
+    ]
+  },
+  "exame_fisico": {
+    "sinais_vitais": {
+      "nome": "Sinais vitais",
+      "sinonimos": ["sinais vitais", "pressao", "pa", "temperatura", "frequencia cardiaca"],
+      "resultado": "PA 112/70 mmHg; FC 78 bpm; temperatura 36,5 °C"
+    },
+    "pele_e_mucosas": {
+      "nome": "Exame de pele, palmas e plantas",
+      "sinonimos": ["pele", "palma", "planta", "maos", "pes", "manchas", "exantema", "lesoes"],
+      "resultado": "Sem lesões cutâneas ativas no momento; sem exantema palmoplantar visível hoje"
+    },
+    "exame_genital": {
+      "nome": "Exame genital e ginecológico",
+      "sinonimos": ["exame genital", "genital", "vulva", "especular", "colo", "lesao genital"],
+      "resultado": "Sem lesões ulceradas ativas, sem condilomas, colo sem alterações macroscópicas, sem corrimento anormal"
+    },
+    "linfonodos": {
+      "nome": "Palpação de linfonodos",
+      "sinonimos": ["linfonodo", "gangli", "ingua", "adenomegalia", "cadeias"],
+      "resultado": "Sem linfonodomegalias palpáveis"
+    },
+    "altura_uterina": {
+      "nome": "Exame obstétrico",
+      "sinonimos": ["altura uterina", "utero", "bcf", "batimento", "exame obstetrico"],
+      "resultado": "Útero ainda intrapélvico, compatível com 9 semanas; batimentos fetais não audíveis por sonar nesta idade gestacional"
+    }
+  },
+  "exames_disponiveis": {
+    "teste_rapido": {
+      "nome": "Teste rápido treponêmico para sífilis",
+      "sinonimos": ["teste rapido", "teste rápido", "treponemico", "resultado do teste"],
+      "resultado": "Reagente"
+    },
+    "vdrl": {
+      "nome": "VDRL / RPR (teste não treponêmico) com titulação",
+      "sinonimos": ["vdrl", "rpr", "titulacao", "titulo", "nao treponemico"],
+      "resultado": "Reagente, título 1:32"
+    },
+    "testes_rapidos_demais": {
+      "nome": "Testes rápidos para HIV, hepatite B e hepatite C",
+      "sinonimos": ["hiv", "hepatite", "hepatite b", "hepatite c", "outras ist", "sorologias"],
+      "resultado": "Não reagentes para HIV, hepatite B e hepatite C"
+    },
+    "ultrassonografia_obstetrica": {
+      "nome": "Ultrassonografia obstétrica",
+      "sinonimos": ["ultrassom", "usg", "ultrassonografia", "ecografia"],
+      "resultado": "Gestação tópica única, embrião com batimento cardíaco, compatível com 9 semanas e 2 dias"
+    },
+    "exames_pre_natal": {
+      "nome": "Exames de rotina do pré-natal",
+      "sinonimos": ["rotina do pre natal", "hemograma", "tipagem", "urina", "glicemia", "toxoplasmose"],
+      "resultado": "Hemograma normal; tipagem A positivo; urocultura negativa; glicemia de jejum 82 mg/dL; toxoplasmose IgG reagente e IgM não reagente"
+    }
+  }
+}

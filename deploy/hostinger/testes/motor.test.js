@@ -687,10 +687,15 @@ test("toda estação médica tem PEP fechando 10 e nunca entrega o diagnóstico"
     if (diagnostico) {
       // Só as palavras que NOMEIAM a doença. Sem o filtro, o teste reprovava por
       // "paciente" e "agudo" — palavras que o impresso legitimamente usa.
+      // Palavras que descrevem QUEM é o paciente ou a intensidade do quadro — não
+      // o que ele tem. O impresso da prova legitimamente diz "lactente de 4 meses"
+      // e "gestante de 34 semanas": é o cenário, não o gabarito.
       const comuns = new Set([
-        "paciente", "aguda", "agudo", "cronica", "cronico", "grave", "moderada", "moderado",
+        "paciente", "lactente", "gestante", "crianca", "recem", "nascido", "adulto", "idoso",
+        "aguda", "agudo", "cronica", "cronico", "grave", "moderada", "moderado", "leve",
         "direita", "esquerda", "primaria", "secundaria", "adquirida", "provavel", "quadro",
-        "sinais", "alarme", "comunidade", "sistemica", "arterial", "profunda",
+        "sinais", "alarme", "comunidade", "sistemica", "arterial", "profunda", "gestacao",
+        "meses", "semanas", "duracao", "ignorada", "latente", "incompleto", "completo",
       ]);
       // A QUEIXA pode (e deve) estar no impresso: na prova real o cenário diz
       // "trazido por diarreia há 30 horas". O que não pode vazar é o que o

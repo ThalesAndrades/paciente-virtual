@@ -1,0 +1,140 @@
+{
+  "nome_caso": "Sífilis na Gestação — Teste Rápido Reagente na APS",
+  "revalida": {
+    "area": "medicina_familia",
+    "cenario": "Unidade Básica de Saúde. Gestante de 22 anos, 9 semanas, retorna para o resultado dos testes rápidos colhidos na primeira consulta de pré-natal. O teste rápido para sífilis foi reagente.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) da Unidade Básica de Saúde e vai atender uma gestante de 9 semanas que retorna para resultado de exames.",
+      "O teste rápido treponêmico para sífilis foi reagente.",
+      "Complete a anamnese pertinente e comunique o resultado à paciente.",
+      "Defina a conduta terapêutica, as medidas de vigilância em saúde e o seguimento.",
+      "Registre no fechamento a hipótese, os diferenciais e a conduta."
+    ],
+    "limites": { "exames": 3, "hipoteses": 1, "condutas": 5 },
+    "pep": [
+      {
+        "id": "sigilo_acolhimento",
+        "descricao": "Acolhe a paciente, garante sigilo e comunica o resultado sem julgamento moral",
+        "peso": 1.5,
+        "adequado": "Apresenta-se, garante privacidade e sigilo, comunica o resultado em linguagem acessível e sem juízo de valor, e verifica como ela recebeu a notícia.",
+        "parcial": "Comunica o resultado, mas em linguagem técnica ou sem garantir sigilo e espaço para reação.",
+        "inadequado": "Comunica o resultado com juízo moral, culpabiliza a paciente ou não comunica o resultado."
+      },
+      {
+        "id": "historia_ist",
+        "descricao": "Investiga a história compatível com sífilis e o estadiamento",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre lesão genital prévia (úlcera indolor), manchas em palmas e plantas, tempo aproximado desses episódios e tratamentos anteriores — dados que definem o estadiamento.",
+        "parcial": "Investiga apenas parte desses achados.",
+        "inadequado": "Não investiga a história da infecção."
+      },
+      {
+        "id": "parcerias_e_preservativo",
+        "descricao": "Investiga parcerias sexuais e uso de preservativo",
+        "peso": 1,
+        "adequado": "Pergunta sobre parcerias sexuais, tempo de relacionamento e uso de preservativo, com abordagem respeitosa.",
+        "parcial": "Pergunta de forma superficial ou constrangedora.",
+        "inadequado": "Não investiga parcerias — o que inviabiliza interromper a cadeia de transmissão."
+      },
+      {
+        "id": "alergia_penicilina",
+        "descricao": "Investiga história de alergia à penicilina",
+        "peso": 0.5,
+        "adequado": "Pergunta especificamente sobre alergia à penicilina antes de indicar o tratamento.",
+        "inadequado": "Prescreve penicilina sem investigar alergia."
+      },
+      {
+        "id": "exames_complementares",
+        "descricao": "Solicita o teste não treponêmico com titulação e rastreia outras IST",
+        "peso": 1,
+        "adequado": "Solicita VDRL/RPR com titulação para acompanhamento e verifica ou solicita testagem para HIV, hepatite B e hepatite C.",
+        "parcial": "Solicita apenas o VDRL, sem rastrear outras IST.",
+        "inadequado": "Não solicita teste não treponêmico."
+      },
+      {
+        "id": "tratamento",
+        "descricao": "Prescreve penicilina benzatina em esquema adequado à gestação",
+        "peso": 2,
+        "adequado": "Prescreve penicilina benzatina 2,4 milhões UI por via intramuscular, em esquema de três doses semanais (sífilis latente tardia ou de duração ignorada), na própria unidade, e explica que é o único tratamento que trata o feto.",
+        "parcial": "Indica penicilina benzatina, mas em esquema ou dose incorretos, ou encaminha para outro serviço sem necessidade.",
+        "inadequado": "Prescreve outro antibiótico (doxiciclina, azitromicina) ou não trata."
+      },
+      {
+        "id": "parceria",
+        "descricao": "Define a convocação e o tratamento da parceria sexual",
+        "peso": 1,
+        "adequado": "Orienta a convocação da parceria para testagem e tratamento, discutindo com a paciente como fazer isso com segurança.",
+        "parcial": "Menciona a parceria, mas sem plano concreto de convocação.",
+        "inadequado": "Não aborda a parceria."
+      },
+      {
+        "id": "notificacao",
+        "descricao": "Reconhece a notificação compulsória de sífilis em gestante",
+        "peso": 1,
+        "adequado": "Informa que fará a notificação compulsória de sífilis em gestante, explicando que é uma exigência de vigilância e que o sigilo é preservado.",
+        "inadequado": "Não menciona a notificação."
+      },
+      {
+        "id": "seguimento",
+        "descricao": "Estabelece o seguimento sorológico e o pré-natal de acompanhamento",
+        "peso": 1,
+        "adequado": "Define VDRL mensal até o fim da gestação para controle de cura, mantém o pré-natal e alerta sobre a necessidade de avaliação do recém-nascido.",
+        "parcial": "Menciona repetir exames sem definir periodicidade ou sem vincular ao pré-natal.",
+        "inadequado": "Não estabelece seguimento."
+      },
+      {
+        "id": "prevencao",
+        "descricao": "Orienta prevenção e verifica o entendimento da paciente",
+        "peso": 0.5,
+        "adequado": "Orienta uso de preservativo durante o tratamento e depois dele, e confirma o que a paciente entendeu.",
+        "inadequado": "Não orienta prevenção nem confirma entendimento."
+      }
+    ]
+  },
+  "criterios": [
+    {
+      "nome": "Comunicação do resultado",
+      "objetivo": "Informar com sigilo e sem julgamento.",
+      "peso": 2,
+      "itens": [
+        { "nome": "explica o resultado", "termos": ["resultado", "exame deu", "reagente", "significa"] },
+        { "nome": "sigilo", "termos": ["sigilo", "confidencial", "so eu e voce", "ninguem vai saber"] },
+        { "nome": "acolhimento", "termos": ["como voce esta", "como se sente", "entendeu", "alguma duvida"] }
+      ]
+    },
+    {
+      "nome": "História e estadiamento",
+      "objetivo": "Reconstituir a infecção.",
+      "peso": 2,
+      "itens": [
+        { "nome": "lesão genital", "termos": ["ferida", "feridinha", "ulcera", "lesao", "cancro"] },
+        { "nome": "manchas", "termos": ["manchas", "mancha", "palma", "planta", "maos", "pes"] },
+        { "nome": "tratamento anterior", "termos": ["ja tratou", "tomou injecao", "tratamento anterior", "penicilina antes"] },
+        { "nome": "alergia à penicilina", "termos": ["alergia", "alergica", "penicilina"] }
+      ]
+    },
+    {
+      "nome": "Parcerias e prevenção",
+      "objetivo": "Interromper a cadeia de transmissão.",
+      "peso": 2,
+      "itens": [
+        { "nome": "parcerias", "termos": ["parceiro", "companheiro", "parceria", "com quem"] },
+        { "nome": "preservativo", "termos": ["preservativo", "camisinha", "protecao"] },
+        { "nome": "convocação", "termos": ["trazer ele", "chamar", "convocar", "ele precisa", "tratar o parceiro"] }
+      ]
+    },
+    {
+      "nome": "Conduta e vigilância",
+      "objetivo": "Tratar, notificar e seguir.",
+      "peso": 4,
+      "itens": [
+        { "nome": "penicilina benzatina", "termos": ["penicilina", "benzatina", "benzetacil", "injecao"] },
+        { "nome": "VDRL/titulação", "termos": ["vdrl", "rpr", "titulacao", "titulo"] },
+        { "nome": "outras IST", "termos": ["hiv", "hepatite", "outras ist", "sorologia"] },
+        { "nome": "notificação", "termos": ["notificacao", "notificar", "sinan", "vigilancia"] },
+        { "nome": "seguimento mensal", "termos": ["mensal", "todo mes", "repetir o exame", "seguimento", "controle de cura"] }
+      ]
+    }
+  ]
+}
