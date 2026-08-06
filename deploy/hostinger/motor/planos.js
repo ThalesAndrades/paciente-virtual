@@ -83,8 +83,19 @@ export function itemPorId(id) {
   return null;
 }
 
+// Formatação à mão, sem `toLocaleString`. O Node do contêiner é compilado com ICU
+// reduzida: `pt-BR` não existe lá, a chamada cai no inglês em silêncio e a loja
+// anunciava "R$180.00" para um aluno brasileiro — ponto no lugar da vírgula, num
+// número que ele vai pagar. Preço é a última coisa que pode depender do que veio
+// instalado no servidor.
 export function reais(centavos) {
-  return (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  const total = Math.round(Number(centavos) || 0);
+  const sinal = total < 0 ? "-" : "";
+  const absoluto = Math.abs(total);
+  const inteiros = String(Math.floor(absoluto / 100));
+  const centavosTexto = String(absoluto % 100).padStart(2, "0");
+  const comMilhar = inteiros.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return `${sinal}R$ ${comMilhar},${centavosTexto}`;
 }
 
 // Tudo o que a página precisa para montar a loja, sem ela conhecer regra nenhuma.

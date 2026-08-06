@@ -841,3 +841,28 @@ test("o sorteio do circuito cobre áreas e degrada com acervo raso", async () =>
   assert.equal(final.nota, 42.5);
   assert.equal(proximaEstacao(prova), null, "circuito concluído não abre mais estação");
 });
+
+/* ---------- Preço ---------- */
+
+test("o preço sai em real brasileiro sem depender da ICU do servidor", async () => {
+  // Este teste existe por um defeito visto em PRODUÇÃO: `toLocaleString("pt-BR")`
+  // num Node compilado com ICU reduzida cai no inglês em silêncio, e a loja
+  // anunciava "R$180.00" — ponto no lugar da vírgula, num número que o aluno paga.
+  const { reais, PACOTES, ASSINATURAS } = await import("../motor/planos.js");
+
+  assert.equal(reais(2400), "R$ 24,00");
+  assert.equal(reais(5990), "R$ 59,90");
+  assert.equal(reais(18000), "R$ 180,00");
+  assert.equal(reais(100000), "R$ 1.000,00");
+  assert.equal(reais(7), "R$ 0,07");
+  assert.equal(reais(0), "R$ 0,00");
+
+  // E o catálogo inteiro sai no formato brasileiro, seja qual for o servidor.
+  for (const item of [...PACOTES, ...ASSINATURAS]) {
+    assert.match(
+      reais(item.centavos),
+      /^R\$ \d{1,3}(\.\d{3})*,\d{2}$/,
+      `${item.id}: preço fora do formato brasileiro`
+    );
+  }
+});
