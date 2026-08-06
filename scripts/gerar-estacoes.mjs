@@ -32,6 +32,16 @@ const AREA = {
   colica_renal: "cirurgia",
   ulcera_peptica: "cirurgia",
   lombalgia: "medicina_familia",
+  diverticulite: "cirurgia",
+  obstrucao_intestinal_bridas: "cirurgia",
+  doenca_inflamatoria_pelvica: "ginecologia_obstetricia",
+  endometriose: "ginecologia_obstetricia",
+  // Hanseníase e tuberculose são diagnóstico de Atenção Primária no Brasil: têm
+  // programa nacional, busca de contatos e tratamento na UBS. Classificá-las como
+  // Clínica Médica treinaria o participante para o cenário errado.
+  hanseniase: "medicina_familia",
+  tuberculose_pulmonar: "medicina_familia",
+  hipertireoidismo_graves: "clinica_medica",
 };
 
 // Os critérios de anamnese viram itens de PEP com redação de prova. A chave é o
@@ -120,15 +130,31 @@ function identificador(nome, usados) {
   return id;
 }
 
+// Onde a estação acontece, por área. Antes eram dois ternários que mandavam
+// Ginecologia e Pediatria para a "unidade de emergência" por omissão — o que treina
+// o participante para o cenário errado: dismenorreia e puericultura não chegam pelo
+// pronto-socorro. Cada área do edital tem o seu lugar, declarado.
+const LOCAL_TAREFA = {
+  clinica_medica: "na unidade de emergência de um hospital",
+  cirurgia: "no pronto-socorro de um hospital geral",
+  medicina_familia: "em uma Unidade Básica de Saúde",
+  ginecologia_obstetricia: "no ambulatório de ginecologia e obstetrícia",
+  pediatria: "no ambulatório de pediatria",
+};
+
+const LOCAL_CENARIO = {
+  clinica_medica: "Unidade de emergência de hospital geral.",
+  cirurgia: "Pronto-socorro de hospital geral.",
+  medicina_familia: "Unidade Básica de Saúde, atendimento de demanda espontânea.",
+  ginecologia_obstetricia: "Ambulatório de ginecologia e obstetrícia.",
+  pediatria: "Ambulatório de pediatria.",
+};
+
 function tarefaPadrao(caso, area) {
   const ident = caso.identificacao || {};
   const idade = ident.idade ? `${ident.idade} anos` : "";
   const quem = `${ident.sexo === "Feminino" ? "paciente do sexo feminino" : "paciente do sexo masculino"}${idade ? `, ${idade}` : ""}`;
-  const local = area === "medicina_familia"
-    ? "em uma Unidade Básica de Saúde"
-    : area === "cirurgia"
-      ? "no pronto-socorro de um hospital geral"
-      : "na unidade de emergência de um hospital";
+  const local = LOCAL_TAREFA[area] || LOCAL_TAREFA.clinica_medica;
 
   return [
     `Você é o(a) médico(a) de plantão ${local} e vai atender um(a) ${quem}.`,
@@ -141,6 +167,7 @@ function tarefaPadrao(caso, area) {
 
 let escritas = 0;
 let preservadas = 0;
+let recusadas = 0;
 const relatorio = [];
 
 for (const arquivo of fs.readdirSync(path.join(RAIZ, "avaliacoes")).sort()) {
@@ -158,6 +185,16 @@ for (const arquivo of fs.readdirSync(path.join(RAIZ, "avaliacoes")).sort()) {
   if (rubrica.revalida) {
     preservadas += 1;
     relatorio.push(`  = ${id} (já tinha estação, preservada)`);
+    continue;
+  }
+
+  // Caso com acompanhante: `identificacao` descreve QUEM FALA, não quem está
+  // doente. Gerar daqui produziria um impresso mandando o participante atender o
+  // pai de 38 anos quando o paciente é o filho de 7 — e ninguém notaria, porque o
+  // arquivo fica válido. Melhor recusar em voz alta do que gerar errado calado.
+  if (caso.interlocutor) {
+    recusadas += 1;
+    relatorio.push(`  ! ${id.padEnd(24)} tem acompanhante — estação precisa ser escrita à mão`);
     continue;
   }
 
@@ -185,11 +222,7 @@ for (const arquivo of fs.readdirSync(path.join(RAIZ, "avaliacoes")).sort()) {
   // versão deste script, e só não foi para produção porque o teste existia.
   const ident = caso.identificacao || {};
   const cenario = [
-    area === "medicina_familia"
-      ? "Unidade Básica de Saúde, atendimento de demanda espontânea."
-      : area === "cirurgia"
-        ? "Pronto-socorro de hospital geral."
-        : "Unidade de emergência de hospital geral.",
+    LOCAL_CENARIO[area] || LOCAL_CENARIO.clinica_medica,
     `Paciente do sexo ${String(ident.sexo || "").toLowerCase() || "não informado"}${ident.idade ? `, ${ident.idade} anos` : ""}, procura atendimento.`,
   ].join(" ");
 
@@ -211,4 +244,11 @@ for (const arquivo of fs.readdirSync(path.join(RAIZ, "avaliacoes")).sort()) {
 }
 
 console.log(relatorio.join("\n"));
-console.log(`\n${escritas} estação(ões) ${somenteVer ? "seriam escritas" : "escritas"}, ${preservadas} preservada(s).`);
+console.log(
+  `\n${escritas} estação(ões) ${somenteVer ? "seriam escritas" : "escritas"}, ` +
+    `${preservadas} preservada(s), ${recusadas} recusada(s) por acompanhante.`
+);
+
+// Recusa não é sucesso silencioso: sem saída diferente de zero, um caso pediátrico
+// novo entraria no acervo sem estação e só o teste do PEP pegaria — depois do push.
+if (recusadas > 0) process.exitCode = 1;

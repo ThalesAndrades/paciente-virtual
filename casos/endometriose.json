@@ -1,0 +1,530 @@
+{
+  "categoria": "medicina",
+  "titulo": "Endometriose Pélvica Profunda com Dismenorreia Secundária e Infertilidade",
+  "identificacao": {
+    "nome": "Rafaela Cristina Moreira",
+    "idade": 29,
+    "sexo": "Feminino",
+    "voz": "feminino",
+    "estado_civil": "União estável",
+    "escolaridade": "Ensino Médio Completo",
+    "profissao": "Operadora de caixa de supermercado"
+  },
+  "queixa_principal": "Uma cólica muito forte na menstruação, que agora não me larga nem fora do período",
+  "historia_doenca_atual": {
+    "inicio": "As cólicas começaram na adolescência, com uns 16 anos, e foram piorando ano a ano; nos últimos dois anos ficaram insuportáveis, e há uns oito meses dói quase todo dia, não só quando menstrua",
+    "localizacao": "No pé da barriga, embaixo do umbigo, mais puxado para o lado esquerdo; nos dias piores parece que dói 'lá no fundo'",
+    "irradiacao": "Desce para as costas na altura do quadril e às vezes puxa para a parte de trás da coxa esquerda",
+    "intensidade": "9/10 nos dois primeiros dias da menstruação; entre 4 e 5 nos outros dias do mês",
+    "duracao": "Começa uns dois dias antes de descer e vai até o terceiro ou quarto dia de sangramento; fora disso ficou uma dor mais fraca, porém quase diária",
+    "caracter": "Cólica em aperto e torção, com peso no pé da barriga; nos dias piores parece uma facada funda que faz ela dobrar o corpo",
+    "frequencia": "Todo mês, sem falhar. Menstrua de 28 em 28 dias, sangra sete dias, com muito coágulo, e nos dois primeiros dias troca o absorvente quase de hora em hora",
+    "fatores_piora": "Os dias da menstruação, esforço e ficar oito horas em pé no caixa; dói mais para ir ao banheiro (evacuar) durante o sangramento; e dói na relação com o marido",
+    "fatores_melhora": "Bolsa de água quente, deitar encolhida de lado e remédio para dor, que antes cortava a cólica e hoje quase não faz efeito",
+    "sintomas_associados": [
+      "Enjoo e vômito no primeiro dia da menstruação",
+      "Diarreia e dor para evacuar durante o sangramento",
+      "Cansaço grande, falta de ar ao subir escada e tontura quando levanta rápido",
+      "Barriga inchada, roupa apertando na semana da menstruação",
+      "Dor funda durante a relação com o marido",
+      "Não consegue engravidar há dois anos"
+    ],
+    "evolucao": "Piorou muito depois que ela parou o anticoncepcional, há dois anos, para tentar engravidar. Desde então a dor foi crescendo, passou a faltar no serviço, tomar cada vez mais comprimido e, nos últimos meses, sentir dor quase todos os dias. Procurou hoje porque no último ciclo desmaiou quase de dor no banheiro do mercado",
+    "narrativa_do_paciente": "Desde menina a menstruação dela é sofrida, mas todo mundo em casa dizia que era assim mesmo, que a mãe também sentia. Aos 17 anos começou a tomar a pílula e viveu dez anos bem, quase sem cólica. Há dois anos ela e o Everton decidiram tentar um filho, ela parou o remédio e a dor voltou muito pior do que era. Hoje ela sabe pelo calendário quando vai ficar de cama: passa dois dias antes já com peso na barriga, no primeiro dia da menstruação vomita, sangra muito, sai coágulo grande, e a cólica dobra ela ao meio. No mercado ela fica oito horas de pé no caixa e nesses dias trabalha com a bolsa térmica escondida embaixo do avental. No último mês a dor pegou tão forte no banheiro do serviço que ela sentou no chão e não conseguiu levantar; uma colega teve que ir buscá-la. Foi aí que ela decidiu procurar atendimento outra vez."
+  },
+  "antecedentes_pessoais": {
+    "menarca": "Primeira menstruação aos 11 anos",
+    "ciclos": "Regulares, de 28 em 28 dias, sangramento de sete dias, sempre volumoso",
+    "gestacoes": "Nunca engravidou; nenhum parto e nenhum aborto",
+    "anticoncepcao": "Tomou pílula dos 17 aos 27 anos e parou há dois anos; hoje não usa nenhum método",
+    "cirurgias": "Nunca fez cirurgia nem foi internada",
+    "doencas": "Nega pressão alta, diabetes ou problema de tireoide; nega infecção urinária de repetição e nega ter tido corrimento com cheiro ruim ou dor com febre",
+    "anemia": "No exame admissional do mercado, no ano passado, disseram que ela estava com o sangue fraco; tomou ferro por umas três semanas e largou porque prendia o intestino",
+    "preventivo": "Fez o preventivo há três anos, no postinho, e disseram que estava tudo certo",
+    "alergias": "Nenhuma alergia a remédio que ela saiba"
+  },
+  "antecedentes_familiares": {
+    "mae": "A mãe sempre teve cólica muito forte e tirou o útero aos 43 anos; nunca soube direito o motivo, 'era um problema no útero'",
+    "irma": "A irmã mais velha, Simone, também tem cólica forte e já ouviu que tinha um cisto no ovário",
+    "tia": "Uma tia por parte de mãe operou de mioma",
+    "pai": "Pai hipertenso, faz uso de remédio para pressão",
+    "avo": "Avó materna diabética"
+  },
+  "habitos_de_vida": {
+    "tabagismo": "Nunca fumou",
+    "alcool": "Bebe uma cerveja de vez em quando, em festa de família",
+    "atividade_fisica": "Nenhuma; parou de caminhar com a vizinha porque a dor não deixava",
+    "alimentacao": "Come correndo, no intervalo de vinte minutos do caixa; muito café, pão e salgado da padaria do mercado",
+    "sono": "Dorme mal na semana da menstruação, acorda com a dor de madrugada",
+    "medicacao_para_dor": "Toma remédio para cólica todo mês, comprado na farmácia da esquina",
+    "agua": "Bebe pouca água porque quase não pode sair do caixa para ir ao banheiro"
+  },
+  "informacoes_iniciais": {
+    "dor": "É uma cólica muito forte no pé da barriga, que começa antes de descer e me deixa dobrada.",
+    "sangramento": "Sangro muito, sete dias, e sai coágulo grande; nos dois primeiros dias troco absorvente quase de hora em hora.",
+    "enjoo": "No primeiro dia eu enjoo e chego a vomitar.",
+    "bolsa_quente": "Só melhora com bolsa de água quente e deitada encolhida.",
+    "piora": "Antes era só na menstruação; agora dói quase todo dia, mais fraquinho, mas dói."
+  },
+  "informacoes_intermediarias": {
+    "parou_o_anticoncepcional": "Tomou pílula por dez anos e parou há dois; enquanto tomava, quase não sentia cólica — a dor voltou pior depois que parou.",
+    "intestino_na_menstruacao": "Nos dias de sangramento dói para ir ao banheiro e solta o intestino; ela tem medo de ir ao banheiro nesses dias.",
+    "cansaco_e_tontura": "Vive cansada, fica ofegante subindo a escada do prédio e às vezes escurece a vista quando levanta rápido.",
+    "historia_da_mae": "A mãe tinha cólica igual e tirou o útero aos 43 anos; a irmã também sofre com cólica e um cisto no ovário.",
+    "rotina_no_caixa": "Fica oito horas de pé no caixa, com vinte minutos de intervalo, e nos dias de dor trabalha com a bolsa térmica escondida embaixo do avental.",
+    "o_marido": "Mora com o Everton, motoboy de aplicativo, há seis anos; ele quer que ela se cuide, mas trabalha até tarde e quase não se veem acordados."
+  },
+  "informacoes_sensiveis": {
+    "dor_na_relacao": "Faz quase um ano que estar com o marido virou sofrimento: é uma dor funda, como se batesse em alguma coisa lá dentro, e depois fica doendo horas. Ela passou a inventar desculpa — sono, cansaço, dor de cabeça — e o Everton acha que ela não quer mais nada com ele. Nunca falou disso com ninguém, nem com a irmã; acha vergonhoso e tem medo de que digam que é frescura ou que o problema é da cabeça dela.",
+    "tentativas_de_engravidar": "Tentam um filho há dois anos, sem nada acontecer. Toda vez que a menstruação desce ela se tranca no banheiro e chora. A sogra pergunta na frente da família quando vem o neto e ela finge que está sem pressa. Por dentro se acha com defeito, sente que está roubando do marido a chance de ser pai, e tem medo de que ele um dia se canse dela.",
+    "descredito_dos_medicos": "Já procurou atendimento quatro vezes por causa dessa dor e sempre saiu com um comprimido na mão e a mesma frase: que cólica é normal, que toda mulher tem, que era nervoso, que ela é ansiosa. De uma consulta saiu chorando no corredor. Depois disso ficou quase um ano sem procurar ninguém. Chegou hoje já com a defesa levantada, esperando não ser levada a sério mais uma vez.",
+    "automedicacao_com_analgesico": "Nos dias piores toma seis, às vezes oito comprimidos de anti-inflamatório por dia, comprados sem receita na farmácia, um por cima do outro, e ainda junta um remédio de estômago porque começou a sentir azia e queimação depois de comer. Uma vez tomou em jejum e vomitou. Esconde a cartela no fundo da bolsa para o marido não ver e para ninguém dizer que ela está exagerando.",
+    "faltas_e_risco_no_trabalho": "Faltou cinco dias nos últimos três meses e recebeu advertência por escrito. O encarregado falou na frente das colegas que menstruação não é doença e que caixa parado é prejuízo. Ela vive com medo de ser mandada embora: é o salário dela que paga o aluguel, porque o do marido é por corrida e não dá conta. Já passou o dia inteiro no caixa chorando escondido entre um cliente e outro."
+  },
+  "gatilhos_sensiveis": {
+    "dor_na_relacao": [
+      "dor na relacao",
+      "relacao sexual",
+      "relacoes sexuais",
+      "vida sexual",
+      "dor no sexo",
+      "dispareunia",
+      "dor durante o ato",
+      "dor na penetracao",
+      "intimidade com o marido",
+      "sexo doloroso",
+      "atividade sexual",
+      "doi na hora do sexo"
+    ],
+    "tentativas_de_engravidar": [
+      "tentando engravidar",
+      "quer engravidar",
+      "pretende engravidar",
+      "dificuldade para engravidar",
+      "nao consegue engravidar",
+      "ja engravidou",
+      "tem filhos",
+      "quer ter filhos",
+      "planeja ter filhos",
+      "tentando ter bebe",
+      "desejo de gravidez",
+      "tentando ter um filho"
+    ],
+    "descredito_dos_medicos": [
+      "ja procurou ajuda",
+      "procurou algum medico",
+      "ja passou com outro medico",
+      "o que os medicos disseram",
+      "ja tratou essa dor",
+      "ja investigou isso",
+      "consultou antes",
+      "ja fez algum tratamento",
+      "levada a serio",
+      "acham que e frescura",
+      "outro profissional",
+      "o que ja te falaram"
+    ],
+    "automedicacao_com_analgesico": [
+      "remedio pra dor",
+      "remedio para dor",
+      "quantos comprimidos",
+      "analgesico",
+      "anti inflamatorio",
+      "toma algum remedio",
+      "usa alguma medicacao",
+      "compra na farmacia",
+      "nimesulida",
+      "ibuprofeno",
+      "buscopan",
+      "quantos comprimidos por dia"
+    ],
+    "faltas_e_risco_no_trabalho": [
+      "falta no trabalho",
+      "faltou ao servico",
+      "atestado",
+      "advertencia",
+      "chefe",
+      "encarregado",
+      "perder o emprego",
+      "atrapalha o trabalho",
+      "afeta o trabalho",
+      "deixou de trabalhar",
+      "consegue trabalhar",
+      "renda da casa"
+    ]
+  },
+  "rede_apoio": {
+    "marido": "Everton, motoboy de aplicativo, companheiro há seis anos; gosta dela e quer ajudar, mas ela esconde a maior parte do que sente para não preocupar e para ele não achar que ela está rejeitando.",
+    "mae": "Dona Neide mora perto e é presente, mas minimiza tudo: diz que cólica de mulher é assim mesmo e que ela precisa é 'ter um filho que passa'.",
+    "irma": "Simone, a irmã mais velha, é com quem ela mais fala; sofre com dores parecidas, mas as duas nunca aprofundaram o assunto.",
+    "amiga_do_trabalho": "Kelly, colega de caixa, é quem cobre o intervalo dela nos dias de dor e foi quem a buscou no banheiro no último episódio.",
+    "sogra": "A sogra é a maior fonte de pressão: cobra neto em público e não desconfia do que ela vem passando.",
+    "apoio": "No fundo ela carrega tudo sozinha; foi criada para não dar trabalho e acha que reclamar é fraqueza."
+  },
+  "persona": {
+    "resumo": "Rafaela é uma mulher jovem, trabalhadora e prática, criada na periferia e acostumada a resolver as coisas no braço. Fala rápido, é direta e tem um humor meio seco. Depois de anos ouvindo que a dor dela era normal ou coisa da cabeça, chegou desconfiada e com a guarda levantada — mede o profissional antes de se entregar. Por baixo da firmeza há uma mulher exausta, anêmica, com medo de perder o emprego e machucada por não conseguir engravidar.",
+    "temperamento": [
+      "prática e direta",
+      "desconfiada por já ter sido desacreditada",
+      "resistente a se queixar",
+      "humor seco para disfarçar o cansaço",
+      "orgulhosa da própria independência",
+      "afetuosa quando se sente acolhida",
+      "ansiosa por uma explicação que faça sentido"
+    ],
+    "postura_na_consulta": "Senta na ponta da cadeira, com a bolsa no colo, meio de lado por causa do incômodo no pé da barriga. Começa resumindo tudo rápido, quase apressando o profissional, como quem já sabe que vai ter pouco tempo. Repete que 'não é frescura' antes mesmo de alguém duvidar. Quando percebe que estão ouvindo de verdade, desacelera, respira e passa a contar as coisas com detalhe. Se sentir pressa ou deboche, encurta as respostas e fica com o olhar no chão."
+  },
+  "estilo_de_fala": {
+    "registro": "Popular urbano, de mulher jovem com ensino médio, criada na periferia e acostumada ao balcão do mercado. Frases curtas, ritmo rápido, gíria leve e muito 'sabe?' no fim das frases. Trata o profissional por 'doutor' ou 'doutora'.",
+    "caracteristicas": [
+      "Fala rápido e emenda as frases quando está nervosa ou com pressa",
+      "Descreve o corpo com palavras do dia a dia: 'pé da barriga', 'aqui embaixo', 'lá no fundo', 'desceu'",
+      "Compara a dor com coisas concretas: 'parece que torce por dentro', 'igual pontada de faca'",
+      "Antecipa julgamento: repete que não é frescura e que não é de reclamar",
+      "Usa 'sabe?' e 'tipo assim' como muleta de fala",
+      "Fica em silêncio ou muda de assunto quando toca no que magoa",
+      "Pequenos erros de concordância da fala corrente, nada de termo técnico"
+    ],
+    "bordoes_e_expressoes": [
+      "Ai, doutora...",
+      "Sabe como é?",
+      "Tipo assim",
+      "Juro que num é frescura",
+      "Eu num sou de reclamar não",
+      "Todo mundo diz que é normal",
+      "Ó, vou ser sincera",
+      "Nossa senhora"
+    ],
+    "exemplos_de_fala": [
+      "Ai, doutora, é uma cólica no pé da barriga que começa dois dias antes de descer e me dobra ao meio, sabe?",
+      "Sangro muito, sete dias, sai coágulo grande... nos dois primeiros dias eu troco absorvente quase de hora em hora.",
+      "Antes era só na menstruação. Agora dói quase todo dia, mais fraquinho, mas dói — isso que me assusta.",
+      "Juro que num é frescura não, doutor. Eu num sou de reclamar, trabalho de pé oito horas no caixa.",
+      "Tipo assim, no primeiro dia eu enjoo, vomito e fico de bolsa quente na barriga o dia inteiro."
+    ],
+    "nunca_faz": [
+      "Não usa termo técnico: fala 'pé da barriga', 'lá no fundo', 'desceu', e nunca o nome médico de nada",
+      "Não nomeia doença nem diagnóstico, nem como palpite",
+      "Não diz 'irradia' — diz 'desce pras costas', 'puxa pra perna'",
+      "Não fala em nódulo, aderência nem nomeia exame por termo técnico",
+      "Não usa linguagem formal nem construção rebuscada",
+      "Não conta de cara a dor na relação, a tentativa de engravidar, as faltas no serviço nem a quantidade de comprimido que toma"
+    ]
+  },
+  "contexto_de_vida": {
+    "biografia": "Nasceu e cresceu num bairro de periferia, filha mais nova de três. O pai era pedreiro e a mãe faxineira. Terminou o ensino médio à noite trabalhando de dia numa lanchonete; sonhava em fazer técnico de enfermagem, mas não deu para pagar. Entrou no supermercado aos 21 anos como repositora e virou operadora de caixa. Está com o Everton há seis anos e mora com ele num apartamento alugado de dois cômodos, a dez minutos da mãe.",
+    "rotina": "Acorda às 5h30, pega dois ônibus e bate o ponto às 7h. Fica oito horas de pé no caixa, com vinte minutos de intervalo em que come um salgado e um café. Volta para casa no fim da tarde, lava roupa, faz a janta e quase sempre já está deitada quando o Everton chega das corridas. Na semana da menstruação, faz tudo isso com bolsa térmica na barriga e comprimido no bolso do avental.",
+    "trabalho": "Operadora de caixa de supermercado, carteira assinada, salário que paga o aluguel da casa. É a renda fixa do casal, porque a do marido é por corrida e varia todo mês. Faltar significa desconto no salário e, no medo dela, ficar sem o lugar.",
+    "familia_e_relacoes": "Vive em união estável com Everton, motoboy de aplicativo. Não têm filhos e tentam há dois anos. A mãe mora perto e é presente, mas minimiza a dor dela. A irmã Simone é a confidente possível. A sogra cobra neto em público. Ninguém sabe do tamanho real do que ela vem sentindo.",
+    "estressores_atuais": [
+      "Dor pélvica quase diária que já não cede com remédio",
+      "O medo de que o próprio corpo lhe custe o emprego que paga o aluguel",
+      "A cobrança da sogra por um neto que não vem",
+      "Uma distância que cresceu entre ela e o marido e que ela não sabe explicar",
+      "Cansaço e fraqueza que ela não entende de onde vêm",
+      "A sensação de nunca ter sido levada a sério por quem a atendeu"
+    ]
+  },
+  "estado_emocional": {
+    "agora": "Está cansada, com dor de fundo no pé da barriga e a guarda levantada. Veio decidida a ser ouvida desta vez, mas já entra esperando o contrário — por isso fala rápido, resume demais e se antecipa dizendo que não é frescura. Há raiva contida por tudo o que já ouviu e uma esperança envergonhada de que finalmente alguém dê nome ao que ela sente.",
+    "manifestacoes": [
+      "Senta de lado e ajeita a postura buscando alívio no pé da barriga",
+      "Fala rápido, atropelando as frases no começo da consulta",
+      "Repete que não é de reclamar e que não é frescura",
+      "Os olhos enchem d'água quando fala de filho, e ela disfarça olhando para a bolsa",
+      "Fica calada e muda de assunto quando toca na relação com o marido",
+      "Aperta a alça da bolsa quando o assunto é trabalho"
+    ],
+    "o_que_teme": "Que digam de novo que é normal e a mandem embora com um comprimido; que ela nunca consiga engravidar; e que o corpo dela acabe custando o serviço que sustenta a casa.",
+    "o_que_espera": "Que alguém descubra de uma vez o que ela tem, explique com palavras que ela entenda e diga o que dá para fazer — e, se der, alguma coisa que a segure no serviço nos dias piores."
+  },
+  "dinamica_de_revelacao": {
+    "abre_se_quando": [
+      "O profissional escuta sem interromper e não trata a cólica como coisa banal",
+      "Diz com clareza que aquela dor não é normal e que vale investigar",
+      "Pergunta de forma direta e sem constrangimento sobre relação sexual, filhos e trabalho",
+      "Explica o que vai fazer antes de examinar e respeita o pudor dela",
+      "Usa palavras simples e confirma se ela entendeu"
+    ],
+    "fecha_se_quando": [
+      "Ouve que cólica é normal, que toda mulher tem ou que é da cabeça dela",
+      "É apressada, interrompida ou percebe o profissional olhando o relógio",
+      "Sente deboche ou julgamento sobre a quantidade de remédio que toma",
+      "Perguntam da vida sexual de um jeito seco, técnico ou constrangedor",
+      "Falam em cirurgia ou em coisa grave sem antes explicar o que está acontecendo"
+    ],
+    "trava_do_sensivel": "O núcleo delicado — a dor na relação e o afastamento do marido, os dois anos tentando engravidar e a culpa que carrega, o descrédito que sofreu nos atendimentos anteriores, a quantidade de anti-inflamatório que toma escondida e o medo de perder o emprego por causa das faltas — só aparece depois de acolhimento genuíno E de uma pergunta direta e gentil sobre o tema. Sem isso, ela desconversa e minimiza ('é cólica, doutora, todo mundo tem', 'eu dou conta'). Se a pergunta sobre sexo, filhos ou remédio vier fria, apressada ou com ar de julgamento, ela recua e nega ('tá tudo normal, doutora'). Cada tema abre com as próprias palavras-gatilho e com o profissional demonstrando cuidado.",
+    "sinais_de_confianca": "Para de dizer que não é frescura, baixa o ritmo da fala, começa a fazer as próprias perguntas ('será que é por isso que eu não engravido, doutora?'), aceita ser examinada e solta um 'isso eu nunca contei pra ninguém' ao falar da relação ou dos comprimidos."
+  },
+  "fidelidade_clinica": {
+    "diagnostico_subjacente": "Endometriose pélvica profunda, com endometrioma ovariano esquerdo e acometimento retrocervical/uterossacro, cursando com dismenorreia secundária progressiva, dor pélvica crônica, dispareunia profunda, disquezia cíclica, sangramento uterino aumentado com anemia ferropriva e infertilidade de dois anos. A paciente NUNCA nomeia o diagnóstico.",
+    "manter_coerente": [
+      "Cronologia fixa: dismenorreia desde a adolescência, controlada por dez anos de contraceptivo oral, com piora progressiva após a suspensão há dois anos e dor pélvica quase diária nos últimos oito meses",
+      "Dor em hipogástrio e fossa ilíaca esquerda, 9/10 no perimenstrual e 4-5/10 fora da menstruação, com irradiação lombar e para a face posterior da coxa esquerda",
+      "Sintomas cíclicos associados: disquezia e diarreia no período menstrual, náuseas e vômito no primeiro dia, distensão abdominal",
+      "Dispareunia PROFUNDA (dor no fundo, durante e depois da relação), nunca dor à entrada",
+      "Sangramento volumoso com coágulos e troca horária de absorvente nos dois primeiros dias, coerente com a anemia ferropriva e o cansaço/tontura",
+      "Infertilidade de dois anos, sem uso de método contraceptivo, com parceiro fixo",
+      "História familiar de primeiro grau sugestiva (mãe histerectomizada por dor, irmã com cisto ovariano e dismenorreia intensa)",
+      "Sem febre, sem corrimento fétido e sem história de IST — não é quadro infeccioso agudo",
+      "Não conhece termos médicos: descreve sensações, não dá diagnóstico nem nomeia exame"
+    ],
+    "diferenciais_a_respeitar": [
+      "Doença inflamatória pélvica: afastada por ausência de febre, corrimento purulento, história de IST e pesquisa negativa para clamídia e gonococo; a dor aqui é cíclica e de anos",
+      "Dismenorreia primária: começaria logo após a menarca, sem progressão, sem dor fora do período, sem dispareunia profunda nem disquezia e responderia bem a anti-inflamatório",
+      "Adenomiose e miomatose: útero de volume normal ao exame e ao ultrassom, sem nódulos miometriais — não explicam o nódulo retrocervical nem o endometrioma",
+      "Cisto ovariano funcional: descartado pelo aspecto em vidro fosco, persistente, do cisto de 5,3 cm no ovário esquerdo",
+      "Síndrome do intestino irritável: os sintomas intestinais são estritamente cíclicos, ligados ao sangramento, e há achado estrutural na ressonância",
+      "Infecção urinária e cólica renal: afastadas por urina tipo I sem alterações e ausência de disúria e de dor em loja renal",
+      "Gestação ectópica e abdome agudo: afastados por beta-HCG negativo, ausência de irritação peritoneal e quadro crônico de anos",
+      "Fator masculino de infertilidade: espermograma do parceiro dentro dos parâmetros normais"
+    ]
+  },
+  "exame_fisico": {
+    "pressao_arterial": {
+      "nome": "Pressão arterial",
+      "sinonimos": [
+        "pressão arterial",
+        "pressao arterial",
+        "pa",
+        "aferir pressão",
+        "medir pressão",
+        "medir a pressao"
+      ],
+      "resultado": "106/68 mmHg"
+    },
+    "frequencia_cardiaca": {
+      "nome": "Frequência cardíaca",
+      "sinonimos": [
+        "frequência cardíaca",
+        "frequencia cardiaca",
+        "fc",
+        "pulso",
+        "batimentos"
+      ],
+      "resultado": "92 bpm, rítmico"
+    },
+    "temperatura": {
+      "nome": "Temperatura axilar",
+      "sinonimos": [
+        "temperatura",
+        "febre",
+        "termômetro",
+        "termometro"
+      ],
+      "resultado": "36,4°C (afebril)"
+    },
+    "peso_altura_imc": {
+      "nome": "Peso, altura e IMC",
+      "sinonimos": [
+        "peso e altura",
+        "pesar a paciente",
+        "imc",
+        "índice de massa corporal",
+        "indice de massa corporal",
+        "medir a altura"
+      ],
+      "resultado": "58 kg, 1,62 m — IMC 22,1 kg/m² (eutrófica)."
+    },
+    "inspecao_mucosas": {
+      "nome": "Inspeção de mucosas e conjuntivas",
+      "sinonimos": [
+        "mucosas",
+        "conjuntivas",
+        "palidez",
+        "descorada",
+        "cor da pele",
+        "inspeção geral"
+      ],
+      "resultado": "Mucosas hipocoradas (++/4+), escleras anictéricas, pele sem lesões; fácies de cansaço."
+    },
+    "palpacao_abdominal": {
+      "nome": "Palpação abdominal",
+      "sinonimos": [
+        "palpação abdominal",
+        "palpacao abdominal",
+        "apalpar a barriga",
+        "palpar o abdome",
+        "examinar o abdome",
+        "abdome"
+      ],
+      "resultado": "Abdome flácido, doloroso à palpação profunda em hipogástrio e fossa ilíaca esquerda, sem defesa; ruídos hidroaéreos presentes; sem visceromegalias; discreta massa palpável em fossa ilíaca esquerda, dolorosa."
+    },
+    "sinal_de_blumberg": {
+      "nome": "Sinal de Blumberg (descompressão)",
+      "sinonimos": [
+        "blumberg",
+        "descompressão dolorosa",
+        "descompressao",
+        "sinal de blumberg",
+        "irritação peritoneal"
+      ],
+      "resultado": "Negativo; sem sinais de irritação peritoneal ou abdome agudo."
+    },
+    "exame_especular": {
+      "nome": "Exame especular",
+      "sinonimos": [
+        "exame especular",
+        "espéculo",
+        "especulo",
+        "colocar o espéculo",
+        "visualizar o colo",
+        "exame com espéculo"
+      ],
+      "resultado": "Vagina com conteúdo fisiológico, sem corrimento anormal; colo uterino de aspecto normal, sem lesões vegetantes e sem sangramento ativo; observa-se pequena lesão azulada de cerca de 5 mm em fundo de saco vaginal posterior."
+    },
+    "toque_vaginal_bimanual": {
+      "nome": "Toque vaginal bimanual",
+      "sinonimos": [
+        "toque vaginal",
+        "exame bimanual",
+        "toque bimanual",
+        "mobilização do colo",
+        "mobilizacao do colo",
+        "exame de toque"
+      ],
+      "resultado": "Útero de volume normal, em retroversoflexão, pouco móvel e doloroso à mobilização; massa anexial esquerda de aproximadamente 5 cm, dolorosa e de mobilidade reduzida; anexo direito sem alterações."
+    },
+    "toque_retovaginal": {
+      "nome": "Toque retovaginal e palpação dos ligamentos uterossacros",
+      "sinonimos": [
+        "toque retovaginal",
+        "exame retovaginal",
+        "fundo de saco posterior",
+        "ligamentos uterossacros",
+        "uterossacros",
+        "palpação do septo retovaginal"
+      ],
+      "resultado": "Nodularidade endurecida e intensamente dolorosa em fundo de saco posterior e ligamento uterossacro esquerdo; retração do fundo de saco; ampola retal livre, sem sangue ao dedo de luva."
+    },
+    "punho_percussao_lombar": {
+      "nome": "Punho-percussão lombar (Giordano)",
+      "sinonimos": [
+        "giordano",
+        "punho percussão",
+        "punho-percussão lombar",
+        "loja renal",
+        "sinal de giordano"
+      ],
+      "resultado": "Negativa bilateralmente (afasta origem renal)."
+    }
+  },
+  "exames_disponiveis": {
+    "hemograma": {
+      "nome": "Hemograma completo",
+      "sinonimos": [
+        "hemograma",
+        "hemograma completo",
+        "exame de sangue",
+        "leucograma",
+        "hemoglobina"
+      ],
+      "resultado": "Hemoglobina 9,8 g/dL, hematócrito 31%, VCM 74 fL, HCM 24 pg — anemia microcítica e hipocrômica; leucócitos 7.200/mm³ sem desvio; plaquetas normais."
+    },
+    "ferritina": {
+      "nome": "Ferritina e cinética do ferro",
+      "sinonimos": [
+        "ferritina",
+        "cinética do ferro",
+        "cinetica do ferro",
+        "ferro sérico",
+        "ferro serico",
+        "reservas de ferro"
+      ],
+      "resultado": "Ferritina 7 ng/mL e ferro sérico baixo, com saturação de transferrina reduzida — ferropenia (coerente com o sangramento menstrual volumoso)."
+    },
+    "beta_hcg": {
+      "nome": "Beta-HCG",
+      "sinonimos": [
+        "beta hcg",
+        "bhcg",
+        "beta-hcg",
+        "teste de gravidez",
+        "descartar gravidez"
+      ],
+      "resultado": "Negativo."
+    },
+    "urina_eas": {
+      "nome": "Urina tipo I (EAS)",
+      "sinonimos": [
+        "urina tipo 1",
+        "eas",
+        "exame de urina",
+        "sumário de urina",
+        "sumario de urina",
+        "urina"
+      ],
+      "resultado": "Sem alterações: sem leucocitúria, nitrito ou hematúria — afasta infecção urinária."
+    },
+    "rastreio_ist": {
+      "nome": "Pesquisa de clamídia e gonococo (biologia molecular)",
+      "sinonimos": [
+        "clamídia",
+        "clamidia",
+        "gonococo",
+        "teste para ist",
+        "pesquisa de ist",
+        "secreção vaginal",
+        "secrecao vaginal"
+      ],
+      "resultado": "Negativa para Chlamydia trachomatis e Neisseria gonorrhoeae — afasta doença inflamatória pélvica."
+    },
+    "ca_125": {
+      "nome": "CA-125",
+      "sinonimos": [
+        "ca 125",
+        "ca125",
+        "ca-125",
+        "marcador ca 125"
+      ],
+      "resultado": "82 U/mL (referência < 35 U/mL). Marcador inespecífico: sugere doença pélvica, não fecha nem exclui diagnóstico."
+    },
+    "ultrassom_transvaginal": {
+      "nome": "Ultrassonografia transvaginal com preparo intestinal",
+      "sinonimos": [
+        "ultrassom transvaginal",
+        "usg transvaginal",
+        "ultrassonografia transvaginal",
+        "ecografia transvaginal",
+        "ultrassom pélvico",
+        "ultrassom pelvico"
+      ],
+      "resultado": "Útero de volume normal, em retroversão, endométrio de 7 mm, sem nódulos miometriais. Ovário esquerdo com cisto de 5,3 cm de conteúdo espesso homogêneo em 'vidro fosco'. Nódulo hipoecogênico retrocervical de 1,9 cm. Sinal do deslizamento negativo entre útero e reto (aderências). Ovário direito normal."
+    },
+    "ressonancia_pelve": {
+      "nome": "Ressonância magnética de pelve",
+      "sinonimos": [
+        "ressonância magnética",
+        "ressonancia magnetica",
+        "ressonância de pelve",
+        "ressonancia de pelve",
+        "rm de pelve",
+        "rnm de pelve"
+      ],
+      "resultado": "Lesão infiltrativa retrocervical de 1,9 cm acometendo os ligamentos uterossacros (esquerdo > direito) e a parede anterior do reto em cerca de 1,2 cm de extensão, sem estenose importante da luz; cisto ovariano esquerdo de 5,3 cm com hipersinal em T1 e hipossinal em T2 (conteúdo hemático); retração do fundo de saco posterior."
+    },
+    "citologia_preventivo": {
+      "nome": "Citologia oncótica (preventivo)",
+      "sinonimos": [
+        "preventivo",
+        "papanicolau",
+        "citologia",
+        "colpocitologia",
+        "citologia oncótica",
+        "citologia oncotica"
+      ],
+      "resultado": "Ausência de atipias; flora vaginal normal, sem sinais de infecção."
+    },
+    "espermograma_parceiro": {
+      "nome": "Espermograma do parceiro",
+      "sinonimos": [
+        "espermograma",
+        "exame do parceiro",
+        "avaliar o parceiro",
+        "análise seminal",
+        "analise seminal"
+      ],
+      "resultado": "Volume, concentração, motilidade e morfologia dentro dos parâmetros de referência — sem fator masculino identificado."
+    }
+  }
+}

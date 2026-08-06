@@ -1,0 +1,639 @@
+{
+  "nome_caso": "Consulta de Enfermagem na APS — Ferida Crônica de Membro Inferior",
+  "criterios": [
+    {
+      "nome": "Acolhimento, identificação segura e biossegurança",
+      "objetivo": "Apresentar-se como enfermeiro(a), identificar o paciente com dois identificadores, higienizar as mãos, usar EPI no manejo da ferida e garantir privacidade e consentimento. ITEM CRÍTICO: não higienizar as mãos nem calçar luvas antes de tocar a ferida deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "apresentacao profissional (nome, categoria, COREN)",
+          "termos": [
+            "meu nome e",
+            "sou enfermeiro",
+            "sou a enfermeira",
+            "sou o enfermeiro",
+            "enfermeiro da unidade",
+            "enfermeira da unidade",
+            "meu coren",
+            "vou atender o senhor hoje",
+            "vou te atender hoje"
+          ]
+        },
+        {
+          "nome": "identificacao com dois identificadores",
+          "termos": [
+            "nome completo",
+            "me confirma o nome",
+            "data de nascimento",
+            "cartao do sus",
+            "numero do prontuario"
+          ]
+        },
+        {
+          "nome": "higienizacao das maos",
+          "termos": [
+            "higienizar as maos",
+            "higienizo as maos",
+            "lavar as maos",
+            "alcool em gel",
+            "higiene das maos",
+            "antissepsia das maos"
+          ]
+        },
+        {
+          "nome": "privacidade, consentimento e explicacao previa",
+          "termos": [
+            "vou fechar a porta",
+            "espaco reservado",
+            "sigilo",
+            "me autoriza",
+            "posso examinar",
+            "vou explicar o que vou fazer",
+            "se sente confortavel",
+            "fica so entre nos",
+            "biombo"
+          ]
+        },
+        {
+          "nome": "uso de EPI e descarte adequado no manejo da ferida",
+          "termos": [
+            "luva de procedimento",
+            "calcar as luvas",
+            "epi",
+            "tecnica limpa",
+            "descarte do material",
+            "lixo infectante"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Anamnese dirigida da ferida e da história clínica",
+      "objetivo": "Coletar a história da ferida (início, evolução, ferida anterior, secreção, dor com padrão postural), comorbidades, medicamentos, antecedentes vasculares, hábitos, história ocupacional e contexto de moradia e apoio.",
+      "itens": [
+        {
+          "nome": "queixa e motivo da consulta",
+          "termos": [
+            "o que trouxe o senhor",
+            "o que te trouxe",
+            "me conta o que esta acontecendo",
+            "qual a sua queixa",
+            "como posso ajudar",
+            "me fala um pouco"
+          ]
+        },
+        {
+          "nome": "tempo de evolucao e ferida anterior",
+          "termos": [
+            "quando comecou a ferida",
+            "quanto tempo essa ferida",
+            "quanto tempo de ferida",
+            "ja teve outra ferida",
+            "como comecou",
+            "primeira vez que abre",
+            "a ferida de tres anos atras"
+          ]
+        },
+        {
+          "nome": "caracteristicas da ferida e da secrecao",
+          "termos": [
+            "sai secrecao",
+            "sai alguma agua",
+            "aumentou a secrecao",
+            "que cor e a agua",
+            "sangra a ferida",
+            "tem cheiro",
+            "como e o fundo da ferida"
+          ]
+        },
+        {
+          "nome": "caracterizacao da dor e do padrao postural",
+          "termos": [
+            "como e a dor",
+            "de zero a dez",
+            "piora em pe",
+            "melhora quando deita",
+            "melhora quando eleva",
+            "dor no fim do dia",
+            "dor de madrugada",
+            "dor ao caminhar"
+          ]
+        },
+        {
+          "nome": "comorbidades, medicamentos e alergias",
+          "termos": [
+            "tem pressao alta",
+            "tem diabetes",
+            "faz tratamento de alguma coisa",
+            "toma algum remedio",
+            "remedio de uso continuo",
+            "toma remedio pra pressao",
+            "tem alergia",
+            "alergia a medicamento"
+          ]
+        },
+        {
+          "nome": "antecedentes vasculares e cirurgicos",
+          "termos": [
+            "ja teve trombose",
+            "tem varizes",
+            "veia grossa",
+            "ja fez cirurgia",
+            "ja ficou internado"
+          ]
+        },
+        {
+          "nome": "habitos de vida",
+          "termos": [
+            "como e a alimentacao",
+            "o que costuma comer",
+            "toma bastante agua",
+            "fuma",
+            "ja fumou",
+            "atividade fisica",
+            "costuma caminhar"
+          ]
+        },
+        {
+          "nome": "historia ocupacional e contexto de vida",
+          "termos": [
+            "trabalha em que",
+            "trabalhava em que",
+            "qual era o trabalho",
+            "trabalhava em pe",
+            "quantas horas em pe",
+            "mora sozinho",
+            "quem mora com o senhor",
+            "tem apoio",
+            "quem ajuda o senhor"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Rastreio ativo dos temas sensíveis",
+      "objetivo": "Investigar com pergunta direta e sem julgamento os cinco núcleos escondidos do caso: o curativo caseiro (borra de café e babosa), o motivo real do abandono do tratamento, o consumo diário de álcool, o luto com isolamento social e o medo de amputação. ITEM CRÍTICO: deixar de investigar o que ele coloca na ferida ou repreender o paciente (que então mente e se fecha) deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "investiga o curativo caseiro sem julgamento",
+          "termos": [
+            "passa alguma coisa na ferida",
+            "coloca alguma coisa na ferida",
+            "o que passa na ferida",
+            "quem faz o curativo",
+            "curativo em casa",
+            "algum remedio caseiro",
+            "indicaram algum tratamento caseiro"
+          ]
+        },
+        {
+          "nome": "investiga o abandono do tratamento e suas barreiras",
+          "termos": [
+            "parou de ir no posto",
+            "deixou de ir no posto",
+            "por que parou de ir",
+            "por que parou o tratamento",
+            "motivo de ter parado",
+            "abandonou o tratamento",
+            "nao voltou mais",
+            "usava a faixa",
+            "chegou a usar a bota",
+            "usava a meia"
+          ]
+        },
+        {
+          "nome": "rastreia o consumo de alcool",
+          "termos": [
+            "costuma beber",
+            "bebida alcoolica",
+            "uso de alcool",
+            "quantas doses",
+            "com que frequencia bebe",
+            "bebe todos os dias",
+            "bebe cachaca",
+            "audit"
+          ]
+        },
+        {
+          "nome": "investiga o luto, o animo e o isolamento social",
+          "termos": [
+            "como esta o animo",
+            "sente triste",
+            "sente sozinho",
+            "como esta o sono",
+            "deixou de sair",
+            "vida social",
+            "a esposa",
+            "como foi a perda",
+            "gds",
+            "escala de depressao geriatrica"
+          ]
+        },
+        {
+          "nome": "investiga medos, preocupacoes e a demora em procurar o servico",
+          "termos": [
+            "medo de perder a perna",
+            "medo de amputar",
+            "algum medo",
+            "algum receio",
+            "o que mais preocupa",
+            "maior preocupacao",
+            "irmao",
+            "nao veio antes",
+            "demorou pra procurar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exame físico dirigido da ferida e do membro",
+      "objetivo": "Executar avaliação sistematizada da ferida (leito, bordas, exsudato, mensuração), da pele perilesional, do edema, dos pulsos periféricos, do ITB e da sensibilidade protetora, além dos sinais vitais. ITEM CRÍTICO: não palpar pulsos nem verificar o ITB antes de pensar em compressão deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "sinais vitais",
+          "termos": [
+            "pressao arterial",
+            "aferir a pressao",
+            "medir a pressao",
+            "frequencia cardiaca",
+            "temperatura",
+            "saturacao",
+            "sinais vitais"
+          ]
+        },
+        {
+          "nome": "antropometria e estado nutricional",
+          "termos": [
+            "vou pesar",
+            "verificar o peso",
+            "sua altura",
+            "imc",
+            "estado nutricional"
+          ]
+        },
+        {
+          "nome": "avaliacao sistematizada da ferida com mensuracao",
+          "termos": [
+            "avaliar a ferida",
+            "examinar a ferida",
+            "leito da ferida",
+            "bordas da ferida",
+            "tecido de granulacao",
+            "esfacelo",
+            "exsudato",
+            "medir a ferida",
+            "mensuracao da ferida"
+          ]
+        },
+        {
+          "nome": "pele perilesional e sinais de estase",
+          "termos": [
+            "pele ao redor",
+            "perilesional",
+            "dermatite ocre",
+            "escurecimento da pele",
+            "lipodermatosclerose",
+            "eczema"
+          ]
+        },
+        {
+          "nome": "avaliacao do edema",
+          "termos": [
+            "avaliar o edema",
+            "cacifo",
+            "sinal do cacifo",
+            "comparar as pernas",
+            "inchaco na perna"
+          ]
+        },
+        {
+          "nome": "palpacao dos pulsos perifericos",
+          "termos": [
+            "palpar os pulsos",
+            "pulso pedioso",
+            "tibial posterior",
+            "pulsos perifericos",
+            "enchimento capilar"
+          ]
+        },
+        {
+          "nome": "indice tornozelo-braquial antes de qualquer compressao",
+          "termos": [
+            "itb",
+            "indice tornozelo braquial",
+            "doppler portatil",
+            "pressao no tornozelo"
+          ]
+        },
+        {
+          "nome": "sensibilidade protetora com monofilamento",
+          "termos": [
+            "monofilamento",
+            "sensibilidade protetora",
+            "testar a sensibilidade",
+            "estesiometro"
+          ]
+        },
+        {
+          "nome": "pesquisa de sinais de infeccao",
+          "termos": [
+            "pesquisar sinais de infeccao",
+            "verificar sinais de infeccao",
+            "avaliar sinais de infeccao",
+            "calor local",
+            "teve febre"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "Raciocínio clínico e diagnósticos diferenciais",
+      "objetivo": "Reconhecer o padrão venoso da ferida, afastar componente arterial antes de comprimir, diferenciar colonização de infecção (sem antibiótico nem swab de rotina), afastar etiologia neuropática/diabética e lembrar a vigilância de malignização em ferida refratária.",
+      "itens": [
+        {
+          "nome": "identifica o padrao venoso da ulcera",
+          "termos": [
+            "origem venosa",
+            "ulcera venosa",
+            "insuficiencia venosa",
+            "estase venosa",
+            "problema de circulacao das veias",
+            "retorno do sangue"
+          ]
+        },
+        {
+          "nome": "afasta componente arterial antes de comprimir",
+          "termos": [
+            "afastar doenca arterial",
+            "componente arterial",
+            "ulcera arterial",
+            "circulacao arterial",
+            "doenca arterial periferica",
+            "claudicacao"
+          ]
+        },
+        {
+          "nome": "diferencia colonizacao de infeccao",
+          "termos": [
+            "colonizacao",
+            "colonizada",
+            "sem infeccao ativa",
+            "nao esta infectada",
+            "antibiotico nao esta indicado",
+            "swab nao esta indicado"
+          ]
+        },
+        {
+          "nome": "afasta etiologia neuropatica e diabetica",
+          "termos": [
+            "pe diabetico",
+            "ulcera neuropatica",
+            "afastar diabetes",
+            "descartar diabetes"
+          ]
+        },
+        {
+          "nome": "vigilancia de malignizacao em ferida refrataria",
+          "termos": [
+            "biopsia",
+            "marjolin",
+            "malignizacao",
+            "se nao melhorar em tres meses",
+            "ferida que nao responde ao tratamento"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Condutas e plano terapêutico dentro do protocolo",
+      "objetivo": "Realizar limpeza adequada, escolher cobertura conforme a avaliação, indicar terapia compressiva após ITB normal, suspender com respeito os produtos caseiros, atualizar a antitetânica, trabalhar a adesão à losartana, fazer intervenção breve para o álcool, encaminhar ao vascular e agendar curativos seriados. ITEM CRÍTICO: indicar compressão sem ITB, prescrever antibiótico sem infecção ou manter os produtos caseiros zera este critério.",
+      "itens": [
+        {
+          "nome": "limpeza adequada da ferida",
+          "termos": [
+            "limpar com soro",
+            "soro fisiologico",
+            "irrigar a ferida",
+            "lavar a ferida com soro",
+            "jato de soro",
+            "remover os residuos"
+          ]
+        },
+        {
+          "nome": "escolha de cobertura conforme a avaliacao",
+          "termos": [
+            "escolher a cobertura",
+            "cobertura absorvente",
+            "espuma de poliuretano",
+            "alginato de calcio",
+            "hidrofibra",
+            "hidrogel",
+            "carvao ativado",
+            "desbridamento autolitico"
+          ]
+        },
+        {
+          "nome": "terapia compressiva apos confirmacao do ITB",
+          "termos": [
+            "terapia compressiva",
+            "indicar a bota de unna",
+            "prescrever a meia de compressao",
+            "enfaixamento compressivo",
+            "faixa de compressao"
+          ]
+        },
+        {
+          "nome": "orienta suspender os produtos caseiros com respeito",
+          "termos": [
+            "suspender a borra de cafe",
+            "parar com a babosa",
+            "nada caseiro na ferida",
+            "so o que for prescrito na ferida",
+            "nao passar mais a pomada"
+          ]
+        },
+        {
+          "nome": "atualiza a vacinacao antitetanica",
+          "termos": [
+            "reforco da dt",
+            "vacina dt",
+            "antitetanica",
+            "atualizar o cartao de vacina",
+            "encaminhar para a sala de vacina"
+          ]
+        },
+        {
+          "nome": "trabalha a adesao a losartana e o controle pressorico",
+          "termos": [
+            "tomar a losartana",
+            "nao esquecer o remedio da pressao",
+            "acompanhar a pressao na unidade",
+            "organizar os horarios do remedio",
+            "caixinha de comprimidos"
+          ]
+        },
+        {
+          "nome": "intervencao breve para o alcool e encaminhamentos compartilhados",
+          "termos": [
+            "intervencao breve",
+            "reduzir a bebida",
+            "diminuir a bebida",
+            "encaminhar ao vascular",
+            "cirurgiao vascular",
+            "compartilhar com o medico",
+            "discutir com a equipe",
+            "apoio de saude mental"
+          ]
+        },
+        {
+          "nome": "agenda curativos seriados na unidade",
+          "termos": [
+            "curativo aqui na unidade",
+            "agendar os curativos",
+            "trocas na unidade",
+            "vezes por semana",
+            "retorno para troca"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Educação em saúde, pactuação e vínculo",
+      "objetivo": "Orientar elevação do membro e exercício, alimentação para cicatrização, sinais de alerta da ferida; acolher o medo de amputação e corrigir crenças sem bronca; pactuar combinados realistas com teach-back e reconstruir o vínculo com o serviço. ITEM CRÍTICO: dar bronca ou sermão (o paciente mente e abandona de novo) deve pesar fortemente contra a nota deste critério.",
+      "itens": [
+        {
+          "nome": "orienta elevacao do membro",
+          "termos": [
+            "elevar as pernas",
+            "perna para cima",
+            "perna elevada",
+            "elevar os pes da cama",
+            "travesseiro embaixo da perna"
+          ]
+        },
+        {
+          "nome": "estimula caminhada e bomba da panturrilha",
+          "termos": [
+            "estimular a caminhada",
+            "caminhar todos os dias",
+            "exercicio de panturrilha",
+            "bomba da panturrilha",
+            "movimentar o tornozelo",
+            "evitar ficar em pe parado"
+          ]
+        },
+        {
+          "nome": "orienta alimentacao e hidratacao para cicatrizacao",
+          "termos": [
+            "alimentacao rica em proteina",
+            "proteina para cicatrizar",
+            "comer carne e ovo",
+            "beber mais agua",
+            "diminuir o sal"
+          ]
+        },
+        {
+          "nome": "orienta sinais de alerta da ferida",
+          "termos": [
+            "se tiver febre",
+            "se a perna ficar vermelha",
+            "se a dor aumentar procure",
+            "cheiro forte procure",
+            "procurar a unidade se piorar",
+            "sinais de alerta"
+          ]
+        },
+        {
+          "nome": "acolhe o medo de amputacao e corrige crencas sem bronca",
+          "termos": [
+            "nao vai perder a perna",
+            "nao e caso de cortar",
+            "essa ferida tem tratamento",
+            "da pra fechar",
+            "quem indicou quis ajudar",
+            "ninguem vai brigar",
+            "sem bronca",
+            "o senhor cuidou como sabia"
+          ]
+        },
+        {
+          "nome": "pactua combinados realistas e checa a compreensao (teach-back)",
+          "termos": [
+            "vamos combinar",
+            "pactuar",
+            "me conta com suas palavras",
+            "o que o senhor entendeu",
+            "me explica de volta",
+            "ficou alguma duvida",
+            "teach back",
+            "repete pra mim o que"
+          ]
+        },
+        {
+          "nome": "reconstroi o vinculo e a reinsercao social",
+          "termos": [
+            "grupo da unidade",
+            "atividade em grupo",
+            "a agente comunitaria vai acompanhar",
+            "pode me procurar na unidade",
+            "visita domiciliar"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Registro da evolução de enfermagem e documentação da ferida",
+      "objetivo": "Registrar a consulta e o plano no prontuário com as etapas do processo de enfermagem, documentar as medidas e a imagem da ferida como linha de base e assinar com nome e COREN.",
+      "itens": [
+        {
+          "nome": "registra a evolucao de enfermagem no prontuario",
+          "termos": [
+            "registrar no prontuario",
+            "evolucao de enfermagem",
+            "anotacao de enfermagem",
+            "vou anotar tudo",
+            "descrever no prontuario"
+          ]
+        },
+        {
+          "nome": "documenta as medidas e a imagem da ferida como linha de base",
+          "termos": [
+            "registrar as medidas no prontuario",
+            "anexar a foto ao prontuario",
+            "registro fotografico no prontuario",
+            "documentar a evolucao da ferida",
+            "linha de base"
+          ]
+        },
+        {
+          "nome": "registra o processo de enfermagem e a data do retorno",
+          "termos": [
+            "processo de enfermagem",
+            "sae",
+            "data e hora",
+            "registrar a data do retorno",
+            "historico, diagnostico, planejamento"
+          ]
+        },
+        {
+          "nome": "assina com nome e numero do COREN",
+          "termos": [
+            "assino com o coren",
+            "numero do coren",
+            "carimbo e coren",
+            "assinatura e coren",
+            "coren numero"
+          ]
+        }
+      ],
+      "peso": 0.5
+    }
+  ]
+}

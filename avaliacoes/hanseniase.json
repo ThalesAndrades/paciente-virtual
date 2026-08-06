@@ -1,0 +1,688 @@
+{
+  "nome_caso": "Hanseníase na Atenção Primária (A Mancha que Não Sente)",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação e apresentar-se ao paciente.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "ocupacao",
+            "trabalha de que",
+            "trabalha em que",
+            "qual seu trabalho",
+            "faz o que da vida"
+          ]
+        }
+      ],
+      "peso": 0.5
+    },
+    {
+      "nome": "Caracterizacao da lesao de pele e dos sintomas neurais (HDA)",
+      "objetivo": "Caracterizar a mancha e o comprometimento neural periferico em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao da lesao",
+          "termos": [
+            "onde apareceu",
+            "em que parte do corpo",
+            "localizacao da mancha",
+            "em que lugar apareceu"
+          ]
+        },
+        {
+          "nome": "prurido e dor na lesao",
+          "termos": [
+            "coca",
+            "da coceira",
+            "arde",
+            "a mancha doi",
+            "sente dor na mancha",
+            "incomoda a mancha"
+          ]
+        },
+        {
+          "nome": "aspecto e descamacao",
+          "termos": [
+            "descama",
+            "solta pele",
+            "casquinha",
+            "como e a mancha",
+            "cor da mancha",
+            "pelo na mancha",
+            "sua na mancha"
+          ]
+        },
+        {
+          "nome": "evolucao e crescimento",
+          "termos": [
+            "cresceu",
+            "aumentou de tamanho",
+            "esta maior",
+            "mudou de tamanho",
+            "piorou ou melhorou"
+          ]
+        },
+        {
+          "nome": "numero de lesoes",
+          "termos": [
+            "quantas manchas",
+            "apareceu mais alguma mancha",
+            "so uma mancha",
+            "tem outra parecida"
+          ]
+        },
+        {
+          "nome": "sintomas neurais (formigamento, dormencia, forca)",
+          "termos": [
+            "formigamento",
+            "formiga",
+            "dormencia",
+            "adormece",
+            "esta dormente",
+            "perdeu forca",
+            "fraqueza na mao",
+            "deixa cair as coisas"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "tratamentos previos para a lesao",
+          "termos": [
+            "usou alguma pomada",
+            "passou alguma pomada",
+            "passou algo na mancha",
+            "ja tratou a mancha",
+            "usou algum remedio na pele"
+          ]
+        },
+        {
+          "nome": "sintomas sistemicos e de vias aereas",
+          "termos": [
+            "febre",
+            "emagreceu",
+            "perdeu peso",
+            "nariz entupido",
+            "sangramento do nariz",
+            "caroco no corpo"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "Antecedentes e historia epidemiologica",
+      "objetivo": "Investigar antecedentes pessoais, procedencia em area endemica e contatos.",
+      "itens": [
+        {
+          "nome": "antecedentes pessoais/comorbidades",
+          "termos": [
+            "tem alguma doenca",
+            "problema de saude",
+            "diabetes",
+            "pressao alta",
+            "usa remedio continuo",
+            "ja fez cirurgia"
+          ]
+        },
+        {
+          "nome": "alergia a medicamento",
+          "termos": [
+            "alergia",
+            "alergico a algum remedio",
+            "reacao a remedio"
+          ]
+        },
+        {
+          "nome": "procedencia e area endemica",
+          "termos": [
+            "onde o senhor mora",
+            "de onde o senhor e",
+            "sempre morou aqui",
+            "nasceu onde",
+            "morou em outro lugar",
+            "zona rural"
+          ]
+        },
+        {
+          "nome": "contato/caso semelhante na familia",
+          "termos": [
+            "alguem na familia teve",
+            "caso parecido na familia",
+            "alguem conhecido com mancha",
+            "contato com alguem doente",
+            "convive com alguem doente"
+          ]
+        },
+        {
+          "nome": "composicao do domicilio",
+          "termos": [
+            "quantas pessoas moram",
+            "com quem o senhor mora",
+            "moradores do domicilio",
+            "quem vive na mesma casa"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares gerais",
+          "termos": [
+            "doenca na familia",
+            "seu pai teve",
+            "sua mae tem",
+            "historico familiar"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida e condicoes de moradia",
+      "objetivo": "Investigar habitos e determinantes sociais relevantes.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "cachaca",
+            "etilismo"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "o que come",
+            "dieta",
+            "come bem"
+          ]
+        },
+        {
+          "nome": "condicoes de moradia",
+          "termos": [
+            "como e a casa",
+            "quantos comodos",
+            "condicoes de moradia",
+            "agua e esgoto",
+            "casa e apertada"
+          ]
+        },
+        {
+          "nome": "esforco manual no servico",
+          "termos": [
+            "cabo de enxada",
+            "esforco com as maos",
+            "pega peso",
+            "usa ferramenta",
+            "como e o servico na roca"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Exame fisico dermatoneurologico",
+      "objetivo": "Realizar o exame dermatoneurologico completo, que sustenta o diagnostico clinico.",
+      "itens": [
+        {
+          "nome": "sinais vitais",
+          "termos": [
+            "aferir a pressao",
+            "sinais vitais",
+            "medir a temperatura",
+            "verificar o pulso"
+          ]
+        },
+        {
+          "nome": "inspecao da lesao de pele",
+          "termos": [
+            "olhar a mancha",
+            "ver a mancha",
+            "examinar a mancha",
+            "examinar a pele",
+            "inspecao da pele",
+            "mostrar o braco"
+          ]
+        },
+        {
+          "nome": "teste de sensibilidade da lesao",
+          "termos": [
+            "testar a sensibilidade",
+            "sensibilidade da mancha",
+            "algodao",
+            "monofilamento",
+            "estesiometro",
+            "quente e frio",
+            "toque na mancha",
+            "agulha na mancha"
+          ]
+        },
+        {
+          "nome": "palpacao de nervos perifericos",
+          "termos": [
+            "palpar os nervos",
+            "palpacao dos nervos",
+            "nervo ulnar",
+            "nervos perifericos",
+            "espessamento neural",
+            "apalpar o cotovelo"
+          ]
+        },
+        {
+          "nome": "forca motora das maos",
+          "termos": [
+            "testar a forca",
+            "forca das maos",
+            "abrir os dedos",
+            "apertar a minha mao",
+            "pinca dos dedos"
+          ]
+        },
+        {
+          "nome": "exame dos olhos e da face",
+          "termos": [
+            "fechar os olhos",
+            "lagoftalmo",
+            "madarose",
+            "olhar as sobrancelhas",
+            "examinar a face",
+            "lobulo da orelha"
+          ]
+        },
+        {
+          "nome": "exame de toda a superficie corporal",
+          "termos": [
+            "examinar o corpo",
+            "resto do corpo",
+            "corpo inteiro",
+            "tronco e pernas",
+            "procurar outras lesoes"
+          ]
+        },
+        {
+          "nome": "avaliacao neurologica simplificada e grau de incapacidade",
+          "termos": [
+            "avaliacao neurologica simplificada",
+            "grau de incapacidade",
+            "sensibilidade dos pes",
+            "planta do pe",
+            "examinar os pes"
+          ]
+        },
+        {
+          "nome": "inspecao das maos e lesoes traumaticas",
+          "termos": [
+            "olhar as maos",
+            "examinar as maos",
+            "cicatriz na mao",
+            "machucado na mao",
+            "calo ou ulcera"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "Exames complementares e diagnosticos diferenciais",
+      "objetivo": "Solicitar exames pertinentes, lembrando que o diagnostico e clinico.",
+      "itens": [
+        {
+          "nome": "baciloscopia de raspado intradermico",
+          "termos": [
+            "baciloscopia",
+            "raspado intradermico",
+            "pesquisa de bacilo",
+            "indice baciloscopico"
+          ]
+        },
+        {
+          "nome": "micologico direto (afastar pano branco)",
+          "termos": [
+            "micologico",
+            "koh",
+            "pesquisa de fungo",
+            "raspado para fungo"
+          ]
+        },
+        {
+          "nome": "biopsia de pele",
+          "termos": [
+            "biopsia",
+            "histopatologico",
+            "anatomopatologico"
+          ]
+        },
+        {
+          "nome": "glicemia",
+          "termos": [
+            "glicemia",
+            "glicose",
+            "acucar no sangue",
+            "dextro"
+          ]
+        },
+        {
+          "nome": "hemograma antes da medicacao",
+          "termos": [
+            "hemograma",
+            "exame de sangue",
+            "hemacias",
+            "anemia"
+          ]
+        },
+        {
+          "nome": "sorologias",
+          "termos": [
+            "sorologia",
+            "hiv",
+            "vdrl",
+            "sifilis",
+            "teste rapido"
+          ]
+        },
+        {
+          "nome": "eletroneuromiografia",
+          "termos": [
+            "eletroneuromiografia",
+            "enmg",
+            "conducao nervosa"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Conduta terapeutica e acoes de saude coletiva",
+      "objetivo": "Instituir tratamento, notificar o caso e organizar a vigilancia dos contatos.",
+      "itens": [
+        {
+          "nome": "iniciar poliquimioterapia",
+          "termos": [
+            "iniciar poliquimioterapia",
+            "prescrever poliquimioterapia",
+            "prescrever pqt",
+            "esquema pqt-u",
+            "prescrever rifampicina",
+            "prescrever dapsona",
+            "prescrever clofazimina",
+            "seis doses de tratamento"
+          ]
+        },
+        {
+          "nome": "dose supervisionada e acompanhamento mensal",
+          "termos": [
+            "dose supervisionada",
+            "tomar a dose no posto",
+            "cartela mensal",
+            "retornar todo mes",
+            "acompanhamento mensal na unidade"
+          ]
+        },
+        {
+          "nome": "notificacao compulsoria",
+          "termos": [
+            "notificacao compulsoria",
+            "notificar o caso",
+            "preencher a notificacao",
+            "sinan",
+            "registrar no sistema de agravos"
+          ]
+        },
+        {
+          "nome": "exame dos contatos domiciliares",
+          "termos": [
+            "examinar os contatos",
+            "avaliar os contatos",
+            "exame dos comunicantes",
+            "trazer os familiares ao posto",
+            "convocar a familia para avaliacao"
+          ]
+        },
+        {
+          "nome": "bcg e quimioprofilaxia dos contatos",
+          "termos": [
+            "bcg para os contatos",
+            "dose de bcg nos contatos",
+            "checar cicatriz vacinal",
+            "quimioprofilaxia dos contatos"
+          ]
+        },
+        {
+          "nome": "prevencao de incapacidades e autocuidado",
+          "termos": [
+            "prevencao de incapacidades",
+            "orientar autocuidado",
+            "proteger a mao",
+            "hidratar a pele",
+            "cuidado com queimaduras",
+            "usar luva no servico",
+            "exercicios para a mao"
+          ]
+        },
+        {
+          "nome": "encaminhamento e vinculo com a equipe",
+          "termos": [
+            "acompanhar na equipe de saude da familia",
+            "encaminhar ao dermatologista",
+            "referencia para servico especializado",
+            "visita da agente de saude"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Comunicacao, acolhimento e enfrentamento do estigma",
+      "objetivo": "Comunicar o diagnostico com linguagem acessivel, garantir sigilo e desconstruir o estigma.",
+      "itens": [
+        {
+          "nome": "explicar o diagnostico em linguagem acessivel",
+          "termos": [
+            "vou explicar o que o senhor tem",
+            "explicar a doenca",
+            "essa doenca tem cura",
+            "tem tratamento e cura",
+            "explicar com calma o resultado"
+          ]
+        },
+        {
+          "nome": "esclarecer transmissao sem alarmar",
+          "termos": [
+            "como se transmite",
+            "deixa de transmitir",
+            "nao transmite mais depois de iniciar",
+            "nao precisa se afastar da familia",
+            "pode continuar em casa",
+            "ninguem mais e internado"
+          ]
+        },
+        {
+          "nome": "garantir gratuidade e continuidade do trabalho",
+          "termos": [
+            "tratamento e gratuito",
+            "remedio de graca no posto",
+            "pode continuar trabalhando",
+            "nao vai perder o servico"
+          ]
+        },
+        {
+          "nome": "garantir sigilo e autonomia sobre quem sabe",
+          "termos": [
+            "garantir sigilo",
+            "isso fica entre nos",
+            "e confidencial",
+            "o senhor decide quem vai saber"
+          ]
+        },
+        {
+          "nome": "acolher o medo e a vergonha",
+          "termos": [
+            "entendo seu medo",
+            "entendo sua preocupacao",
+            "nao precisa ter vergonha",
+            "o senhor nao tem culpa",
+            "nao vai ser levado para longe"
+          ]
+        },
+        {
+          "nome": "envolver a familia com consentimento",
+          "termos": [
+            "conversar com sua esposa",
+            "quer que eu explique para sua familia",
+            "posso chamar sua esposa",
+            "ajudar a contar em casa"
+          ]
+        },
+        {
+          "nome": "verificar entendimento e abrir espaco para duvidas",
+          "termos": [
+            "ficou alguma duvida",
+            "o senhor entendeu",
+            "quer me perguntar algo",
+            "o que o senhor entendeu"
+          ]
+        }
+      ],
+      "peso": 1
+    }
+  ],
+  "revalida": {
+    "area": "medicina_familia",
+    "cenario": "Unidade Básica de Saúde, atendimento de demanda espontânea. Paciente do sexo masculino, 41 anos, procura atendimento.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) de plantão em uma Unidade Básica de Saúde e vai atender um(a) paciente do sexo masculino, 41 anos.",
+      "Realize a anamnese dirigida e o exame físico pertinente ao caso.",
+      "Solicite os exames complementares que julgar necessários — eles serão fornecidos pelo Chefe de Estação.",
+      "Ao final, informe ao paciente a sua hipótese diagnóstica e a conduta, em linguagem acessível.",
+      "Registre hipótese, diferenciais e conduta no fechamento da estação."
+    ],
+    "limites": {
+      "exames": 4,
+      "hipoteses": 1,
+      "condutas": 3
+    },
+    "pep": [
+      {
+        "id": "identificacao_do_paciente",
+        "descricao": "Identifica-se ao paciente e confirma a identificação dele antes de iniciar",
+        "peso": 0.5,
+        "adequado": "Apresenta-se pelo nome, diz que é o(a) médico(a) e confirma nome e idade do paciente.",
+        "parcial": "Apresenta-se OU confirma a identificação, mas não os dois.",
+        "inadequado": "Inicia a anamnese sem se apresentar nem confirmar quem é o paciente."
+      },
+      {
+        "id": "caracterizacao_da_lesao_de_p",
+        "descricao": "Caracteriza a queixa principal e a história da doença atual",
+        "peso": 2,
+        "adequado": "Investiga início, localização, irradiação, intensidade, fatores de melhora e piora e sintomas associados.",
+        "parcial": "Caracteriza a queixa de forma incompleta, deixando de fora atributos que mudam a conduta.",
+        "inadequado": "Não caracteriza a queixa ou apenas a registra sem investigar."
+      },
+      {
+        "id": "antecedentes_e_historia_epid",
+        "descricao": "Investiga antecedentes pessoais, medicamentos em uso e alergias",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre doenças prévias, medicações em uso e alergias.",
+        "parcial": "Investiga parte dos antecedentes, deixando de fora medicações ou alergias.",
+        "inadequado": "Não investiga antecedentes."
+      },
+      {
+        "id": "habitos_de_vida_e_condicoes_",
+        "descricao": "Investiga hábitos de vida e fatores de risco",
+        "peso": 0.75,
+        "adequado": "Pergunta sobre tabagismo, álcool, atividade física e outros fatores pertinentes ao caso.",
+        "parcial": "Investiga apenas um dos hábitos relevantes.",
+        "inadequado": "Não investiga hábitos nem fatores de risco."
+      },
+      {
+        "id": "exame_fisico_dermatoneurolog",
+        "descricao": "Realiza o exame físico dirigido, incluindo sinais vitais",
+        "peso": 2,
+        "adequado": "Solicita sinais vitais e as manobras dirigidas à hipótese, e interpreta o que encontra.",
+        "parcial": "Realiza parte do exame necessário ou não interpreta os achados.",
+        "inadequado": "Não examina o paciente ou pede exame não pertinente ao caso."
+      },
+      {
+        "id": "exames_complementares_e_diag",
+        "descricao": "Solicita os exames complementares pertinentes e justificados",
+        "peso": 0.75,
+        "adequado": "Solicita os exames que mudam a conduta neste caso, sem excesso.",
+        "parcial": "Solicita alguns dos exames necessários, ou acrescenta exames irrelevantes.",
+        "inadequado": "Não solicita exame ou solicita bateria sem relação com a hipótese."
+      },
+      {
+        "id": "conduta_terapeutica_e_acoes_",
+        "descricao": "Define a conduta imediata adequada ao caso",
+        "peso": 1.5,
+        "adequado": "Indica a conduta correta, na ordem de prioridade que o quadro exige.",
+        "parcial": "Indica conduta parcialmente correta ou fora da prioridade.",
+        "inadequado": "Não define conduta ou define conduta inadequada ao quadro."
+      },
+      {
+        "id": "comunicacao_acolhimento_e_en",
+        "descricao": "Comunica-se com o paciente em linguagem acessível e acolhedora",
+        "peso": 1,
+        "adequado": "Explica o que está acontecendo sem jargão, checa entendimento e acolhe a preocupação do paciente.",
+        "parcial": "Comunica-se de forma técnica demais ou não confirma o entendimento.",
+        "inadequado": "Não explica nada ao paciente ou o trata com indiferença."
+      }
+    ]
+  }
+}

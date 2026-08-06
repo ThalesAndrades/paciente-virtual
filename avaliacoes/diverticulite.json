@@ -1,0 +1,456 @@
+{
+  "nome_caso": "Diverticulite Aguda",
+  "criterios": [
+    {
+      "nome": "Identificação do paciente",
+      "objetivo": "Obter dados básicos de identificação.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "trabalha",
+            "ocupacao",
+            "aposentado",
+            "faz o que"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a dor abdominal e o quadro associado em detalhe.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "faz quanto tempo",
+            "desde quando",
+            "ha quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "onde e a dor",
+            "localizacao",
+            "que lugar",
+            "aponta onde"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "vai para algum lugar",
+            "corre para",
+            "espalha"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "intensidade",
+            "de zero a dez",
+            "escala",
+            "quanto doi",
+            "nota para a dor"
+          ]
+        },
+        {
+          "nome": "carater/tipo",
+          "termos": [
+            "como e a dor",
+            "tipo de dor",
+            "aperto",
+            "queimacao",
+            "pontada",
+            "em peso",
+            "colica"
+          ]
+        },
+        {
+          "nome": "fatores de melhora/piora",
+          "termos": [
+            "melhora",
+            "piora",
+            "alivia",
+            "o que faz melhorar",
+            "o que piora"
+          ]
+        },
+        {
+          "nome": "habito intestinal",
+          "termos": [
+            "intestino preso",
+            "habito intestinal",
+            "ultima evacuacao",
+            "constipacao",
+            "evacuando",
+            "eliminando gases",
+            "como esta o intestino"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "febre",
+            "outros sintomas",
+            "mais alguma coisa",
+            "enjoo",
+            "vomito",
+            "apetite"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta pior",
+            "evoluiu",
+            "desde que comecou"
+          ]
+        }
+      ],
+      "peso": 3
+    },
+    {
+      "nome": "Antecedentes",
+      "objetivo": "Investigar antecedentes pessoais e familiares, incluindo a historia familiar de cancer colorretal.",
+      "itens": [
+        {
+          "nome": "doencas cronicas",
+          "termos": [
+            "pressao alta",
+            "hipertensao",
+            "diabetes",
+            "doenca cronica",
+            "problema de saude"
+          ]
+        },
+        {
+          "nome": "cirurgias previas",
+          "termos": [
+            "cirurgia",
+            "operacao",
+            "ja operou",
+            "ja fez cirurgia"
+          ]
+        },
+        {
+          "nome": "medicamentos de uso continuo",
+          "termos": [
+            "uso continuo",
+            "medicamento todo dia",
+            "losartana",
+            "remedio de pressao",
+            "quais remedios usa"
+          ]
+        },
+        {
+          "nome": "antecedentes familiares",
+          "termos": [
+            "na familia",
+            "historico familiar",
+            "pai",
+            "mae",
+            "irmao",
+            "cancer na familia"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Habitos de vida",
+      "objetivo": "Investigar habitos relevantes para doenca diverticular.",
+      "itens": [
+        {
+          "nome": "tabagismo",
+          "termos": [
+            "fuma",
+            "cigarro",
+            "tabagismo",
+            "fumante",
+            "fumou"
+          ]
+        },
+        {
+          "nome": "alcool",
+          "termos": [
+            "bebe",
+            "alcool",
+            "bebida",
+            "etilismo",
+            "cerveja"
+          ]
+        },
+        {
+          "nome": "alimentacao",
+          "termos": [
+            "alimentacao",
+            "verdura",
+            "fibra",
+            "fruta",
+            "dieta",
+            "o que come no dia"
+          ]
+        },
+        {
+          "nome": "atividade fisica",
+          "termos": [
+            "exercicio",
+            "atividade fisica",
+            "caminha",
+            "sedentario",
+            "esporte"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado ao abdome agudo.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "aferir pressao",
+            "medir a pressao",
+            "sinais vitais",
+            "temperatura",
+            "frequencia cardiaca",
+            "saturacao",
+            "pulso"
+          ]
+        },
+        {
+          "nome": "palpacao abdominal",
+          "termos": [
+            "palpacao abdominal",
+            "palpar o abdome",
+            "apalpar a barriga",
+            "apertar a barriga",
+            "examinar o abdome",
+            "examinar a barriga"
+          ]
+        },
+        {
+          "nome": "descompressao brusca (Blumberg)",
+          "termos": [
+            "blumberg",
+            "descompressao",
+            "dor de rebote",
+            "sinal de rebote"
+          ]
+        },
+        {
+          "nome": "ausculta abdominal",
+          "termos": [
+            "ausculta abdominal",
+            "ruidos hidroaereos",
+            "escutar a barriga",
+            "peristalse"
+          ]
+        },
+        {
+          "nome": "toque retal",
+          "termos": [
+            "toque retal",
+            "exame de toque",
+            "toque no reto",
+            "exame proctologico"
+          ]
+        },
+        {
+          "nome": "sinal de Giordano",
+          "termos": [
+            "giordano",
+            "punho percussao",
+            "loja renal"
+          ]
+        },
+        {
+          "nome": "canais inguinais",
+          "termos": [
+            "canal inguinal",
+            "regiao inguinal",
+            "examinar a virilha",
+            "hernia inguinal"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar exames pertinentes, incluindo a colonoscopia eletiva apos a fase aguda.",
+      "itens": [
+        {
+          "nome": "hemograma completo",
+          "termos": [
+            "hemograma",
+            "leucocitos",
+            "leucograma"
+          ]
+        },
+        {
+          "nome": "proteina C reativa",
+          "termos": [
+            "pcr",
+            "proteina c reativa",
+            "prova inflamatoria",
+            "marcador inflamatorio"
+          ]
+        },
+        {
+          "nome": "urina tipo 1",
+          "termos": [
+            "exame de urina",
+            "urina tipo 1",
+            "eas",
+            "sumario de urina"
+          ]
+        },
+        {
+          "nome": "tomografia de abdome",
+          "termos": [
+            "tomografia",
+            "tc de abdome",
+            "tomografia computadorizada"
+          ]
+        },
+        {
+          "nome": "radiografia de abdome",
+          "termos": [
+            "radiografia de abdome",
+            "raio x de abdome",
+            "rx de abdome",
+            "raio x da barriga"
+          ]
+        },
+        {
+          "nome": "funcao renal e eletrolitos",
+          "termos": [
+            "funcao renal",
+            "ureia",
+            "creatinina",
+            "eletrolitos"
+          ]
+        },
+        {
+          "nome": "lactato",
+          "termos": [
+            "lactato"
+          ]
+        },
+        {
+          "nome": "colonoscopia apos a fase aguda",
+          "termos": [
+            "colonoscopia",
+            "exame do colon",
+            "endoscopia do intestino"
+          ]
+        }
+      ],
+      "peso": 2
+    }
+  ],
+  "revalida": {
+    "area": "cirurgia",
+    "cenario": "Pronto-socorro de hospital geral. Paciente do sexo masculino, 59 anos, procura atendimento.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) de plantão no pronto-socorro de um hospital geral e vai atender um(a) paciente do sexo masculino, 59 anos.",
+      "Realize a anamnese dirigida e o exame físico pertinente ao caso.",
+      "Solicite os exames complementares que julgar necessários — eles serão fornecidos pelo Chefe de Estação.",
+      "Ao final, informe ao paciente a sua hipótese diagnóstica e a conduta, em linguagem acessível.",
+      "Registre hipótese, diferenciais e conduta no fechamento da estação."
+    ],
+    "limites": {
+      "exames": 4,
+      "hipoteses": 1,
+      "condutas": 3
+    },
+    "pep": [
+      {
+        "id": "identificacao_do_paciente",
+        "descricao": "Identifica-se ao paciente e confirma a identificação dele antes de iniciar",
+        "peso": 1,
+        "adequado": "Apresenta-se pelo nome, diz que é o(a) médico(a) e confirma nome e idade do paciente.",
+        "parcial": "Apresenta-se OU confirma a identificação, mas não os dois.",
+        "inadequado": "Inicia a anamnese sem se apresentar nem confirmar quem é o paciente."
+      },
+      {
+        "id": "caracterizacao_da_queixa_hda",
+        "descricao": "Caracteriza a queixa principal e a história da doença atual",
+        "peso": 3,
+        "adequado": "Investiga início, localização, irradiação, intensidade, fatores de melhora e piora e sintomas associados.",
+        "parcial": "Caracteriza a queixa de forma incompleta, deixando de fora atributos que mudam a conduta.",
+        "inadequado": "Não caracteriza a queixa ou apenas a registra sem investigar."
+      },
+      {
+        "id": "antecedentes",
+        "descricao": "Investiga antecedentes pessoais, medicamentos em uso e alergias",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre doenças prévias, medicações em uso e alergias.",
+        "parcial": "Investiga parte dos antecedentes, deixando de fora medicações ou alergias.",
+        "inadequado": "Não investiga antecedentes."
+      },
+      {
+        "id": "habitos_de_vida",
+        "descricao": "Investiga hábitos de vida e fatores de risco",
+        "peso": 1,
+        "adequado": "Pergunta sobre tabagismo, álcool, atividade física e outros fatores pertinentes ao caso.",
+        "parcial": "Investiga apenas um dos hábitos relevantes.",
+        "inadequado": "Não investiga hábitos nem fatores de risco."
+      },
+      {
+        "id": "exame_fisico",
+        "descricao": "Realiza o exame físico dirigido, incluindo sinais vitais",
+        "peso": 1.5,
+        "adequado": "Solicita sinais vitais e as manobras dirigidas à hipótese, e interpreta o que encontra.",
+        "parcial": "Realiza parte do exame necessário ou não interpreta os achados.",
+        "inadequado": "Não examina o paciente ou pede exame não pertinente ao caso."
+      },
+      {
+        "id": "exames_complementares",
+        "descricao": "Solicita os exames complementares pertinentes e justificados",
+        "peso": 2,
+        "adequado": "Solicita os exames que mudam a conduta neste caso, sem excesso.",
+        "parcial": "Solicita alguns dos exames necessários, ou acrescenta exames irrelevantes.",
+        "inadequado": "Não solicita exame ou solicita bateria sem relação com a hipótese."
+      }
+    ]
+  }
+}

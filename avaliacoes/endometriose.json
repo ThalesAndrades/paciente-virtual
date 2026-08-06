@@ -1,0 +1,636 @@
+{
+  "nome_caso": "Endometriose Pélvica Profunda com Dismenorreia Secundária e Infertilidade",
+  "criterios": [
+    {
+      "nome": "Identificação da paciente",
+      "objetivo": "Obter os dados básicos de identificação e situar a paciente.",
+      "itens": [
+        {
+          "nome": "nome",
+          "termos": [
+            "nome",
+            "se chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade",
+          "termos": [
+            "idade",
+            "quantos anos"
+          ]
+        },
+        {
+          "nome": "profissao/ocupacao",
+          "termos": [
+            "profissao",
+            "ocupacao",
+            "em que trabalha",
+            "onde trabalha",
+            "o que faz da vida"
+          ]
+        },
+        {
+          "nome": "estado civil / com quem mora",
+          "termos": [
+            "estado civil",
+            "com quem mora",
+            "mora com quem",
+            "e casada"
+          ]
+        }
+      ],
+      "peso": 0.75
+    },
+    {
+      "nome": "Caracterizacao da dor (HDA)",
+      "objetivo": "Caracterizar em detalhe a dor pélvica e os sintomas cíclicos associados.",
+      "itens": [
+        {
+          "nome": "queixa/motivo da consulta",
+          "termos": [
+            "o que sente",
+            "o que te trouxe",
+            "me conta o que",
+            "qual e o problema",
+            "esta sentindo"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "ha quanto tempo",
+            "desde quando",
+            "faz quanto tempo"
+          ]
+        },
+        {
+          "nome": "localizacao",
+          "termos": [
+            "onde doi",
+            "que lugar doi",
+            "localizacao da dor",
+            "aponta onde",
+            "em que parte"
+          ]
+        },
+        {
+          "nome": "irradiacao",
+          "termos": [
+            "irradia",
+            "corre para",
+            "espalha",
+            "vai para as costas",
+            "vai para a perna"
+          ]
+        },
+        {
+          "nome": "intensidade",
+          "termos": [
+            "de zero a dez",
+            "escala da dor",
+            "quanto doi",
+            "intensidade da dor",
+            "dor forte"
+          ]
+        },
+        {
+          "nome": "carater/tipo da dor",
+          "termos": [
+            "tipo de dor",
+            "como e a dor",
+            "dor em aperto",
+            "pontada",
+            "queimacao",
+            "dor em peso"
+          ]
+        },
+        {
+          "nome": "duracao e frequencia",
+          "termos": [
+            "quanto tempo dura",
+            "quantos dias dura",
+            "vem e vai",
+            "com que frequencia",
+            "dor todos os dias"
+          ]
+        },
+        {
+          "nome": "relacao da dor com o ciclo menstrual",
+          "termos": [
+            "piora na menstruacao",
+            "doi mais quando menstrua",
+            "antes de menstruar",
+            "fora do periodo",
+            "relacao com o ciclo",
+            "so na menstruacao"
+          ]
+        },
+        {
+          "nome": "fatores de melhora e piora",
+          "termos": [
+            "o que melhora",
+            "o que piora",
+            "alivia",
+            "melhora com alguma coisa",
+            "piora com esforco"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "outros sintomas",
+            "mais alguma coisa",
+            "sente junto",
+            "alem da dor",
+            "enjoo",
+            "vomito"
+          ]
+        },
+        {
+          "nome": "sintomas intestinais e urinarios ciclicos",
+          "termos": [
+            "dor para evacuar",
+            "ir ao banheiro",
+            "diarreia",
+            "prisao de ventre",
+            "dor para urinar",
+            "sangue nas fezes"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "piorou com o tempo",
+            "esta pior",
+            "melhorou ou piorou",
+            "como evoluiu"
+          ]
+        }
+      ],
+      "peso": 2.5
+    },
+    {
+      "nome": "Historia menstrual e antecedentes gineco-obstetricos",
+      "objetivo": "Levantar a história menstrual, obstétrica, contraceptiva e os antecedentes relevantes.",
+      "itens": [
+        {
+          "nome": "menarca",
+          "termos": [
+            "primeira menstruacao",
+            "menarca",
+            "com que idade menstruou"
+          ]
+        },
+        {
+          "nome": "ciclo e regularidade",
+          "termos": [
+            "ciclo menstrual",
+            "ciclos sao regulares",
+            "menstruacao e regular",
+            "regularidade do ciclo",
+            "de quantos em quantos dias"
+          ]
+        },
+        {
+          "nome": "fluxo e duracao do sangramento",
+          "termos": [
+            "quantos dias sangra",
+            "fluxo menstrual",
+            "quantidade de sangue",
+            "coagulos",
+            "quantos absorventes"
+          ]
+        },
+        {
+          "nome": "data da ultima menstruacao",
+          "termos": [
+            "ultima menstruacao",
+            "dum",
+            "quando menstruou pela ultima vez"
+          ]
+        },
+        {
+          "nome": "gestacoes, partos e abortos",
+          "termos": [
+            "quantas gestacoes",
+            "quantas gravidezes",
+            "ja teve parto",
+            "ja teve aborto",
+            "gesta e para"
+          ]
+        },
+        {
+          "nome": "metodo contraceptivo",
+          "termos": [
+            "usa anticoncepcional",
+            "toma anticoncepcional",
+            "usou pilula",
+            "metodo contraceptivo",
+            "usa camisinha"
+          ]
+        },
+        {
+          "nome": "rastreio do colo do utero",
+          "termos": [
+            "ultimo preventivo",
+            "ja fez preventivo",
+            "papanicolau",
+            "colpocitologia"
+          ]
+        },
+        {
+          "nome": "antecedentes clinicos e cirurgicos",
+          "termos": [
+            "ja fez cirurgia",
+            "alguma doenca",
+            "medicamento de uso continuo",
+            "alergia a medicamento"
+          ]
+        },
+        {
+          "nome": "historia familiar",
+          "termos": [
+            "alguem na familia",
+            "historia familiar",
+            "caso na familia",
+            "sua mae teve"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Impacto na vida e abordagem dos temas sensiveis",
+      "objetivo": "Investigar, com acolhimento, o impacto da dor na vida sexual, reprodutiva e laboral e o uso de medicação.",
+      "itens": [
+        {
+          "nome": "dor na relacao sexual",
+          "termos": [
+            "dor na relacao",
+            "vida sexual",
+            "relacao sexual",
+            "dor no sexo"
+          ]
+        },
+        {
+          "nome": "desejo e dificuldade de engravidar",
+          "termos": [
+            "tentando engravidar",
+            "quer ter filhos",
+            "dificuldade para engravidar",
+            "planeja engravidar"
+          ]
+        },
+        {
+          "nome": "impacto no trabalho",
+          "termos": [
+            "atrapalha o trabalho",
+            "falta no trabalho",
+            "afeta o trabalho",
+            "deixou de trabalhar"
+          ]
+        },
+        {
+          "nome": "uso de medicacao para a dor",
+          "termos": [
+            "quantos comprimidos",
+            "remedio pra dor",
+            "remedio para dor",
+            "compra na farmacia",
+            "toma sem receita"
+          ]
+        },
+        {
+          "nome": "atendimentos anteriores por esta dor",
+          "termos": [
+            "ja procurou ajuda",
+            "ja passou com outro medico",
+            "ja tratou essa dor",
+            "o que ja te disseram"
+          ]
+        },
+        {
+          "nome": "validacao do sofrimento",
+          "termos": [
+            "como isso afeta a sua vida",
+            "ja se sentiu desacreditada",
+            "o que isso mudou na sua vida",
+            "isso te faz sofrer"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exame fisico e ginecologico",
+      "objetivo": "Realizar exame físico geral e ginecológico direcionado à dor pélvica.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais",
+          "termos": [
+            "aferir a pressao",
+            "medir a pressao",
+            "pressao arterial",
+            "frequencia cardiaca",
+            "sinais vitais",
+            "verificar a temperatura"
+          ]
+        },
+        {
+          "nome": "peso, altura e IMC",
+          "termos": [
+            "peso e altura",
+            "calcular o imc",
+            "pesar a paciente"
+          ]
+        },
+        {
+          "nome": "inspecao de mucosas (palidez)",
+          "termos": [
+            "mucosas",
+            "conjuntivas",
+            "palidez",
+            "descorada"
+          ]
+        },
+        {
+          "nome": "palpacao abdominal",
+          "termos": [
+            "palpar o abdome",
+            "palpacao abdominal",
+            "apalpar a barriga",
+            "examinar o abdome"
+          ]
+        },
+        {
+          "nome": "pesquisa de irritacao peritoneal",
+          "termos": [
+            "blumberg",
+            "descompressao dolorosa",
+            "irritacao peritoneal"
+          ]
+        },
+        {
+          "nome": "exame especular",
+          "termos": [
+            "exame especular",
+            "especulo",
+            "visualizar o colo"
+          ]
+        },
+        {
+          "nome": "toque vaginal bimanual",
+          "termos": [
+            "toque vaginal",
+            "exame bimanual",
+            "mobilizacao do colo"
+          ]
+        },
+        {
+          "nome": "toque retovaginal e uterossacros",
+          "termos": [
+            "toque retovaginal",
+            "fundo de saco posterior",
+            "ligamentos uterossacros"
+          ]
+        },
+        {
+          "nome": "punho-percussao lombar",
+          "termos": [
+            "giordano",
+            "punho percussao",
+            "loja renal"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar os exames pertinentes ao diagnóstico e aos diferenciais.",
+      "itens": [
+        {
+          "nome": "Hemograma",
+          "termos": [
+            "hemograma",
+            "leucograma",
+            "dosar hemoglobina",
+            "exame de sangue"
+          ]
+        },
+        {
+          "nome": "Ferritina e cinetica do ferro",
+          "termos": [
+            "ferritina",
+            "cinetica do ferro",
+            "ferro serico"
+          ]
+        },
+        {
+          "nome": "Beta-HCG",
+          "termos": [
+            "beta hcg",
+            "bhcg",
+            "teste de gravidez",
+            "descartar gravidez"
+          ]
+        },
+        {
+          "nome": "Urina tipo I (EAS)",
+          "termos": [
+            "urina tipo 1",
+            "sumario de urina",
+            "exame de urina",
+            "eas"
+          ]
+        },
+        {
+          "nome": "Pesquisa de clamidia e gonococo",
+          "termos": [
+            "clamidia",
+            "gonococo",
+            "pesquisa de ist",
+            "sorologias"
+          ]
+        },
+        {
+          "nome": "CA-125",
+          "termos": [
+            "ca 125",
+            "ca125",
+            "marcador tumoral"
+          ]
+        },
+        {
+          "nome": "Ultrassonografia transvaginal",
+          "termos": [
+            "ultrassom transvaginal",
+            "usg transvaginal",
+            "ultrassonografia transvaginal",
+            "ultrassom pelvico"
+          ]
+        },
+        {
+          "nome": "Ressonancia magnetica de pelve",
+          "termos": [
+            "ressonancia magnetica",
+            "ressonancia de pelve",
+            "rm de pelve"
+          ]
+        },
+        {
+          "nome": "Espermograma do parceiro",
+          "termos": [
+            "espermograma",
+            "exame do parceiro",
+            "analise seminal"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Conduta, orientacao e encaminhamento",
+      "objetivo": "Explicar o quadro e propor conduta terapêutica e encaminhamento adequados.",
+      "itens": [
+        {
+          "nome": "explicar o quadro em linguagem acessivel",
+          "termos": [
+            "explicar o diagnostico",
+            "explicar o que a senhora tem",
+            "esclarecer a causa da dor",
+            "explicar o quadro"
+          ]
+        },
+        {
+          "nome": "tratamento hormonal",
+          "termos": [
+            "prescrever anticoncepcional continuo",
+            "iniciar tratamento hormonal",
+            "bloqueio hormonal",
+            "prescrever dienogeste",
+            "prescrever progestagenio"
+          ]
+        },
+        {
+          "nome": "analgesia",
+          "termos": [
+            "prescrever analgesico",
+            "prescrever anti-inflamatorio",
+            "orientar analgesia"
+          ]
+        },
+        {
+          "nome": "tratamento da anemia",
+          "termos": [
+            "prescrever sulfato ferroso",
+            "repor ferro",
+            "tratar a anemia"
+          ]
+        },
+        {
+          "nome": "encaminhamento ao especialista",
+          "termos": [
+            "encaminhar para o ginecologista",
+            "encaminhar ao especialista",
+            "encaminhar para o servico de referencia",
+            "indicar avaliacao cirurgica"
+          ]
+        },
+        {
+          "nome": "abordagem do desejo de gestacao",
+          "termos": [
+            "encaminhar para reproducao assistida",
+            "discutir o desejo de gestacao",
+            "orientar sobre a fertilidade"
+          ]
+        },
+        {
+          "nome": "atestado e afastamento",
+          "termos": [
+            "fornecer atestado",
+            "emitir atestado"
+          ]
+        }
+      ],
+      "peso": 0.75
+    }
+  ],
+  "revalida": {
+    "area": "ginecologia_obstetricia",
+    "cenario": "Ambulatório de ginecologia e obstetrícia. Paciente do sexo feminino, 29 anos, procura atendimento.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) de plantão no ambulatório de ginecologia e obstetrícia e vai atender um(a) paciente do sexo feminino, 29 anos.",
+      "Realize a anamnese dirigida e o exame físico pertinente ao caso.",
+      "Solicite os exames complementares que julgar necessários — eles serão fornecidos pelo Chefe de Estação.",
+      "Ao final, informe ao paciente a sua hipótese diagnóstica e a conduta, em linguagem acessível.",
+      "Registre hipótese, diferenciais e conduta no fechamento da estação."
+    ],
+    "limites": {
+      "exames": 4,
+      "hipoteses": 1,
+      "condutas": 3
+    },
+    "pep": [
+      {
+        "id": "identificacao_da_paciente",
+        "descricao": "Identifica-se ao paciente e confirma a identificação dele antes de iniciar",
+        "peso": 0.75,
+        "adequado": "Apresenta-se pelo nome, diz que é o(a) médico(a) e confirma nome e idade do paciente.",
+        "parcial": "Apresenta-se OU confirma a identificação, mas não os dois.",
+        "inadequado": "Inicia a anamnese sem se apresentar nem confirmar quem é o paciente."
+      },
+      {
+        "id": "caracterizacao_da_dor_hda",
+        "descricao": "Caracteriza a queixa principal e a história da doença atual",
+        "peso": 2.5,
+        "adequado": "Investiga início, localização, irradiação, intensidade, fatores de melhora e piora e sintomas associados.",
+        "parcial": "Caracteriza a queixa de forma incompleta, deixando de fora atributos que mudam a conduta.",
+        "inadequado": "Não caracteriza a queixa ou apenas a registra sem investigar."
+      },
+      {
+        "id": "historia_menstrual_e_anteced",
+        "descricao": "Investiga antecedentes pessoais, medicamentos em uso e alergias",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre doenças prévias, medicações em uso e alergias.",
+        "parcial": "Investiga parte dos antecedentes, deixando de fora medicações ou alergias.",
+        "inadequado": "Não investiga antecedentes."
+      },
+      {
+        "id": "impacto_na_vida_e_abordagem_",
+        "descricao": "Investiga hábitos de vida e fatores de risco",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre tabagismo, álcool, atividade física e outros fatores pertinentes ao caso.",
+        "parcial": "Investiga apenas um dos hábitos relevantes.",
+        "inadequado": "Não investiga hábitos nem fatores de risco."
+      },
+      {
+        "id": "exame_fisico_e_ginecologico",
+        "descricao": "Realiza o exame físico dirigido, incluindo sinais vitais",
+        "peso": 1.5,
+        "adequado": "Solicita sinais vitais e as manobras dirigidas à hipótese, e interpreta o que encontra.",
+        "parcial": "Realiza parte do exame necessário ou não interpreta os achados.",
+        "inadequado": "Não examina o paciente ou pede exame não pertinente ao caso."
+      },
+      {
+        "id": "exames_complementares",
+        "descricao": "Solicita os exames complementares pertinentes e justificados",
+        "peso": 1.5,
+        "adequado": "Solicita os exames que mudam a conduta neste caso, sem excesso.",
+        "parcial": "Solicita alguns dos exames necessários, ou acrescenta exames irrelevantes.",
+        "inadequado": "Não solicita exame ou solicita bateria sem relação com a hipótese."
+      },
+      {
+        "id": "conduta_orientacao_e_encamin",
+        "descricao": "Define a conduta imediata adequada ao caso",
+        "peso": 0.75,
+        "adequado": "Indica a conduta correta, na ordem de prioridade que o quadro exige.",
+        "parcial": "Indica conduta parcialmente correta ou fora da prioridade.",
+        "inadequado": "Não define conduta ou define conduta inadequada ao quadro."
+      }
+    ]
+  }
+}

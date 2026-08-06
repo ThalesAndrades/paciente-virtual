@@ -866,3 +866,98 @@ test("o preço sai em real brasileiro sem depender da ICU do servidor", async ()
     );
   }
 });
+
+test("todo caso do acervo tem rubrica — sem ela o aluno termina a consulta sem nota", () => {
+  // Um caso sem rubrica não quebra nada: `carregarRubrica` devolve null e o
+  // servidor segue. O preço é pior que um erro — o aluno faz a consulta inteira,
+  // chega ao fechamento e não recebe nota objetiva nenhuma. Já entrou caso assim
+  // no acervo (leptospirose, úlcera venosa crônica), e nada avisou.
+  const casos = fs
+    .readdirSync(path.join(RAIZ, "casos"))
+    .filter((n) => n.endsWith(".json"));
+
+  const orfaos = casos.filter(
+    (nome) => !fs.existsSync(path.join(RAIZ, "avaliacoes", nome))
+  );
+
+  assert.deepEqual(
+    orfaos,
+    [],
+    `casos sem rubrica em avaliacoes/: ${orfaos.join(", ")} — o aluno terminaria sem nota`
+  );
+});
+
+test("rubrica órfã não fica no acervo apontando para caso que não existe", () => {
+  // O simétrico do teste acima: uma rubrica sem caso aparece na varredura das
+  // estações (`gerar-estacoes.mjs` e o teste do PEP leem `avaliacoes/`) e faz o
+  // acervo parecer maior do que é.
+  const rubricas = fs
+    .readdirSync(path.join(RAIZ, "avaliacoes"))
+    .filter((n) => n.endsWith(".json"));
+
+  const orfas = rubricas.filter(
+    (nome) => !fs.existsSync(path.join(RAIZ, "casos", nome))
+  );
+
+  assert.deepEqual(orfas, [], `rubricas sem caso em casos/: ${orfas.join(", ")}`);
+});
+
+test("caso em que quem fala não é o paciente declara o interlocutor", () => {
+  // O defeito já aconteceu duas vezes. Na primeira, o modelo interpretou o bebê
+  // em vez da mãe. Na segunda, um caso de pediatria entrou no acervo com a
+  // identificação do PAI ("Jorge, 38 anos, pai e acompanhante de Miguel, 7 anos")
+  // e SEM `interlocutor` — o prompt mandava o pai ser o doente, e o participante
+  // conversaria com um adulto de 38 anos sobre uma doença de escolar.
+  //
+  // A pista está na própria identificação: quem escreve o caso descreve o
+  // parentesco ali. Se o nome anuncia acompanhante, `interlocutor` é obrigatório.
+  const ANUNCIA_ACOMPANHANTE = /\b(m[ãa]e|pai|av[óo]|respons[áa]vel|acompanhante|cuidador[a]?|tia|tio)\b/i;
+
+  const casos = fs
+    .readdirSync(path.join(RAIZ, "casos"))
+    .filter((n) => n.endsWith(".json"));
+
+  for (const arquivo of casos) {
+    const caso = lerCaso(arquivo.replace(/\.json$/, ""));
+    const nome = String((caso.identificacao || {}).nome || "");
+    if (!ANUNCIA_ACOMPANHANTE.test(nome)) continue;
+
+    assert.ok(
+      caso.interlocutor,
+      `${arquivo}: a identificação anuncia acompanhante ("${nome}") mas o caso não declara "interlocutor" — o modelo trataria o acompanhante como o doente`
+    );
+  }
+});
+
+test("todo caso com interlocutor avisa o modelo de que o doente é outro", () => {
+  // Declarar `interlocutor` não basta: o campo tem de CHEGAR ao prompt. Se o
+  // motor parar de montar o bloco, os casos com acompanhante voltam a falhar em
+  // silêncio — o JSON continua correto e o paciente continua errado.
+  const casos = fs
+    .readdirSync(path.join(RAIZ, "casos"))
+    .filter((n) => n.endsWith(".json"));
+
+  let comAcompanhante = 0;
+  for (const arquivo of casos) {
+    const caso = lerCaso(arquivo.replace(/\.json$/, ""));
+    if (!caso.interlocutor) continue;
+    comAcompanhante += 1;
+
+    const prompt = sistemaPaciente(caso);
+    assert.match(
+      prompt,
+      /QUEM ESTÁ DOENTE NÃO É VOCÊ/,
+      `${arquivo}: o prompt não avisa que o doente é outra pessoa`
+    );
+    assert.ok(
+      prompt.includes(caso.interlocutor),
+      `${arquivo}: o papel do acompanhante não chegou ao prompt`
+    );
+    assert.ok(
+      !/Quem está doente e sofrendo é VOCÊ/.test(prompt),
+      `${arquivo}: instrução contraditória no mesmo prompt`
+    );
+  }
+
+  assert.ok(comAcompanhante >= 2, "o acervo tem casos com acompanhante — o teste precisa vê-los");
+});

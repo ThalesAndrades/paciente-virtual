@@ -1,0 +1,544 @@
+{
+  "nome_caso": "Glomerulonefrite Aguda na Infância (Pediatria — Revalida)",
+  "criterios": [
+    {
+      "nome": "Acolhimento e identificação",
+      "objetivo": "Identificar a criança, o acompanhante e o contexto escolar.",
+      "itens": [
+        {
+          "nome": "nome da crianca",
+          "termos": [
+            "qual o nome",
+            "nome dele",
+            "nome do seu filho",
+            "como ele chama",
+            "como se chama"
+          ]
+        },
+        {
+          "nome": "idade da crianca",
+          "termos": [
+            "quantos anos",
+            "que idade",
+            "idade dele"
+          ]
+        },
+        {
+          "nome": "quem acompanha/cuida",
+          "termos": [
+            "quem cuida",
+            "quem trouxe",
+            "quem acompanha",
+            "grau de parentesco",
+            "quem mora com"
+          ]
+        },
+        {
+          "nome": "escola",
+          "termos": [
+            "vai a escola",
+            "vai à escola",
+            "que ano esta na escola",
+            "frequenta a escola",
+            "faltou aula"
+          ]
+        }
+      ],
+      "peso": 1
+    },
+    {
+      "nome": "Caracterizacao da queixa (HDA)",
+      "objetivo": "Caracterizar a urina escura, o edema e os sintomas associados.",
+      "itens": [
+        {
+          "nome": "motivo da consulta",
+          "termos": [
+            "o que aconteceu",
+            "o que houve",
+            "o que trouxe",
+            "me conta",
+            "qual a queixa"
+          ]
+        },
+        {
+          "nome": "inicio/tempo de evolucao",
+          "termos": [
+            "quando comecou",
+            "desde quando",
+            "faz quanto tempo",
+            "ha quanto tempo",
+            "há quanto tempo"
+          ]
+        },
+        {
+          "nome": "cor/aspecto da urina",
+          "termos": [
+            "cor do xixi",
+            "cor da urina",
+            "como esta a urina",
+            "urina escura",
+            "xixi escuro",
+            "sangue na urina",
+            "sangue no xixi"
+          ]
+        },
+        {
+          "nome": "volume/frequencia urinaria",
+          "termos": [
+            "quantidade de xixi",
+            "quantidade de urina",
+            "quantas vezes faz xixi",
+            "urinando menos",
+            "fazendo menos xixi",
+            "volume de urina"
+          ]
+        },
+        {
+          "nome": "dor ou ardencia ao urinar",
+          "termos": [
+            "arde para fazer xixi",
+            "arde pra fazer xixi",
+            "dor para urinar",
+            "dor pra urinar",
+            "ardencia ao urinar",
+            "doi para fazer xixi",
+            "doi quando faz xixi"
+          ]
+        },
+        {
+          "nome": "caracterizacao do inchaco",
+          "termos": [
+            "quando incha",
+            "onde incha",
+            "olhos inchados",
+            "acorda inchado",
+            "inchado de manha",
+            "inchaço piora",
+            "inchaco piora"
+          ]
+        },
+        {
+          "nome": "sintomas associados",
+          "termos": [
+            "mais alguma coisa",
+            "outros sintomas",
+            "dor de cabeca",
+            "dor de cabeça",
+            "teve febre",
+            "vomitou",
+            "junto com isso"
+          ]
+        },
+        {
+          "nome": "evolucao",
+          "termos": [
+            "melhorou ou piorou",
+            "esta piorando",
+            "está piorando",
+            "como evoluiu",
+            "de la para ca",
+            "de lá para cá"
+          ]
+        }
+      ],
+      "peso": 2.5
+    },
+    {
+      "nome": "Antecedentes e epidemiologia",
+      "objetivo": "Investigar a infeccao estreptococica previa, contatos, vacinacao e historia familiar.",
+      "itens": [
+        {
+          "nome": "feridas de pele previas",
+          "termos": [
+            "feridas na pele",
+            "feridas nas pernas",
+            "machucado na pele",
+            "problema de pele",
+            "teve feridas",
+            "lesao na pele",
+            "impetigo"
+          ]
+        },
+        {
+          "nome": "infeccao de garganta previa",
+          "termos": [
+            "dor de garganta",
+            "garganta inflamada",
+            "amigdalite",
+            "infeccao de garganta",
+            "infecção de garganta"
+          ]
+        },
+        {
+          "nome": "contatos/irmaos com quadro semelhante",
+          "termos": [
+            "irmaos",
+            "irmãos",
+            "irma dele",
+            "irmã dele",
+            "outras criancas",
+            "outras crianças",
+            "alguem mais em casa",
+            "alguém mais em casa"
+          ]
+        },
+        {
+          "nome": "vacinacao",
+          "termos": [
+            "vacina",
+            "caderneta de vacina",
+            "cartao de vacina",
+            "cartão de vacina"
+          ]
+        },
+        {
+          "nome": "antecedentes da crianca",
+          "termos": [
+            "nasceu de parto",
+            "como foi o parto",
+            "ja internou",
+            "já internou",
+            "internacao previa",
+            "alergia",
+            "doenca cronica",
+            "doença crônica"
+          ]
+        },
+        {
+          "nome": "historia familiar",
+          "termos": [
+            "na familia",
+            "na família",
+            "historico familiar",
+            "histórico familiar",
+            "doenca dos rins na familia"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exame fisico",
+      "objetivo": "Realizar exame fisico direcionado: pressao, peso, edema, pele e auscultas.",
+      "itens": [
+        {
+          "nome": "aferir sinais vitais e pressao",
+          "termos": [
+            "aferir a pressao",
+            "aferir a pressão",
+            "medir a pressao",
+            "medir a pressão",
+            "pressao arterial",
+            "pressão arterial",
+            "sinais vitais",
+            "frequencia cardiaca",
+            "temperatura"
+          ]
+        },
+        {
+          "nome": "pesar e comparar com a caderneta",
+          "termos": [
+            "pesar a crianca",
+            "pesar a criança",
+            "verificar o peso",
+            "aferir o peso",
+            "quanto pesa",
+            "colocar na balanca",
+            "colocar na balança"
+          ]
+        },
+        {
+          "nome": "pesquisar edema",
+          "termos": [
+            "cacifo",
+            "godet",
+            "apertar a canela",
+            "pesquisar edema",
+            "examinar o inchaco",
+            "examinar o inchaço",
+            "edema de membros"
+          ]
+        },
+        {
+          "nome": "examinar a pele e as cicatrizes",
+          "termos": [
+            "examinar a pele",
+            "olhar as pernas",
+            "ver as cicatrizes",
+            "examinar as feridas",
+            "olhar a pele"
+          ]
+        },
+        {
+          "nome": "ausculta cardiopulmonar",
+          "termos": [
+            "auscultar",
+            "ausculta pulmonar",
+            "ausculta cardiaca",
+            "ausculta cardíaca",
+            "escutar o pulmao",
+            "escutar o pulmão",
+            "escutar o coracao",
+            "escutar o coração"
+          ]
+        },
+        {
+          "nome": "exame do abdome e giordano",
+          "termos": [
+            "palpar a barriga",
+            "examinar o abdome",
+            "apalpar o abdome",
+            "giordano",
+            "punho-percussao",
+            "punho percussao"
+          ]
+        }
+      ],
+      "peso": 1.5
+    },
+    {
+      "nome": "Exames complementares",
+      "objetivo": "Solicitar os exames que confirmam a sindrome nefritica e a etiologia pos-estreptococica.",
+      "itens": [
+        {
+          "nome": "exame de urina",
+          "termos": [
+            "exame de urina",
+            "urina tipo 1",
+            "urina 1",
+            "sumario de urina",
+            "sumário de urina",
+            "parcial de urina",
+            "sedimento urinario",
+            "sedimento urinário"
+          ]
+        },
+        {
+          "nome": "funcao renal",
+          "termos": [
+            "ureia",
+            "creatinina",
+            "funcao renal",
+            "função renal"
+          ]
+        },
+        {
+          "nome": "complemento serico",
+          "termos": [
+            "complemento",
+            "c3",
+            "c4"
+          ]
+        },
+        {
+          "nome": "marcadores de estreptococo",
+          "termos": [
+            "aslo",
+            "antiestreptolisina",
+            "anti-dnase",
+            "anti dnase",
+            "sorologia para estreptococo"
+          ]
+        },
+        {
+          "nome": "hemograma e eletrolitos",
+          "termos": [
+            "hemograma",
+            "eletrolitos",
+            "eletrólitos",
+            "ionograma",
+            "potassio",
+            "potássio"
+          ]
+        },
+        {
+          "nome": "urocultura",
+          "termos": [
+            "urocultura",
+            "cultura de urina"
+          ]
+        },
+        {
+          "nome": "proteinuria quantificada",
+          "termos": [
+            "proteinuria",
+            "proteinúria",
+            "relacao proteina creatinina",
+            "relação proteína creatinina",
+            "albumina serica",
+            "albumina sérica"
+          ]
+        },
+        {
+          "nome": "ultrassom renal",
+          "termos": [
+            "ultrassom dos rins",
+            "usg renal",
+            "ultrassonografia renal",
+            "ecografia dos rins",
+            "usg de rins e vias"
+          ]
+        }
+      ],
+      "peso": 2
+    },
+    {
+      "nome": "Conduta e comunicacao",
+      "objetivo": "Explicar em linguagem simples, orientar sal e liquidos, indicar observacao/internacao, tratar a causa e a pressao, e acolher o medo do pai.",
+      "itens": [
+        {
+          "nome": "explicar o diagnostico em linguagem simples",
+          "termos": [
+            "inflamacao nos rins",
+            "inflamação nos rins",
+            "inflamacao no rim",
+            "inflamação no rim",
+            "rins inflamados",
+            "nefrite",
+            "vou explicar o que ele tem"
+          ]
+        },
+        {
+          "nome": "orientar restricao de sal e liquidos",
+          "termos": [
+            "restricao de sal",
+            "restrição de sal",
+            "diminuir o sal",
+            "menos sal na comida",
+            "restricao de liquidos",
+            "restrição de líquidos",
+            "controlar o liquido",
+            "controlar o líquido"
+          ]
+        },
+        {
+          "nome": "indicar internacao ou observacao",
+          "termos": [
+            "precisa internar",
+            "vamos internar",
+            "deixar internado",
+            "ficar em observacao",
+            "ficar em observação",
+            "internacao para controle",
+            "internação para controle"
+          ]
+        },
+        {
+          "nome": "prescrever antibiotico para erradicacao",
+          "termos": [
+            "prescrever penicilina",
+            "penicilina benzatina",
+            "benzetacil",
+            "prescrever antibiotico",
+            "prescrever antibiótico",
+            "receitar antibiotico",
+            "receitar antibiótico"
+          ]
+        },
+        {
+          "nome": "tratar hipertensao e edema",
+          "termos": [
+            "prescrever furosemida",
+            "prescrever diuretico",
+            "prescrever diurético",
+            "diuretico para o inchaco",
+            "remedio para baixar a pressao",
+            "remédio para baixar a pressão",
+            "anti-hipertensivo"
+          ]
+        },
+        {
+          "nome": "acolher o medo e orientar prognostico",
+          "termos": [
+            "vai ficar bem",
+            "bom prognostico",
+            "bom prognóstico",
+            "maioria se recupera",
+            "costuma curar",
+            "nao vai precisar de hemodialise",
+            "não vai precisar de hemodiálise",
+            "pode ficar tranquilo",
+            "retorno em"
+          ]
+        }
+      ],
+      "peso": 1.5
+    }
+  ],
+  "revalida": {
+    "area": "pediatria",
+    "cenario": "Ambulatório de pediatria. Escolar de 7 anos trazido pelo pai por inchaço ao redor dos olhos ao acordar e urina escura há dois dias. Quem presta as informações é o pai.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) do ambulatório de pediatria e vai atender um escolar de 7 anos trazido pelo pai.",
+      "A criança está presente, mas é tímida e responde por monossílabos: a história vem do pai.",
+      "Realize a anamnese dirigida e o exame físico da criança, solicitando ao Chefe de Estação os achados que desejar examinar.",
+      "Solicite os exames complementares que julgar necessários — eles serão fornecidos pelo Chefe de Estação.",
+      "Informe ao pai a hipótese diagnóstica e a conduta, em linguagem acessível.",
+      "Registre no fechamento a hipótese, os diferenciais e a conduta."
+    ],
+    "limites": {
+      "exames": 4,
+      "hipoteses": 1,
+      "condutas": 3
+    },
+    "pep": [
+      {
+        "id": "apresentacao",
+        "descricao": "Apresenta-se, identifica a criança e o acompanhante e acolhe a preocupação do pai",
+        "peso": 0.8,
+        "adequado": "Apresenta-se pelo nome, diz que é o(a) médico(a), confirma nome e idade da criança e acolhe a preocupação do pai.",
+        "parcial": "Identifica a criança, mas conduz o atendimento ignorando o pai como interlocutor.",
+        "inadequado": "Inicia a anamnese sem se apresentar nem confirmar quem é o paciente."
+      },
+      {
+        "id": "caracterizacao_edema_urina",
+        "descricao": "Caracteriza o edema e a alteração urinária: início, evolução no dia, cor e volume da urina",
+        "peso": 2.2,
+        "adequado": "Investiga quando começou, que o edema é matinal e periorbitário, a cor da urina e a redução do volume urinário.",
+        "parcial": "Caracteriza o edema OU a urina, sem cobrir os dois.",
+        "inadequado": "Não caracteriza o edema nem a alteração urinária."
+      },
+      {
+        "id": "infeccao_previa",
+        "descricao": "Pesquisa ativamente infecção de pele ou de garganta nas semanas anteriores",
+        "peso": 1.5,
+        "adequado": "Pergunta explicitamente por feridas de pele, impetigo ou dor de garganta nas últimas semanas e obtém a informação, que o pai não relaciona espontaneamente.",
+        "parcial": "Pergunta por infecção prévia de forma vaga e não recupera o antecedente.",
+        "inadequado": "Não pesquisa infecção prévia — o antecedente decisivo passa em branco."
+      },
+      {
+        "id": "exame_fisico_pa",
+        "descricao": "Realiza exame físico dirigido e AFERE A PRESSÃO ARTERIAL com manguito adequado à idade",
+        "peso": 1.5,
+        "adequado": "Examina estado geral e edema E afere a pressão arterial, reconhecendo que está acima do esperado para a idade.",
+        "parcial": "Examina a criança, mas não afere a pressão arterial.",
+        "inadequado": "Não realiza exame físico dirigido nem afere a pressão."
+      },
+      {
+        "id": "exames_complementares",
+        "descricao": "Solicita os exames que confirmam a hipótese e avaliam a função renal",
+        "peso": 2,
+        "adequado": "Solicita exame de urina e função renal E pelo menos um marcador de infecção prévia ou de complemento, interpretando os achados.",
+        "parcial": "Solicita exame de urina, mas não avalia função renal nem os marcadores.",
+        "inadequado": "Não solicita exames ou pede exames sem relação com o quadro."
+      },
+      {
+        "id": "conduta",
+        "descricao": "Define conduta: restrição hidrossalina, controle da pressão e seguimento com sinais de alarme",
+        "peso": 1.5,
+        "adequado": "Orienta restrição de sal e líquidos, controle da pressão arterial, acompanhamento ambulatorial e diz quando retornar de imediato.",
+        "parcial": "Define parte da conduta, sem seguimento ou sem sinais de alarme.",
+        "inadequado": "Não define conduta ou indica conduta inadequada ao quadro."
+      },
+      {
+        "id": "comunicacao",
+        "descricao": "Comunica-se com o pai em linguagem acessível e confirma o entendimento",
+        "peso": 0.5,
+        "adequado": "Explica o que está acontecendo sem jargão, diz que costuma ter boa evolução e confirma se o pai entendeu.",
+        "parcial": "Comunica-se de forma técnica demais ou não confirma o entendimento.",
+        "inadequado": "Não explica nada ao acompanhante."
+      }
+    ]
+  }
+}
