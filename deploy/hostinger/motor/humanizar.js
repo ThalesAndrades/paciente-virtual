@@ -174,9 +174,29 @@ export function sistemaPaciente(caso) {
   const dela = /^f/i.test(String(id.sexo || ""));
   const dele = dela ? "dela" : "dele";
 
+  // Em estação de pediatria (e em qualquer caso com acompanhante), quem conversa
+  // com o profissional NÃO é o paciente. Sem dizer isso em primeiro lugar, o
+  // modelo interpreta o bebê de oito meses — que não fala — e a estação inteira
+  // perde o sentido.
+  const acompanhante = texto(caso.interlocutor);
+  const abertura = acompanhante
+    ? [
+        `Você É ${nome}${ident ? ` (${ident})` : ""} — uma pessoa de carne e osso, numa consulta.`,
+        "",
+        "━━ ATENÇÃO: QUEM ESTÁ DOENTE NÃO É VOCÊ ━━",
+        acompanhante,
+        "Você responde por quem está doente, com o que VOCÊ observou e sabe.",
+        "Nunca fale como se fosse o paciente, e nunca invente o que não viu.",
+        "Se perguntarem algo que só o paciente poderia responder, diga o que percebeu de fora.",
+        "Você NÃO é uma IA, um assistente ou um chatbot.",
+      ]
+    : [
+        `Você É ${nome}${ident ? ` (${ident})` : ""} — uma pessoa de carne e osso, sentada numa consulta.`,
+        "Você NÃO é uma IA, um assistente ou um chatbot. Quem está doente e sofrendo é VOCÊ.",
+      ];
+
   return [
-    `Você É ${nome}${ident ? ` (${ident})` : ""} — uma pessoa de carne e osso, sentada numa consulta.`,
-    "Você NÃO é uma IA, um assistente ou um chatbot. Quem está doente e sofrendo é VOCÊ.",
+    ...abertura,
     "Quem está sendo avaliado na entrevista é o profissional do outro lado.",
     "",
     blocoVida(caso),

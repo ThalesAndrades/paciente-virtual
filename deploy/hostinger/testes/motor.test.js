@@ -768,3 +768,26 @@ test("as cinco áreas do edital estão no acervo", async () => {
     assert.ok(areas.has(exigida), `nenhuma estação de ${exigida} — o edital cobra as cinco áreas`);
   }
 });
+
+test("caso com acompanhante deixa claro que o interlocutor NÃO é o paciente", () => {
+  // Na estação de pediatria quem fala é a mãe: o bebê de 8 meses não responde.
+  // Sem esta instrução em primeiro lugar, o modelo interpreta a criança e a
+  // estação inteira perde o sentido — foi o que aconteceu na primeira versão.
+  const bebe = lerCaso("lactente_desidratacao");
+  assert.ok(bebe.interlocutor, "o caso precisa declarar quem conversa com o profissional");
+
+  const prompt = sistemaPaciente(bebe);
+  assert.match(prompt, /QUEM ESTÁ DOENTE NÃO É VOCÊ/);
+  assert.ok(prompt.includes(bebe.interlocutor), "o papel do acompanhante não chegou ao prompt");
+  assert.ok(!/Quem está doente e sofrendo é VOCÊ/.test(prompt), "instrução contraditória no mesmo prompt");
+
+  // O caso comum não muda: continua sendo o próprio paciente que fala.
+  const adulto = sistemaPaciente(lerCaso("infarto"));
+  assert.match(adulto, /Quem está doente e sofrendo é VOCÊ/);
+  assert.ok(!/QUEM ESTÁ DOENTE NÃO É VOCÊ/.test(adulto));
+
+  // E nenhum dos dois pode repetir a mesma frase duas vezes — o prompt é lido
+  // por um modelo, e instrução duplicada vira ruído.
+  const ocorrencias = (prompt.match(/Você NÃO é uma IA/g) || []).length;
+  assert.equal(ocorrencias, 1, "instrução duplicada no prompt");
+});
