@@ -172,8 +172,8 @@ TEPT, Anorexia, Borderline, Depressão pós-parto, Autolesão na adolescência�
 - Entre os contratos travados por teste: **nenhum dos 40 casos abre um tema
   sensível diante de 12 formas de cumprimento**, e um único turno do profissional
   não fecha a rubrica inteira.
-- **CI** (`.github/workflows/ci.yml`): um job — `npm test` (Node 20), em push
-  para `main` e em PRs.
+- **CI** (`.github/workflows/ci.yml`): um job — `npm test` (Node 22, a mesma
+  versão da imagem de produção), em push para `main` e em PRs.
 
 ### Achado da análise — 2 falhas de CI (diagnosticadas e corrigidas neste PR)
 Sobre a base deste documento (commit `1b0162e`, **2026-07-22**), a CI tinha duas

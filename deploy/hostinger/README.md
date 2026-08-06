@@ -28,7 +28,9 @@ Para voz neural local (Whisper/Piper/Kokoro) é preciso do servidor Python
    `https://github.com/ThalesAndrades/paciente-virtual` e branch `main`) ou enviando
    os arquivos pelo Gerenciador de Arquivos.
 3. Configure a aplicação:
-   - **Versão do Node**: 18 ou superior (o repositório fixa `20` em `.nvmrc`).
+   - **Versão do Node**: **22 ou superior** — não é preferência. O banco de contas
+     usa `node:sqlite`, que só existe a partir do 22.5; no 20 o servidor nem sobe.
+     O repositório fixa `22` em `.nvmrc` e `>=22` em `engines`.
    - **Arquivo de inicialização**: `app.js` (na raiz do repositório — é o valor
      que a Hostinger já pré-preenche). Alternativas equivalentes: `npm start`
      ou apontar direto para `deploy/hostinger/servidor.js`.
@@ -40,7 +42,12 @@ Para voz neural local (Whisper/Piper/Kokoro) é preciso do servidor Python
    `OLLAMA_URL=http://127.0.0.1:11434` e rode `ollama pull qwen3:8b`.
 5. Reinicie a aplicação. Pronto: a página do simulador estará no seu domínio.
 
-Não há `npm install`: o servidor usa apenas módulos nativos do Node.
+**É preciso instalar as dependências** (`npm ci --omit=dev`). O servidor foi
+zero-dependências até o login por matrícula chegar; hoje ele importa `better-auth`,
+e um ambiente que pula essa etapa morre no primeiro `import`. Foi exatamente esse
+esquecimento que derrubou a produção — por isso `deploy/hostinger/servidor.js`
+instala o que faltar antes de entregar a aplicação. A auto-cura é rede de proteção,
+não substituto: o ambiente correto já chega com as dependências no lugar.
 
 ### Upload por ZIP (sem Git)
 
