@@ -170,6 +170,21 @@
   </div>
   <p class="subtitulo" id="loja-explica"></p>
 
+  <!-- A carteira do aluno. Estes três blocos JÁ vinham do servidor em
+       /api/creditos e eram descartados pela página: assinatura ativa, extrato dos
+       lançamentos e pagamentos recentes. O preço de descartá-los era caro e
+       silencioso — quem já assinava não via a assinatura e comprava crédito por
+       cima; quem pagava um Pix não via o pagamento pendente e pagava de novo; e
+       ninguém conseguia responder "para onde foram os meus créditos?". -->
+  <div id="carteira" class="carteira oculto">
+    <div id="carteira-assinatura" class="assinatura-faixa oculto"></div>
+    <div id="carteira-pendentes" class="oculto"></div>
+    <details id="carteira-extrato" class="extrato oculto">
+      <summary>Extrato de créditos</summary>
+      <div id="extrato-linhas"></div>
+    </details>
+  </div>
+
   <div id="loja-assinaturas"></div>
   <div id="loja-pacotes"></div>
 
@@ -198,6 +213,11 @@
     <button class="aba ativa" id="aba-consultas" role="tab" aria-selected="true">Consultas</button>
     <button class="aba oculto" id="aba-alunos" role="tab" aria-selected="false">Contas</button>
     <button class="aba oculto" id="aba-cobranca" role="tab" aria-selected="false">Cobrança</button>
+    <!-- /api/diagnostico existia desde sempre e não tinha tela: quem administra
+         só a alcançava por curl. É a rota que responde a pergunta mais cara da
+         operação — "por que o paciente está em modo demonstração?" — dizendo qual
+         modelo REALMENTE serviu e qual foi a última falha do provedor. -->
+    <button class="aba oculto" id="aba-diagnostico" role="tab" aria-selected="false">Diagnóstico</button>
   </div>
 
   <div id="painel-consultas">
@@ -266,9 +286,21 @@
 
     <p class="pref-dica" style="margin-top:18px">
       Webhooks a cadastrar nos painéis dos provedores:<br>
-      Stripe → <code>https://ubtec.sbs/api/webhooks/stripe</code><br>
-      Woovi → <code>https://ubtec.sbs/api/webhooks/woovi</code>
+      <!-- Preenchido com o domínio ATUAL. Estava fixo em ubtec.sbs, e desde que
+           existem dois domínios um endereço fixo manda quem administra a
+           plataforma Med cadastrar o webhook no domínio errado. -->
+      Stripe → <code id="webhook-stripe">—</code><br>
+      Woovi → <code id="webhook-woovi">—</code>
     </p>
+  </div>
+
+  <!-- Diagnóstico: o que está REALMENTE servindo agora. -->
+  <div id="painel-diagnostico" class="oculto">
+    <p class="subtitulo">
+      O que o servidor está usando neste momento. Serve para responder por que uma
+      resposta saiu em modo demonstração sem ter de abrir o log do container.
+    </p>
+    <div id="diagnostico-conteudo" class="diagnostico"></div>
   </div>
 </section>
 
@@ -635,6 +667,15 @@ async function carregarAcesso() {
   $("abrir-desempenho").classList.toggle("oculto", !acesso.autenticado);
   $("aba-alunos").classList.toggle("oculto", !acesso.admin);
   $("aba-cobranca").classList.toggle("oculto", !acesso.admin);
+  // Diagnóstico é do professor, não só do admin: quem acompanha a turma é quem
+  // percebe primeiro que as respostas caíram para o modo demonstração.
+  $("aba-diagnostico").classList.toggle("oculto", !acesso.professor);
+
+  // Os endereços de webhook são os DESTE domínio. Fixos em ubtec.sbs, mandariam
+  // quem administra a plataforma Med cadastrar o webhook no domínio errado.
+  const wStripe = $("webhook-stripe"), wWoovi = $("webhook-woovi");
+  if (wStripe) wStripe.textContent = `${location.origin}/api/webhooks/stripe`;
+  if (wWoovi) wWoovi.textContent = `${location.origin}/api/webhooks/woovi`;
   const quem = $("quem-sou");
   if (quem) quem.textContent = acesso.matricula ? `Entrou como ${acesso.nome || acesso.matricula} (${acesso.matricula}).` : "";
 }
@@ -782,6 +823,91 @@ function pintarSaldo() {
     ? `Dá para ${consultas} consulta${consultas > 1 ? "s" : ""} completa${consultas > 1 ? "s" : ""}.`
     : "Não dá para uma consulta completa.";
   cartao.classList.toggle("vazio", c.saldo < (c.custo.consulta || 10));
+  pintarCarteira();
+}
+
+/* ---------- A carteira: assinatura, pagamentos pendentes e extrato ----------
+   Os três blocos já vinham em /api/creditos e eram jogados fora pela página. Cada
+   um resolve uma pergunta que o aluno fazia e o produto não respondia. */
+
+// Nome legível de cada motivo de lançamento. O banco guarda o motivo cru
+// ("consulta", "boas-vindas"); mostrar isso ao aluno seria vazar o schema.
+const MOTIVO = {
+  "consulta": "Consulta",
+  "prova": "Simulado completo",
+  "estorno": "Estorno",
+  "boas-vindas": "Créditos de boas-vindas",
+  "compra": "Compra de créditos",
+  "assinatura": "Assinatura mensal",
+  "ajuste": "Ajuste manual",
+  "voz": "Conversa por voz",
+};
+function nomeDoMotivo(m) {
+  return MOTIVO[m] || String(m || "Lançamento").replaceAll("-", " ").replace(/^./, (c) => c.toUpperCase());
+}
+
+function dataCurta(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }) +
+    " " + d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+}
+
+function pintarCarteira() {
+  const c = estado.creditos;
+  const raiz = $("carteira");
+  if (!raiz) return;
+  if (!c || c.isento) { raiz.classList.add("oculto"); return; }
+  raiz.classList.remove("oculto");
+
+  // --- Assinatura ativa. Sem isto, quem já assina não tem como saber e acaba
+  //     comprando pacote por cima da própria assinatura.
+  const faixa = $("carteira-assinatura");
+  const a = c.assinatura;
+  if (a && a.status === "ativa") {
+    const ate = a.periodo_fim ? ` — renova em ${new Date(a.periodo_fim).toLocaleDateString("pt-BR")}` : "";
+    faixa.innerHTML = `<strong>✓ Assinatura ativa</strong><span>${esc(a.plano)}${esc(ate)}</span>`;
+    faixa.classList.remove("oculto");
+  } else if (a && a.status) {
+    // Assinatura que existe mas não está ativa (cancelada, vencida, em atraso) é
+    // a informação MAIS importante da tela: o aluno acha que tem e não tem.
+    faixa.innerHTML = `<strong>⚠ Assinatura ${esc(a.status)}</strong><span>${esc(a.plano)} — renove para voltar a usar sem gastar créditos.</span>`;
+    faixa.classList.remove("oculto");
+    faixa.classList.add("inativa");
+  } else {
+    faixa.classList.add("oculto");
+  }
+
+  // --- Pagamento aguardando. O caso clássico do Pix: o aluno paga, o webhook
+  //     demora, a tela não muda e ele paga de novo. Mostrar o pendente evita a
+  //     cobrança duplicada — e o pedido de estorno que vem depois dela.
+  const pend = $("carteira-pendentes");
+  const pendentes = (c.pagamentos || []).filter((p) => p.status && p.status !== "pago" && p.status !== "cancelado");
+  if (pendentes.length) {
+    pend.innerHTML = pendentes.map((p) =>
+      `<div class="pend-linha"><span class="pend-selo">aguardando</span>` +
+      `<span>${p.creditos} créditos por ${esc(p.provedor)} — iniciado em ${esc(dataCurta(p.criado_em))}</span></div>`
+    ).join("");
+    pend.classList.remove("oculto");
+  } else {
+    pend.classList.add("oculto");
+  }
+
+  // --- Extrato. Fechado por padrão: é resposta para quando a pergunta aparece,
+  //     não informação para empurrar em quem só quer começar a consulta.
+  const ext = $("carteira-extrato");
+  const linhas = c.extrato || [];
+  if (linhas.length) {
+    $("extrato-linhas").innerHTML = linhas.map((l) => {
+      const sinal = l.delta > 0 ? "mais" : "menos";
+      return `<div class="extrato-linha"><span class="ext-data">${esc(dataCurta(l.criado_em))}</span>` +
+        `<span class="ext-motivo">${esc(nomeDoMotivo(l.motivo))}</span>` +
+        `<span class="ext-delta ${sinal}">${l.delta > 0 ? "+" : ""}${l.delta}</span></div>`;
+    }).join("");
+    ext.classList.remove("oculto");
+  } else {
+    ext.classList.add("oculto");
+  }
 }
 
 // Antes de começar: se o saldo não cobre a experiência completa, o aluno decide.
@@ -2350,7 +2476,12 @@ $("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abr
    A aba só aparece para quem tem o papel; o servidor confere de novo em toda
    rota. Esconder botão é conforto, não segurança. */
 function trocarAba(qual) {
-  const abas = { consultas: "painel-consultas", alunos: "painel-alunos", cobranca: "painel-cobranca" };
+  const abas = {
+    consultas: "painel-consultas",
+    alunos: "painel-alunos",
+    cobranca: "painel-cobranca",
+    diagnostico: "painel-diagnostico",
+  };
   const escolhida = abas[qual] ? qual : "consultas";
   for (const [nome, painel] of Object.entries(abas)) {
     const ativa = nome === escolhida;
@@ -2360,6 +2491,61 @@ function trocarAba(qual) {
   }
   if (escolhida === "alunos") carregarAlunos();
   if (escolhida === "cobranca") carregarCobranca();
+  if (escolhida === "diagnostico") carregarDiagnostico();
+}
+
+/* ---------- Diagnóstico do servidor (professor) ----------
+   A rota /api/diagnostico existe desde sempre e nunca teve tela: quem administra
+   só a alcançava por curl, e só se soubesse que ela existia. É onde está a
+   resposta para "o paciente respondeu em modo demonstração, por quê?" — que
+   depende de saber qual modelo a cadeia de fallback REALMENTE usou e qual foi o
+   último erro do provedor. */
+async function carregarDiagnostico() {
+  const alvo = $("diagnostico-conteudo");
+  alvo.innerHTML = "<p class='subtitulo'>Consultando…</p>";
+  let d;
+  try {
+    const r = await fetch("/api/diagnostico");
+    if (!r.ok) {
+      alvo.innerHTML = "<p class='subtitulo'>Restrito ao professor.</p>";
+      return;
+    }
+    d = await r.json();
+  } catch {
+    alvo.innerHTML = "<p class='subtitulo'>Não consegui falar com o servidor.</p>";
+    return;
+  }
+
+  const linha = (rotulo, valor, alerta) =>
+    `<div class="diag-linha${alerta ? " alerta" : ""}"><span class="diag-rotulo">${esc(rotulo)}</span>` +
+    `<span class="diag-valor">${esc(valor)}</span></div>`;
+
+  const partes = [];
+  // O backend em demonstração é o único estado que merece destaque: significa que
+  // o aluno está conversando com respostas do próprio caso, não com o modelo.
+  partes.push(linha("Backend", d.backend, d.backend === "demonstracao"));
+  partes.push(linha("Modelo do paciente", d.modelo_paciente));
+  partes.push(linha("Modelo da avaliação", d.modelo_avaliacao));
+
+  // `servido_por` é o que a cadeia de fallback usou de fato — o primeiro da lista
+  // pode não estar liberado na conta e o servidor rebaixa sem avisar ninguém.
+  const servido = d.servido_por || {};
+  for (const [onde, modelo] of Object.entries(servido)) {
+    if (modelo) partes.push(linha(`Servido por (${onde})`, modelo));
+  }
+
+  if (d.voz) partes.push(linha("Voz", d.voz.disponivel ? (d.voz.provedor || "disponível") : "indisponível"));
+  if (d.tempo_real) partes.push(linha("Conversa ao vivo", d.tempo_real.disponivel ? "disponível" : "indisponível"));
+  if (typeof d.consultas_ativas === "number") partes.push(linha("Consultas abertas agora", String(d.consultas_ativas)));
+
+  if (d.ultima_falha_ia) {
+    const f = d.ultima_falha_ia;
+    partes.push(linha(`Última falha (${f.onde})`, `${f.mensagem} — ${dataCurta(f.quando)}`, true));
+  } else {
+    partes.push(linha("Última falha do modelo", "nenhuma registrada"));
+  }
+
+  alvo.innerHTML = partes.join("");
 }
 
 /* ---------- Chaves de cobrança (só o admin) ----------
@@ -2513,6 +2699,7 @@ async function alternarAtivo(a) {
 $("aba-consultas").addEventListener("click", () => trocarAba("consultas"));
 $("aba-alunos").addEventListener("click", () => trocarAba("alunos"));
 $("aba-cobranca").addEventListener("click", () => trocarAba("cobranca"));
+$("aba-diagnostico").addEventListener("click", () => trocarAba("diagnostico"));
 $("form-cobranca").addEventListener("submit", salvarCobranca);
 $("sortear-senha").addEventListener("click", () => { $("nova-senha").value = senhaSorteada(); });
 $("form-conta").addEventListener("submit", async (e) => {

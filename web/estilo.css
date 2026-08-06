@@ -1038,3 +1038,76 @@ input, select, textarea {
 .desemp-sug-txt { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 3px; }
 .desemp-sug-txt strong { font-size: 1.05rem; }
 .desemp-sug-txt span { color: var(--texto-suave); font-size: .9rem; line-height: 1.45; }
+
+/* ---------- Carteira: assinatura, pagamentos pendentes e extrato ----------
+   Dados que o servidor já mandava e a página descartava. Desenho contido de
+   propósito: é a área onde o aluno CONFERE, não onde ele decide comprar — a
+   vitrine de planos, logo abaixo, é que precisa de peso visual. */
+.carteira { margin: 0 0 18px; display: grid; gap: 10px; }
+
+.assinatura-faixa {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  padding: 11px 14px; border-radius: var(--raio-sm);
+  background: var(--primaria-suave); color: var(--texto);
+  border: 1px solid color-mix(in srgb, var(--primaria) 30%, var(--borda));
+}
+.assinatura-faixa strong { font-weight: 750; }
+.assinatura-faixa span { color: var(--texto-suave); font-size: .9rem; }
+/* Assinatura que existe mas não vale: o aviso pesa mais que a confirmação. */
+.assinatura-faixa.inativa {
+  background: var(--exame); border-color: var(--exame-borda); color: var(--exame-texto);
+}
+.assinatura-faixa.inativa span { color: var(--exame-texto); }
+
+.pend-linha {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 9px;
+  padding: 10px 14px; border-radius: var(--raio-sm);
+  background: var(--exame); border: 1px solid var(--exame-borda); color: var(--exame-texto);
+  font-size: .9rem;
+}
+.pend-selo {
+  text-transform: uppercase; letter-spacing: .06em; font-size: .68rem; font-weight: 750;
+  padding: 3px 8px; border-radius: 999px;
+  background: color-mix(in srgb, var(--exame-texto) 16%, transparent);
+}
+
+.extrato { border: 1px solid var(--borda); border-radius: var(--raio-sm); background: var(--superficie); }
+.extrato > summary {
+  cursor: pointer; padding: 11px 14px; font-weight: 650; font-size: .92rem;
+  color: var(--texto-suave); list-style: none;
+}
+.extrato > summary::-webkit-details-marker { display: none; }
+.extrato > summary::before { content: "▸ "; color: var(--texto-fraco); }
+.extrato[open] > summary::before { content: "▾ "; }
+.extrato > summary:focus-visible { outline: 2px solid var(--primaria); outline-offset: -2px; }
+
+#extrato-linhas { padding: 0 14px 8px; }
+.extrato-linha {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: baseline;
+  padding: 7px 0; border-top: 1px solid var(--borda); font-size: .88rem;
+}
+.ext-data { color: var(--texto-fraco); font-variant-numeric: tabular-nums; font-size: .82rem; }
+.ext-motivo { color: var(--texto-suave); }
+/* Débito e crédito não se distinguem só pela cor: o sinal vem junto, para quem
+   não enxerga a diferença entre o verde e o vermelho. */
+.ext-delta { font-weight: 750; font-variant-numeric: tabular-nums; }
+.ext-delta.mais { color: var(--ok); }
+.ext-delta.menos { color: var(--texto-suave); }
+
+/* ---------- Diagnóstico do servidor (painel do professor) ----------
+   Lista de pares rótulo/valor. Denso de propósito: é tela de conferência, lida
+   quando algo já deu errado — não precisa respirar, precisa caber. */
+.diagnostico { display: grid; gap: 1px; background: var(--borda); border: 1px solid var(--borda); border-radius: var(--raio-sm); overflow: hidden; }
+.diag-linha {
+  display: grid; grid-template-columns: minmax(140px, 34%) 1fr; gap: 14px;
+  padding: 10px 14px; background: var(--superficie); font-size: .9rem; align-items: baseline;
+}
+.diag-rotulo { color: var(--texto-suave); font-weight: 600; }
+.diag-valor { color: var(--texto); word-break: break-word; font-variant-numeric: tabular-nums; }
+/* O estado que pede ação: modo demonstração e última falha do provedor. Sinal
+   redundante — cor E barra lateral — para não depender só do matiz. */
+.diag-linha.alerta { background: var(--exame); border-left: 3px solid var(--exame-borda); }
+.diag-linha.alerta .diag-rotulo, .diag-linha.alerta .diag-valor { color: var(--exame-texto); }
+@media (max-width: 560px) {
+  .diag-linha { grid-template-columns: 1fr; gap: 2px; }
+}
