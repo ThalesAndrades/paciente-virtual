@@ -9,9 +9,10 @@ projeto é*; [`ROADMAP.md`](ROADMAP.md), *para onde ele vai*. Aqui está *onde e
 parou*.
 
 - **Última atualização:** 6 de agosto de 2026
-- **Topo da `main` publicado:** `6bba4cc`
+- **Topo da `main` publicado:** `2fcd3ad`
 - **Testes:** 77 passando (`npm test`, Node ≥ 22)
-- **Produção:** <https://ubtec.sbs>
+- **Produção:** <https://ubtec.sbs> — servindo em `node:22-alpine`, contêiner
+  `healthy`, `npm ci` feito pela stack (a auto-cura não precisou entrar)
 
 ---
 
@@ -131,18 +132,29 @@ existe o caminho em que alguém troca o número e lê o histórico do colega.
 O contêiner **clona a `main` no start** — não há build nem registry. Por isso o
 push é o deploy, e o restart é o que o aplica.
 
-### O que está torto e precisa de terminal no host
+### O compose do host — resolvido em 6 de agosto de 2026
 
-O `docker-compose.yml` em `/docker/paciente-virtual/` está **desatualizado**:
-declara `node:20-alpine` e variáveis mortas. Quem segura a produção hoje é a
-auto-cura no start (`deploy/hostinger/servidor.js` virou bootstrap: instala
-dependências, sobe o Node e, se nada funcionar, serve página de manutenção em vez
-de tela morta).
+Por semanas o `docker-compose.yml` em `/docker/paciente-virtual/` foi o arquivo
+mais perigoso do projeto: declarava `node:20-alpine`, não instalava dependências
+e não conhecia o `PV_URL`. Recriar o serviço a partir dele rebaixava a produção
+e quebrava o login, porque o Better Auth precisa do `node:sqlite` — que não
+existe no Node 20. Quem segurava a produção era a auto-cura no start
+(`deploy/hostinger/servidor.js` virou bootstrap: instala dependências, troca o
+Node e, se nada disso funcionar, serve página de manutenção em vez de tela
+morta).
 
-**Não rodar `VPS_updateProjectV1` nem `createNewProjectV1` enquanto o arquivo em
-disco for o antigo** — recriar a partir dele rebaixa a produção e quebra o login
-(o Better Auth precisa do `node:sqlite`, que não existe no Node 20). Reconstruir
-o compose a partir do que roda é tarefa para quando houver terminal no host.
+**O arquivo em disco agora é este mesmo, versionado.** Foi copiado de
+`deploy/hostinger/docker-compose.yml` por SSH (`root@187.127.34.223`, chave
+`despacho_vps` — o usuário `despacho` do alias não alcança o `docker.sock`) e
+aplicado com `docker compose up -d`. O contêiner voltou `healthy` em
+`node:22-alpine`, com o `npm ci` feito pela stack: a auto-cura ficou de reserva,
+que é o lugar dela.
+
+A cópia anterior está em `docker-compose.yml.bak-20260806`, ao lado. Rollback é
+restaurá-la e repetir o `up -d`.
+
+**A lição que fica:** o arquivo derivou porque só existia no servidor. Ele agora
+tem dono no repositório — mudança de produção começa aqui, não lá.
 
 ---
 
@@ -165,7 +177,7 @@ o compose a partir do que roda é tarefa para quando houver terminal no host.
 
 | O quê | De quem | Nota |
 | --- | --- | --- |
-| Trocar o `docker-compose.yml` do host | dono (precisa de terminal) | hoje a auto-cura compensa |
+| ~~Trocar o `docker-compose.yml` do host~~ | — | **feito em 6/8** (seção 5); falta um `up -d` para o `www` entrar em `trustedOrigins` |
 | Teste ponta a ponta de pagamento real | dono | gerar Pix de R$ 24,00 e conferir se o crédito cai; é o único trecho que teste local não cobre |
 | Esclarecer o pedido "1000 créditos pro admin e 10001000" | dono | a funcionalidade de lançar crédito por conta existe no painel; falta saber quem é "10001000" |
 | PEP escrito à mão para as 14 estações de Clínica Médica | próxima sessão | as demais áreas já têm; CM ainda usa PEP gerado |
