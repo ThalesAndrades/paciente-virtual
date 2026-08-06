@@ -413,3 +413,59 @@ instruct multilíngue geral rende falas de paciente mais naturais.
   `SIGTERM`/`SIGINT` e encerra as conexões de forma limpa nos reinícios.
 - **LGPD**: como no restante do projeto, as transcrições contêm nome do aluno e o
   conteúdo da consulta; trate esses dados de acordo.
+
+## Backup dos dados dos alunos
+
+O volume `paciente-virtual_historico` guarda as duas coisas que não existem em
+nenhum outro lugar: o **banco de contas** (`pv.sqlite` — alunos, créditos,
+pagamentos, assinaturas, desempenho) e as **transcrições**, que contêm nome e
+conteúdo da consulta de alunos. O código se recupera de um `git clone`; isto, não.
+
+O volume protege contra redeploy — o container faz `rm -rf /app` a cada start.
+**Não** protege contra perder o disco, o VPS ou a pasta. Por isso o backup.
+
+O script é `deploy/hostinger/backup.sh`. Ele usa `VACUUM INTO`, e não uma cópia do
+arquivo: o SQLite mantém um WAL, e copiar `pv.sqlite` com o servidor rodando pode
+capturar um estado a meio de uma transação — o arquivo abre, parece íntegro, e
+falta o último pedaço. Depois verifica que o instantâneo abre e conta as contas;
+backup que não se lê é pior que backup nenhum, porque dá a sensação de proteção.
+
+### Instalar no VPS
+
+```bash
+scp deploy/hostinger/backup.sh root@SEU-VPS:/root/backup-paciente-virtual.sh
+ssh root@SEU-VPS 'chmod +x /root/backup-paciente-virtual.sh'
+```
+
+Confira antes de agendar — gera, verifica e apaga:
+
+```bash
+ssh root@SEU-VPS '/root/backup-paciente-virtual.sh --testar'
+```
+
+Depois instale `pv-backup.service` e `pv-backup.timer` (diário, 03:30 UTC,
+`Persistent=true` para não perder o dia se o VPS estiver desligado na hora) e
+ative com `systemctl enable --now pv-backup.timer`.
+
+Os pacotes ficam em `/var/backups/paciente-virtual/` com permissão 600, retenção
+de 14 dias (`PV_BACKUP_RETENCAO` muda).
+
+### Restaurar
+
+```bash
+tar xzf /var/backups/paciente-virtual/pv-AAAAMMDD-HHMMSS.tar.gz -C /tmp/restauro
+# /tmp/restauro/pv.sqlite          → o banco de contas
+# /tmp/restauro/transcricoes/*.txt → as consultas gravadas
+```
+
+Para voltar ao ar: pare o container, copie `pv.sqlite` e as transcrições para o
+volume, e suba de novo. **Teste a restauração de vez em quando** — a única prova
+de que um backup existe é ter aberto um.
+
+### O que ainda falta: cópia fora deste servidor
+
+Hoje o backup fica no **mesmo disco** do que ele protege. Isso cobre engano
+humano, redeploy e corrupção de banco; **não** cobre perder o VPS. Para fechar,
+falta uma credencial de saída (o `root` deste host não tem chave SSH para outro
+destino) e decidir o destino. Enquanto isso não existe, o risco é conhecido e
+está escrito aqui, não esquecido.

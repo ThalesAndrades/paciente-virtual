@@ -58,12 +58,18 @@ services:
       # Base pública do Better Auth. Sem ela o servidor deduz a origem da requisição
       # e avisa a cada start ("Base URL is not set").
       #
-      # OS DOIS hosts, separados por vírgula, porque os `labels` abaixo publicam os
-      # dois: `baseURL` usa só o primeiro (o apex, canônico), mas `trustedOrigins`
-      # usa a lista inteira. Com apenas o apex aqui, quem entrasse por `www` teria
-      # a requisição barrada pela defesa contra CSRF — e o erro chega na tela do
+      # TODOS os hosts publicados, separados por vírgula, porque os `labels` abaixo
+      # publicam todos: `baseURL` usa só o primeiro (o apex, canônico), mas
+      # `trustedOrigins` usa a lista inteira. Host publicado que falte aqui tem a
+      # requisição barrada pela defesa contra CSRF — e o erro chega na tela do
       # aluno como "senha errada", que é o diagnóstico mais caro possível.
-      PV_URL: https://ubtec.sbs,https://www.ubtec.sbs
+      #
+      # São QUATRO desde que a Medicina ganhou domínio próprio: o mesmo servidor
+      # atende `ubtec.sbs` (demais profissões) e `revalidaai.med.br` (estações do
+      # Revalida), com o mesmo banco e a mesma carteira de créditos. Quem separa é
+      # o Host, em motor/marca.js. Esquecer `revalidaai.med.br` nesta linha faz a
+      # plataforma Med subir bonita e não deixar ninguém entrar.
+      PV_URL: https://ubtec.sbs,https://www.ubtec.sbs,https://revalidaai.med.br,https://www.revalidaai.med.br
       # O banco de contas mora no volume (via symlink /app/historico), então
       # sobrevive ao re-clone. Explícito para não depender do symlink resolver.
       PV_BANCO: /dados/historico/pv.sqlite
@@ -119,15 +125,23 @@ services:
       retries: 3
       start_period: 90s
 
+    # Um container, quatro hosts. A regra do Traefik lista os quatro porque as duas
+    # plataformas são o MESMO processo: separá-las em dois containers duplicaria o
+    # banco de contas e partiria a carteira de créditos do aluno ao meio.
+    #
+    # O certificado do Let's Encrypt é emitido por host da regra: no primeiro
+    # acesso a `revalidaai.med.br` o Traefik pede o dele. Isso só funciona depois
+    # que o DNS do domínio apontar para este VPS — antes disso o desafio HTTP-01
+    # falha, e o Traefik reserva a próxima tentativa.
     labels:
       - traefik.enable=true
       - traefik.docker.network=coolify
-      - "traefik.http.routers.pv.rule=Host(`ubtec.sbs`) || Host(`www.ubtec.sbs`)"
+      - "traefik.http.routers.pv.rule=Host(`ubtec.sbs`) || Host(`www.ubtec.sbs`) || Host(`revalidaai.med.br`) || Host(`www.revalidaai.med.br`)"
       - traefik.http.routers.pv.entrypoints=https
       - traefik.http.routers.pv.tls=true
       - traefik.http.routers.pv.tls.certresolver=letsencrypt
       - traefik.http.routers.pv.service=pv
-      - "traefik.http.routers.pv-web.rule=Host(`ubtec.sbs`) || Host(`www.ubtec.sbs`)"
+      - "traefik.http.routers.pv-web.rule=Host(`ubtec.sbs`) || Host(`www.ubtec.sbs`) || Host(`revalidaai.med.br`) || Host(`www.revalidaai.med.br`)"
       - traefik.http.routers.pv-web.entrypoints=http
       - traefik.http.routers.pv-web.service=pv
       - traefik.http.routers.pv-web.middlewares=pv-redir
