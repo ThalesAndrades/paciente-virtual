@@ -5,6 +5,6 @@
 // rubricas, avaliação) vive em deploy/hostinger/. Rode `npm start` para o
 // mesmo efeito localmente.
 
-import { iniciar } from "./deploy/hostinger/servidor.js";
+import { iniciar } from "./deploy/hostinger/aplicacao.js";
 
 iniciar();

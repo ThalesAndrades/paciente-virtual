@@ -20,7 +20,7 @@ process.env.PV_BANCO = path.join(
   "pv.sqlite"
 );
 
-const { criarServidor } = await import("../servidor.js");
+const { criarServidor } = await import("../aplicacao.js");
 const { criarUsuario, migrar } = await import("../motor/auth.js");
 
 await migrar();
