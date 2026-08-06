@@ -52,6 +52,7 @@ import {
   verificarAssinaturaStripe,
 } from "./motor/pagamentos.js";
 import { CUSTO, EXPERIENCIA_COMPLETA, catalogo, itemPorId } from "./motor/planos.js";
+import { CHAVES, definirSegredo, estadoDosSegredos } from "./motor/configuracao.js";
 import {
   carregarSessao,
   ehAdmin,
@@ -1062,6 +1063,36 @@ export function criarServidor() {
         }
 
         return json(res, 404, { erro: "Rota não encontrada." });
+      }
+
+      // ---- Chaves de cobrança, instaladas pelo painel. Só o ADMIN.
+      //
+      // Existe porque a chave no `.env` do host só chega ao container se o
+      // `docker-compose.yml` declarar a variável — e esse arquivo não está no
+      // repositório. Já derrubou a cobrança uma vez: chave instalada, invisível
+      // para a aplicação, sem nenhum sinal de que era isso. Aqui ela entra por
+      // HTTPS, vai para o banco (dentro do volume) e vale na hora, sem redeploy.
+      if (pathname === "/api/configuracao") {
+        if (!ehAdmin(req)) return json(res, 403, { erro: "Restrito ao administrador." });
+
+        if (req.method === "GET") {
+          return json(res, 200, { segredos: estadoDosSegredos(), formas: provedoresDisponiveis() });
+        }
+
+        if (req.method === "POST") {
+          const dados = await lerCorpo(req);
+          const gravadas = [];
+          for (const chave of CHAVES) {
+            // Ausente significa "não mexa"; string vazia significa "apague".
+            if (dados[chave] === undefined) continue;
+            definirSegredo(chave, dados[chave]);
+            gravadas.push(chave);
+          }
+          if (!gravadas.length) return json(res, 400, { erro: "Nada para gravar." });
+          console.log(`[configuracao] ${gravadas.join(", ")} atualizada(s) pelo painel`);
+          // O valor nunca volta para a tela — só o estado dele.
+          return json(res, 200, { ok: true, segredos: estadoDosSegredos(), formas: provedoresDisponiveis() });
+        }
       }
 
       // A vitrine (título, queixa, contagem por área) fica aberta: é o que a página

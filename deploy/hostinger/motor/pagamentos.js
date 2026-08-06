@@ -26,13 +26,17 @@ import {
   creditar,
 } from "./creditos.js";
 import { assinaturaPorId, itemPorId } from "./planos.js";
+import { segredo } from "./configuracao.js";
 
 const WOOVI_BASE = (process.env.WOOVI_BASE_URL || "https://api.woovi.com").replace(/\/+$/, "");
 const STRIPE_BASE = "https://api.stripe.com/v1";
 
-const chaveWoovi = () => (process.env.WOOVI_APP_ID || "").trim();
-const chaveStripe = () => (process.env.STRIPE_SECRET_KEY || "").trim();
-const segredoWebhookStripe = () => (process.env.STRIPE_WEBHOOK_SECRET || "").trim();
+// As credenciais vêm de `configuracao.js`: banco primeiro (instaladas pelo painel),
+// ambiente depois (`.env` do servidor). Ler `process.env` direto aqui deixaria a
+// chave do painel invisível para a cobrança.
+const chaveWoovi = () => segredo("WOOVI_APP_ID");
+const chaveStripe = () => segredo("STRIPE_SECRET_KEY");
+const segredoWebhookStripe = () => segredo("STRIPE_WEBHOOK_SECRET");
 
 export function provedoresDisponiveis() {
   return { pix: Boolean(chaveWoovi()), cartao: Boolean(chaveStripe()) };

@@ -136,6 +136,7 @@
   <div class="abas-painel" id="abas-painel" role="tablist">
     <button class="aba ativa" id="aba-consultas" role="tab" aria-selected="true">Consultas</button>
     <button class="aba oculto" id="aba-alunos" role="tab" aria-selected="false">Contas</button>
+    <button class="aba oculto" id="aba-cobranca" role="tab" aria-selected="false">Cobrança</button>
   </div>
 
   <div id="painel-consultas">
@@ -175,6 +176,38 @@
     </form>
 
     <div id="lista-alunos"></div>
+  </div>
+
+  <!-- As chaves de cobrança entram por aqui e vão direto para o banco do
+       servidor, dentro do volume. Nunca voltam para a tela: o painel mostra
+       apenas se estão configuradas e os últimos caracteres. -->
+  <div id="painel-cobranca" class="oculto">
+    <p class="subtitulo">
+      As chaves ficam guardadas no servidor e valem na hora, sem redeploy. Elas nunca
+      são exibidas de volta — só os últimos caracteres, para você conferir qual está lá.
+    </p>
+
+    <div id="estado-segredos" class="estado-segredos"></div>
+
+    <form id="form-cobranca" class="form-conta">
+      <label>WOOVI_APP_ID <span class="dica-campo">Pix — App ID da Woovi</span>
+        <input id="chave-woovi" type="password" placeholder="deixe em branco para não alterar" autocomplete="off" spellcheck="false">
+      </label>
+      <label>STRIPE_SECRET_KEY <span class="dica-campo">Cartão e assinatura</span>
+        <input id="chave-stripe" type="password" placeholder="deixe em branco para não alterar" autocomplete="off" spellcheck="false">
+      </label>
+      <label>STRIPE_WEBHOOK_SECRET <span class="dica-campo">Sem ele, nenhum webhook da Stripe é aceito</span>
+        <input id="chave-whsec" type="password" placeholder="deixe em branco para não alterar" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="modal-erro oculto" id="cobranca-erro"></div>
+      <button class="botao" id="salvar-cobranca" type="submit">Salvar chaves</button>
+    </form>
+
+    <p class="pref-dica" style="margin-top:18px">
+      Webhooks a cadastrar nos painéis dos provedores:<br>
+      Stripe → <code>https://ubtec.sbs/api/webhooks/stripe</code><br>
+      Woovi → <code>https://ubtec.sbs/api/webhooks/woovi</code>
+    </p>
   </div>
 </section>
 
@@ -416,6 +449,7 @@ async function carregarAcesso() {
   // O painel só é anunciado a quem TEM o papel: botão que leva a 403 é ruído.
   $("botao-painel").classList.toggle("oculto", !acesso.professor);
   $("aba-alunos").classList.toggle("oculto", !acesso.admin);
+  $("aba-cobranca").classList.toggle("oculto", !acesso.admin);
   const quem = $("quem-sou");
   if (quem) quem.textContent = acesso.matricula ? `Entrou como ${acesso.nome || acesso.matricula} (${acesso.matricula}).` : "";
 }
@@ -1748,14 +1782,72 @@ $("botao-nova").addEventListener("click", () => { if (estado.categoriaAtual) abr
    A aba só aparece para quem tem o papel; o servidor confere de novo em toda
    rota. Esconder botão é conforto, não segurança. */
 function trocarAba(qual) {
-  const contas = qual === "alunos";
-  $("painel-consultas").classList.toggle("oculto", contas);
-  $("painel-alunos").classList.toggle("oculto", !contas);
-  $("aba-consultas").classList.toggle("ativa", !contas);
-  $("aba-alunos").classList.toggle("ativa", contas);
-  $("aba-consultas").setAttribute("aria-selected", String(!contas));
-  $("aba-alunos").setAttribute("aria-selected", String(contas));
-  if (contas) carregarAlunos();
+  const abas = { consultas: "painel-consultas", alunos: "painel-alunos", cobranca: "painel-cobranca" };
+  const escolhida = abas[qual] ? qual : "consultas";
+  for (const [nome, painel] of Object.entries(abas)) {
+    const ativa = nome === escolhida;
+    $(painel).classList.toggle("oculto", !ativa);
+    $(`aba-${nome}`).classList.toggle("ativa", ativa);
+    $(`aba-${nome}`).setAttribute("aria-selected", String(ativa));
+  }
+  if (escolhida === "alunos") carregarAlunos();
+  if (escolhida === "cobranca") carregarCobranca();
+}
+
+/* ---------- Chaves de cobrança (só o admin) ----------
+   Instaladas por aqui porque a chave no `.env` do host só chega ao container se o
+   compose declarar a variável — e já aconteceu de a chave estar instalada e
+   invisível para a aplicação, sem nenhum sinal de que era isso. */
+async function carregarCobranca() {
+  const alvo = $("estado-segredos");
+  alvo.innerHTML = "<p class='subtitulo'>Carregando…</p>";
+  try {
+    const r = await fetch("/api/configuracao");
+    if (!r.ok) { alvo.innerHTML = "<p class='subtitulo'>Sem permissão.</p>"; return; }
+    const { segredos, formas } = await r.json();
+    alvo.innerHTML = segredos.map((s) => {
+      const estado = s.configurada
+        ? `<span class="ok">configurada ${esc(s.final)}</span> <span class="origem">via ${esc(s.origem)}</span>`
+        : `<span class="falta">não configurada</span>`;
+      return `<div class="linha-segredo"><code>${esc(s.chave)}</code> ${estado}</div>`;
+    }).join("") +
+      `<div class="linha-segredo resumo">Loja hoje: Pix ${formas.pix ? "✅" : "❌"} · Cartão ${formas.cartao ? "✅" : "❌"}</div>`;
+  } catch { alvo.innerHTML = "<p class='subtitulo'>Erro ao consultar.</p>"; }
+}
+
+async function salvarCobranca(ev) {
+  ev.preventDefault();
+  const erro = $("cobranca-erro");
+  erro.classList.add("oculto");
+  // Campo em branco não altera o que já está lá: trocar só a chave da Stripe não
+  // pode exigir redigitar a da Woovi.
+  const corpo = {};
+  const campos = [["chave-woovi", "WOOVI_APP_ID"], ["chave-stripe", "STRIPE_SECRET_KEY"], ["chave-whsec", "STRIPE_WEBHOOK_SECRET"]];
+  for (const [id, chave] of campos) {
+    const valor = $(id).value.trim();
+    if (valor) corpo[chave] = valor;
+  }
+  if (!Object.keys(corpo).length) {
+    erro.textContent = "Preencha ao menos uma chave.";
+    erro.classList.remove("oculto");
+    return;
+  }
+  const botao = $("salvar-cobranca"); botao.disabled = true;
+  try {
+    const r = await fetch("/api/configuracao", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) { erro.textContent = d.erro || "Não foi possível salvar."; erro.classList.remove("oculto"); return; }
+    // Some com os valores da tela assim que saem daqui.
+    for (const [id] of campos) $(id).value = "";
+    torrada("Chaves salvas. A loja já está usando.");
+    carregarCobranca();
+    estado.loja = null; // força recarregar o catálogo com as formas novas
+  } catch {
+    erro.textContent = "Falha de conexão.";
+    erro.classList.remove("oculto");
+  } finally { botao.disabled = false; }
 }
 
 function senhaSorteada() {
@@ -1852,6 +1944,8 @@ async function alternarAtivo(a) {
 
 $("aba-consultas").addEventListener("click", () => trocarAba("consultas"));
 $("aba-alunos").addEventListener("click", () => trocarAba("alunos"));
+$("aba-cobranca").addEventListener("click", () => trocarAba("cobranca"));
+$("form-cobranca").addEventListener("submit", salvarCobranca);
 $("sortear-senha").addEventListener("click", () => { $("nova-senha").value = senhaSorteada(); });
 $("form-conta").addEventListener("submit", async (e) => {
   e.preventDefault();

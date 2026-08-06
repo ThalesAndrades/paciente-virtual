@@ -869,3 +869,42 @@ test("professor não lança crédito para ninguém", async () => {
     servidor.close();
   }
 });
+
+test("chaves de cobrança: só o admin instala, e elas nunca voltam para a tela", async () => {
+  const { servidor, api } = await subir();
+  try {
+    // Fechada para quem não administra.
+    await entrar(api, "prof001");
+    assert.equal((await api("/api/configuracao")).status, 403);
+    assert.equal((await api("/api/configuracao", { WOOVI_APP_ID: "roubada" })).status, 403);
+
+    await entrar(api, "adm001");
+    const antes = await api("/api/configuracao");
+    assert.equal(antes.status, 200);
+    assert.equal(antes.dados.formas.pix, false);
+
+    const gravou = await api("/api/configuracao", { WOOVI_APP_ID: "chave-secreta-de-teste-1234" });
+    assert.equal(gravou.status, 200);
+    // A loja passa a oferecer Pix na hora, sem reiniciar nada.
+    assert.equal(gravou.dados.formas.pix, true);
+    assert.equal((await api("/api/loja")).dados.formas.pix, true);
+
+    // O valor NUNCA sai: só o estado e os últimos caracteres.
+    const estado = (await api("/api/configuracao")).dados;
+    const woovi = estado.segredos.find((s) => s.chave === "WOOVI_APP_ID");
+    assert.equal(woovi.configurada, true);
+    assert.equal(woovi.origem, "painel");
+    assert.equal(woovi.final, "…1234");
+    assert.ok(!JSON.stringify(estado).includes("chave-secreta-de-teste"), "a chave vazou na resposta");
+
+    // Chave desconhecida não vira depósito de qualquer coisa.
+    const lixo = await api("/api/configuracao", { QUALQUER_COISA: "x" });
+    assert.equal(lixo.status, 400);
+
+    // Apagar é mandar string vazia — e a loja volta a não oferecer.
+    await api("/api/configuracao", { WOOVI_APP_ID: "" });
+    assert.equal((await api("/api/loja")).dados.formas.pix, false);
+  } finally {
+    servidor.close();
+  }
+});
