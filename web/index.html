@@ -2105,7 +2105,17 @@ async function alternarSala() {
     // Com o painel aberto a tela precisa de mais largura: sem isto, no desktop, a
     // conversa era espremida a ~200 px entre a presença e os instrumentos.
     $("tela-consulta").classList.add("largo");
-    const ok = await mod.abrir({ container: $("sala-tela"), expressao: estado.expressao });
+    // Quem é a pessoa que o candidato tem à frente. `id` fixa o rosto: sem ele o
+    // paciente trocaria de aparência a cada abertura da sala, no meio da consulta.
+    const ok = await mod.abrir({
+      container: $("sala-tela"),
+      expressao: estado.expressao,
+      // A semente do rosto é o NOME do paciente, não o id do caso: `aplicarConsulta`
+      // também roda no circuito, onde o caso é oculto de propósito, e o nome está
+      // sempre à mão (aparece no cabeçalho). Estável por caso — a mesma pessoa em
+      // toda abertura da sala e em toda recarga.
+      perfil: { ...(estado.pacienteInfo || {}) },
+    });
     if (!ok) { fecharSala(); torrada("Não consegui mostrar a presença do paciente. A consulta segue normalmente.", true); return; }
     // O áudio já tocado antes da sala abrir continua saindo pelo mesmo elemento:
     // basta apresentá-lo ao analisador para a boca acompanhar a fala.

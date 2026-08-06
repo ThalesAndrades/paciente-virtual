@@ -106,6 +106,9 @@ const ESTATICOS = new Map([
   // biblioteca; o boneco caiu no vale da estranheza e a biblioteca cobrava a
   // franquia de dados do aluno. Hoje é um canvas 2D e nenhuma dependência.
   ["/presenca.js", { arquivo: path.join(RAIZ, "web", "presenca.js"), tipo: JS }],
+  // O rosto do ator, importado por presenca.js. Precisa estar na lista: é um
+  // módulo ES, e o navegador vai buscá-lo sozinho ao resolver o `import`.
+  ["/rosto.js", { arquivo: path.join(RAIZ, "web", "rosto.js"), tipo: JS }],
 ]);
 
 const AVISO_SEM_PARECER =

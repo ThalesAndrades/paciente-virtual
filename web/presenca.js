@@ -16,7 +16,10 @@
  * o que importa num celular de aluno, no meio de uma aula.
  */
 
+import { aparenciaDoCaso, desenharRosto } from "./rosto.js";
+
 let raiz = null;
+let aparencia = aparenciaDoCaso({});
 let canvas = null;
 let ctx = null;
 let quadro = null;
@@ -255,14 +258,20 @@ function desenhar(t, dt) {
   ctx.strokeStyle = cor(tom.luz + 6, 0.35 + energiaVoz * 0.4);
   ctx.stroke();
 
-  // Núcleo: a pessoa. Sólido, macio, com um brilho que acompanha a fala.
-  const nucleo = ctx.createRadialGradient(cx - raio * 0.3, cy - raio * 0.35, raio * 0.1, cx, cy, raio);
-  nucleo.addColorStop(0, cor(Math.min(78, tom.luz + 22), 0.95));
-  nucleo.addColorStop(1, cor(tom.luz - 6, 0.9));
-  ctx.beginPath();
-  ctx.arc(cx, cy, raio, 0, Math.PI * 2);
-  ctx.fillStyle = nucleo;
-  ctx.fill();
+  // A pessoa. Era um núcleo abstrato — honesto, mas não era ninguém: no Revalida
+  // quem está do outro lado é um ATOR, com rosto, que olha para o candidato. O
+  // halo e o anel de voz continuam por baixo, agora como o ar em volta dela.
+  desenharRosto(ctx, {
+    cx,
+    cy,
+    r: raio,
+    exp: expressao,
+    energiaVoz,
+    t,
+    falando: estado === "falando",
+    aparencia,
+    semMovimento,
+  });
 
   // Arco do microfone: o retorno de que ESTÁ sendo ouvido. Sem isto o aluno fala
   // mais alto do que precisa, sem saber se o sistema o escuta.
@@ -336,12 +345,16 @@ function dimensionar() {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
-export async function abrir({ container, expressao: exp }) {
+export async function abrir({ container, expressao: exp, perfil }) {
   if (canvas) return true;
   if (!suportada()) return false;
 
   raiz = container;
   expressao = { ...expressaoNeutra(), ...(exp || {}) };
+  // Quem é a pessoa: sexo e faixa etária saem da identificação do caso, e o id
+  // mantém o mesmo rosto entre recargas — o paciente não pode trocar de cara no
+  // meio da consulta.
+  aparencia = aparenciaDoCaso(perfil);
   semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   estado = "espera";
   inicio = performance.now();
