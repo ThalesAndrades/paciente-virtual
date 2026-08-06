@@ -1525,6 +1525,11 @@ function formatarNota(n) { return n.toFixed(1).replace(".", ","); }
 function corDaFaixa(pct) {
   return pct >= 80 ? "var(--sev-boa)" : pct >= 40 ? "var(--sev-atencao)" : "var(--sev-critica)";
 }
+// A mesma faixa, na versão que serve para TEXTO. O âmbar do anel sobre branco dá
+// ~1,9:1 de contraste — bonito no traço, ilegível como número.
+function corDaFaixaTexto(pct) {
+  return pct >= 80 ? "var(--sev-boa-texto)" : pct >= 40 ? "var(--sev-atencao-texto)" : "var(--sev-critica-texto)";
+}
 function renderizarChecklist(cont, cl) {
   cont.innerHTML = "";
   for (const c of cl.criterios) {
@@ -1583,8 +1588,9 @@ function anelNota(nota) {
   anel.style.strokeDashoffset = String(circ);
   // Mesma rampa de severidade dos medidores: a nota e os critérios contam a mesma
   // história em cores coerentes.
-  const cor = corDaFaixa(nota * 10);
-  document.querySelector(".resultado-topo").style.setProperty("--cor-nota", cor);
+  const topo = document.querySelector(".resultado-topo");
+  topo.style.setProperty("--cor-nota", corDaFaixa(nota * 10));
+  topo.style.setProperty("--cor-nota-texto", corDaFaixaTexto(nota * 10));
   const frac = Math.max(0, Math.min(1, nota / 10));
   const aplicar = () => { anel.style.strokeDashoffset = String(circ * (1 - frac)); };
   if (semMovimento()) aplicar();
