@@ -1111,3 +1111,74 @@ input, select, textarea {
 @media (max-width: 560px) {
   .diag-linha { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* ---------- A consulta é uma ESTAÇÃO, não uma página ----------
+   Antes, quem rolava era a janela inteira. Isso produzia dois defeitos que se
+   somavam e apareciam como "o chat não acompanha a conversa":
+
+   1. A presença do paciente é `sticky`. Com a página rolando, o balão recém-chegado
+      entrava POR BAIXO dela — existia, mas não dava para ler.
+   2. O auto-rolar era `scrollIntoView({behavior:"smooth"})` disparado a cada
+      pedaço de texto do streaming. Cada chamada agenda uma animação da JANELA, e
+      a seguinte cancela a anterior: com tokens chegando a cada poucos ms, a
+      rolagem ficava presa no lugar. Quanto mais o paciente falava, menos rolava.
+
+   Agora a tela tem a altura da janela e SÓ a transcrição rola, dentro dela mesma —
+   como numa estação de verdade, onde o cronômetro e o comando ficam à vista o
+   tempo todo. `100dvh` e não `100vh`: no celular a barra do navegador aparece e
+   some, e `vh` mede a tela sem ela, cortando a última linha. */
+#tela-consulta.ativa {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-height: 100dvh;
+  /* Espaço para a barra de entrada, que é `position: fixed` e não ocupa lugar no
+     fluxo. A altura vem da PRÓPRIA barra, medida em acompanharAlturaDaEntrada():
+     ela muda quando o botão "Ao vivo" entra, quando o rótulo quebra linha no
+     celular e quando a área segura do iPhone soma. Com número fixo, os últimos
+     centímetros da conversa nascem atrás do campo de digitar — o texto existe, o
+     auto-rolar jura que chegou ao fim, e o aluno não vê a última resposta.
+     O 78px é só o palpite do primeiro quadro, antes da medição. */
+  padding-bottom: calc(var(--altura-entrada, 78px) + 10px);
+  overflow: hidden;
+}
+/* Dentro de um container de altura fixa, `sticky` não tem o que grudar: o
+   cabeçalho já é a primeira linha do flex e não sai da tela. */
+#tela-consulta .cabecalho-consulta { position: static; flex: none; }
+#tela-consulta .palco { flex: 1; min-height: 0; }
+#tela-consulta .coluna-chat { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+/* `min-height: 0` é o que faz o flex realmente encolher e a rolagem existir: sem
+   ele, o item cresce com o conteúdo e o overflow nunca chega a acontecer.
+   `overscroll-behavior: contain` impede que, ao chegar ao fim da transcrição, o
+   gesto continue e arraste a página atrás — no celular isso fechava a estação. */
+#tela-consulta .fluxo-mensagens {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 4px 8px 2px;
+  scroll-behavior: auto;   /* quem anima é o JS, e só quando faz sentido */
+}
+#tela-consulta .sala { position: static; max-height: 100%; }
+#tela-consulta .sala-tela { max-height: min(62vh, 100%); }
+
+@media (max-width: 860px) {
+  /* No celular a presença é uma faixa no alto e a conversa fica embaixo; as duas
+     dividem a altura, e só a conversa rola. */
+  #tela-consulta .palco.com-sala { flex-direction: column; }
+  #tela-consulta .sala { flex: none; }
+  #tela-consulta .coluna-chat { flex: 1; min-height: 0; }
+}
+
+/* Alguém rolou para cima para reler algo: o botão traz de volta ao fim sem
+   obrigar a arrastar. Aparece só quando há distância — ver `pertoDoFim()`. */
+.voltar-ao-fim {
+  position: absolute; right: 14px; bottom: 12px; z-index: 6;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 13px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--borda-forte); background: var(--superficie); color: var(--texto);
+  font-size: .84rem; font-weight: 650; box-shadow: var(--sombra-forte);
+  animation: entra .18s ease;
+}
+.voltar-ao-fim.oculto { display: none; }
+#tela-consulta .coluna-chat { position: relative; }

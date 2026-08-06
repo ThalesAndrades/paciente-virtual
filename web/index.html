@@ -348,6 +348,9 @@
     </div>
     <div class="coluna-chat">
       <div id="mensagens" class="fluxo-mensagens" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <!-- Só aparece quando o aluno rolou para reler algo e a conversa seguiu sem
+           ele. Enquanto está visível, nada o arrasta de volta à força. -->
+      <button type="button" id="voltar-ao-fim" class="voltar-ao-fim oculto">↓ Voltar ao fim</button>
     </div>
     <aside class="painel-instrumentos oculto" id="painel-instrumentos" aria-label="Instrumentos e anotações">
       <div class="cabeca"><span id="titulo-painel-lateral">🩺 Instrumentos</span> <button class="fechar-inst" id="fechar-inst" aria-label="Fechar">✕</button></div>
@@ -1374,6 +1377,12 @@ function aplicarConsulta(dados) {
   }
 
   mostrarTela("tela-consulta");
+  // Consulta nova começa acompanhando o fim, e o vigia passa a saber quando o
+  // aluno sai dele para reler.
+  seguindoFim = true;
+  vigiarRolagem();
+  acompanharAlturaDaEntrada();
+  atualizarBotaoFim();
   $("campo-mensagem").focus();
   $("botao-sala").classList.remove("oculto");
   // Reabre a sala se o aluno já a estava usando — sem perguntar de novo a cada caso.
@@ -1649,12 +1658,108 @@ async function solicitarExame(chave, botao) {
   finally { estado.ocupado = false; if (botao) botao.disabled = false; }
 }
 
+/* ---------- Rolagem da transcrição ----------
+   Era `scrollIntoView({behavior:"smooth"})` em cada balão — e, durante a digitação
+   e o streaming, a CADA pedaço de texto (a cada 22 ms). Três defeitos de uma vez:
+
+   1. Cada chamada agenda uma animação nova e CANCELA a anterior. Com texto
+      chegando a cada poucos ms, a animação nunca terminava: a rolagem ficava
+      parada. Quanto mais o paciente falava, menos o chat acompanhava.
+   2. `scrollIntoView` rola o ancestral rolável — que era a JANELA. O balão novo
+      ia parar atrás da presença do paciente, que é `sticky`.
+   3. Sequestrava o aluno que tinha rolado para reler uma resposta anterior: a
+      cada token, de volta para o fim.
+
+   Agora: um pedido de rolagem por quadro (`requestAnimationFrame`), direto no
+   container, e só se o aluno já estava acompanhando o fim. */
+
+// Margem de "ainda estou no fim". Não pode ser 0: durante o streaming o conteúdo
+// cresce entre um quadro e outro, e uma comparação exata acusaria "o usuário
+// rolou para cima" a cada linha nova.
+const MARGEM_FIM = 80;
+
+function pertoDoFim(el) {
+  return el.scrollHeight - el.scrollTop - el.clientHeight <= MARGEM_FIM;
+}
+
+let rolagemPedida = false;
+let seguindoFim = true;
+
+// Um pedido por quadro, não um por token. `rolagemPedida` faz as N chamadas de um
+// mesmo quadro virarem uma só escrita — que é o que evita a briga de animações.
+function rolarParaOFim(forcar = false) {
+  if (forcar) seguindoFim = true;
+  if (!seguindoFim) return;
+  if (rolagemPedida) return;
+  rolagemPedida = true;
+
+  const aplicar = () => {
+    rolagemPedida = false;
+    const el = $("mensagens");
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+    atualizarBotaoFim();
+  };
+
+  // Com a aba em segundo plano o navegador não entrega quadros, e o
+  // `requestAnimationFrame` fica pendente até o aluno voltar. Isso importa aqui:
+  // a conversa por voz continua acontecendo com a aba escondida — o aluno olha
+  // outra coisa e volta —, e ele voltaria para uma transcrição parada no meio,
+  // com o resto abaixo da dobra. Sem quadros, aplica direto.
+  if (document.hidden) aplicar();
+  else requestAnimationFrame(aplicar);
+}
+
+function atualizarBotaoFim() {
+  const botao = $("voltar-ao-fim");
+  if (!botao) return;
+  botao.classList.toggle("oculto", seguindoFim);
+}
+
+/* A barra de entrada é `position: fixed`, então não ocupa espaço no fluxo: a
+   transcrição tem de reservar a altura dela. Um número fixo no CSS erra, porque a
+   barra MUDA de altura — o botão "Ao vivo" entra, o rótulo quebra linha no
+   celular, a área segura do iPhone soma. Com o número errado, os últimos
+   centímetros da conversa nascem atrás do campo de digitar: o texto existe, o
+   auto-rolar jura que chegou ao fim, e o aluno não vê a última resposta.
+
+   Aqui a própria barra informa quanto ocupa. */
+function acompanharAlturaDaEntrada() {
+  const entrada = document.querySelector(".entrada");
+  if (!entrada) return;
+  const aplicar = () => {
+    document.documentElement.style.setProperty("--altura-entrada", `${entrada.offsetHeight}px`);
+    // A altura mudou: quem estava no fim precisa continuar no fim.
+    rolarParaOFim();
+  };
+  aplicar();
+  if (window.ResizeObserver) new ResizeObserver(aplicar).observe(entrada);
+  else window.addEventListener("resize", aplicar, { passive: true });
+}
+
+// O aluno rolou: se saiu do fim, paramos de arrastá-lo de volta; se voltou ao fim,
+// voltamos a acompanhar. Sem `passive: true` o navegador não pode adiantar a
+// rolagem enquanto este ouvinte roda, e o gesto fica pesado no celular.
+function vigiarRolagem() {
+  const el = $("mensagens");
+  if (!el || el.dataset.vigiado) return;
+  el.dataset.vigiado = "1";
+  el.addEventListener("scroll", () => {
+    seguindoFim = pertoDoFim(el);
+    atualizarBotaoFim();
+  }, { passive: true });
+}
+
 /* ---------- Chat ---------- */
 function adicionarBalao(tipo, texto, extra = {}) {
   const b = document.createElement("div"); b.className = `balao ${tipo}`;
   if (tipo === "exame") { b.innerHTML = `<strong>${extra.titulo} — ${extra.nome}</strong>`; b.append(texto); }
   else b.textContent = texto;
-  $("mensagens").appendChild(b); b.scrollIntoView({ behavior: "smooth", block: "end" }); return b;
+  $("mensagens").appendChild(b);
+  // Balão do próprio aluno SEMPRE traz de volta ao fim: ele acabou de agir, quer
+  // ver o resultado. Os demais respeitam onde ele estava lendo.
+  rolarParaOFim(tipo === "aluno");
+  return b;
 }
 let temporizadorDigitacao = null, balaoDigitando = null, textoDigitando = "", demoDigitando = false;
 function finalizarDigitacao() {
@@ -1678,7 +1783,7 @@ function digitarResposta(balao, texto, ehDemo) {
   temporizadorDigitacao = setInterval(() => {
     i = Math.min(i + passo, texto.length);
     balao.textContent = texto.slice(0, i);
-    balao.scrollIntoView({ behavior: "smooth", block: "end" });
+    rolarParaOFim();
     if (i >= texto.length) finalizarDigitacao();
   }, 22);
 }
@@ -1693,7 +1798,7 @@ async function enviarMensagem() {
   naSala((s) => s.marcarInteracao()); // o silêncio só pesa quando ninguém pergunta nada
   const dig = adicionarBalao("digitando", "");
   dig.innerHTML = `<span class="quem">${estado.pacienteNome || "O paciente"} está pensando</span><span class="pontos-digita"><i></i><i></i><i></i></span>`;
-  dig.scrollIntoView({ behavior: "smooth", block: "end" });
+  rolarParaOFim(true);
   estado.ocupado = true;
   let digVivo = true;
   const tirarDig = () => { if (digVivo) { dig.remove(); digVivo = false; } };
@@ -1727,7 +1832,7 @@ async function enviarMensagem() {
         else if (ev.tipo === "delta") {
           tirarDig();
           if (!balao) { balao = adicionarBalao("paciente", ""); balao.classList.add("digitando-vivo"); }
-          textoPac += ev.t; balao.textContent = textoPac; balao.scrollIntoView({ behavior: "smooth", block: "end" });
+          textoPac += ev.t; balao.textContent = textoPac; rolarParaOFim();
           // Só a PRIMEIRA frase sai adiantada, para a voz começar junto do texto.
           // O resto vai numa síntese única no fim: sintetizar frase a frase fazia a
           // prosódia reiniciar a cada uma e deixava emenda audível entre os clipes.
@@ -2700,6 +2805,7 @@ $("aba-consultas").addEventListener("click", () => trocarAba("consultas"));
 $("aba-alunos").addEventListener("click", () => trocarAba("alunos"));
 $("aba-cobranca").addEventListener("click", () => trocarAba("cobranca"));
 $("aba-diagnostico").addEventListener("click", () => trocarAba("diagnostico"));
+$("voltar-ao-fim").addEventListener("click", () => rolarParaOFim(true));
 $("form-cobranca").addEventListener("submit", salvarCobranca);
 $("sortear-senha").addEventListener("click", () => { $("nova-senha").value = senhaSorteada(); });
 $("form-conta").addEventListener("submit", async (e) => {

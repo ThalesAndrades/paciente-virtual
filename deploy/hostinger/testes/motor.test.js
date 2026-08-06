@@ -18,7 +18,7 @@ import { expressaoDoCaso } from "../motor/expressao.js";
 import { consultarFicha } from "../motor/ficha.js";
 import { sistemaPaciente } from "../motor/humanizar.js";
 import { conceder, zerarOrcamento } from "../motor/orcamento.js";
-import { FERRAMENTAS, instrucoesTempoReal } from "../motor/tempo-real.js";
+import { ESCUTA, FERRAMENTAS, MAX_TOKENS_FALA, instrucoesTempoReal } from "../motor/tempo-real.js";
 import { limparRaciocinio } from "../motor/ia.js";
 import { contemTermo, normalizar } from "../motor/texto.js";
 
@@ -960,4 +960,41 @@ test("todo caso com interlocutor avisa o modelo de que o doente é outro", () =>
   }
 
   assert.ok(comAcompanhante >= 2, "o acervo tem casos com acompanhante — o teste precisa vê-los");
+});
+
+test("a escuta do ator não volta a cortar o candidato no meio da pergunta", () => {
+  // Estes números decidem a cadência da conversa falada e são REGRESSÃO
+  // SILENCIOSA: baixar `silence_duration_ms` de volta para 700 não quebra nada
+  // por conta própria, não aparece em log, e só reaparece semanas depois como
+  // "a voz está cortando". Cada assert abaixo guarda um jeito de cortar que já
+  // aconteceu de verdade.
+
+  // Numa anamnese o aluno pausa PARA PENSAR no meio da própria pergunta. Com
+  // 700 ms o paciente respondia à meia-pergunta — e a resposta saía sem sentido
+  // porque a pergunta estava pela metade.
+  assert.ok(
+    ESCUTA.silence_duration_ms >= 1000,
+    `silêncio de ${ESCUTA.silence_duration_ms}ms corta quem pausa para pensar`
+  );
+
+  // "hum-hum", "sei", "entendo" são acolhimento, não tomada de turno. Limiar
+  // baixo derruba a fala do paciente e pune o aluno que entrevista bem.
+  assert.ok(ESCUTA.threshold >= 0.7, `limiar ${ESCUTA.threshold} confunde escuta com interrupção`);
+
+  // Sem padding, a primeira sílaba da pergunta chega decapitada.
+  assert.ok(ESCUTA.prefix_padding_ms >= 400, "padding curto decapita o início da fala");
+
+  // No Revalida o ator PARA quando o candidato fala por cima: quem conduz a
+  // estação é o candidato. Isto não deve ser desligado para "resolver" corte.
+  assert.equal(ESCUTA.interrupt_response, true, "o ator precisa parar quando o candidato assume");
+  assert.equal(ESCUTA.type, "server_vad");
+
+  // Corte por limite de token não tem cadência: não soa como alguém que parou de
+  // falar, soa como defeito. A brevidade vem da INSTRUÇÃO, não da guilhotina.
+  assert.ok(MAX_TOKENS_FALA >= 600, `teto de ${MAX_TOKENS_FALA} tokens serra a fala ao meio`);
+
+  const instrucoes = instrucoesTempoReal(lerCaso("infarto"));
+  assert.match(instrucoes, /1 ou 2 frases curtas/, "a brevidade precisa estar pedida no prompt");
+  assert.match(instrucoes, /TERMINE a frase/, "o ator precisa ser instruído a terminar a frase");
+  assert.match(instrucoes, /hum-hum/, "o ator precisa saber que ruído de escuta não é interrupção");
 });

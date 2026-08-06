@@ -77,6 +77,54 @@ export const FERRAMENTAS = [
 
 // Instruções da sessão: o personagem de sempre + o que muda quando a conversa é
 // falada e pode ser interrompida.
+/* Como o ator ESCUTA o candidato.
+ *
+ * Estes quatro números decidem a cadência da conversa falada, e cada um deles
+ * saiu de um jeito diferente de a conversa cortar sem sentido. Ficam aqui,
+ * nomeados e exportados, porque são regressão silenciosa: baixar
+ * `silence_duration_ms` de volta para 700 não quebra teste nenhum por conta
+ * própria, não aparece em log, e só reaparece como "a voz está cortando" semanas
+ * depois. O teste em testes/motor.test.js trava cada um com o motivo.
+ */
+export const ESCUTA = {
+  type: "server_vad",
+
+  // Quem entrevista bem PONTUA a escuta: "hum-hum", "sei", "entendo", "certo".
+  // No limiar antigo (0.62) esses ruídos contavam como tomada de turno e
+  // derrubavam a fala do paciente no meio — o aluno era punido justamente por
+  // fazer a coisa certa.
+  threshold: 0.72,
+
+  // A primeira sílaba da pergunta chegava decapitada quando o aluno começava a
+  // falar em cima do silêncio: o detector abria depois do início da fala.
+  prefix_padding_ms: 500,
+
+  // O corte principal. Numa anamnese o aluno pausa PARA PENSAR no meio da própria
+  // pergunta — "a senhora sente essa dor… [pausa] …em que momento do dia?". Com
+  // 700 ms o paciente respondia à meia-pergunta, e a resposta chegava sem sentido
+  // porque a PERGUNTA estava pela metade. 1,2 s cobre a pausa de raciocínio sem
+  // deixar a conversa arrastada.
+  silence_duration_ms: 1200,
+
+  create_response: true,
+
+  // Verdadeiro de propósito: no Revalida o ator PARA quando o candidato fala por
+  // cima — quem conduz a estação é o candidato. O que consertou a interrupção
+  // indevida foi o limiar acima, não desligar isto.
+  interrupt_response: true,
+};
+
+// Teto por fala. Era 300, e 300 era uma guilhotina: quando o paciente
+// legitimamente precisava de mais — contar como a dor começou, responder a "me
+// fala mais sobre isso" — a frase morria no meio da palavra. Corte por limite de
+// token é o pior tipo de corte, porque não tem cadência nenhuma: não soa como
+// alguém que parou de falar, soa como defeito.
+//
+// A brevidade continua garantida, mas por onde deve vir: a instrução do ator ("1
+// ou 2 frases curtas"), que produz uma fala curta INTEIRA em vez de uma fala
+// longa serrada ao meio. O teto agora é só rede contra monólogo.
+export const MAX_TOKENS_FALA = 800;
+
 export function instrucoesTempoReal(caso) {
   return [
     sistemaPaciente(caso),
@@ -84,7 +132,15 @@ export function instrucoesTempoReal(caso) {
     "━━ ESTA CONVERSA É FALADA, AO VIVO ━━",
     "Você está numa sala, falando com o profissional. Ele ouve a sua voz.",
     "- Fale em 1 ou 2 frases curtas. Ninguém responde a 'como a senhora está?' com um parágrafo.",
+    "- TERMINE a frase que começou. Fala curta e inteira, nunca uma fala longa pela metade.",
     "- Se ele começar a falar por cima, PARE na hora e ouça. Quem conduz a consulta é ele.",
+    // O aluno bem treinado pontua a escuta. Sem esta regra o ator trata o
+    // acolhimento como tomada de turno e para de falar — punindo justamente quem
+    // entrevista bem.
+    "- Mas 'hum-hum', 'sei', 'entendo', 'certo' NÃO são interrupção: é ele te",
+    "  escutando. Siga falando normalmente por cima disso.",
+    "- Se ele parar no meio da própria pergunta, ESPERE. Ele está pensando. Não",
+    "  responda a uma pergunta pela metade nem tente adivinhar o final dela.",
     "- Silêncio é permitido: hesite, respire, deixe a pausa acontecer. Você não é um locutor.",
     "- Fale em português do Brasil, no seu jeito, sem termo técnico.",
     "",
@@ -120,22 +176,14 @@ function corpoDaSessao(caso, voz, modelo, minutos) {
           // latência alta. Aqui vale mais um corte previsível, com limiar alto e
           // silêncio longo — o paciente só responde quando o aluno de fato parou
           // de falar, em vez de reagir a qualquer barulho da sala.
-          turn_detection: {
-            type: "server_vad",
-            threshold: 0.62,
-            prefix_padding_ms: 300,
-            silence_duration_ms: 700,
-            create_response: true,
-            interrupt_response: true,
-          },
+          //
+          turn_detection: { ...ESCUTA },
         },
         output: { voice: VOZ[voz] || VOZ.feminino },
       },
       tools: FERRAMENTAS,
       tool_choice: "auto",
-      // Teto por fala: o paciente responde curto. Sem isto, um monólogo de um
-      // minuto custa por minuto e ainda atropela a consulta.
-      max_output_tokens: 300,
+      max_output_tokens: MAX_TOKENS_FALA,
     },
     // O token morre em segundos; a SESSÃO é limitada pelo orçamento em minutos, que
     // o navegador encerra e o servidor debita na concessão.
