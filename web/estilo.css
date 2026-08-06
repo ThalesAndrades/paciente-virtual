@@ -822,3 +822,31 @@ input, select, textarea {
 .linha-segredo .origem { color: var(--texto-fraco); font-size: .8rem; }
 .linha-segredo.resumo { background: var(--superficie-2); font-weight: 650; }
 .dica-campo { display: block; font-weight: 400; font-size: .8rem; color: var(--texto-suave); }
+
+/* ── Estação de Revalida ───────────────────────────────────────────────────── */
+.estacao-box { max-width: 620px; text-align: left; }
+.estacao-cabeca { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.chip-area { font-size: .74rem; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; color: var(--med); background: var(--med-suave); padding: 5px 11px; border-radius: 999px; }
+.estacao-tempo { font-size: .85rem; font-weight: 700; color: var(--texto-suave); }
+.estacao-cenario { color: var(--texto-suave); font-size: .95rem; margin: 0 0 14px; }
+.estacao-tarefa { margin: 0 0 14px; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+.estacao-tarefa li { line-height: 1.5; }
+.estacao-limites { font-size: .88rem; font-weight: 650; color: var(--exame-texto); background: var(--exame); border: 1px solid var(--exame-borda); border-radius: var(--raio-sm); padding: 9px 12px; margin: 0 0 14px; }
+
+/* O cronômetro regressivo muda de cor quando aperta: na prova, o tempo é o
+   recurso mais escasso e o participante precisa senti-lo. */
+#med-tempo.apertado { color: var(--exame-texto); }
+#med-tempo.acabando { color: var(--falha); animation: piscar 1s steps(1) infinite; }
+
+.item-pep { border: 1px solid var(--borda); border-left-width: 4px; border-radius: var(--raio-sm); padding: 12px 14px; margin-bottom: 10px; background: var(--superficie); }
+.item-pep.ok { border-left-color: var(--ok); }
+.item-pep.parcial { border-left-color: var(--exame-borda); }
+.item-pep.falho { border-left-color: var(--falha); }
+.pep-topo { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.pep-nivel { font-size: .74rem; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; }
+.item-pep.ok .pep-nivel { color: var(--ok); }
+.item-pep.parcial .pep-nivel { color: var(--exame-texto); }
+.item-pep.falho .pep-nivel { color: var(--falha); }
+.pep-pontos { font-size: .82rem; font-weight: 700; color: var(--texto-suave); white-space: nowrap; }
+.pep-desc { font-weight: 600; line-height: 1.45; }
+.pep-comentario { font-size: .88rem; color: var(--texto-suave); margin-top: 5px; line-height: 1.5; }

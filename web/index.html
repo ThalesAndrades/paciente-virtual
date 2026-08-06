@@ -296,6 +296,29 @@
   </div>
 </div>
 
+<!-- O impresso da estação. Na prova, o participante lê isto na porta da sala e só
+     entra ao sinal sonoro — o cronômetro começa no "Entrar na estação", não antes. -->
+<div id="modal-estacao" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="estacao-tit">
+  <div class="modal-box estacao-box">
+    <div class="estacao-cabeca">
+      <span class="chip-area" id="estacao-area"></span>
+      <span class="estacao-tempo" id="estacao-tempo"></span>
+    </div>
+    <h2 id="estacao-tit">Orientações ao participante</h2>
+    <p class="estacao-cenario" id="estacao-cenario"></p>
+    <ol class="estacao-tarefa" id="estacao-tarefa"></ol>
+    <p class="estacao-limites oculto" id="estacao-limites"></p>
+    <p class="pref-dica">
+      O tempo começa quando você entrar e não é prorrogável. Ao final, registre hipótese,
+      diferenciais e conduta — é sobre isso que a avaliação do PEP acontece.
+    </p>
+    <div class="modal-acoes">
+      <button class="botao secundario" id="estacao-desistir" type="button">Voltar</button>
+      <button class="botao" id="estacao-entrar" type="button">Entrar na estação</button>
+    </div>
+  </div>
+</div>
+
 <div id="modal-fechamento" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="fecha-tit">
   <div class="modal-box largo">
     <h2 id="fecha-tit">Antes de encerrar: qual a sua conclusão?</h2>
@@ -381,7 +404,7 @@ const estado = {
   casos: [], categoriaAtual: null, casoSelecionado: null, consultaId: null,
   voz: "feminino", categoriaCaso: "psicologia", pacienteNome: "", instrumentos: null,
   falarRespostas: lerPreferenciaAudio(), avisoDemoExibido: false, ocupado: false,
-  creditos: null, loja: null,
+  creditos: null, loja: null, estacao: null, estacaoEncerrando: false,
   capacidades: { stt: false, tts: {} },
   inicioConsulta: null, perguntas: 0, exames: 0, timerEstacao: null,
 };
@@ -970,6 +993,16 @@ async function iniciarConsulta(casoId, aleatorio) {
   adicionarBalao("aviso", temInstrumentos
     ? "Consulta iniciada. Faça a anamnese, use os instrumentos (🩺) para sinais vitais e exames, e clique em “Encerrar e avaliar” ao final."
     : "Consulta iniciada. Acolha e conduza a entrevista — o paciente se abre conforme a qualidade das suas perguntas. Ao final, clique em “Encerrar e avaliar”.");
+  // Estação de Revalida: o impresso vem ANTES, e o cronômetro só começa quando o
+  // participante diz que entrou. Ler a tarefa faz parte da prova — na sala real,
+  // ele lê na porta, com o tempo ainda parado.
+  estado.estacao = dados.estacao || null;
+  estado.estacaoEncerrando = false;
+  if (estado.estacao) {
+    pararCronometro();
+    mostrarImpressoDaEstacao(estado.estacao);
+  }
+
   mostrarTela("tela-consulta");
   $("campo-mensagem").focus();
   $("botao-sala").classList.remove("oculto");
@@ -988,10 +1021,62 @@ function formatarDuracao(s) {
 }
 function atualizarMedidores() {
   if (!estado.inicioConsulta) return;
-  $("med-tempo").textContent = formatarDuracao(Math.floor((Date.now() - estado.inicioConsulta) / 1000));
+  const decorrido = Math.floor((Date.now() - estado.inicioConsulta) / 1000);
+
+  // Numa estação de Revalida o tempo CORRE PARA TRÁS e não é prorrogável (edital,
+  // item 3.6.1.1). Ver o tempo subindo livremente ensina o ritmo errado: o que a
+  // prova cobra é caber em dez minutos.
+  if (estado.estacao) {
+    const total = (estado.estacao.tempo_minutos || 10) * 60;
+    const restante = Math.max(0, total - decorrido);
+    const medidor = $("med-tempo");
+    medidor.textContent = formatarDuracao(restante);
+    medidor.classList.toggle("apertado", restante <= 120 && restante > 30);
+    medidor.classList.toggle("acabando", restante <= 30);
+    if (restante === 120) torrada("Dois minutos restantes.");
+    if (restante <= 0 && !estado.estacaoEncerrando) {
+      estado.estacaoEncerrando = true;
+      torrada("Tempo esgotado. A estação foi encerrada.", true);
+      // Abre o fechamento: a estação acabou, mas o raciocínio ainda é do aluno e
+      // é sobre ele que boa parte do PEP é avaliada.
+      abrirFechamento();
+    }
+  } else {
+    $("med-tempo").textContent = formatarDuracao(decorrido);
+  }
+
   $("med-perguntas").textContent = estado.perguntas;
   $("med-exames").textContent = estado.exames;
 }
+/* ---------- Estação de Revalida ---------- */
+
+function mostrarImpressoDaEstacao(estacao) {
+  $("estacao-area").textContent = estacao.area_nome || "Clínica Médica";
+  $("estacao-tempo").textContent = `${estacao.tempo_minutos || 10} minutos`;
+  $("estacao-cenario").textContent = estacao.cenario || "";
+  $("estacao-tarefa").innerHTML = (estacao.tarefa || []).map((t) => `<li>${esc(t)}</li>`).join("");
+
+  // Os limites do item 3.8 do edital: a tarefa pode restringir quantos exames,
+  // hipóteses e condutas o participante pode propor. Deixar isso implícito seria
+  // treinar para uma prova que não existe.
+  const l = estacao.limites || {};
+  const partes = [];
+  if (l.exames) partes.push(`no máximo ${l.exames} exames complementares`);
+  if (l.hipoteses) partes.push(`${l.hipoteses} hipótese diagnóstica principal`);
+  if (l.condutas) partes.push(`até ${l.condutas} condutas`);
+  const limites = $("estacao-limites");
+  limites.textContent = partes.length ? `Limites desta estação: ${partes.join(" · ")}.` : "";
+  limites.classList.toggle("oculto", !partes.length);
+
+  $("modal-estacao").classList.remove("oculto");
+}
+
+function entrarNaEstacao() {
+  $("modal-estacao").classList.add("oculto");
+  iniciarCronometro();
+  $("campo-mensagem").focus();
+}
+
 function iniciarCronometro() {
   pararCronometro();
   estado.inicioConsulta = Date.now(); estado.perguntas = 0; estado.exames = 0;
@@ -1691,6 +1776,36 @@ function renderizarFechamento(d) {
   if (fech && fech.conduta) linhas.push(`<div class="fecha-linha"><div class="fecha-rotulo">A sua conduta</div><div class="fecha-texto">${esc(fech.conduta)}</div></div>`);
   card.innerHTML = linhas.join("");
 }
+// Resultado da estação: cada item do PEP com o nível que o avaliador atribuiu.
+// Mostrar o item errado com o que faltou é o que transforma nota em treino.
+const NIVEL = {
+  adequado: { rotulo: "Adequado", classe: "ok" },
+  parcialmente_adequado: { rotulo: "Parcialmente adequado", classe: "parcial" },
+  inadequado: { rotulo: "Inadequado", classe: "falho" },
+};
+
+function renderizarPEP(container, estacao) {
+  container.innerHTML = "";
+  if (!estacao.itens || !estacao.itens.length) {
+    const aviso = document.createElement("p");
+    aviso.className = "subtitulo";
+    aviso.textContent = estacao.aviso || "Avaliação por item indisponível nesta estação.";
+    container.appendChild(aviso);
+    return;
+  }
+  for (const item of estacao.itens) {
+    const nivel = NIVEL[item.nivel] || NIVEL.inadequado;
+    const linha = document.createElement("div");
+    linha.className = `item-pep ${nivel.classe}`;
+    linha.innerHTML =
+      `<div class="pep-topo"><span class="pep-nivel">${nivel.rotulo}</span>` +
+      `<span class="pep-pontos">${formatarNota(item.pontos)} / ${formatarNota(item.peso)}</span></div>` +
+      `<div class="pep-desc">${esc(item.descricao)}</div>` +
+      (item.comentario ? `<div class="pep-comentario">${esc(item.comentario)}</div>` : "");
+    container.appendChild(linha);
+  }
+}
+
 function mostrarAvaliacao(d) {
   estado.consultaId = null; pararFala(); pararDigitacao(); pararCronometro();
   pararVivo(); // encerra a sessão ao vivo antes de soltar o id: sem isso ela seguiria custando por minuto
@@ -1718,6 +1833,22 @@ function mostrarAvaliacao(d) {
   $("botao-revisao").setAttribute("aria-expanded", "false");
   const av = $("aviso-avaliacao"); av.classList.toggle("oculto", !d.aviso); if (d.aviso) av.textContent = d.aviso;
   const badge = $("veredito-badge");
+  // Numa estação de Revalida a nota é a do PEP, não a do checklist por palavra:
+  // é ela que a prova produz, item a item, na escala do edital.
+  if (d.estacao) {
+    const nota = d.estacao.nota;
+    anelNota(nota); contarNota(nota);
+    badge.textContent = `${d.estacao.area_nome || "Estação"} · ${formatarNota(nota)}/10`;
+    badge.classList.remove("oculto");
+    $("titulo-criterios").classList.remove("oculto");
+    $("titulo-criterios").textContent = "Padrão Esperado de Procedimentos — item a item";
+    renderizarPEP($("criterios"), d.estacao);
+    const tpp = Boolean(d.parecer);
+    $("titulo-parecer").classList.toggle("oculto", !tpp);
+    $("parecer").classList.toggle("oculto", !tpp);
+    if (tpp) $("parecer").textContent = d.parecer;
+    return;
+  }
   const tem = Boolean(d.checklist);
   $("titulo-criterios").classList.toggle("oculto", !tem);
   $("criterios").innerHTML = "";
@@ -1736,6 +1867,8 @@ function mostrarAvaliacao(d) {
 audioPlayer = $("player-voz");
 $("botao-enviar").addEventListener("click", enviarMensagem);
 $("botao-vivo").addEventListener("click", alternarVivo);
+$("estacao-entrar").addEventListener("click", entrarNaEstacao);
+$("estacao-desistir").addEventListener("click", () => { $("modal-estacao").classList.add("oculto"); estado.estacao = null; mostrarTela("tela-inicio"); });
 document.querySelectorAll("#abas-acesso .seg").forEach((s) => s.addEventListener("click", () => trocarAbaAcesso(s.dataset.acesso)));
 $("abrir-loja").addEventListener("click", abrirLoja);
 $("loja-voltar").addEventListener("click", () => mostrarTela("tela-inicio"));

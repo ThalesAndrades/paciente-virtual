@@ -53,6 +53,7 @@ import {
 } from "./motor/pagamentos.js";
 import { CUSTO, EXPERIENCIA_COMPLETA, catalogo, itemPorId } from "./motor/planos.js";
 import { CHAVES, definirSegredo, estadoDosSegredos } from "./motor/configuracao.js";
+import { ehEstacao, lerVeredito, montarPromptPEP, notaDePiso, pontuarPEP, tarefaDaEstacao } from "./motor/revalida.js";
 import {
   carregarSessao,
   ehAdmin,
@@ -505,6 +506,10 @@ async function iniciarConsulta(req, res) {
       escolaridade: ident.escolaridade || "",
     },
     instrumentos: instrumentosDoCaso(caso),
+    // Quando o caso é uma estação de Revalida, a página recebe o impresso da
+    // tarefa e o tempo — e mostra os dois ANTES de o cronômetro começar, como o
+    // participante recebe na porta da sala.
+    estacao: tarefaDaEstacao(carregarRubrica(casoId)),
     // Como esta pessoa CHEGA: seis números e duas palavras, para a sala em 3D
     // montar a postura, o olhar e a respiração. Nada de texto do caso vai junto.
     expressao: expressaoDoCaso(caso),
@@ -721,6 +726,45 @@ async function encerrarConsulta(req, res, id) {
   }
 
   resultado.checklist = pontuarChecklist(rubrica, extrairTextoProfissional(consulta.transcript));
+
+  // ── Estação de Revalida ────────────────────────────────────────────────
+  //
+  // Aqui a avaliação não é um parecer em prosa: é o PEP, item a item, na escala
+  // que o edital determina. O parecer vem junto, mas quem dá a nota é a soma dos
+  // itens — igual à prova, onde o Médico Avaliador marca cada item e o sistema
+  // soma.
+  if (ehEstacao(rubrica)) {
+    try {
+      const bruto = await conversar(
+        [
+          {
+            role: "user",
+            content: montarPromptPEP(rubrica, consulta.transcript, temFechamento ? fechamento : null),
+          },
+        ],
+        { avaliacao: true }
+      );
+      const veredito = lerVeredito(bruto);
+      if (!veredito) throw new Error("avaliador devolveu resposta fora do formato");
+      resultado.estacao = pontuarPEP(rubrica, veredito);
+      resultado.parecer = resultado.estacao.parecer || null;
+    } catch (erro) {
+      registrarFalhaIA("avaliação da estação (PEP)", erro);
+      // Sem o avaliador, a estação não fica sem nota: cai no piso determinístico
+      // do checklist, avisando que é estimativa.
+      resultado.estacao = {
+        ...notaDePiso(resultado.checklist),
+        area: rubrica.revalida.area,
+        itens: [],
+      };
+      // `null` e não ausente: a página distingue "não houve parecer" de "campo
+      // que eu esqueci de mandar", e um teste crava a diferença.
+      resultado.parecer = null;
+      resultado.aviso = AVISO_SEM_PARECER;
+    }
+    consultas.delete(id);
+    return json(res, 200, resultado);
+  }
 
   try {
     resultado.parecer = await conversar(

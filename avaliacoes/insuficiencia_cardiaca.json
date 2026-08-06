@@ -443,5 +443,72 @@
       ],
       "peso": 2
     }
-  ]
+  ],
+  "revalida": {
+    "area": "clinica_medica",
+    "cenario": "Unidade de emergência de hospital geral. Paciente do sexo feminino, 71 anos, procura atendimento.",
+    "tempo_minutos": 10,
+    "tarefa": [
+      "Você é o(a) médico(a) de plantão na unidade de emergência de um hospital e vai atender um(a) paciente do sexo feminino, 71 anos.",
+      "Realize a anamnese dirigida e o exame físico pertinente ao caso.",
+      "Solicite os exames complementares que julgar necessários — eles serão fornecidos pelo Chefe de Estação.",
+      "Ao final, informe ao paciente a sua hipótese diagnóstica e a conduta, em linguagem acessível.",
+      "Registre hipótese, diferenciais e conduta no fechamento da estação."
+    ],
+    "limites": {
+      "exames": 4,
+      "hipoteses": 1,
+      "condutas": 3
+    },
+    "pep": [
+      {
+        "id": "identificacao_do_paciente",
+        "descricao": "Identifica-se ao paciente e confirma a identificação dele antes de iniciar",
+        "peso": 1,
+        "adequado": "Apresenta-se pelo nome, diz que é o(a) médico(a) e confirma nome e idade do paciente.",
+        "parcial": "Apresenta-se OU confirma a identificação, mas não os dois.",
+        "inadequado": "Inicia a anamnese sem se apresentar nem confirmar quem é o paciente."
+      },
+      {
+        "id": "caracterizacao_da_queixa_hda",
+        "descricao": "Caracteriza a queixa principal e a história da doença atual",
+        "peso": 3,
+        "adequado": "Investiga início, localização, irradiação, intensidade, fatores de melhora e piora e sintomas associados.",
+        "parcial": "Caracteriza a queixa de forma incompleta, deixando de fora atributos que mudam a conduta.",
+        "inadequado": "Não caracteriza a queixa ou apenas a registra sem investigar."
+      },
+      {
+        "id": "antecedentes",
+        "descricao": "Investiga antecedentes pessoais, medicamentos em uso e alergias",
+        "peso": 1.5,
+        "adequado": "Pergunta sobre doenças prévias, medicações em uso e alergias.",
+        "parcial": "Investiga parte dos antecedentes, deixando de fora medicações ou alergias.",
+        "inadequado": "Não investiga antecedentes."
+      },
+      {
+        "id": "habitos_de_vida",
+        "descricao": "Investiga hábitos de vida e fatores de risco",
+        "peso": 1,
+        "adequado": "Pergunta sobre tabagismo, álcool, atividade física e outros fatores pertinentes ao caso.",
+        "parcial": "Investiga apenas um dos hábitos relevantes.",
+        "inadequado": "Não investiga hábitos nem fatores de risco."
+      },
+      {
+        "id": "exame_fisico",
+        "descricao": "Realiza o exame físico dirigido, incluindo sinais vitais",
+        "peso": 1.5,
+        "adequado": "Solicita sinais vitais e as manobras dirigidas à hipótese, e interpreta o que encontra.",
+        "parcial": "Realiza parte do exame necessário ou não interpreta os achados.",
+        "inadequado": "Não examina o paciente ou pede exame não pertinente ao caso."
+      },
+      {
+        "id": "exames_complementares",
+        "descricao": "Solicita os exames complementares pertinentes e justificados",
+        "peso": 2,
+        "adequado": "Solicita os exames que mudam a conduta neste caso, sem excesso.",
+        "parcial": "Solicita alguns dos exames necessários, ou acrescenta exames irrelevantes.",
+        "inadequado": "Não solicita exame ou solicita bateria sem relação com a hipótese."
+      }
+    ]
+  }
 }

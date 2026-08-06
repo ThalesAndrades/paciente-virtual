@@ -645,3 +645,107 @@ test("a presença: respiração, resposta à voz e cor do sofrimento", async () 
     }
   }
 });
+
+/* ---------- Estação de Revalida ---------- */
+
+test("toda estação médica tem PEP fechando 10 e nunca entrega o diagnóstico", async () => {
+  const { ehEstacao, tarefaDaEstacao, pesosNormalizados, AREAS } = await import("../motor/revalida.js");
+
+  const arquivos = fs.readdirSync(path.join(RAIZ, "avaliacoes")).filter((n) => n.endsWith(".json"));
+  let estacoes = 0;
+  const porArea = new Map();
+
+  for (const arquivo of arquivos) {
+    const id = arquivo.replace(/\.json$/, "");
+    const caso = lerCaso(id);
+    if (caso.categoria !== "medicina") continue;
+
+    const rubrica = JSON.parse(fs.readFileSync(path.join(RAIZ, "avaliacoes", arquivo), "utf-8"));
+    assert.ok(ehEstacao(rubrica), `${id}: caso de medicina sem estação de Revalida`);
+    estacoes += 1;
+
+    const r = rubrica.revalida;
+    assert.ok(AREAS[r.area], `${id}: área fora das do edital (${r.area})`);
+    porArea.set(r.area, (porArea.get(r.area) || 0) + 1);
+    assert.equal(r.tempo_minutos, 10, `${id}: a estação do Revalida tem 10 minutos`);
+
+    // Os pesos precisam fechar 10: uma estação valendo 8,5 não é comparável com
+    // as outras nove da prova.
+    const soma = pesosNormalizados(r.pep).reduce((t, p) => t + p, 0);
+    assert.ok(Math.abs(soma - 10) < 0.01, `${id}: PEP soma ${soma.toFixed(2)}, não 10`);
+    assert.ok(r.pep.length >= 4, `${id}: PEP com poucos itens (${r.pep.length})`);
+    for (const item of r.pep) {
+      assert.ok(item.id && item.descricao && item.adequado && item.inadequado,
+        `${id}: item ${item.id || "?"} sem descrição ou sem critérios da escala`);
+    }
+
+    // O IMPRESSO da estação não pode conter o diagnóstico. Já vazou uma vez: a
+    // primeira versão do gerador colocava o título do caso no cenário, e o
+    // participante abriria a aba de rede para gabaritar antes de perguntar nada.
+    const impresso = JSON.stringify(tarefaDaEstacao(rubrica)).toLowerCase();
+    const diagnostico = String((caso.fidelidade_clinica || {}).diagnostico_subjacente || "");
+    if (diagnostico) {
+      // Só as palavras que NOMEIAM a doença. Sem o filtro, o teste reprovava por
+      // "paciente" e "agudo" — palavras que o impresso legitimamente usa.
+      const comuns = new Set([
+        "paciente", "aguda", "agudo", "cronica", "cronico", "grave", "moderada", "moderado",
+        "direita", "esquerda", "primaria", "secundaria", "adquirida", "provavel", "quadro",
+        "sinais", "alarme", "comunidade", "sistemica", "arterial", "profunda",
+      ]);
+      const nucleo = diagnostico
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g, "")
+        .split(/[^a-z]+/)
+        .filter((p) => p.length > 5 && !comuns.has(p));
+      for (const palavra of nucleo.slice(0, 3)) {
+        assert.ok(!impresso.includes(palavra), `${id}: o impresso da estação entrega "${palavra}"`);
+      }
+    }
+    assert.ok(!impresso.includes(String(caso.titulo || "").toLowerCase()), `${id}: o impresso traz o título do caso`);
+  }
+
+  assert.ok(estacoes >= 20, `esperado ao menos 20 estações, há ${estacoes}`);
+  // O edital cobra cinco grandes áreas. Ter tudo numa só seria simular um terço
+  // da prova e chamar de prova.
+  assert.ok(porArea.size >= 3, `pouca variedade de áreas: ${[...porArea.keys()].join(", ")}`);
+});
+
+test("o PEP pontua na escala do edital, e o que não foi avaliado não pontua", async () => {
+  const { pontuarPEP, lerVeredito } = await import("../motor/revalida.js");
+  const rubrica = {
+    nome_caso: "Teste",
+    revalida: {
+      area: "clinica_medica",
+      pep: [
+        { id: "a", descricao: "Item A", peso: 5, adequado: "x", inadequado: "y" },
+        { id: "b", descricao: "Item B", peso: 3, adequado: "x", inadequado: "y" },
+        { id: "c", descricao: "Item C", peso: 2, adequado: "x", inadequado: "y" },
+      ],
+    },
+  };
+
+  const nota = pontuarPEP(rubrica, {
+    itens: [
+      { id: "a", nivel: "adequado", comentario: "ok" },
+      { id: "b", nivel: "parcialmente_adequado", comentario: "faltou" },
+      // "c" não foi avaliado de propósito
+    ],
+    parecer: "parecer",
+  });
+
+  // 5 (adequado) + 1,5 (metade de 3) + 0 (não avaliado) = 6,5
+  assert.equal(nota.nota, 6.5);
+  assert.equal(nota.itens.length, 3);
+  assert.equal(nota.itens[2].nivel, "inadequado", "item não avaliado é inadequado — na prova, o que não aparece não pontua");
+  assert.equal(nota.nota_maxima, 10);
+
+  // Nível inventado pelo modelo não vira crédito.
+  const inventado = pontuarPEP(rubrica, { itens: [{ id: "a", nivel: "excelente" }] });
+  assert.equal(inventado.nota, 0);
+
+  // O veredito chega embrulhado em cerca de código com frequência.
+  assert.deepEqual(lerVeredito('```json\n{"itens":[],"parecer":"x"}\n```'), { itens: [], parecer: "x" });
+  assert.deepEqual(lerVeredito("Segue a avaliação: {\"itens\":[]} pronto"), { itens: [] });
+  assert.equal(lerVeredito("não é json"), null);
+});
