@@ -66,13 +66,13 @@
   <div class="pref-audio" id="pref-audio">
     <span class="pref-rotulo">Respostas do paciente</span>
     <div class="segmentos" role="group" aria-label="Como ouvir as respostas do paciente">
-      <button type="button" class="seg" data-audio="1">🔊 Texto + voz</button>
-      <button type="button" class="seg" data-audio="0">📝 Somente texto</button>
+      <button type="button" class="seg" data-audio="1"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9v6h3l5 4V5L8 9Z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/></svg> Texto + voz</button>
+      <button type="button" class="seg" data-audio="0"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg> Somente texto</button>
     </div>
     <p class="pref-dica">O paciente responde por escrito e, com voz ligada, o relato também é lido em voz alta (voz masculina/feminina conforme o caso). Você pode mudar durante a consulta.</p>
   </div>
 
-  <p class="pref-dica" id="quem-sou" style="margin:0 0 10px"></p>
+  <p class="quem-sou" id="quem-sou"></p>
 
   <!-- Saldo em destaque na home: o aluno precisa saber quanto tem ANTES de
        escolher o caso, não descobrir na hora de começar. -->
@@ -603,20 +603,53 @@ function mostrarTela(id) {
    categoria que exista nos casos carregados — área nova no acervo aparece sozinha,
    sem tocar nesta página. O fallback cobre categoria que ainda não está aqui:
    melhor um card genérico do que um caso invisível (ou um crash de `.cor`). */
+/* ---------- Ícones ----------
+   Emoji era o tell amador número um — inconsistente entre sistemas, colorido fora
+   da paleta, e ridículo em alguns casos (a "faca de cozinha" para Cirurgia). No
+   lugar, um conjunto monoline próprio: grade de 24, traço de 1.7, `currentColor`,
+   pontas arredondadas. Todos herdam a cor de quem os contém, então funcionam
+   iguais sobre card colorido, sobre branco e no escuro. */
+const ICONES = {
+  // Áreas do edital
+  coracao: '<path d="M12 20.5C12 20.5 3.5 15.5 3.5 9.2A4.7 4.7 0 0 1 12 6.6a4.7 4.7 0 0 1 8.5 2.6C20.5 15.5 12 20.5 12 20.5Z"/><path d="M4 12h4l1.5-3 2.5 6 1.6-3H20"/>',
+  bisturi: '<path d="M4 20l7.5-7.5"/><path d="M11 12.5 18.8 4.7a1.6 1.6 0 0 1 2.5 2L14 15l-4 1 1-3.5Z"/>',
+  venus: '<circle cx="12" cy="9" r="5"/><path d="M12 14v7M9 18h6"/>',
+  crianca: '<circle cx="12" cy="6.5" r="2.5"/><path d="M6.5 21c0-3 2.4-5.5 5.5-5.5s5.5 2.5 5.5 5.5"/><path d="M9.5 11.5 12 13l2.5-1.5"/>',
+  casa: '<path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-5h4v5"/>',
+  grupo: '<circle cx="8" cy="9" r="2.4"/><circle cx="16" cy="9" r="2.4"/><path d="M3.5 19c0-2.6 2-4.6 4.5-4.6s4.5 2 4.5 4.6M12.5 19c.4-2.2 2.2-3.7 4.2-3.7 2.4 0 4.3 2 4.3 4.3"/>',
+  mente: '<path d="M15.5 4.5A5 5 0 0 0 7 8a4 4 0 0 0-1 7.5V19a1.5 1.5 0 0 0 1.5 1.5H14"/><path d="M12 8v13"/><path d="M12 12h3.5a2.5 2.5 0 0 0 0-5"/>',
+  // Profissões
+  estetoscopio: '<path d="M6 4v5a4 4 0 0 0 8 0V4"/><path d="M5 4h2M13 4h2"/><path d="M10 17a4 4 0 0 0 8 0v-2"/><circle cx="18" cy="12" r="2.2"/>',
+  cruz: '<path d="M9.5 4h5v5.5H20v5h-5.5V20h-5v-5.5H4v-5h5.5Z"/>',
+  atividade: '<path d="M3 12h4l2.5-7 4 15 2.5-8H21"/>',
+  folha: '<path d="M20 5c0 8-5 13-13 13 0-8 5-13 13-13Z"/><path d="M6 18C10 14 13 11 18 8"/>',
+  dente: '<path d="M6.5 4.5C4.8 5.6 4 7.5 4.5 10c.6 3 1 4.5 1.6 7 .3 1.4 1.9 1.6 2.3.2.4-1.5.7-3 1.6-3s1.2 1.5 1.6 3c.4 1.4 2 1.2 2.3-.2.6-2.5 1-4 1.6-7 .5-2.5-.3-4.4-2-5.5-1.6-1-3.6-.6-5 .4-1.4-1-3.4-1.4-5-.4Z"/>',
+  capsula: '<rect x="3.5" y="8" width="17" height="8" rx="4" transform="rotate(-45 12 12)"/><path d="M9 9l6 6"/>',
+  voz: '<path d="M5 9v6h3l5 4V5L8 9Z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10"/>',
+  // UI
+  bloco: '<path d="M6 4h9l5 5v11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6"/><path d="M8.5 14h7M8.5 17h5"/>',
+  saldo: '<rect x="3.5" y="6" width="17" height="12" rx="2.5"/><path d="M3.5 10h17"/><circle cx="16.5" cy="14" r="1.2"/>',
+};
+function ico(nome, tam = 24) {
+  const d = ICONES[nome];
+  if (!d) return "";
+  return `<svg viewBox="0 0 24 24" width="${tam}" height="${tam}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+}
+
 const CAT = {
-  medicina: { nome: "Medicina", eixo: "e1", cor: "var(--med)", ic: "🩺", desc: "Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa." },
-  psicologia: { nome: "Psicologia", eixo: "e2", cor: "var(--psi)", ic: "🧠", desc: "Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente." },
-  enfermagem: { nome: "Enfermagem", eixo: "e5", cor: "var(--enf)", ic: "💉", desc: "Consulta de enfermagem: acolhimento, avaliação e orientação com raciocínio clínico próprio." },
-  fisioterapia: { nome: "Fisioterapia", eixo: "e4", cor: "var(--fis)", ic: "🦴", desc: "Avaliação cinesiológico-funcional: história, testes e raciocínio para o diagnóstico fisioterapêutico." },
-  nutricao: { nome: "Nutrição", eixo: "e3", cor: "var(--nut)", ic: "🥗", desc: "Anamnese alimentar e diagnóstico nutricional, com conduta pactuada com a pessoa." },
-  odontologia: { nome: "Odontologia", eixo: "e6", cor: "var(--odo)", ic: "🦷", desc: "Urgência e clínica odontológica: anamnese, exame e conduta com comunicação clara." },
-  farmacia: { nome: "Farmácia", eixo: "e7", cor: "var(--far)", ic: "💊", desc: "Atenção farmacêutica: conciliação, interações e adesão, medicamento a medicamento." },
-  fonoaudiologia: { nome: "Fonoaudiologia", eixo: "e2", cor: "var(--fon)", ic: "🗣️", desc: "Avaliação fonoaudiológica de linguagem, voz, audição e deglutição." },
+  medicina: { nome: "Medicina", eixo: "e1", cor: "var(--med)", ic: "estetoscopio", desc: "Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa." },
+  psicologia: { nome: "Psicologia", eixo: "e2", cor: "var(--psi)", ic: "mente", desc: "Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente." },
+  enfermagem: { nome: "Enfermagem", eixo: "e5", cor: "var(--enf)", ic: "cruz", desc: "Consulta de enfermagem: acolhimento, avaliação e orientação com raciocínio clínico próprio." },
+  fisioterapia: { nome: "Fisioterapia", eixo: "e4", cor: "var(--fis)", ic: "atividade", desc: "Avaliação cinesiológico-funcional: história, testes e raciocínio para o diagnóstico fisioterapêutico." },
+  nutricao: { nome: "Nutrição", eixo: "e3", cor: "var(--nut)", ic: "folha", desc: "Anamnese alimentar e diagnóstico nutricional, com conduta pactuada com a pessoa." },
+  odontologia: { nome: "Odontologia", eixo: "e6", cor: "var(--odo)", ic: "dente", desc: "Urgência e clínica odontológica: anamnese, exame e conduta com comunicação clara." },
+  farmacia: { nome: "Farmácia", eixo: "e7", cor: "var(--far)", ic: "capsula", desc: "Atenção farmacêutica: conciliação, interações e adesão, medicamento a medicamento." },
+  fonoaudiologia: { nome: "Fonoaudiologia", eixo: "e2", cor: "var(--fon)", ic: "voz", desc: "Avaliação fonoaudiológica de linguagem, voz, audição e deglutição." },
 };
 function catDe(cat) {
   return CAT[cat] || {
     nome: String(cat || "?").replace(/^./, (c) => c.toUpperCase()),
-    chip: "psi", cor: "var(--primaria)", ic: "🩹",
+    chip: "psi", cor: "var(--primaria)", ic: "estetoscopio",
     desc: "Casos de simulação clínica desta área.",
   };
 }
@@ -1258,18 +1291,18 @@ function aplicarPreferenciaAudio(l) {
 // referência, onde a cor identifica o bloco em uma olhada. `eixo` aponta para as
 // classes .e1..e7 do estilo (paleta em :root).
 const AREA_EDITAL = {
-  clinica_medica: { nome: "Clínica Médica", ic: "🫀", eixo: "e1", desc: "Emergência e enfermaria: o maior bloco da prova." },
-  cirurgia: { nome: "Cirurgia", ic: "🔪", eixo: "e5", desc: "Abdome agudo, trauma e o que chega pelo pronto-socorro." },
-  ginecologia_obstetricia: { nome: "Ginecologia e Obstetrícia", ic: "🤰", eixo: "e2", desc: "Pré-natal, urgência obstétrica e ginecologia ambulatorial." },
-  pediatria: { nome: "Pediatria", ic: "👶", eixo: "e3", desc: "Da puericultura à urgência — e quem fala é o acompanhante." },
-  medicina_familia: { nome: "Medicina da Família", ic: "🏠", eixo: "e4", desc: "Atenção primária: o vínculo, o programa e a longitudinalidade." },
-  saude_coletiva: { nome: "Saúde Coletiva", ic: "📋", eixo: "e6", desc: "Vigilância, notificação e o olhar sobre a população." },
-  saude_mental: { nome: "Saúde Mental", ic: "🧩", eixo: "e7", desc: "Sofrimento psíquico na porta de entrada do sistema." },
+  clinica_medica: { nome: "Clínica Médica", ic: "coracao", eixo: "e1", desc: "Emergência e enfermaria: o maior bloco da prova." },
+  cirurgia: { nome: "Cirurgia", ic: "bisturi", eixo: "e5", desc: "Abdome agudo, trauma e o que chega pelo pronto-socorro." },
+  ginecologia_obstetricia: { nome: "Ginecologia e Obstetrícia", ic: "venus", eixo: "e2", desc: "Pré-natal, urgência obstétrica e ginecologia ambulatorial." },
+  pediatria: { nome: "Pediatria", ic: "crianca", eixo: "e3", desc: "Da puericultura à urgência — e quem fala é o acompanhante." },
+  medicina_familia: { nome: "Medicina da Família", ic: "casa", eixo: "e4", desc: "Atenção primária: o vínculo, o programa e a longitudinalidade." },
+  saude_coletiva: { nome: "Saúde Coletiva", ic: "grupo", eixo: "e6", desc: "Vigilância, notificação e o olhar sobre a população." },
+  saude_mental: { nome: "Saúde Mental", ic: "mente", eixo: "e7", desc: "Sofrimento psíquico na porta de entrada do sistema." },
 };
 function areaDe(area) {
   return AREA_EDITAL[area] || {
     nome: String(area || "Outras").replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase()),
-    ic: "🩺", desc: "Estações desta área.",
+    ic: "estetoscopio", desc: "Estações desta área.",
   };
 }
 
@@ -1307,7 +1340,7 @@ async function carregarCasos() {
     b.className = "cat-card " + (m.eixo ? "cheio " + m.eixo : (eixo.classe || m.chip || ""));
     b.dataset.cat = chave;
     b.style.setProperty("--i", ordem.indexOf(chave));
-    b.innerHTML = `<div class="ic">${m.ic}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${eixo.rotulo(grupos[chave])}</span>`;
+    b.innerHTML = `<div class="ic">${ico(m.ic) || esc(m.ic || "")}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${eixo.rotulo(grupos[chave])}</span>`;
     b.addEventListener("click", () => abrirCategoria(chave));
     alvo.appendChild(b);
   }

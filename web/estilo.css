@@ -144,8 +144,14 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .pref-audio .pref-rotulo { font-weight: 650; }
 .pref-audio .pref-dica { font-size: .82rem; color: var(--texto-suave); flex-basis: 100%; margin: 0; }
 .segmentos { display: inline-flex; border: 1px solid var(--borda-forte); border-radius: 999px; padding: 4px; gap: 4px; background: var(--superficie-2); }
-.seg { border: none; background: transparent; color: var(--texto-suave); padding: 8px 15px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .9rem; transition: background .15s, color .15s; }
+.seg { display: inline-flex; align-items: center; gap: 6px; border: none; background: transparent; color: var(--texto-suave); padding: 8px 15px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .9rem; transition: background var(--t-rapido) ease, color var(--t-rapido) ease; }
+.seg svg { opacity: .85; }
 .seg.ativo { background: var(--primaria); color: var(--sobre-primaria); font-weight: 650; box-shadow: var(--sombra); }
+
+/* Quem está logado: uma linha discreta, não texto preto solto (parecia debug).
+   Só aparece quando há nome. */
+.quem-sou { margin: 4px 0 14px; font-size: .84rem; color: var(--texto-fraco); }
+.quem-sou:empty { display: none; }
 
 /* Cards de categoria */
 .categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
@@ -153,17 +159,18 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .cat-card {
   text-align: left; border: 1px solid var(--borda); border-radius: var(--raio);
   background: var(--superficie); color: var(--texto); cursor: pointer; font: inherit;
-  padding: 22px; box-shadow: var(--sombra); transition: transform .16s, box-shadow .16s, border-color .16s;
+  padding: 18px 20px; box-shadow: var(--sombra); transition: transform .16s, box-shadow .16s, border-color .16s;
   position: relative; overflow: hidden;
 }
 .cat-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--cor); }
 .cat-card { transition: transform var(--t-medio) var(--mola), box-shadow var(--t-medio) ease, border-color var(--t-medio) ease; }
 .cat-card:hover { transform: translateY(-3px) scale(1.008); box-shadow: var(--sombra-forte); border-color: color-mix(in srgb, var(--cor) 45%, var(--borda)); }
 .cat-card:active { transform: translateY(-1px) scale(.99); }
-.cat-card .ic { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; font-size: 1.7rem; background: var(--cor-suave); color: var(--cor); margin-bottom: 14px; }
-.cat-card h3 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 750; }
-.cat-card p { margin: 0; color: var(--texto-suave); font-size: .92rem; }
-.cat-card .qtd { margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 650; color: var(--cor); background: var(--cor-suave); padding: 5px 11px; border-radius: 999px; }
+.cat-card .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--cor-suave); color: var(--cor); margin-bottom: 12px; }
+.cat-card .ic svg { width: 23px; height: 23px; }
+.cat-card h3 { margin: 0 0 3px; font-size: 1.14rem; font-weight: 750; letter-spacing: -.017em; }
+.cat-card p { margin: 0; color: var(--texto-suave); font-size: .9rem; line-height: 1.45; }
+.cat-card .qtd { margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--cor); background: var(--cor-suave); padding: 5px 10px; border-radius: 8px; }
 /* ── Card de área PREENCHIDO (padrão dos 5 eixos) ─────────────────────────────
    O card deixa de ser branco com um filete colorido e passa a ser a própria cor,
    como cada eixo na referência: gradiente diagonal do topo mais claro para a base,
