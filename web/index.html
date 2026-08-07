@@ -217,6 +217,7 @@
          só a alcançava por curl. É a rota que responde a pergunta mais cara da
          operação — "por que o paciente está em modo demonstração?" — dizendo qual
          modelo REALMENTE serviu e qual foi a última falha do provedor. -->
+    <button class="aba oculto" id="aba-cupons" role="tab" aria-selected="false">Convites</button>
     <button class="aba oculto" id="aba-diagnostico" role="tab" aria-selected="false">Diagnóstico</button>
   </div>
 
@@ -292,6 +293,38 @@
       Stripe → <code id="webhook-stripe">—</code><br>
       Woovi → <code id="webhook-woovi">—</code>
     </p>
+  </div>
+
+  <!-- Convites do beta. Não se cria mais conta sozinho: quem entra tem um código,
+       e quem emite é o admin. -->
+  <div id="painel-cupons" class="oculto">
+    <p class="subtitulo">
+      O beta é por convite. Cada código deposita créditos na conta de quem o usa —
+      e vale por um número limitado de contas e por um prazo, para que um código
+      repassado num grupo não vire cadastro aberto com outro nome.
+    </p>
+
+    <form id="form-cupom" class="form-conta">
+      <div class="linha-cupom">
+        <label>Créditos por conta
+          <input id="cupom-creditos" type="number" min="1" max="100000" value="40" required>
+        </label>
+        <label>Quantas contas
+          <input id="cupom-usos" type="number" min="1" max="1000" value="1" required>
+        </label>
+        <label>Validade (dias)
+          <input id="cupom-dias" type="number" min="0" max="365" value="30">
+        </label>
+      </div>
+      <label>Para quem / por quê <span class="dica-campo">só você vê</span>
+        <input id="cupom-obs" maxlength="200" placeholder="ex.: turma do prof. Almeida, out/26">
+      </label>
+      <div class="modal-erro oculto" id="cupom-erro"></div>
+      <button class="botao" id="emitir-cupom" type="submit">Emitir convite</button>
+    </form>
+
+    <div id="cupom-novo" class="cupom-novo oculto"></div>
+    <div id="lista-cupons"></div>
   </div>
 
   <!-- Diagnóstico: o que está REALMENTE servindo agora. -->
@@ -680,6 +713,8 @@ async function carregarAcesso() {
   $("abrir-desempenho").classList.toggle("oculto", !acesso.autenticado);
   $("aba-alunos").classList.toggle("oculto", !acesso.admin);
   $("aba-cobranca").classList.toggle("oculto", !acesso.admin);
+  // Emitir convite é abrir a porta do produto: privilégio de admin, não de professor.
+  $("aba-cupons").classList.toggle("oculto", !acesso.admin);
   // Diagnóstico é do professor, não só do admin: quem acompanha a turma é quem
   // percebe primeiro que as respostas caíram para o modo demonstração.
   $("aba-diagnostico").classList.toggle("oculto", !acesso.professor);
@@ -2651,6 +2686,7 @@ function trocarAba(qual) {
     consultas: "painel-consultas",
     alunos: "painel-alunos",
     cobranca: "painel-cobranca",
+    cupons: "painel-cupons",
     diagnostico: "painel-diagnostico",
   };
   const escolhida = abas[qual] ? qual : "consultas";
@@ -2662,7 +2698,105 @@ function trocarAba(qual) {
   }
   if (escolhida === "alunos") carregarAlunos();
   if (escolhida === "cobranca") carregarCobranca();
+  if (escolhida === "cupons") carregarCupons();
   if (escolhida === "diagnostico") carregarDiagnostico();
+}
+
+/* ---------- Convites do beta (só o admin) ----------
+   Não se cria mais conta sozinho: quem entra tem um código. Emitir um convite é
+   abrir a porta do produto, então isto vive atrás do papel de admin — o servidor
+   confere de novo em toda rota, porque esconder botão é conforto, não segurança. */
+async function carregarCupons() {
+  const alvo = $("lista-cupons");
+  alvo.innerHTML = "<p class='subtitulo'>Carregando…</p>";
+  let d;
+  try {
+    const r = await fetch("/api/cupons");
+    if (!r.ok) { alvo.innerHTML = "<p class='subtitulo'>Restrito ao administrador.</p>"; return; }
+    d = await r.json();
+  } catch { alvo.innerHTML = "<p class='subtitulo'>Não consegui falar com o servidor.</p>"; return; }
+
+  const cupons = d.cupons || [];
+  if (!cupons.length) {
+    alvo.innerHTML = "<p class='subtitulo'>Nenhum convite emitido ainda.</p>";
+    return;
+  }
+
+  alvo.innerHTML = `<label>Convites emitidos</label><div class="cupons">${cupons.map((c) => {
+    // Um convite tem três jeitos de não valer, e cada um pede uma ação diferente:
+    // revogado foi decisão sua, esgotado pede um novo, expirado pede prazo maior.
+    const estado = c.revogado ? "revogado" : c.expirado ? "expirado" : c.esgotado ? "esgotado" : "ativo";
+    const validade = c.expira_em
+      ? `vale até ${new Date(c.expira_em).toLocaleDateString("pt-BR")}`
+      : "sem validade";
+    return `<div class="cupom-linha ${estado}">
+      <code>${esc(formatarCupom(c.codigo))}</code>
+      <span class="cupom-info">${c.creditos} créditos · ${c.usos}/${c.usos_max} usados · ${esc(validade)}</span>
+      ${c.observacao ? `<span class="cupom-obs">${esc(c.observacao)}</span>` : ""}
+      <span class="cupom-selo">${estado}</span>
+      ${estado === "ativo" ? `<button class="botao secundario cupom-revogar" data-codigo="${esc(c.codigo)}" type="button">Revogar</button>` : ""}
+    </div>`;
+  }).join("")}</div>`;
+
+  for (const b of alvo.querySelectorAll(".cupom-revogar")) {
+    b.addEventListener("click", async () => {
+      if (!confirm("Revogar este convite? Quem ainda não usou não vai conseguir entrar com ele.")) return;
+      b.disabled = true;
+      try {
+        await fetch(`/api/cupons/${encodeURIComponent(b.dataset.codigo)}`, { method: "DELETE" });
+        carregarCupons();
+      } catch { b.disabled = false; }
+    });
+  }
+}
+
+// O banco guarda o código sem hífen (é assim que ele é comparado); a tela mostra
+// com hífen, que é como ele vai ser lido em voz alta e digitado.
+function formatarCupom(codigo) {
+  const c = String(codigo || "");
+  const m = c.match(/^(.+?)([A-Z0-9]{4})([A-Z0-9]{4})$/);
+  return m ? `${m[1]}-${m[2]}-${m[3]}` : c;
+}
+
+async function emitirCupom(ev) {
+  ev.preventDefault();
+  const botao = $("emitir-cupom");
+  const erro = $("cupom-erro");
+  erro.classList.add("oculto");
+  botao.disabled = true;
+  try {
+    const r = await fetch("/api/cupons", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        creditos: Number($("cupom-creditos").value),
+        usos_max: Number($("cupom-usos").value),
+        dias: Number($("cupom-dias").value),
+        observacao: $("cupom-obs").value.trim(),
+      }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      erro.textContent = d.erro || "Não consegui emitir o convite.";
+      erro.classList.remove("oculto");
+      return;
+    }
+    // O código aparece grande e copiável: ele vai ser mandado por mensagem, e
+    // procurá-lo numa lista de vinte é o caminho para mandar o errado.
+    $("cupom-novo").innerHTML =
+      `<span class="cupom-novo-rotulo">Convite emitido</span>
+       <code id="cupom-codigo">${esc(d.codigo)}</code>
+       <button class="botao" id="copiar-cupom" type="button">Copiar</button>`;
+    $("cupom-novo").classList.remove("oculto");
+    $("copiar-cupom").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(d.codigo); torrada("Convite copiado."); }
+      catch { torrada("Copie o código manualmente.", true); }
+    });
+    $("cupom-obs").value = "";
+    carregarCupons();
+  } catch {
+    erro.textContent = "Falha de conexão.";
+    erro.classList.remove("oculto");
+  } finally { botao.disabled = false; }
 }
 
 /* ---------- Diagnóstico do servidor (professor) ----------
@@ -2870,6 +3004,8 @@ async function alternarAtivo(a) {
 $("aba-consultas").addEventListener("click", () => trocarAba("consultas"));
 $("aba-alunos").addEventListener("click", () => trocarAba("alunos"));
 $("aba-cobranca").addEventListener("click", () => trocarAba("cobranca"));
+$("aba-cupons").addEventListener("click", () => trocarAba("cupons"));
+$("form-cupom").addEventListener("submit", emitirCupom);
 $("aba-diagnostico").addEventListener("click", () => trocarAba("diagnostico"));
 $("voltar-ao-fim").addEventListener("click", () => rolarParaOFim(true));
 // Reler o comando no meio da estação. O cronômetro segue: na prova, consultar o

@@ -1191,3 +1191,33 @@ input, select, textarea {
   background: var(--exame); border: 1px solid var(--exame-borda); color: var(--exame-texto);
   font-size: .88rem; font-weight: 600;
 }
+
+/* ---------- Convites do beta (painel do admin) ---------- */
+.linha-cupom { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.cupom-novo {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  margin: 16px 0; padding: 14px 16px; border-radius: var(--raio-sm);
+  background: var(--primaria-suave); border: 1px solid color-mix(in srgb, var(--primaria) 32%, var(--borda));
+}
+.cupom-novo-rotulo { font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-suave); }
+.cupom-novo code { font-size: 1.24rem; font-weight: 750; letter-spacing: .06em; color: var(--texto); }
+
+.cupons { display: grid; gap: 8px; }
+.cupom-linha {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  padding: 11px 14px; border: 1px solid var(--borda); border-radius: var(--raio-sm);
+  background: var(--superficie); font-size: .9rem;
+}
+.cupom-linha code { font-weight: 700; letter-spacing: .04em; }
+.cupom-info { color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+.cupom-obs { color: var(--texto-fraco); font-size: .84rem; font-style: italic; }
+.cupom-selo {
+  margin-left: auto; text-transform: uppercase; letter-spacing: .06em;
+  font-size: .68rem; font-weight: 750; padding: 3px 9px; border-radius: 999px;
+  background: var(--primaria-suave); color: var(--primaria);
+}
+/* Convite que não vale mais fica visivelmente apagado — a lista cresce, e ler
+   "esgotado" no meio de vinte linhas iguais não acontece. */
+.cupom-linha.revogado, .cupom-linha.expirado, .cupom-linha.esgotado { opacity: .62; }
+.cupom-linha.revogado .cupom-selo, .cupom-linha.expirado .cupom-selo { background: var(--exame); color: var(--exame-texto); }
+.cupom-linha.esgotado .cupom-selo { background: var(--aviso-fundo); color: var(--aviso-texto); }

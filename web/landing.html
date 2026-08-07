@@ -293,6 +293,10 @@ footer.rodape {
   background: var(--fundo); border: 1px solid var(--borda-forte); color: var(--tinta);
   transition: border-color .15s, box-shadow .15s;
 }
+.ajuda-campo { display: block; margin-top: 6px; font-size: .82rem; color: var(--tinta-3); }
+.ajuda-campo.ok { color: #0a7d3f; font-weight: 600; }
+.ajuda-campo.ruim { color: #b3261e; }
+@media (prefers-color-scheme: dark) { .ajuda-campo.ok { color: #5fd08a; } .ajuda-campo.ruim { color: #f0a3a0; } }
 .campo input:focus {
   outline: none; border-color: var(--acao);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--acao) 16%, transparent);
@@ -370,7 +374,7 @@ footer.rodape {
     <span class="nome" id="marca-nome">Revalida <i>AI</i></span>
   </a>
   <nav class="topo-links">
-    <button class="link-fantasma some" type="button" id="abrir-criar">Criar conta</button>
+    <button class="link-fantasma some" type="button" id="abrir-criar">Tenho um convite</button>
     <button class="botao-entrar" type="button" id="abrir-login">Entrar</button>
   </nav>
 </header>
@@ -386,7 +390,7 @@ footer.rodape {
       </p>
       <div class="acoes">
         <button class="cta" type="button" id="cta-principal">Entrar na estação →</button>
-        <button class="cta fantasma" type="button" id="cta-conta">Criar conta</button>
+        <button class="cta fantasma" type="button" id="cta-conta">Tenho um convite</button>
       </div>
       <div class="medidas" id="medidas">
         <div class="medida"><strong id="n-estacoes">36</strong><span>estações</span></div>
@@ -429,8 +433,14 @@ footer.rodape {
     <h2 id="painel-tit">Entrar</h2>
     <p class="dica" id="painel-dica">Use a sua matrícula ou o seu e-mail.</p>
     <div class="erro" id="erro"></div>
-    <!-- Ordem invertida no modo "criar": o nome vem primeiro porque é o que a
-         pessoa responde sem pensar, e começar por ele reduz o abandono. -->
+    <!-- O convite vem PRIMEIRO no modo "criar": se o código não vale, a pessoa
+         descobre antes de digitar nome, e-mail e senha — e não depois. -->
+    <label class="campo" id="campo-cupom" hidden>
+      <span>Código do convite</span>
+      <input id="cupom" name="cupom" autocomplete="off" autocapitalize="characters"
+             spellcheck="false" placeholder="BETA-XXXX-XXXX">
+      <small class="ajuda-campo" id="cupom-estado"></small>
+    </label>
     <label class="campo" id="campo-nome" hidden>
       <span>Seu nome</span>
       <input id="nome" name="name" autocomplete="name" autocapitalize="words">
@@ -722,14 +732,55 @@ function montarPilares(conteudo) {
 
 /* ── Acesso ────────────────────────────────────────────────────────────── */
 let modo = "entrar";
+// Quantos créditos o convite deposita. Descoberto ao conferir o código, e mostrado
+// à pessoa antes de ela preencher o resto — é a única promessa que a página faz.
+let creditosDoConvite = null;
+
+/* Confere o convite assim que a pessoa termina de digitar. Sem isto, ela preenche
+   nome, e-mail e senha para ouvir no fim que o código estava errado — e é aí que
+   desiste. O servidor limita a frequência desta rota, então não se confere a cada
+   tecla: só quando o campo perde o foco ou o código tem o tamanho esperado. */
+async function conferirConvite() {
+  const codigo = $("cupom").value.trim();
+  const aviso = $("cupom-estado");
+  if (!codigo) { aviso.textContent = ""; aviso.className = "ajuda-campo"; creditosDoConvite = null; return; }
+
+  aviso.textContent = "Conferindo…";
+  aviso.className = "ajuda-campo";
+  try {
+    const r = await fetch("/api/cupons/conferir", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cupom: codigo }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok) {
+      creditosDoConvite = d.creditos;
+      aviso.textContent = `Convite válido — ${d.creditos} créditos para começar.`;
+      aviso.className = "ajuda-campo ok";
+    } else {
+      creditosDoConvite = null;
+      aviso.textContent = d.erro || "Convite inválido.";
+      aviso.className = "ajuda-campo ruim";
+    }
+  } catch {
+    creditosDoConvite = null;
+    aviso.textContent = "";
+    aviso.className = "ajuda-campo";
+  }
+}
 
 function abrirPainel(qual) {
   modo = qual;
   const criando = qual === "criar";
   $("painel-tit").textContent = criando ? "Criar conta" : "Entrar";
   $("painel-dica").textContent = criando
-    ? `Leva um minuto. Você começa com ${boasVindas} créditos para experimentar.`
+    ? "O beta é por convite. Informe o código que você recebeu."
     : "Use a sua matrícula ou o seu e-mail.";
+  $("campo-cupom").hidden = !criando;
+  $("cupom").required = criando;
+  $("cupom-estado").textContent = "";
+  $("cupom-estado").className = "ajuda-campo";
+  creditosDoConvite = null;
   $("campo-nome").hidden = !criando;
   $("nome").required = criando;
   // Conta nova é criada por E-MAIL: o servidor deriva a matrícula dele. Pedir
@@ -782,9 +833,12 @@ $("form-acesso").addEventListener("submit", async (ev) => {
       // O contrato da rota é {nome, email, senha} — ela deriva a matrícula do
       // e-mail. Mandar `matricula` fazia o servidor responder "E-mail inválido",
       // e a pessoa não tinha como adivinhar o que estava errado.
+      const cupom = $("cupom").value.trim();
+      if (!cupom) return falhar("Informe o código do convite.");
+
       const r = await fetch("/api/cadastro", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email: usuario, senha }),
+        body: JSON.stringify({ nome, email: usuario, senha, cupom }),
       });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) return falhar(d.erro || "Não consegui criar a conta.");
@@ -820,6 +874,14 @@ $("form-acesso").addEventListener("submit", async (ev) => {
   } catch {
     falhar("Falha de conexão. Tente de novo.");
   }
+});
+
+$("cupom").addEventListener("blur", conferirConvite);
+$("cupom").addEventListener("input", () => {
+  // Formato BETA-XXXX-XXXX: quando o comprimento bate, confere sozinho — quem
+  // colou o código não precisa clicar fora para saber se vale.
+  const limpo = $("cupom").value.replace(/[^A-Za-z0-9]/g, "");
+  if (limpo.length >= 12) conferirConvite();
 });
 
 $("veu").addEventListener("click", (ev) => { if (ev.target === $("veu")) fecharPainel(); });
@@ -876,15 +938,10 @@ addEventListener("scroll", () => {
     if (n && Array.isArray(casos) && casos.length) n.textContent = String(casos.length);
   } catch { /* fica o número do HTML */ }
 
-  try {
-    const loja = await (await fetch("/api/loja")).json();
-    if (Number.isFinite(loja.boas_vindas) && loja.boas_vindas > 0) {
-      boasVindas = loja.boas_vindas;
-      // A oferta entra no botão: "criar conta" é custo, "ganhar créditos" é ganho.
-      $("cta-conta").textContent = `Criar conta — ${boasVindas} créditos grátis`;
-      $("abrir-criar").textContent = "Criar conta";
-    }
-  } catch { /* a página funciona sem isto */ }
+  // Os créditos NÃO são mais anunciados aqui: quem define quanto vale o convite é
+  // o cupom, e cada um pode valer diferente. Prometer um número fixo na porta
+  // seria mentir para metade dos convidados. O valor aparece quando o código é
+  // conferido, que é quando ele passa a ser verdade.
 
   dimensionar();
   addEventListener("resize", dimensionar, { passive: true });

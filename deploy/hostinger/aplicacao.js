@@ -43,6 +43,15 @@ import {
 } from "./motor/creditos.js";
 import { migrarDesempenho, registrarEstacao, resumoDoAluno } from "./motor/desempenho.js";
 import {
+  conferirCupom,
+  criarCupom,
+  listarCupons,
+  migrarCupons,
+  resgatarCupom,
+  revogarCupom,
+  usosDoCupom,
+} from "./motor/cupons.js";
+import {
   cobrarCartao,
   cobrarPix,
   conferirCartao,
@@ -1123,20 +1132,85 @@ export function criarServidor() {
 
       // Cadastro público. A API do Better Auth continua com o `sign-up` fechado:
       // quem cria conta é esta rota, que é onde as regras do produto vivem.
+      // Conferir um cupom ANTES de pedir nome, e-mail e senha. Sem isto, o
+      // convidado preenche o formulário inteiro para ouvir no fim que o código
+      // estava errado — e é aí que ele desiste.
+      if (req.method === "POST" && pathname === "/api/cupons/conferir") {
+        if (estourouLimite(req, res, "cadastro", LIMITE_CADASTRO)) return;
+        const dados = await lerCorpo(req);
+        const r = conferirCupom(String(dados.cupom || ""));
+        return json(res, r.ok ? 200 : 400, r.ok ? { ok: true, creditos: r.creditos } : { erro: r.motivo });
+      }
+
+      // Cadastro. NÃO é mais público: o beta é por convite, e o convite é o cupom.
+      //
+      // Sem esta trava, os créditos de boas-vindas eram uma torneira de custo
+      // aberta para qualquer um na internet — bastava um e-mail novo por conta.
       if (req.method === "POST" && pathname === "/api/cadastro") {
         if (estourouLimite(req, res, "cadastro", LIMITE_CADASTRO)) return;
         const dados = await lerCorpo(req);
+
+        // O cupom é conferido ANTES de a conta existir: criar a conta e só depois
+        // descobrir que o cupom não vale deixaria um usuário órfão sem crédito e
+        // sem como entrar de novo pelo mesmo caminho.
+        const conferencia = conferirCupom(String(dados.cupom || ""));
+        if (!conferencia.ok) return json(res, 403, { erro: conferencia.motivo });
+
         try {
           const usuario = await criarUsuarioPublico({
             nome: dados.nome,
             email: dados.email,
             senha: String(dados.senha || ""),
           });
-          darBoasVindas(usuario.id);
-          return json(res, 200, { ok: true, email: usuario.email });
+
+          // Entre a conferência e aqui, outra pessoa pode ter consumido o último
+          // uso. O resgate é que decide de verdade — ele incrementa com condição
+          // na própria atualização.
+          const resgate = resgatarCupom({
+            codigo: String(dados.cupom || ""),
+            usuarioId: usuario.id,
+            email: usuario.email,
+          });
+          if (!resgate.ok) return json(res, 403, { erro: resgate.motivo });
+
+          // O crédito vem DO CUPOM, não da regra geral de boas-vindas: é o cupom
+          // que define quanto vale o convite.
+          creditar(usuario.id, resgate.creditos, "cupom", `cupom:${usuario.id}`);
+          return json(res, 200, { ok: true, email: usuario.email, creditos: resgate.creditos });
         } catch (erro) {
           return json(res, 400, { erro: (erro && erro.message) || "Não foi possível criar a conta." });
         }
+      }
+
+      // ---- Cupons do beta. Só o ADMIN emite. -----------------------------------
+      if (pathname.startsWith("/api/cupons") && pathname !== "/api/cupons/conferir" && !ehAdmin(req)) {
+        return json(res, 403, { erro: "Restrito ao administrador." });
+      }
+
+      if (req.method === "GET" && pathname === "/api/cupons") {
+        return json(res, 200, { cupons: listarCupons(200) });
+      }
+
+      if (req.method === "POST" && pathname === "/api/cupons") {
+        const dados = await lerCorpo(req);
+        const cupom = criarCupom({
+          creditos: dados.creditos,
+          usosMax: dados.usos_max,
+          diasParaExpirar: dados.dias,
+          observacao: dados.observacao,
+          prefixo: dados.prefixo,
+          criadoPor: matriculaDe(req),
+        });
+        console.log(`[cupom] ${cupom.codigo} emitido por ${matriculaDe(req)} — ${cupom.creditos} créditos`);
+        return json(res, 200, cupom);
+      }
+
+      const cupomAlvo = pathname.match(/^\/api\/cupons\/([\w-]+)$/);
+      if (req.method === "DELETE" && cupomAlvo) {
+        return json(res, 200, { ok: revogarCupom(cupomAlvo[1]) });
+      }
+      if (req.method === "GET" && cupomAlvo) {
+        return json(res, 200, { usos: usosDoCupom(cupomAlvo[1]) });
       }
 
       if (req.method === "POST" && pathname === "/api/pagamentos") {
@@ -1747,6 +1821,9 @@ export async function iniciar() {
     migrarCreditos();
     // Histórico de desempenho: mesma regra, mesmo banco.
     migrarDesempenho();
+    // Cupons do beta: sem esta tabela, ninguém entra — a porta do produto passou
+    // a ser o cupom, e uma tabela faltando trancaria a casa inteira.
+    migrarCupons();
 
     // Quem já tinha conta antes de a ferramenta passar a cobrar não pode acordar
     // sem poder usá-la. Cada conta existente ganha os créditos de boas-vindas uma

@@ -767,30 +767,134 @@ test("professor não gasta crédito ao consultar", async () => {
   }
 });
 
-test("cadastro público cria conta com créditos e recusa e-mail repetido", async () => {
+test("nao se cria conta sem cupom — o beta e por convite", async () => {
+  // A porta do produto fechou. Antes qualquer um criava conta e levava os
+  // creditos de boas-vindas: uma torneira de custo ligada para a internet
+  // inteira, bastando um e-mail novo por conta.
   const { servidor, api } = await subir();
   try {
-    const email = `novo${Date.now()}@exemplo.com`;
-    const criado = await api("/api/cadastro", { nome: "Aluna Nova", email, senha: "senha-boa-12345" });
-    assert.equal(criado.status, 200);
+    const email = `sem-cupom${Date.now()}@exemplo.com`;
+    const semCupom = await api("/api/cadastro", { nome: "Sem Convite", email, senha: "senha-boa-12345" });
+    assert.equal(semCupom.status, 403, "cadastro sem cupom deveria ser recusado");
 
-    const repetido = await api("/api/cadastro", { nome: "Outra", email, senha: "senha-boa-12345" });
-    assert.equal(repetido.status, 400);
-    assert.match(repetido.dados.erro, /já existe/i);
+    const cupomFalso = await api("/api/cadastro", {
+      nome: "Sem Convite", email, senha: "senha-boa-12345", cupom: "BETA-XXXX-XXXX",
+    });
+    assert.equal(cupomFalso.status, 403, "cupom inventado deveria ser recusado");
 
-    const curta = await api("/api/cadastro", { nome: "X", email: `x${Date.now()}@exemplo.com`, senha: "curta" });
-    assert.equal(curta.status, 400);
-
-    // Entra com o e-mail e encontra os créditos de boas-vindas já na conta.
+    // E a conta NAO pode ter sido criada pelo caminho recusado: se ela existisse,
+    // o e-mail ficaria queimado e a pessoa nao conseguiria entrar nem com cupom.
     const entrada = await api("/api/auth/sign-in/email", { email, password: "senha-boa-12345" });
-    assert.equal(entrada.status, 200);
-    const { dados } = await api("/api/creditos");
-    assert.ok(dados.saldo > 0, "conta nova precisa nascer com créditos para experimentar");
-    assert.equal(dados.saldo, dados.experiencia_completa);
+    assert.notEqual(entrada.status, 200, "conta foi criada mesmo com o cupom recusado");
   } finally {
     servidor.close();
   }
 });
+
+test("com cupom valido, a conta nasce com os creditos DO CUPOM", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "adm001");
+    const emitido = await api("/api/cupons", { creditos: 77, usos_max: 1, dias: 30, observacao: "teste" });
+    assert.equal(emitido.status, 200);
+    const codigo = emitido.dados.codigo;
+    assert.match(codigo, /^[A-Z0-9]+-[A-Z0-9]{4}-[A-Z0-9]{4}$/, `codigo fora do formato: ${codigo}`);
+
+    const cliente = criarCliente(`http://127.0.0.1:${servidor.address().port}`);
+    const email = `com-cupom${Date.now()}@exemplo.com`;
+    const criado = await cliente("/api/cadastro", { nome: "Convidada", email, senha: "senha-boa-12345", cupom: codigo });
+    assert.equal(criado.status, 200, JSON.stringify(criado.dados));
+
+    const entrada = await cliente("/api/auth/sign-in/email", { email, password: "senha-boa-12345" });
+    assert.equal(entrada.status, 200);
+    const { dados } = await cliente("/api/creditos");
+    assert.equal(dados.saldo, 77, "o saldo tem de vir do cupom, nao da regra geral");
+
+    // Cupom de uso unico nao serve duas vezes.
+    const segundo = await cliente("/api/cadastro", {
+      nome: "Outro", email: `outro${Date.now()}@exemplo.com`, senha: "senha-boa-12345", cupom: codigo,
+    });
+    assert.equal(segundo.status, 403, "cupom de uso unico foi aceito duas vezes");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("o cupom aceita o codigo como a pessoa digita", async () => {
+  // Ele vai ser ditado no telefone e digitado no celular: minuscula, sem hifen e
+  // com espaco sobrando sao a regra, nao a excecao.
+  //
+  // Direto no motor, sem HTTP: a normalizacao e logica pura, e passar as quatro
+  // formas pela rota so gastaria a cota do limitador — que e por IP e faria o
+  // teste SEGUINTE levar 429, longe da causa.
+  const { conferirCupom, criarCupom, normalizar } = await import("../motor/cupons.js");
+  const { codigo } = criarCupom({ creditos: 20, usosMax: 3, diasParaExpirar: 10 });
+
+  for (const forma of [
+    codigo.toLowerCase(),
+    codigo.replaceAll("-", ""),
+    `  ${codigo}  `,
+    codigo.toLowerCase().replaceAll("-", " "),
+  ]) {
+    const r = conferirCupom(forma);
+    assert.equal(r.ok, true, `recusou a forma "${forma}"`);
+    assert.equal(r.creditos, 20);
+  }
+
+  assert.equal(normalizar("beta abcd efgh"), normalizar("BETA-ABCD-EFGH"));
+  assert.equal(conferirCupom("").ok, false, "cupom vazio nao pode passar");
+  assert.equal(conferirCupom("BETA-ZZZZ-ZZZZ").ok, false, "cupom inexistente nao pode passar");
+});
+
+
+test("so o admin emite cupom", async () => {
+  const { servidor, api } = await subir();
+  try {
+    await entrar(api, "aluno001");
+    const comoAluno = await api("/api/cupons", { creditos: 999 });
+    assert.equal(comoAluno.status, 403, "aluno conseguiu emitir cupom");
+
+    await entrar(api, "prof001");
+    const comoProfessor = await api("/api/cupons", { creditos: 999 });
+    assert.equal(comoProfessor.status, 403, "professor conseguiu emitir cupom");
+
+    const lista = await api("/api/cupons");
+    assert.equal(lista.status, 403, "professor conseguiu listar cupons");
+  } finally {
+    servidor.close();
+  }
+});
+
+test("cupom revogado, esgotado e expirado nao abrem conta", async () => {
+  const { conferirCupom, criarCupom, resgatarCupom, revogarCupom } = await import("../motor/cupons.js");
+
+  const revogavel = criarCupom({ creditos: 30, usosMax: 5, diasParaExpirar: 30 });
+  assert.equal(conferirCupom(revogavel.codigo).ok, true);
+  assert.equal(revogarCupom(revogavel.codigo), true);
+  const depois = conferirCupom(revogavel.codigo);
+  assert.equal(depois.ok, false);
+  assert.match(depois.motivo, /cancelad/i);
+
+  // Esgotamento: o teto de usos é o que impede um cupom publicado num grupo de
+  // WhatsApp de virar cadastro aberto com outro nome.
+  const doisUsos = criarCupom({ creditos: 10, usosMax: 2, diasParaExpirar: 30 });
+  assert.equal(resgatarCupom({ codigo: doisUsos.codigo, usuarioId: "u1" }).ok, true);
+  assert.equal(resgatarCupom({ codigo: doisUsos.codigo, usuarioId: "u2" }).ok, true);
+  const terceiro = resgatarCupom({ codigo: doisUsos.codigo, usuarioId: "u3" });
+  assert.equal(terceiro.ok, false, "o terceiro resgate passou num cupom de dois usos");
+
+  // A MESMA conta nao consome duas vezes um cupom de varios usos.
+  const varios = criarCupom({ creditos: 10, usosMax: 5, diasParaExpirar: 30 });
+  assert.equal(resgatarCupom({ codigo: varios.codigo, usuarioId: "mesma" }).ok, true);
+  const repetido = resgatarCupom({ codigo: varios.codigo, usuarioId: "mesma" });
+  assert.equal(repetido.ok, false, "a mesma conta resgatou o cupom duas vezes");
+
+  // `dias: 0` cria sem validade — util para o cupom de um evento que nao acaba.
+  const semValidade = criarCupom({ creditos: 30, diasParaExpirar: 0 });
+  assert.equal(semValidade.expira_em, null);
+  assert.equal(conferirCupom(semValidade.codigo).ok, true);
+});
+
 
 test("a loja é pública e os preços batem com o catálogo", async () => {
   const { servidor, api } = await subir();
