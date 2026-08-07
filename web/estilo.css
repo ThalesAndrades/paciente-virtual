@@ -1,4 +1,18 @@
 :root {
+  /* ── Paleta dos 5 eixos ──────────────────────────────────────────────────
+     Extraída da identidade do SC Mais Inovação: cinco cores ricas e sóbrias,
+     cada uma com um topo mais claro para o gradiente acetinado do card. O
+     PRIMEIRO-PLANO vem junto de propósito — no âmbar, texto branco cai para
+     ~1.9:1 (ilegível), então ali o texto é escuro, como na própria referência.
+     Cada cor é atribuída a uma área do edital (ver AREA_EDITAL no index.html). */
+  --e1-top: #245a7d; --e1-bot: #1a4560; --e1-fg: #ffffff;   /* navy — Clínica Médica */
+  --e2-top: #9d5cb0; --e2-bot: #7c4191; --e2-fg: #ffffff;   /* roxo — Ginecologia e Obstetrícia */
+  --e3-top: #ecb44a; --e3-bot: #d69a2c; --e3-fg: #3b2c05;   /* âmbar — Pediatria (texto escuro) */
+  --e4-top: #429a47; --e4-bot: #2f7d34; --e4-fg: #ffffff;   /* verde — Medicina da Família */
+  --e5-top: #b23336; --e5-bot: #922427; --e5-fg: #ffffff;   /* vinho — Cirurgia */
+  --e6-top: #2591a4; --e6-bot: #17798b; --e6-fg: #ffffff;   /* teal — Saúde Coletiva */
+  --e7-top: #5a5ab5; --e7-bot: #43439a; --e7-fg: #ffffff;   /* índigo — Saúde Mental */
+
   --fundo: #eef2f6;
   --fundo-2: #e4eaf0;
   --superficie: #ffffff;
@@ -150,6 +164,55 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .cat-card h3 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 750; }
 .cat-card p { margin: 0; color: var(--texto-suave); font-size: .92rem; }
 .cat-card .qtd { margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 650; color: var(--cor); background: var(--cor-suave); padding: 5px 11px; border-radius: 999px; }
+/* ── Card de área PREENCHIDO (padrão dos 5 eixos) ─────────────────────────────
+   O card deixa de ser branco com um filete colorido e passa a ser a própria cor,
+   como cada eixo na referência: gradiente diagonal do topo mais claro para a base,
+   um brilho acetinado no alto, cantos generosos e uma sombra TINGIDA da cor — o
+   que faz o card parecer feito daquele material, não pintado por cima. */
+.cat-card.cheio {
+  border: none;
+  color: var(--fg, #fff);
+  background: linear-gradient(158deg, var(--top) 0%, var(--bot) 100%);
+  box-shadow:
+    0 1px 2px rgba(16,34,46,.12),
+    0 14px 30px -10px color-mix(in srgb, var(--bot) 55%, transparent);
+}
+/* O brilho: uma faixa clara no topo, como luz batendo no material. Fica sob o
+   conteúdo (o texto vem acima) e some para baixo. */
+.cat-card.cheio::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(158deg, rgba(255,255,255,.22), rgba(255,255,255,0) 46%);
+}
+/* O filete lateral da versão branca não faz sentido aqui — a cor já é o card. */
+.cat-card.cheio::before { display: none; }
+.cat-card.cheio > * { position: relative; z-index: 1; }
+.cat-card.cheio:hover {
+  box-shadow:
+    0 2px 4px rgba(16,34,46,.14),
+    0 22px 46px -12px color-mix(in srgb, var(--bot) 68%, transparent);
+}
+.cat-card.cheio h3 { color: var(--fg, #fff); font-weight: 780; letter-spacing: -.02em; }
+/* Subtítulo: derivado do primeiro-plano, não uma cor fixa — no âmbar ele escurece
+   junto com o texto, em vez de sumir num cinza que só serve para fundo claro. */
+.cat-card.cheio p { color: color-mix(in srgb, var(--fg, #fff) 78%, transparent); }
+.cat-card.cheio .ic {
+  background: color-mix(in srgb, var(--fg, #fff) 20%, transparent);
+  color: var(--fg, #fff);
+}
+.cat-card.cheio .qtd {
+  background: color-mix(in srgb, var(--fg, #fff) 20%, transparent);
+  color: var(--fg, #fff);
+}
+
+/* As sete cores. Cada classe só declara os três tokens; o resto herda de .cheio. */
+.cat-card.e1 { --top: var(--e1-top); --bot: var(--e1-bot); --fg: var(--e1-fg); }
+.cat-card.e2 { --top: var(--e2-top); --bot: var(--e2-bot); --fg: var(--e2-fg); }
+.cat-card.e3 { --top: var(--e3-top); --bot: var(--e3-bot); --fg: var(--e3-fg); }
+.cat-card.e4 { --top: var(--e4-top); --bot: var(--e4-bot); --fg: var(--e4-fg); }
+.cat-card.e5 { --top: var(--e5-top); --bot: var(--e5-bot); --fg: var(--e5-fg); }
+.cat-card.e6 { --top: var(--e6-top); --bot: var(--e6-bot); --fg: var(--e6-fg); }
+.cat-card.e7 { --top: var(--e7-top); --bot: var(--e7-bot); --fg: var(--e7-fg); }
+
 .cat-card.med { --cor: var(--med); --cor-suave: var(--med-suave); }
 .cat-card.psi { --cor: var(--psi); --cor-suave: var(--psi-suave); }
 

@@ -604,14 +604,14 @@ function mostrarTela(id) {
    sem tocar nesta página. O fallback cobre categoria que ainda não está aqui:
    melhor um card genérico do que um caso invisível (ou um crash de `.cor`). */
 const CAT = {
-  medicina: { nome: "Medicina", chip: "med", cor: "var(--med)", ic: "🩺", desc: "Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa." },
-  psicologia: { nome: "Psicologia", chip: "psi", cor: "var(--psi)", ic: "🧠", desc: "Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente." },
-  enfermagem: { nome: "Enfermagem", chip: "enfermagem", cor: "var(--enf)", ic: "💉", desc: "Consulta de enfermagem: acolhimento, avaliação e orientação com raciocínio clínico próprio." },
-  fisioterapia: { nome: "Fisioterapia", chip: "fisioterapia", cor: "var(--fis)", ic: "🦴", desc: "Avaliação cinesiológico-funcional: história, testes e raciocínio para o diagnóstico fisioterapêutico." },
-  nutricao: { nome: "Nutrição", chip: "nutricao", cor: "var(--nut)", ic: "🥗", desc: "Anamnese alimentar e diagnóstico nutricional, com conduta pactuada com a pessoa." },
-  odontologia: { nome: "Odontologia", chip: "odontologia", cor: "var(--odo)", ic: "🦷", desc: "Urgência e clínica odontológica: anamnese, exame e conduta com comunicação clara." },
-  farmacia: { nome: "Farmácia", chip: "farmacia", cor: "var(--far)", ic: "💊", desc: "Atenção farmacêutica: conciliação, interações e adesão, medicamento a medicamento." },
-  fonoaudiologia: { nome: "Fonoaudiologia", chip: "fonoaudiologia", cor: "var(--fon)", ic: "🗣️", desc: "Avaliação fonoaudiológica de linguagem, voz, audição e deglutição." },
+  medicina: { nome: "Medicina", eixo: "e1", cor: "var(--med)", ic: "🩺", desc: "Casos clínicos com anamnese, sinais vitais e exames. Use os instrumentos ao lado da conversa." },
+  psicologia: { nome: "Psicologia", eixo: "e2", cor: "var(--psi)", ic: "🧠", desc: "Consulta terapêutica: acolha e conduza a entrevista para o paciente se abrir gradualmente." },
+  enfermagem: { nome: "Enfermagem", eixo: "e5", cor: "var(--enf)", ic: "💉", desc: "Consulta de enfermagem: acolhimento, avaliação e orientação com raciocínio clínico próprio." },
+  fisioterapia: { nome: "Fisioterapia", eixo: "e4", cor: "var(--fis)", ic: "🦴", desc: "Avaliação cinesiológico-funcional: história, testes e raciocínio para o diagnóstico fisioterapêutico." },
+  nutricao: { nome: "Nutrição", eixo: "e3", cor: "var(--nut)", ic: "🥗", desc: "Anamnese alimentar e diagnóstico nutricional, com conduta pactuada com a pessoa." },
+  odontologia: { nome: "Odontologia", eixo: "e6", cor: "var(--odo)", ic: "🦷", desc: "Urgência e clínica odontológica: anamnese, exame e conduta com comunicação clara." },
+  farmacia: { nome: "Farmácia", eixo: "e7", cor: "var(--far)", ic: "💊", desc: "Atenção farmacêutica: conciliação, interações e adesão, medicamento a medicamento." },
+  fonoaudiologia: { nome: "Fonoaudiologia", eixo: "e2", cor: "var(--fon)", ic: "🗣️", desc: "Avaliação fonoaudiológica de linguagem, voz, audição e deglutição." },
 };
 function catDe(cat) {
   return CAT[cat] || {
@@ -1254,14 +1254,17 @@ function aplicarPreferenciaAudio(l) {
    catálogo é por ÁREA, não por profissão: é assim que o participante organiza o
    estudo, e é assim que a prova sorteia as cinco estações. Em ubtec.sbs isto nem
    é carregado — lá o catálogo continua sendo por profissão. */
+// Cada área do edital ganha uma cor dos cinco eixos — o mesmo padrão da
+// referência, onde a cor identifica o bloco em uma olhada. `eixo` aponta para as
+// classes .e1..e7 do estilo (paleta em :root).
 const AREA_EDITAL = {
-  clinica_medica: { nome: "Clínica Médica", ic: "🫀", desc: "Emergência e enfermaria: o maior bloco da prova." },
-  cirurgia: { nome: "Cirurgia", ic: "🔪", desc: "Abdome agudo, trauma e o que chega pelo pronto-socorro." },
-  ginecologia_obstetricia: { nome: "Ginecologia e Obstetrícia", ic: "🤰", desc: "Pré-natal, urgência obstétrica e ginecologia ambulatorial." },
-  pediatria: { nome: "Pediatria", ic: "👶", desc: "Da puericultura à urgência — e quem fala é o acompanhante." },
-  medicina_familia: { nome: "Medicina da Família", ic: "🏠", desc: "Atenção primária: o vínculo, o programa e a longitudinalidade." },
-  saude_coletiva: { nome: "Saúde Coletiva", ic: "📋", desc: "Vigilância, notificação e o olhar sobre a população." },
-  saude_mental: { nome: "Saúde Mental", ic: "🧩", desc: "Sofrimento psíquico na porta de entrada do sistema." },
+  clinica_medica: { nome: "Clínica Médica", ic: "🫀", eixo: "e1", desc: "Emergência e enfermaria: o maior bloco da prova." },
+  cirurgia: { nome: "Cirurgia", ic: "🔪", eixo: "e5", desc: "Abdome agudo, trauma e o que chega pelo pronto-socorro." },
+  ginecologia_obstetricia: { nome: "Ginecologia e Obstetrícia", ic: "🤰", eixo: "e2", desc: "Pré-natal, urgência obstétrica e ginecologia ambulatorial." },
+  pediatria: { nome: "Pediatria", ic: "👶", eixo: "e3", desc: "Da puericultura à urgência — e quem fala é o acompanhante." },
+  medicina_familia: { nome: "Medicina da Família", ic: "🏠", eixo: "e4", desc: "Atenção primária: o vínculo, o programa e a longitudinalidade." },
+  saude_coletiva: { nome: "Saúde Coletiva", ic: "📋", eixo: "e6", desc: "Vigilância, notificação e o olhar sobre a população." },
+  saude_mental: { nome: "Saúde Mental", ic: "🧩", eixo: "e7", desc: "Sofrimento psíquico na porta de entrada do sistema." },
 };
 function areaDe(area) {
   return AREA_EDITAL[area] || {
@@ -1298,7 +1301,10 @@ async function carregarCasos() {
     const m = eixo.meta(chave);
     const b = document.createElement("button");
     b.type = "button";
-    b.className = "cat-card " + (eixo.classe || m.chip);
+    // `cheio` + a classe de eixo (e1..e7) pinta o card inteiro com o gradiente da
+    // cor, no padrão dos cinco eixos. Categoria sem cor definida cai no card
+    // branco antigo — nada quebra se uma profissão nova entrar sem eixo.
+    b.className = "cat-card " + (m.eixo ? "cheio " + m.eixo : (eixo.classe || m.chip || ""));
     b.dataset.cat = chave;
     b.innerHTML = `<div class="ic">${m.ic}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${eixo.rotulo(grupos[chave])}</span>`;
     b.addEventListener("click", () => abrirCategoria(chave));
