@@ -92,6 +92,9 @@ const DIR_HISTORICO = path.join(RAIZ, "historico");
 const PAGINA = path.join(RAIZ, "web", "index.html");
 // A apresentação do produto, servida na raiz para quem ainda não entrou.
 const LANDING = path.join(RAIZ, "web", "landing.html");
+// Um retrato por caso, gerado por scripts/gerar-retratos.mjs. A pasta pode não
+// existir: caso sem retrato cai no rosto desenhado, e a sala nunca fica vazia.
+const DIR_RETRATOS = path.join(RAIZ, "web", "retratos");
 
 // Arquivos estáticos servidos por LISTA FIXA, não por caminho montado a partir do
 // pedido. É a diferença entre servir dois arquivos conhecidos e abrir um leitor de
@@ -1036,6 +1039,34 @@ export function criarServidor() {
         const html = fs.readFileSync(PAGINA);
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
         return res.end(html);
+      }
+
+      // O retrato do ator de um caso. Aqui NÃO dá para usar a lista fixa dos
+      // demais estáticos, porque há um arquivo por caso — mas o caminho continua
+      // sem sair do pedido: o id é validado contra o ACERVO e o caminho é montado
+      // a partir do id que passou. Quem escrever `../../etc/passwd` não encontra
+      // um caso com esse nome e leva 404, que é o mesmo que qualquer id inválido.
+      const retrato = pathname.match(/^\/retratos\/([\w-]+)\.webp$/);
+      if (req.method === "GET" && retrato) {
+        const id = retrato[1];
+        if (!acervo().some((caso) => caso.id === id)) {
+          return json(res, 404, { erro: "Retrato não encontrado." });
+        }
+        const arquivo = path.join(DIR_RETRATOS, `${id}.webp`);
+        if (!fs.existsSync(arquivo)) {
+          // Caso sem retrato é normal: a página desenha o rosto de reserva.
+          return json(res, 404, { erro: "Retrato não encontrado." });
+        }
+        const imagem = fs.readFileSync(arquivo);
+        res.writeHead(200, {
+          "Content-Type": "image/webp",
+          "Content-Length": imagem.length,
+          // O retrato é imutável dentro da vida do container (vem do clone), e é
+          // a coisa mais pesada da sala: baixar de novo a cada consulta cobraria
+          // a franquia de dados do aluno sem motivo.
+          "Cache-Control": "public, max-age=604800, immutable",
+        });
+        return res.end(imagem);
       }
 
       if (req.method === "GET" && ESTATICOS.has(pathname)) {

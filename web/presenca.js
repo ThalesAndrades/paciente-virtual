@@ -20,6 +20,20 @@ import { aparenciaDoCaso, desenharRosto } from "./rosto.js";
 
 let raiz = null;
 let aparencia = aparenciaDoCaso({});
+
+/* O retrato do ator.
+ *
+ * Quando existe uma foto para o caso, é ELA que aparece: fotografia é o realismo
+ * que o boneco 3D tentou e não alcançou — e sem o vale da estranheza, porque uma
+ * foto não tenta se mover. O desenho de `rosto.js` continua como plano B para
+ * caso sem retrato, para a imagem que não carrega e para quem está offline: a
+ * consulta nunca fica sem ninguém do outro lado.
+ *
+ * O que se anima aqui é só o que uma foto pode fazer sem denunciar: um leve
+ * respiro de escala na frequência do caso. A boca não se mexe — boca animada em
+ * cima de foto é exatamente o efeito que se está evitando. */
+let retrato = null;
+let retratoPronto = false;
 let canvas = null;
 let ctx = null;
 let quadro = null;
@@ -261,17 +275,28 @@ function desenhar(t, dt) {
   // A pessoa. Era um núcleo abstrato — honesto, mas não era ninguém: no Revalida
   // quem está do outro lado é um ATOR, com rosto, que olha para o candidato. O
   // halo e o anel de voz continuam por baixo, agora como o ar em volta dela.
-  desenharRosto(ctx, {
-    cx,
-    cy,
-    r: raio,
-    exp: expressao,
-    energiaVoz,
-    t,
-    falando: estado === "falando",
-    aparencia,
-    semMovimento,
-  });
+  if (retratoPronto && retrato) {
+    // A foto cobre o palco inteiro, recortada pelo centro (o rosto fica no alto
+    // do enquadramento, então o corte privilegia o terço superior).
+    const escala = Math.max(l / retrato.width, a / retrato.height) * (semMovimento ? 1 : respiro);
+    const largura = retrato.width * escala;
+    const altura = retrato.height * escala;
+    ctx.save();
+    ctx.drawImage(retrato, (l - largura) / 2, (a - altura) * 0.34, largura, altura);
+    ctx.restore();
+  } else {
+    desenharRosto(ctx, {
+      cx,
+      cy,
+      r: raio,
+      exp: expressao,
+      energiaVoz,
+      t,
+      falando: estado === "falando",
+      aparencia,
+      semMovimento,
+    });
+  }
 
   // Arco do microfone: o retorno de que ESTÁ sendo ouvido. Sem isto o aluno fala
   // mais alto do que precisa, sem saber se o sistema o escuta.
@@ -355,6 +380,19 @@ export async function abrir({ container, expressao: exp, perfil }) {
   // mantém o mesmo rosto entre recargas — o paciente não pode trocar de cara no
   // meio da consulta.
   aparencia = aparenciaDoCaso(perfil);
+
+  // Retrato do caso, se houver. `decoding: async` e o `onerror` garantem que uma
+  // imagem faltando ou lenta jamais segure a sala: o desenho entra no lugar.
+  retrato = null;
+  retratoPronto = false;
+  const idDoCaso = (perfil && perfil.caso) || "";
+  if (idDoCaso) {
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = () => { retrato = img; retratoPronto = true; };
+    img.onerror = () => { retrato = null; retratoPronto = false; };
+    img.src = `/retratos/${encodeURIComponent(idDoCaso)}.webp`;
+  }
   semMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   estado = "espera";
   inicio = performance.now();

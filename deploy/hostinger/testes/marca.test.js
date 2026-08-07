@@ -419,3 +419,40 @@ test("quem cria conta consegue entrar e já tem crédito para a primeira consult
     servidor.close();
   }
 });
+
+test("o retrato do ator não vira um leitor de disco", async () => {
+  // Esta é a ÚNICA rota que serve arquivo por um nome vindo do pedido — todas as
+  // outras usam lista fixa. O id é validado contra o acervo e o caminho é montado
+  // a partir do que passou, mas isso precisa estar cravado: um dia alguém
+  // "simplifica" para path.join(DIR, req.url) e abre o disco inteiro.
+  const { servidor, local } = await subir();
+
+  try {
+    const travessias = [
+      "/retratos/..%2f..%2fpackage.json.webp",
+      "/retratos/../../package.json.webp",
+      "/retratos/....//package.json.webp",
+      "/retratos/nao-existe-esse-caso.webp",
+      "/retratos/.webp",
+    ];
+    for (const caminho of travessias) {
+      const r = await local(caminho);
+      assert.ok(
+        r.status === 404 || r.status === 400,
+        `${caminho} devolveu ${r.status} — deveria ser recusado`
+      );
+      assert.ok(
+        !String(r.dados).includes("\"dependencies\""),
+        `${caminho} vazou conteúdo de arquivo do servidor`
+      );
+    }
+
+    // Caso REAL sem retrato gerado também é 404 — e isso é normal: a página
+    // desenha o rosto de reserva. O que não pode é 500 nem vazamento.
+    const casos = await local("/api/casos");
+    const real = await local(`/retratos/${casos.dados[0].id}.webp`);
+    assert.ok([200, 404].includes(real.status), `caso real devolveu ${real.status}`);
+  } finally {
+    servidor.close();
+  }
+});

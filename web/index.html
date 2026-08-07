@@ -1383,6 +1383,9 @@ function aplicarConsulta(dados) {
   // respiração. Vêm prontos do servidor — a página não interpreta o caso.
   estado.expressao = dados.expressao || null; estado.pacienteInfo = dados.paciente || {};
   estado.pacienteNome = (dados.paciente.nome || "O paciente").trim().split(/\s+/)[0];
+  // Qual arquivo de caso está aberto: é o nome do retrato do ator. Vem do
+  // servidor, e não do clique, porque no circuito o caso é sorteado lá dentro.
+  estado.casoDaConsulta = dados.caso || null;
   const cor = catDe(dados.categoria).cor;
 
   $("mensagens").innerHTML = "";
@@ -2165,7 +2168,9 @@ async function alternarSala() {
       // também roda no circuito, onde o caso é oculto de propósito, e o nome está
       // sempre à mão (aparece no cabeçalho). Estável por caso — a mesma pessoa em
       // toda abertura da sala e em toda recarga.
-      perfil: { ...(estado.pacienteInfo || {}) },
+      // `caso` leva o id do arquivo, que é o nome do retrato; `pacienteInfo` traz
+      // nome, idade e sexo, que alimentam o desenho de reserva.
+      perfil: { caso: estado.casoDaConsulta, ...(estado.pacienteInfo || {}) },
     });
     if (!ok) { fecharSala(); torrada("Não consegui mostrar a presença do paciente. A consulta segue normalmente.", true); return; }
     // O áudio já tocado antes da sala abrir continua saindo pelo mesmo elemento:
