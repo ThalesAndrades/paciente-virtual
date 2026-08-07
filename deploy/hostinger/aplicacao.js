@@ -69,7 +69,7 @@ import {
   papelDe,
   sessaoDe,
 } from "./motor/acesso.js";
-import { categoriaNaMarca, circuitoNaMarca, marcaDoPedido, vitrine } from "./motor/marca.js";
+import { carimbarMarca, categoriaNaMarca, circuitoNaMarca, marcaDoPedido, vitrine } from "./motor/marca.js";
 import { montarPromptAvaliacao, extrairTextoProfissional, pontuarChecklist } from "./motor/avaliador.js";
 import { AVISO_DEMO, responderDemo, fatoSensivelDireto } from "./motor/demo.js";
 import { CHAVES_VITAIS, detectarExames } from "./motor/exames.js";
@@ -1011,11 +1011,15 @@ export function criarServidor() {
         //
         // `/app` (abaixo) serve a ferramenta sempre, para link direto e para quem
         // quiser pular a apresentação.
-        const paginaDaVez = papelDe(req) !== null ? PAGINA : LANDING;
+        const visitante = papelDe(req) === null;
+        const paginaDaVez = visitante ? LANDING : PAGINA;
         // Lê ANTES de enviar cabeçalhos: se o arquivo falhar, o erro cai no catch
         // com headers ainda não enviados → 500 limpo, em vez de writeHead duplo
         // (que viraria unhandledRejection e derrubaria o processo p/ todos).
-        const html = fs.readFileSync(paginaDaVez);
+        let html = fs.readFileSync(paginaDaVez);
+        // Só a página de entrada: buscador e prévia de link não executam o JS que
+        // ajusta o título, e leriam o nome da outra plataforma.
+        if (visitante) html = carimbarMarca(html.toString("utf-8"), marcaDoPedido(req));
         res.writeHead(200, {
           "Content-Type": "text/html; charset=utf-8",
           // A resposta depende do cookie de sessão: sem isto, um proxy poderia

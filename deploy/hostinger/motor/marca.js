@@ -22,6 +22,12 @@ export const MARCAS = {
     id: "med",
     nome: "Revalida AI",
     descricao: "Simulação de estações do Revalida — INEP",
+    // O que vai no <title> e na <meta description> da página de entrada. Não é
+    // detalhe de vitrine: buscador e prévia de link (WhatsApp, Slack) NÃO executam
+    // o JavaScript da página, então leem o que o servidor mandou. Sem isto, o
+    // link de ubtec.sbs seria compartilhado com o nome da outra plataforma.
+    titulo: "Revalida AI — estações de habilidades clínicas",
+    resumo: "Estações do Revalida com paciente que responde, cronômetro de 10 minutos e nota pelo PEP do edital.",
     dominio: "revalidaai.med.br",
     mostra: (categoria) => categoria === CATEGORIA_MED,
     // A Med abre direto na sala de estações: quem chega ali já sabe o que quer.
@@ -33,6 +39,8 @@ export const MARCAS = {
     id: "geral",
     nome: "Paciente Virtual",
     descricao: "Simulação clínica para as profissões da saúde",
+    titulo: "Paciente Virtual — simulação clínica para a saúde",
+    resumo: "Consulta simulada com paciente que hesita e só se abre quando você pergunta do jeito certo. Nota por rubrica e parecer sobre o seu raciocínio.",
     dominio: "ubtec.sbs",
     // Complementar de propósito: TUDO QUE NÃO É medicina. Assim, profissão nova
     // entra no acervo e aparece sozinha aqui, sem ninguém lembrar de cadastrá-la
@@ -50,6 +58,8 @@ export const MARCAS = {
     id: "dev",
     nome: "Paciente Virtual (desenvolvimento)",
     descricao: "Acervo completo — as duas plataformas em uma",
+    titulo: "Paciente Virtual (desenvolvimento)",
+    resumo: "Acervo completo — as duas plataformas em uma.",
     dominio: "localhost",
     mostra: () => true,
     entrada: "catalogo",
@@ -104,6 +114,22 @@ export function categoriaNaMarca(marca, categoria) {
 // sentido para quem estuda Nutrição ou Fonoaudiologia.
 export function circuitoNaMarca(marca) {
   return Boolean(marca && marca.circuito);
+}
+
+// Carimba título e descrição da marca no HTML da página de entrada.
+//
+// A página também ajusta isso por JavaScript, e para o visitante os dois caminhos
+// dão no mesmo. A diferença aparece em quem NÃO executa JavaScript: buscador,
+// prévia de link no WhatsApp, cartão do Slack. Esses leem o que o servidor
+// mandou — e mandavam o nome da outra plataforma.
+export function carimbarMarca(html, marca) {
+  const escapar = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  return String(html)
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapar(marca.titulo || marca.nome)}</title>`)
+    .replace(
+      /(<meta\s+name=["']description["']\s+content=)["'][^"']*["']/i,
+      `$1"${escapar(marca.resumo || marca.descricao)}"`
+    );
 }
 
 // O que a página precisa saber sobre onde ela está. Não expõe nada de servidor.
