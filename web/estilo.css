@@ -233,6 +233,26 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .cartao.selecionado { border-color: var(--cor, var(--primaria)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--cor, var(--primaria)) 30%, transparent), var(--sombra); }
 .cartao .av { width: 44px; height: 44px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 750; color: #fff; background: var(--cor, var(--primaria)); }
 .cartao.med { --cor: var(--med); } .cartao.psi { --cor: var(--psi); }
+/* Card de caso dentro de uma área: herda a cor do eixo do grid (definida em
+   abrirCategoria), então o avatar e a seleção acompanham a cor da área — a
+   pessoa continua "daquela cor" da vitrine até a lista. */
+.cartoes.e1 .eixo-caso { --cor: var(--e1-bot); }
+.cartoes.e2 .eixo-caso { --cor: var(--e2-bot); }
+.cartoes.e3 .eixo-caso { --cor: var(--e3-bot); }
+.cartoes.e4 .eixo-caso { --cor: var(--e4-bot); }
+.cartoes.e5 .eixo-caso { --cor: var(--e5-bot); }
+.cartoes.e6 .eixo-caso { --cor: var(--e6-bot); }
+.cartoes.e7 .eixo-caso { --cor: var(--e7-bot); }
+/* O avatar do caso ganha um anel na cor da área e um degradê sutil — deixa de ser
+   um disco chapado e passa a fazer parte do mesmo material dos cards de cima.
+   Especificidade DELIBERADA (`.cartao.eixo-caso .av`, três classes) para vencer
+   `.cartao .av` sem depender de ordem de fonte, e `background-image` em vez do
+   shorthand `background`, que aquele `.cartao .av` senão zeraria. */
+.cartao.eixo-caso .av {
+  background-color: var(--cor);
+  background-image: linear-gradient(155deg, color-mix(in srgb, var(--cor) 80%, #fff 20%), var(--cor));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor) 16%, transparent);
+}
 .cartao h3 { margin: 0 0 3px; font-size: 1.02rem; font-weight: 700; }
 .cartao p { margin: 1px 0; font-size: .86rem; color: var(--texto-suave); }
 .cartao .q { color: var(--texto); font-weight: 500; }
@@ -420,8 +440,14 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .dica-mic.gravando .ponto { display: inline-block; animation: piscar 1s steps(1) infinite; }
 
 /* Avaliação / painel */
-.nota-geral { display: flex; align-items: baseline; gap: 10px; background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px; margin-bottom: 18px; box-shadow: var(--sombra); }
-.nota-geral .valor { font-size: 2.6rem; font-weight: 800; color: var(--primaria); }
+.nota-geral {
+  display: flex; align-items: baseline; gap: 10px; border-radius: var(--raio);
+  padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--sombra); border: none;
+  /* A nota é o momento do resultado — merece material, não uma caixa branca. Um
+     degradê discreto da cor da marca, com o número em destaque tabular. */
+  background: linear-gradient(158deg, var(--primaria-suave) 0%, var(--superficie) 55%);
+}
+.nota-geral .valor { font-size: 2.8rem; font-weight: 750; color: var(--primaria); letter-spacing: -.03em; font-variant-numeric: tabular-nums; line-height: 1; }
 .criterio { background: var(--superficie); border: 1px solid var(--borda); border-radius: var(--raio); padding: 15px 17px; margin-bottom: 12px; box-shadow: var(--sombra); }
 .criterio h3 { margin: 0; font-size: 1rem; display: flex; justify-content: space-between; gap: 8px; }
 .criterio .objetivo { margin: 4px 0 11px; font-size: .88rem; color: var(--texto-suave); }
@@ -498,7 +524,7 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .anel .trilho { fill: none; stroke: var(--borda); stroke-width: 11; }
 .anel .progresso { fill: none; stroke: var(--cor-nota, var(--primaria)); stroke-width: 11; stroke-linecap: round; transition: stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1); }
 .anel-valor { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.anel-valor span { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--cor-nota, var(--primaria)); }
+.anel-valor span { font-size: 2.2rem; font-weight: 760; line-height: 1; color: var(--cor-nota, var(--primaria)); }
 .anel-valor small { color: var(--texto-suave); font-size: .8rem; margin-top: 2px; }
 .resultado-info { flex: 1; min-width: 190px; }
 .veredito-badge { display: inline-block; font-weight: 750; font-size: .82rem; padding: 5px 13px; border-radius: 999px; margin-bottom: 8px; color: var(--cor-nota, var(--primaria)); background: color-mix(in srgb, var(--cor-nota, var(--primaria)) 14%, transparent); }
@@ -887,7 +913,7 @@ input, select, textarea {
 }
 .cartao-saldo.vazio { border-color: color-mix(in srgb, var(--falha) 40%, var(--borda)); }
 .cartao-saldo .saldo-num { display: flex; align-items: baseline; gap: 6px; }
-.cartao-saldo .saldo-num strong { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; }
+.cartao-saldo .saldo-num strong { font-size: 1.6rem; font-weight: 750; letter-spacing: -.02em; }
 .cartao-saldo .saldo-num span { color: var(--texto-suave); font-size: .85rem; }
 .cartao-saldo .saldo-txt { color: var(--texto-suave); font-size: .9rem; flex: 1; min-width: 140px; }
 .cartao-saldo .botao { padding: 10px 16px; }
@@ -896,14 +922,21 @@ input, select, textarea {
 .plano {
   display: flex; flex-direction: column; gap: 4px; text-align: left; cursor: pointer; font: inherit;
   border: 1px solid var(--borda); border-radius: var(--raio); background: var(--superficie); color: var(--texto);
-  padding: 16px; box-shadow: var(--sombra); transition: transform .15s, border-color .15s, box-shadow .15s;
+  padding: 18px; box-shadow: var(--sombra);
+  transition: transform var(--t-medio) var(--mola), border-color var(--t-medio) ease, box-shadow var(--t-medio) ease;
 }
-.plano:hover { transform: translateY(-2px); border-color: var(--primaria); box-shadow: var(--sombra-forte); }
+.plano:hover { transform: translateY(-3px) scale(1.008); border-color: var(--primaria); box-shadow: var(--sombra-forte); }
+.plano:active { transform: translateY(-1px) scale(.99); }
 /* O destaque não é enfeite: é o pacote que sai mais barato por crédito, e dizer
-   isso poupa o aluno de fazer a conta. */
-.plano.destaque { border-color: var(--primaria); box-shadow: 0 0 0 2px var(--primaria-suave), var(--sombra); }
+   isso poupa o aluno de fazer a conta. Ganha um leve degradê da cor da marca para
+   se separar dos demais sem precisar de selo. */
+.plano.destaque {
+  border-color: var(--primaria);
+  box-shadow: 0 0 0 1.5px var(--primaria), var(--sombra);
+  background: linear-gradient(168deg, var(--primaria-suave) 0%, var(--superficie) 42%);
+}
 .plano-rotulo { font-weight: 700; }
-.plano-preco { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; }
+.plano-preco { font-size: 1.35rem; font-weight: 750; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 .plano-preco i { font-size: .8rem; font-weight: 600; color: var(--texto-suave); font-style: normal; }
 .plano-nota { font-size: .84rem; color: var(--texto-suave); }
 
@@ -1035,7 +1068,7 @@ input, select, textarea {
 
 .boletim-topo { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 6px 0 14px; }
 .boletim-nota { display: flex; align-items: baseline; gap: 5px; }
-.boletim-nota strong { font-size: 3rem; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.boletim-nota strong { font-size: 3rem; font-weight: 760; letter-spacing: -.03em; line-height: 1; }
 .boletim-nota span { color: var(--texto-suave); font-weight: 650; }
 .boletim-resumo { flex: 1; min-width: 180px; }
 .linha-boletim {
@@ -1050,7 +1083,7 @@ input, select, textarea {
 .bol-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .bol-info strong { font-size: .96rem; }
 .bol-info span { color: var(--texto-suave); font-size: .82rem; }
-.bol-nota { font-size: 1.3rem; font-weight: 800; color: var(--cor-bol, var(--texto)); white-space: nowrap; }
+.bol-nota { font-size: 1.3rem; font-weight: 760; color: var(--cor-bol, var(--texto)); white-space: nowrap; }
 .bol-nota i { font-size: .8rem; font-weight: 600; color: var(--texto-suave); font-style: normal; }
 @media (max-width: 620px) {
   .cartao-prova .botao, .barra-circuito .botao { width: 100%; }
@@ -1074,7 +1107,7 @@ input, select, textarea {
   background: var(--superficie); border: 1px solid var(--borda);
   border-radius: var(--raio); box-shadow: var(--sombra);
 }
-.desemp-card strong { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.desemp-card strong { font-size: 1.7rem; font-weight: 760; letter-spacing: -.02em; line-height: 1.1; }
 .desemp-card span { color: var(--texto-suave); font-size: .82rem; }
 
 .desemp-areas { display: flex; flex-direction: column; gap: 12px; }
@@ -1083,7 +1116,7 @@ input, select, textarea {
   border: 1px solid var(--borda); border-radius: var(--raio);
 }
 .desemp-area-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.desemp-area-topo b { font-size: 1.05rem; font-weight: 800; white-space: nowrap; }
+.desemp-area-topo b { font-size: 1.05rem; font-weight: 760; white-space: nowrap; }
 .desemp-area-topo b i { font-style: normal; font-size: .78rem; opacity: .65; }
 .desemp-area-pe { color: var(--texto-suave); font-size: .8rem; margin-top: 6px; }
 /* A barra repete o que o número já diz. É redundância de propósito: comparar
@@ -1102,7 +1135,7 @@ input, select, textarea {
   font-size: .9rem; line-height: 1.45;
 }
 .desemp-vezes {
-  flex: none; font-weight: 800; font-size: .8rem; color: var(--sev-atencao-texto);
+  flex: none; font-weight: 760; font-size: .8rem; color: var(--sev-atencao-texto);
   padding-top: 1px;
 }
 
@@ -1114,7 +1147,7 @@ input, select, textarea {
 .desemp-rec-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .desemp-rec-txt strong { font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .desemp-rec-txt span { color: var(--texto-suave); font-size: .8rem; }
-.desemp-rec-nota { font-weight: 800; font-size: 1.05rem; white-space: nowrap; }
+.desemp-rec-nota { font-weight: 760; font-size: 1.05rem; white-space: nowrap; }
 .desemp-rec-nota i { font-style: normal; font-size: .75rem; opacity: .65; }
 
 @media (max-width: 480px) {
@@ -1323,3 +1356,25 @@ input, select, textarea {
 .cupom-linha.revogado, .cupom-linha.expirado, .cupom-linha.esgotado { opacity: .62; }
 .cupom-linha.revogado .cupom-selo, .cupom-linha.expirado .cupom-selo { background: var(--exame); color: var(--exame-texto); }
 .cupom-linha.esgotado .cupom-selo { background: var(--aviso-fundo); color: var(--aviso-texto); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EMPILHAMENTO ELEGANTE — os cards entram em cascata
+   ══════════════════════════════════════════════════════════════════════════
+   Todos os cards de uma grade não devem surgir de uma vez: entram um após o
+   outro, de baixo para cima, como cartas postas na mesa. O atraso vem do índice
+   (`--i`, posto pelo JS) e é TETADO — numa lista de vinte casos, esperar o
+   vigésimo card seria lentidão disfarçada de charme, então do oitavo em diante
+   todos entram juntos. `backwards` segura o estado inicial durante o atraso, para
+   o card não piscar no lugar antes de animar. */
+@keyframes empilha {
+  from { opacity: 0; transform: translateY(16px) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+.cat-card, .cartao, .plano {
+  animation: empilha .5s var(--mola) backwards;
+  animation-delay: calc(min(var(--i, 0), 8) * 45ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-card, .cartao, .plano { animation: none; }
+}

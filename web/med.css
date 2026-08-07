@@ -208,7 +208,16 @@
   border-radius: var(--raio-sm);
   background: var(--primaria-suave);
   color: var(--primaria);
-  font-weight: 800;
+  font-weight: 760;
+}
+/* Dentro de uma área, o selo carrega a COR DA ÁREA (o eixo) — quadrado, como manda
+   a banca, mas preenchido, para o caso continuar "daquela cor" da vitrine à lista.
+   Especificidade acima da regra sóbria e da base em estilo.css. */
+[data-marca="med"] .cartao.eixo-caso .av {
+  background-color: var(--cor);
+  background-image: linear-gradient(155deg, color-mix(in srgb, var(--cor) 80%, #fff 20%), var(--cor));
+  color: #fff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor) 15%, transparent);
 }
 
 [data-marca="med"] .chip-cat {

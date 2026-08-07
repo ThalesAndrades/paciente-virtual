@@ -1306,6 +1306,7 @@ async function carregarCasos() {
     // branco antigo — nada quebra se uma profissão nova entrar sem eixo.
     b.className = "cat-card " + (m.eixo ? "cheio " + m.eixo : (eixo.classe || m.chip || ""));
     b.dataset.cat = chave;
+    b.style.setProperty("--i", ordem.indexOf(chave));
     b.innerHTML = `<div class="ic">${m.ic}</div><h3>${esc(m.nome)}</h3><p>${esc(m.desc)}</p><span class="qtd">${eixo.rotulo(grupos[chave])}</span>`;
     b.addEventListener("click", () => abrirCategoria(chave));
     alvo.appendChild(b);
@@ -1321,15 +1322,22 @@ function abrirCategoria(cat) {
   $("cat-chip").textContent = meta.nome; $("cat-chip").className = "chip-cat " + chip;
   $("cat-sub").textContent = meta.desc;
   const lista = $("lista-casos"); lista.innerHTML = "";
+  // A cor da área entra por variável no grid: os cards de caso herdam o mesmo
+  // eixo da área aberta, então Pediatria fica âmbar e Cirurgia fica vinho por
+  // dentro — a cor acompanha a pessoa da vitrine à lista, sem monotonia.
+  lista.className = "cartoes" + (meta.eixo ? " " + meta.eixo : "");
   const doCat = estado.casos.filter((c) => (c[eixo.campo] || "outros") === cat);
   if (!doCat.length) { lista.innerHTML = "<p class='subtitulo'>Nenhum caso nesta área ainda.</p>"; }
-  for (const caso of doCat) {
+  doCat.forEach((caso, i) => {
     const b = document.createElement("button");
-    b.className = "cartao " + chip;
-    b.innerHTML = `<div class="av">${(caso.paciente.nome || "?").charAt(0)}</div><div><h3>${caso.titulo}</h3><p>${caso.paciente.nome}, ${caso.paciente.idade} anos — ${caso.paciente.profissao || ""}</p><p class="q">${caso.queixa}</p></div>`;
+    b.className = "cartao " + (meta.eixo ? "eixo-caso" : chip);
+    // O índice alimenta o atraso da cascata: cada card entra um instante depois do
+    // anterior, como cartas postas na mesa.
+    b.style.setProperty("--i", i);
+    b.innerHTML = `<div class="av">${esc((caso.paciente.nome || "?").charAt(0))}</div><div><h3>${esc(caso.titulo)}</h3><p>${esc(caso.paciente.nome)}, ${esc(String(caso.paciente.idade))} anos — ${esc(caso.paciente.profissao || "")}</p><p class="q">${esc(caso.queixa)}</p></div>`;
     b.addEventListener("click", () => exigirCodigo(() => comCreditosSuficientes(() => iniciarConsulta(caso.id, false))));
     lista.appendChild(b);
-  }
+  });
   mostrarTela("tela-categoria");
 }
 
