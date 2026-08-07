@@ -54,8 +54,10 @@
   --raio-sm: 6px;
 
   /* Sombra mais curta e mais dura: papel sobre mesa, não cartão flutuante. */
-  --sombra: 0 1px 2px rgba(16, 26, 37, .05), 0 4px 14px rgba(16, 26, 37, .05);
-  --sombra-forte: 0 2px 6px rgba(16, 26, 37, .09), 0 14px 32px rgba(16, 26, 37, .12);
+  /* Mais contida que a marca geral — a banca não flutua —, mas ainda em camadas:
+     contato + corpo, sem a sombra dura de antes. */
+  --sombra: 0 0 0 1px rgba(16, 26, 37, .035), 0 1px 2px rgba(16, 26, 37, .05), 0 6px 18px -4px rgba(16, 26, 37, .07);
+  --sombra-forte: 0 0 0 1px rgba(16, 26, 37, .04), 0 2px 6px rgba(16, 26, 37, .08), 0 18px 40px -8px rgba(16, 26, 37, .14);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -254,12 +256,12 @@
    entre uma estação e outra, movimento grande é distração — e quem faz simulado
    cronometrado troca de tela dezenas de vezes por sessão. */
 [data-marca="med"] .tela.ativa {
-  animation: med-entra .16s ease-out;
+  animation: med-entra .32s var(--mola, cubic-bezier(.32,.72,0,1));
 }
 
 @keyframes med-entra {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

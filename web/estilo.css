@@ -25,10 +25,22 @@
   --falha: #c8382f;
   --aviso-fundo: #eef4f8;
   --aviso-texto: #4a6072;
-  --sombra: 0 1px 2px rgba(16,34,46,.04), 0 8px 24px rgba(16,34,46,.06);
-  --sombra-forte: 0 2px 6px rgba(16,34,46,.08), 0 18px 40px rgba(16,34,46,.12);
-  --raio: 16px;
-  --raio-sm: 10px;
+  /* Sombra por LUZ, não por linha: três camadas difusas — contato, corpo e
+     ambiente — no lugar de uma sombra dura. É o que faz um cartão parecer
+     apoiado em vez de desenhado. */
+  --sombra: 0 0 0 1px rgba(16,34,46,.028), 0 1px 2px rgba(16,34,46,.045), 0 10px 28px -6px rgba(16,34,46,.08);
+  --sombra-forte: 0 0 0 1px rgba(16,34,46,.03), 0 2px 6px rgba(16,34,46,.07), 0 24px 56px -12px rgba(16,34,46,.16);
+  --raio: 18px;
+  --raio-sm: 12px;
+
+  /* A física do movimento, num lugar só. A mola (--mola) desacelera como objeto
+     com massa — é a diferença entre uma interface que responde e uma que
+     apenas troca de estado. Nada aqui passa de 300 ms: animação que se nota
+     como animação já é lenta demais. */
+  --mola: cubic-bezier(.32,.72,0,1);
+  --saida: cubic-bezier(.4,0,1,1);
+  --t-rapido: .16s;
+  --t-medio: .26s;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -58,6 +70,8 @@
     --falha: #ec7268;
     --aviso-fundo: #172029;
     --aviso-texto: #9fb2c2;
+    --sombra: 0 0 0 1px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -6px rgba(0,0,0,.45);
+    --sombra-forte: 0 0 0 1px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.5), 0 28px 64px -12px rgba(0,0,0,.6);
     --sombra: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
     --sombra-forte: 0 2px 8px rgba(0,0,0,.4), 0 20px 46px rgba(0,0,0,.5);
   }
@@ -70,7 +84,11 @@ body {
      laudo, hipótese digitada pelo aluno — pode esticar a página de lado. Quebra só
      quando a palavra sozinha não cabe, então a tipografia normal fica intacta. */
   overflow-wrap: break-word;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Fonte do SISTEMA, de propósito: SF Pro no Apple, Segoe UI Variable no
+     Windows. É a decisão da própria Apple — a tipografia nativa da plataforma
+     rende melhor que qualquer webfont, e custa zero bytes. */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, sans-serif;
+  font-optical-sizing: auto;
   background:
     radial-gradient(1100px 520px at 78% -8%, color-mix(in srgb, var(--primaria) 12%, transparent), transparent 60%),
     radial-gradient(900px 500px at 8% 108%, color-mix(in srgb, var(--psi) 10%, transparent), transparent 60%),
@@ -80,9 +98,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 .tela { display: none; max-width: 940px; margin: 0 auto; padding: 26px 18px calc(30px + env(safe-area-inset-bottom)); }
-.tela.ativa { display: block; animation: entra .28s ease; }
-@keyframes entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-h1 { font-size: 1.6rem; letter-spacing: -.02em; margin: 6px 0 2px; font-weight: 800; }
+.tela.ativa { display: block; animation: entra .42s var(--mola); }
+@keyframes entra { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+h1 { font-size: 1.7rem; letter-spacing: -.028em; margin: 6px 0 2px; font-weight: 700; }
 .subtitulo { color: var(--texto-suave); margin: 0 0 22px; }
 
 .marca { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
@@ -92,7 +110,7 @@ h1 { font-size: 1.6rem; letter-spacing: -.02em; margin: 6px 0 2px; font-weight: 
   background: linear-gradient(160deg, var(--primaria), color-mix(in srgb, var(--primaria) 55%, #000 8%));
   color: #fff; box-shadow: var(--sombra);
 }
-.marca .tit { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+.marca .tit { font-size: 1.5rem; font-weight: 700; letter-spacing: -.026em; }
 .marca .sub { color: var(--texto-suave); font-size: .92rem; }
 
 label { display: block; font-weight: 650; margin: 20px 0 7px; font-size: .95rem; }
@@ -101,7 +119,7 @@ input[type=text] {
   border: 1px solid var(--borda-forte); border-radius: var(--raio-sm);
   background: var(--superficie); color: var(--texto); transition: border-color .15s, box-shadow .15s;
 }
-input[type=text]:focus { outline: none; border-color: var(--primaria); box-shadow: 0 0 0 4px var(--primaria-suave); }
+input[type=text]:focus { outline: none; border-color: var(--primaria); box-shadow: 0 0 0 4px color-mix(in srgb, var(--primaria) 18%, transparent); }
 
 /* Preferência de áudio */
 .pref-audio {
@@ -125,7 +143,9 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
   position: relative; overflow: hidden;
 }
 .cat-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--cor); }
-.cat-card:hover { transform: translateY(-3px); box-shadow: var(--sombra-forte); border-color: color-mix(in srgb, var(--cor) 45%, var(--borda)); }
+.cat-card { transition: transform var(--t-medio) var(--mola), box-shadow var(--t-medio) ease, border-color var(--t-medio) ease; }
+.cat-card:hover { transform: translateY(-3px) scale(1.008); box-shadow: var(--sombra-forte); border-color: color-mix(in srgb, var(--cor) 45%, var(--borda)); }
+.cat-card:active { transform: translateY(-1px) scale(.99); }
 .cat-card .ic { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; font-size: 1.7rem; background: var(--cor-suave); color: var(--cor); margin-bottom: 14px; }
 .cat-card h3 { margin: 0 0 4px; font-size: 1.2rem; font-weight: 750; }
 .cat-card p { margin: 0; color: var(--texto-suave); font-size: .92rem; }
@@ -157,10 +177,13 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .botao {
   display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; margin-top: 22px;
   background: var(--primaria); border: none; border-radius: var(--raio-sm);
-  color: var(--sobre-primaria); font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: var(--sombra);
-  transition: filter .15s, transform .1s;
+  color: var(--sobre-primaria); font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: var(--sombra);
+  transition: filter var(--t-rapido) ease, transform var(--t-rapido) var(--mola), box-shadow var(--t-rapido) ease;
 }
-.botao:hover { filter: brightness(1.06); } .botao:active { transform: translateY(1px); }
+.botao:hover { filter: brightness(1.05); box-shadow: var(--sombra-forte); }
+/* Afunda por ESCALA, não por deslocamento: o botão cede sob o dedo como um
+   objeto físico, e a mola o traz de volta. */
+.botao:active { transform: scale(.965); filter: brightness(.97); }
 .botao:disabled { opacity: .45; cursor: default; }
 .botao.secundario { background: transparent; color: var(--primaria); border: 1px solid var(--borda-forte); box-shadow: none; }
 .botao.secundario:hover { border-color: var(--primaria); }
@@ -192,12 +215,28 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
    inteira passava a rolar de lado. Quebrar a palavra é sempre melhor que quebrar
    a tela. */
 .balao {
-  max-width: 84%; padding: 11px 15px; border-radius: 16px; white-space: pre-wrap;
+  max-width: 84%; padding: 11px 15px; border-radius: 20px; white-space: pre-wrap;
   overflow-wrap: anywhere; word-break: break-word; hyphens: auto;
-  box-shadow: var(--sombra); animation: entra .2s ease;
+  /* Sombra de contato, mais leve que a dos cartões: o balão descansa sobre a
+     conversa, não flutua acima dela. */
+  box-shadow: 0 1px 2px rgba(16,34,46,.06);
+  /* Entra crescendo a partir do canto de quem falou — o balão "sai" de junto do
+     interlocutor, como no idioma de mensageria da Apple. */
+  animation: balaoEntra .32s var(--mola);
+  transform-origin: var(--origem, center bottom);
 }
-.balao.aluno { align-self: flex-end; background: var(--aluno); color: #fff; border-bottom-right-radius: 5px; }
-.balao.paciente { align-self: flex-start; background: var(--paciente); border-bottom-left-radius: 5px; }
+.balao.aluno {
+  align-self: flex-end; background: var(--aluno); color: #fff;
+  border-bottom-right-radius: 6px; --origem: right bottom;
+}
+.balao.paciente {
+  align-self: flex-start; background: var(--paciente);
+  border-bottom-left-radius: 6px; --origem: left bottom;
+}
+@keyframes balaoEntra {
+  from { opacity: 0; transform: translateY(8px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
 .balao.paciente.digitando-vivo::after { content: "▋"; margin-left: 1px; color: var(--texto-suave); animation: piscar 1s steps(1) infinite; }
 @keyframes piscar { 50% { opacity: 0; } }
 .balao.exame {
@@ -342,8 +381,8 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
 .aleatorio-home { margin-top: 16px; }
 
 /* Modal (código de acesso) */
-.modal { position: fixed; inset: 0; z-index: 150; display: grid; place-items: center; padding: 20px; background: color-mix(in srgb, #05121b 62%, transparent); backdrop-filter: blur(4px); animation: entra .2s ease; }
-.modal-box { background: var(--superficie); border: 1px solid var(--borda); border-radius: 20px; box-shadow: var(--sombra-forte); padding: 28px 26px; max-width: 380px; width: 100%; text-align: center; animation: subiModal .25s cubic-bezier(.22,1,.36,1); }
+.modal { position: fixed; inset: 0; z-index: 150; display: grid; place-items: center; padding: 20px; background: color-mix(in srgb, #05121b 46%, transparent); backdrop-filter: blur(16px) saturate(1.4); animation: entra var(--t-rapido) ease; }
+.modal-box { background: var(--superficie); border: 1px solid var(--borda); border-radius: 22px; box-shadow: var(--sombra-forte); padding: 28px 26px; max-width: 380px; width: 100%; text-align: center; animation: subiModal var(--t-medio) var(--mola); }
 @keyframes subiModal { from { transform: translateY(14px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
 .modal-selo { width: 60px; height: 60px; border-radius: 18px; margin: 0 auto 14px; display: grid; place-items: center; font-size: 1.7rem; background: var(--primaria-suave); color: var(--primaria); }
 .modal-box h2 { margin: 0 0 4px; font-size: 1.25rem; }
@@ -369,7 +408,7 @@ input[type=text]:focus { outline: none; border-color: var(--primaria); box-shado
   box-shadow: var(--sombra-forte); animation: pulsaSelo 1.8s ease-in-out infinite;
 }
 @keyframes pulsaSelo { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.04); } }
-.splash-tit { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; }
+.splash-tit { font-size: 1.7rem; font-weight: 700; letter-spacing: -.028em; }
 .splash-sub { color: var(--texto-suave); margin-top: 4px; }
 .splash-barra { width: 168px; height: 5px; border-radius: 999px; background: var(--borda); margin: 20px auto 0; overflow: hidden; }
 .splash-barra i { display: block; height: 100%; width: 40%; border-radius: 999px; background: var(--primaria); animation: correBarra 1.1s ease-in-out infinite; }

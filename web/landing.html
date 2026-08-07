@@ -62,10 +62,12 @@
   --sans: "Segoe UI Variable Display", "Segoe UI", -apple-system, BlinkMacSystemFont,
           "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
 
-  --raio: 12px;
-  --raio-sm: 8px;
-  --sombra: 0 1px 2px rgba(13,21,32,.04);
-  --sombra-alta: 0 1px 3px rgba(13,21,32,.06), 0 12px 28px rgba(13,21,32,.07);
+  --raio: 16px;
+  --raio-sm: 11px;
+  --sombra: 0 0 0 1px rgba(13,21,32,.025), 0 1px 2px rgba(13,21,32,.04), 0 8px 22px -6px rgba(13,21,32,.07);
+  --sombra-alta: 0 0 0 1px rgba(13,21,32,.03), 0 2px 6px rgba(13,21,32,.07), 0 22px 52px -12px rgba(13,21,32,.16);
+  --mola: cubic-bezier(.32,.72,0,1);
+  --t-medio: .28s;
   --limite: 1140px;
 }
 
@@ -85,8 +87,8 @@
     --sobre-acao: #06101f;
     --tempo: #e3b869;
     --tempo-fraca: #241d10;
-    --sombra: 0 1px 2px rgba(0,0,0,.3);
-    --sombra-alta: 0 1px 3px rgba(0,0,0,.4), 0 12px 28px rgba(0,0,0,.35);
+    --sombra: 0 0 0 1px rgba(0,0,0,.25), 0 1px 2px rgba(0,0,0,.4), 0 8px 22px -6px rgba(0,0,0,.45);
+    --sombra-alta: 0 0 0 1px rgba(0,0,0,.3), 0 2px 6px rgba(0,0,0,.5), 0 26px 60px -12px rgba(0,0,0,.6);
   }
 }
 
@@ -135,9 +137,11 @@ header.topo.rolou { border-bottom-color: var(--borda); }
 .botao-entrar {
   padding: 9px 17px; border-radius: var(--raio-sm); border: 1px solid var(--acao);
   background: var(--acao); color: var(--sobre-acao); font-weight: 600; font-size: .9rem;
-  cursor: pointer; font-family: inherit; transition: background .15s;
+  cursor: pointer; font-family: inherit;
+  transition: background var(--t,.15s) ease, transform .16s var(--mola);
 }
 .botao-entrar:hover { background: var(--acao-forte); }
+.botao-entrar:active { transform: scale(.96); }
 
 /* ── Herói ───────────────────────────────────────────────────────────────── */
 .heroi {
@@ -174,9 +178,10 @@ h1 em { font-style: normal; color: var(--acao); }
   background: var(--acao); color: var(--sobre-acao); font-weight: 620; font-size: .98rem;
   cursor: pointer; font-family: inherit; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
-  transition: background .15s, border-color .15s;
+  transition: background .15s ease, border-color .15s ease, transform .16s var(--mola), box-shadow .2s ease;
 }
-.cta:hover { background: var(--acao-forte); border-color: var(--acao-forte); }
+.cta:hover { background: var(--acao-forte); border-color: var(--acao-forte); box-shadow: var(--sombra-alta); }
+.cta:active { transform: scale(.97); }
 .cta.fantasma { background: none; color: var(--tinta); border-color: var(--borda-forte); }
 .cta.fantasma:focus-visible, .cta:focus-visible, .botao-entrar:focus-visible, .area-chip:focus-visible {
   outline: 2px solid var(--acao); outline-offset: 2px;
@@ -199,7 +204,9 @@ h1 em { font-style: normal; color: var(--acao); }
   border-radius: var(--raio); overflow: hidden;
   border: 1px solid var(--borda); background: var(--superficie);
   box-shadow: var(--sombra-alta);
+  transition: transform .4s var(--mola), box-shadow .4s ease;
 }
+.sala-caixa:hover { transform: translateY(-2px); }
 .sala-topo {
   display: flex; align-items: center; gap: 10px; padding: 11px 14px;
   border-bottom: 1px solid var(--borda); background: var(--superficie-2);
@@ -235,8 +242,9 @@ h1 em { font-style: normal; color: var(--acao); }
   padding: 6px 11px; border-radius: 999px; cursor: pointer; font-family: inherit;
   font-size: .78rem; font-weight: 550;
   background: transparent; color: var(--tinta-2); border: 1px solid var(--borda);
-  transition: all .15s;
+  transition: color .15s, background .15s, border-color .15s, transform .16s var(--mola);
 }
+.area-chip:active { transform: scale(.94); }
 .area-chip:hover { border-color: var(--borda-forte); color: var(--tinta); }
 .area-chip[aria-pressed="true"] { background: var(--acao-fraca); border-color: var(--acao); color: var(--acao); font-weight: 620; }
 
@@ -281,7 +289,7 @@ footer.rodape {
   width: min(400px, 100%); border-radius: var(--raio); padding: 28px;
   background: var(--superficie); border: 1px solid var(--borda);
   box-shadow: 0 20px 60px rgba(13,21,32,.22);
-  transform: translateY(10px); transition: transform .22s cubic-bezier(.2,.8,.3,1);
+  transform: translateY(12px) scale(.985); transition: transform var(--t-medio,.28s) var(--mola);
 }
 .veu.aberto .painel { transform: none; }
 .painel h2 { font-size: 1.28rem; font-weight: 660; letter-spacing: -.024em; margin: 0 0 4px; }
